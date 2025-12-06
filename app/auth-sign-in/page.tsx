@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Mail, Lock, Eye, EyeOff, LogIn, HelpCircle } from 'lucide-react'
+import { Mail, Lock, Eye, EyeOff, LogIn } from 'lucide-react'
 import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
 import { Link } from '../../components/Link'
@@ -19,6 +19,7 @@ import { ICON_SIZE } from '../../constants/iconSize'
 import { LAYOUT } from '../../constants/layout'
 import { SPACING } from '../../constants/spacing'
 import { TEXT_ALIGN } from '../../constants/textAlign'
+import { COLOR } from '../../constants/color'
 
 export default function AuthSignInPage() {
   const router = useRouter()
@@ -26,23 +27,36 @@ export default function AuthSignInPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    // TODO: Add authentication logic here
+    // For now, prevent default form submission
+  }
+
   return (
     <div
       style={{
         display: 'flex',
         flexDirection: 'column',
-        minHeight: LAYOUT.MIN_SCREEN_HEIGHT,
+        height: LAYOUT.MIN_SCREEN_HEIGHT,
         position: 'relative',
+        paddingTop: SPACING.XXL,
+        paddingBottom: SPACING.XXL,
       }}
     >
       <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <Container>
             <HeaderSection>
-              <Heading>Connexion</Heading>
-              <Text>Connectez-vous à votre compte</Text>
+              <Heading>Bienvenue sur Dataxx, la plateforme IA qui réinvente le sponsoring sportif</Heading>
             </HeaderSection>
 
-            <Form>
+            <Form onSubmit={handleSubmit}>
+              <div style={{ marginBottom: SPACING.M, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: SPACING.S }}>
+                <LogIn size={ICON_SIZE.M} style={{ color: COLOR.GREY.DARK }} />
+                <Text size="M" color="GREY_DARK" style={{ textAlign: TEXT_ALIGN.CENTER }}>
+                  Connectez-vous à votre compte
+                </Text>
+              </div>
               <FormGroup>
                 <Input
                   id="email"
@@ -87,14 +101,13 @@ export default function AuthSignInPage() {
                 variant="WHITE"
                 type="button"
                 onClick={() => router.push('/auth-password-reset')}
-                icon={<HelpCircle size={ICON_SIZE.M} />}
+                style={{ marginBottom: SPACING.S }}
               >
                 Mot de passe oublié ?
               </Button>
 
               <div style={{ textAlign: TEXT_ALIGN.CENTER }}>
-                <Spacer size="L" />
-                <Text size="S" color="GREY_DARK">
+                <Text size="M" color="GREY_DARK">
                   Pas encore de compte ?{' '}
                   <Link href="/auth-sign-up" variant="bold">
                     S'inscrire

@@ -66,7 +66,6 @@ export const Popup = ({ isOpen, onClose, title, children }: PopupProps) => {
           maxHeight: POPUP.MAX_HEIGHT,
           display: 'flex',
           flexDirection: 'column',
-          boxShadow: SHADOW.POPUP,
         }}
         onClick={(e) => e.stopPropagation()}
       >
@@ -75,11 +74,14 @@ export const Popup = ({ isOpen, onClose, title, children }: PopupProps) => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            padding: SPACING.L,
+            paddingTop: SPACING.L,
+            paddingLeft: SPACING.L,
+            paddingRight: SPACING.L,
+            paddingBottom: SPACING.S,
             borderBottom: `1px solid ${COLOR.GREY.LIGHT}`,
           }}
         >
-          <Heading level={2}>{title}</Heading>
+          <Heading level={1}>{title}</Heading>
           <IconButton
             onClick={onClose}
             icon={<X size={ICON_SIZE.M} />}

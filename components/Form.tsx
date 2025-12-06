@@ -13,7 +13,7 @@ export const Form = ({ children, className = '', style, ...props }: FormProps) =
       style={{
         display: 'flex',
         flexDirection: 'column',
-        gap: SPACING.L,
+        gap: SPACING.M,
         ...style,
       }}
     >

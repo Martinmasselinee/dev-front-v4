@@ -5,8 +5,6 @@
 :root {
   --font-space-grotesk: 'Space Grotesk', sans-serif;
   --color-white: #ffffff;
-  --color-purple: #5218F9;
-  --color-grey-medium: #b8bcc4;
 }
 
 html,
@@ -30,16 +28,4 @@ body {
   background-attachment: fixed;
   background-repeat: no-repeat;
 }
-
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0px 1000px var(--color-white) inset;
-  box-shadow: 0 0 0px 1000px var(--color-white) inset;
-}
-
-input::selection {
-  background-color: rgba(82, 24, 249, 0.2);
-}
-
 

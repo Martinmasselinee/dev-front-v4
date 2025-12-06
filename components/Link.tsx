@@ -16,7 +16,7 @@ export const Link = ({
   ...props
 }: LinkProps) => {
   const baseStyle: React.CSSProperties = {
-    fontSize: FONT_SIZE.S,
+    fontSize: FONT_SIZE.M,
     fontWeight: variant === 'bold' ? FONT_THICKNESS.L : FONT_THICKNESS.M,
     color: COLOR.PURPLE,
     textDecoration: 'none',

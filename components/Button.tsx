@@ -19,6 +19,7 @@ interface ButtonProps {
   type?: 'button' | 'submit' | 'reset'
   className?: string
   icon?: ReactNode
+  style?: React.CSSProperties
 }
 
 export const Button = ({
@@ -28,6 +29,7 @@ export const Button = ({
   type = 'button',
   className = '',
   icon,
+  style,
 }: ButtonProps) => {
   const buttonStyle = BUTTON_MAIN[variant]
   const buttonHeight = BUTTON_HEIGHT.MAIN
@@ -45,10 +47,10 @@ export const Button = ({
       <style dangerouslySetInnerHTML={{
         __html: `
           button[data-button-variant="${variant}"]:hover {
-            background-color: ${hoverBackgroundColor};
+            background-color: ${hoverBackgroundColor} !important;
           }
           button[data-button-variant="${variant}"]:hover .button-overlay-inner {
-            background-color: ${hoverBackgroundColor};
+            background-color: ${hoverBackgroundColor} !important;
           }
         `
       }} />
@@ -68,6 +70,7 @@ export const Button = ({
           fontSize: FONT_SIZE.M,
           fontWeight: FONT_THICKNESS.L,
           transition: 'background-color 0.2s ease',
+          ...style,
         }}
       >
       <div

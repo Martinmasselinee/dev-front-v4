@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Mail, Lock, Eye, EyeOff, User, ArrowRight } from 'lucide-react'
+import { Mail, Lock, Eye, EyeOff, User, ArrowRight, UserPlus } from 'lucide-react'
 import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
 import { Link } from '../../components/Link'
@@ -18,6 +18,7 @@ import { ICON_SIZE } from '../../constants/iconSize'
 import { SPACING } from '../../constants/spacing'
 import { LAYOUT } from '../../constants/layout'
 import { TEXT_ALIGN } from '../../constants/textAlign'
+import { COLOR } from '../../constants/color'
 
 export default function AuthSignUpPage() {
   const [showPassword, setShowPassword] = useState(false)
@@ -28,23 +29,45 @@ export default function AuthSignUpPage() {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    // TODO: Add registration logic here
+    // For now, prevent default form submission
+  }
+
   return (
     <div
       style={{
         display: 'flex',
         flexDirection: 'column',
-        minHeight: LAYOUT.MIN_SCREEN_HEIGHT,
+        height: LAYOUT.MIN_SCREEN_HEIGHT,
         position: 'relative',
+        paddingTop: SPACING.XXL,
+        paddingBottom: SPACING.XXL,
       }}
     >
-      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div
+        style={{
+          flex: 1,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          paddingLeft: '64px',
+          paddingRight: '64px',
+        }}
+      >
         <Container>
             <HeaderSection>
               <Heading>Inscription</Heading>
-              <Text>Créez votre compte pour commencer</Text>
             </HeaderSection>
 
-            <Form>
+            <Form onSubmit={handleSubmit}>
+              <div style={{ marginBottom: SPACING.M, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: SPACING.S }}>
+                <UserPlus size={ICON_SIZE.M} style={{ color: COLOR.GREY.DARK }} />
+                <Text size="M" color="GREY_DARK" style={{ textAlign: TEXT_ALIGN.CENTER }}>
+                  Créez votre compte pour commencer
+                </Text>
+              </div>
               <FormGroup>
                 <div style={{ display: 'flex', gap: SPACING.M }}>
                   <div style={{ flex: 1 }}>
@@ -129,13 +152,17 @@ export default function AuthSignUpPage() {
                 </div>
               </FormGroup>
 
-              <Button variant="PURPLE" type="submit" icon={<ArrowRight size={ICON_SIZE.M} />}>
+              <Button 
+                variant="PURPLE" 
+                type="submit" 
+                icon={<ArrowRight size={ICON_SIZE.M} />}
+                style={{ marginBottom: SPACING.S }}
+              >
                 S'inscrire
               </Button>
 
               <div style={{ textAlign: TEXT_ALIGN.CENTER }}>
-                <Spacer size="L" />
-                <Text size="S" color="GREY_DARK">
+                <Text size="M" color="GREY_DARK">
                   Déjà un compte ?{' '}
                   <Link href="/auth-sign-in" variant="bold">
                     Se connecter

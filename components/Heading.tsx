@@ -17,14 +17,26 @@ export const Heading = ({
 }: HeadingProps) => {
   const Tag = `h${level}` as keyof JSX.IntrinsicElements
 
+  const getFontSize = () => {
+    if (level === 1) return FONT_SIZE.XXL
+    if (level === 2) return FONT_SIZE.M
+    return FONT_SIZE.L
+  }
+
+  const getLineHeight = () => {
+    if (level === 1) return '1.5'
+    return 'normal'
+  }
+
   return (
     <Tag
       className={className}
       style={{
-        fontSize: FONT_SIZE.XL,
+        fontSize: getFontSize(),
         fontWeight: FONT_THICKNESS.XL,
         color: COLOR.BLACK,
-        marginBottom: SPACING.S,
+        marginBottom: SPACING.M,
+        lineHeight: getLineHeight(),
       }}
     >
       {children}

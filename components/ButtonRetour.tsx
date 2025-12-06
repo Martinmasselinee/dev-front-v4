@@ -45,10 +45,10 @@ export const ButtonRetour = ({
       <style dangerouslySetInnerHTML={{
         __html: `
           button[data-button-retour-variant="${variant}"]:hover {
-            background-color: ${hoverBackgroundColor};
+            background-color: ${hoverBackgroundColor} !important;
           }
           button[data-button-retour-variant="${variant}"]:hover .button-overlay-inner {
-            background-color: ${hoverBackgroundColor};
+            background-color: ${hoverBackgroundColor} !important;
           }
         `
       }} />

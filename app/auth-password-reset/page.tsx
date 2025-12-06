@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Mail, ArrowLeft, ArrowRight, RefreshCw } from 'lucide-react'
+import { Mail, ArrowLeft, ArrowRight, RefreshCw, Sparkles } from 'lucide-react'
 import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
 import { Link } from '../../components/Link'
@@ -20,6 +20,7 @@ import { COLOR } from '../../constants/color'
 import { LAYOUT } from '../../constants/layout'
 import { FONT_THICKNESS } from '../../constants/fontThickness'
 import { TEXT_ALIGN } from '../../constants/textAlign'
+import { FONT_SIZE } from '../../constants/fontSize'
 
 export default function AuthPasswordResetPage() {
   const [email, setEmail] = useState('')
@@ -35,23 +36,26 @@ export default function AuthPasswordResetPage() {
       style={{
         display: 'flex',
         flexDirection: 'column',
-        minHeight: LAYOUT.MIN_SCREEN_HEIGHT,
+        height: LAYOUT.MIN_SCREEN_HEIGHT,
         position: 'relative',
+        paddingTop: SPACING.XXL,
+        paddingBottom: SPACING.XXL,
       }}
     >
       <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <Container>
             <HeaderSection>
-              <Heading>Réinitialisation du mot de passe</Heading>
-              <Text>
-                {isSubmitted
-                  ? 'Vérifiez votre boîte mail'
-                  : 'Entrez votre email pour recevoir un lien de réinitialisation'}
-              </Text>
+              <Heading>Réinitialiser votre mot de passe</Heading>
             </HeaderSection>
 
             {!isSubmitted ? (
               <Form onSubmit={handleSubmit}>
+                <div style={{ marginBottom: SPACING.M, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: SPACING.S }}>
+                  <Sparkles size={ICON_SIZE.M} style={{ color: COLOR.GREY.DARK }} />
+                  <Text size="M" color="GREY_DARK" style={{ textAlign: TEXT_ALIGN.CENTER }}>
+                    Entrez votre email pour recevoir un lien
+                  </Text>
+                </div>
                 <FormGroup>
                   <Input
                     id="email"
@@ -71,7 +75,7 @@ export default function AuthPasswordResetPage() {
                 <div style={{ textAlign: TEXT_ALIGN.CENTER }}>
                   <Link
                     href="/auth-sign-in"
-                    style={{ display: 'inline-flex', alignItems: 'center' }}
+                    style={{ display: 'inline-flex', alignItems: 'center', fontSize: FONT_SIZE.M }}
                   >
                     <ArrowLeft size={ICON_SIZE.S} style={{ marginRight: SPACING.S }} />
                     Retour à la connexion
@@ -113,7 +117,7 @@ export default function AuthPasswordResetPage() {
                 <div>
                   <Link
                     href="/auth-sign-in"
-                    style={{ display: 'inline-flex', alignItems: 'center' }}
+                    style={{ display: 'inline-flex', alignItems: 'center', fontSize: FONT_SIZE.M }}
                   >
                     <ArrowLeft size={ICON_SIZE.S} style={{ marginRight: SPACING.S }} />
                     Retour à la connexion

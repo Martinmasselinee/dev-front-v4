@@ -1,6 +1,8 @@
+import { SPACING } from './spacing'
+
 export const LAYOUT = {
-  CONTAINER_MAX_WIDTH: '448px', // max-w-md
-  CONTAINER_PADDING_X: '24px', // px-6
+  CONTAINER_MAX_WIDTH: '384px', // 448px - 4rem (64px)
+  CONTAINER_PADDING_X: SPACING.M, // 12px
   MIN_SCREEN_HEIGHT: '100vh', // min-h-screen
 } as const
 
