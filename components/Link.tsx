@@ -22,17 +22,10 @@ export const Link = ({
     textDecoration: 'none',
   }
 
-  // Handle inline-flex items-center from className
-  const isFlex = className.includes('inline-flex') || className.includes('items-center')
-  if (isFlex) {
-    baseStyle.display = 'inline-flex'
-    baseStyle.alignItems = 'center'
-  }
-
   return (
     <a
       {...props}
-      className={className.replace(/inline-flex|items-center/g, '').trim()}
+      className={className}
       style={{
         ...baseStyle,
         ...style,

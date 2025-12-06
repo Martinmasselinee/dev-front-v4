@@ -4,6 +4,9 @@
 
 :root {
   --font-space-grotesk: 'Space Grotesk', sans-serif;
+  --color-white: #ffffff;
+  --color-purple: #5218F9;
+  --color-grey-medium: #b8bcc4;
 }
 
 html,
@@ -11,20 +14,32 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  background-color: #ffffff;
+  background-color: var(--color-white);
 }
 
 html {
-  background-color: #ffffff;
+  background-color: var(--color-white);
 }
 
 body {
   font-family: var(--font-space-grotesk);
-  background-color: #ffffff;
+  background-color: var(--color-white);
   background-image: url('/bg2.png');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
   background-repeat: no-repeat;
 }
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px var(--color-white) inset;
+  box-shadow: 0 0 0px 1000px var(--color-white) inset;
+}
+
+input::selection {
+  background-color: rgba(82, 24, 249, 0.2);
+}
+
 

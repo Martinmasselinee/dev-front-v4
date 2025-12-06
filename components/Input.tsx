@@ -1,9 +1,13 @@
-import { InputHTMLAttributes, ReactNode, useState } from 'react'
+'use client'
+
+import { InputHTMLAttributes, ReactNode, useState, cloneElement, isValidElement } from 'react'
 import { FONT_SIZE } from '../constants/fontSize'
 import { FONT_THICKNESS } from '../constants/fontThickness'
 import { COLOR } from '../constants/color'
 import { BORDER_RADIUS } from '../constants/borderRadius'
 import { SPACING } from '../constants/spacing'
+import { INPUT_HEIGHT } from '../constants/inputHeight'
+import { INPUT_PADDING } from '../constants/inputPadding'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   icon?: ReactNode
@@ -33,42 +37,61 @@ export const Input = ({
     onBlur?.(e)
   }
 
+  const iconColor = isFocused ? COLOR.PURPLE : COLOR.BLACK
+  const borderColor = isFocused ? COLOR.PURPLE : COLOR.GREY.MEDIUM
+
   return (
-    <div className="relative">
+    <div style={{ position: 'relative', width: '100%' }}>
       {icon && (
         <div
-          className="absolute left-3 top-1/2 transform -translate-y-1/2"
-          style={{ color: COLOR.BLACK }}
+          style={{
+            position: 'absolute',
+            left: SPACING.M,
+            top: '50%',
+            transform: 'translateY(-50%)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            pointerEvents: 'none',
+            zIndex: 1,
+          }}
         >
-          {icon}
+          {isValidElement(icon)
+            ? cloneElement(icon as React.ReactElement<any>, {
+                color: iconColor,
+                stroke: iconColor,
+              })
+            : icon}
         </div>
       )}
       <input
         {...props}
         onFocus={handleFocus}
         onBlur={handleBlur}
-        className={`w-full ${hasIcon ? 'pl-10' : 'pl-4'} ${
-          hasAction ? 'pr-12' : 'pr-4'
-        } border ${className}`}
+        className={className}
         style={{
+          width: '100%',
           fontSize: FONT_SIZE.M,
           fontWeight: FONT_THICKNESS.M,
           color: COLOR.BLACK,
           backgroundColor: COLOR.WHITE,
           borderRadius: BORDER_RADIUS.M,
-          maxHeight: '40px',
-          height: '40px',
+          height: INPUT_HEIGHT.MAIN,
           paddingTop: SPACING.M,
           paddingBottom: SPACING.M,
+          paddingLeft: hasIcon ? INPUT_PADDING.HORIZONTAL.WITH_ICON : INPUT_PADDING.HORIZONTAL.WITHOUT_ICON,
+          paddingRight: hasAction ? INPUT_PADDING.HORIZONTAL.WITH_ACTION : INPUT_PADDING.HORIZONTAL.WITHOUT_ICON,
+          border: `1px solid ${borderColor}`,
           outline: 'none',
+          transition: 'border-color 0.2s ease, color 0.2s ease',
+          boxSizing: 'border-box',
           ...style,
-          borderColor: isFocused ? COLOR.PURPLE : COLOR.GREY.MEDIUM,
         }}
       />
       {actionButton && (
         <div
-          className="absolute"
           style={{
+            position: 'absolute',
             right: SPACING.M,
             top: '50%',
             transform: 'translateY(-50%)',
@@ -77,6 +100,7 @@ export const Input = ({
             justifyContent: 'center',
             height: '100%',
             pointerEvents: 'auto',
+            zIndex: 1,
           }}
         >
           {actionButton}

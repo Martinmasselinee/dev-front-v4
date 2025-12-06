@@ -38,7 +38,7 @@ This is a front-end rebuild of the Dataxx platform - a sponsoring management pla
 1. **MUST scan the entire project** using codebase_search or grep to find existing reusables
 2. **MUST check for:**
    - Existing components (Button, Input, Label, Link, Text, Heading, Container, PageContainer, Form, FormGroup, Checkbox, Card, Spacer, IconButton, HeaderSection) - **USE THEM, DON'T RECREATE**
-   - Existing constants (FONT_SIZE, FONT_THICKNESS, COLOR, SPACING, BORDER_RADIUS, ICON_SIZE, LAYOUT) - **USE THEM, DON'T HARDCODE**
+   - Existing constants (FONT_SIZE, FONT_THICKNESS, COLOR, SPACING, BORDER_RADIUS, ICON_SIZE, LAYOUT, BUTTON_HEIGHT, BUTTON_OVERLAY, INPUT_HEIGHT, POPUP, OPACITY, SHADOW, Z_INDEX, TEXT_ALIGN) - **USE THEM, DON'T HARDCODE**
    - Existing color variables (COLOR.PURPLE, COLOR.BLACK, COLOR.WHITE, COLOR.GREY.*) - **USE THEM, NEVER WRITE HEX VALUES**
    - Existing font configurations (FONT_SIZE.M, FONT_THICKNESS.L, etc.) - **USE THEM, NEVER WRITE PIXEL VALUES**
    - Existing spacing values (SPACING.S, SPACING.M, etc.) - **USE THEM, NEVER WRITE MARGIN/PADDING VALUES OR USE TAILWIND SPACING CLASSES**
@@ -68,8 +68,17 @@ This is a front-end rebuild of the Dataxx platform - a sponsoring management pla
    - ❌ **NEVER hardcode border radius** - ALWAYS use BORDER_RADIUS constants
    - ❌ **NEVER hardcode icon sizes** - ALWAYS use ICON_SIZE constants
    - ❌ **NEVER hardcode layout values** - ALWAYS use LAYOUT constants
+   - ❌ **NEVER hardcode rgba() values** - ALWAYS use OPACITY constants
+   - ❌ **NEVER hardcode rem units** - ALWAYS use SPACING constants (1rem = 16px = SPACING.L)
+   - ❌ **NEVER hardcode opacity values** - ALWAYS use OPACITY constants
+   - ❌ **NEVER hardcode shadow values** - ALWAYS use SHADOW constants
+   - ❌ **NEVER hardcode z-index values** - ALWAYS use Z_INDEX constants
+   - ❌ **NEVER hardcode text alignment** - ALWAYS use TEXT_ALIGN constants
+   - ❌ **NEVER hardcode component-specific dimensions** - ALWAYS use component-specific constants (BUTTON_HEIGHT, INPUT_HEIGHT, POPUP, etc.)
    - ❌ **NEVER use Tailwind spacing classes** (mb-8, mt-6, px-6, etc.) - ALWAYS use SPACING constants in inline styles
    - ❌ **NEVER use Tailwind layout classes** (max-w-md, min-h-screen, etc.) - ALWAYS use LAYOUT constants or components
+   - ❌ **NEVER use Tailwind positioning classes** (left-3, top-1/2, transform, etc.) - ALWAYS use inline styles with constants
+   - ❌ **NEVER use Tailwind flex/display classes** (flex, items-center, justify-center, etc.) - ALWAYS use inline styles with constants
    - ❌ **NEVER recreate existing components** - ALWAYS import and use them (Button, Input, Label, Link, Text, Heading, Container, PageContainer, Form, FormGroup, Checkbox, Card, Spacer, IconButton, HeaderSection)
    - ❌ **NEVER use raw HTML elements** for styled content - ALWAYS use reusable components
    - ❌ **NEVER write inline styles with hardcoded values** - ALWAYS use constants
@@ -79,10 +88,20 @@ This is a front-end rebuild of the Dataxx platform - a sponsoring management pla
    - ❌ `style={{ fontSize: '13px' }}` → ✅ `style={{ fontSize: FONT_SIZE.M }}`
    - ❌ `style={{ color: '#5218F9' }}` → ✅ `style={{ color: COLOR.PURPLE }}`
    - ❌ `style={{ marginBottom: '8px' }}` → ✅ `style={{ marginBottom: SPACING.S }}`
+   - ❌ `style={{ paddingBottom: '1rem' }}` → ✅ `style={{ paddingBottom: SPACING.L }}`
+   - ❌ `style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}` → ✅ `style={{ backgroundColor: \`rgba(0, 0, 0, ${OPACITY.OVERLAY})\` }}`
+   - ❌ `style={{ boxShadow: '0 10px 25px rgba(0, 0, 0, 0.2)' }}` → ✅ `style={{ boxShadow: SHADOW.POPUP }}`
+   - ❌ `style={{ zIndex: 1000 }}` → ✅ `style={{ zIndex: Z_INDEX.POPUP }}`
+   - ❌ `style={{ textAlign: 'center' }}` → ✅ `style={{ textAlign: TEXT_ALIGN.CENTER }}`
+   - ❌ `style={{ fontWeight: 600 }}` → ✅ `style={{ fontWeight: FONT_THICKNESS.XL }}`
+   - ❌ `style={{ height: '40px' }}` → ✅ `style={{ height: INPUT_HEIGHT.MAIN }}`
+   - ❌ `style={{ maxWidth: '600px' }}` → ✅ `style={{ maxWidth: POPUP.MAX_WIDTH }}`
    - ❌ `className="mb-8"` → ✅ `style={{ marginBottom: SPACING.XXL }}` or use `<Spacer />`
    - ❌ `className="px-6"` → ✅ Use `<Container />` component
    - ❌ `className="max-w-md"` → ✅ Use `<Container />` component or `style={{ maxWidth: LAYOUT.CONTAINER_MAX_WIDTH }}`
-   - ❌ `className="min-h-screen"` → ✅ Use `<PageContainer />` component
+   - ❌ `className="min-h-screen"` → ✅ Use `<PageContainer />` component or `style={{ minHeight: LAYOUT.MIN_SCREEN_HEIGHT }}`
+   - ❌ `className="left-3 top-1/2 transform -translate-y-1/2"` → ✅ `style={{ position: 'absolute', left: SPACING.M, top: '50%', transform: 'translateY(-50%)' }}`
+   - ❌ `className="flex items-center"` → ✅ `style={{ display: 'flex', alignItems: 'center' }}`
    - ❌ `size={18}` → ✅ `size={ICON_SIZE.M}`
    - ❌ `<input className="..." />` → ✅ `<Input ... />`
    - ❌ `<label>...</label>` → ✅ `<Label>...</Label>`
@@ -204,9 +223,10 @@ This is a front-end rebuild of the Dataxx platform - a sponsoring management pla
 - ❌ Sharing files for multiple components/utilities
 - ❌ Creating duplicates without checking for existing items
 - ❌ Creating new reusables without user approval
-- ❌ **Hardcoding ANY values** - colors, font sizes, spacing, border radius, icon sizes
+- ❌ **Hardcoding ANY values** - colors, font sizes, spacing, border radius, icon sizes, opacity, shadows, z-index, rem units, rgba values
 - ❌ **Recreating existing components** - Button, Input, Label, Link, etc.
-- ❌ **Not using constants** - FONT_SIZE, FONT_THICKNESS, COLOR, SPACING, BORDER_RADIUS, ICON_SIZE
+- ❌ **Not using constants** - FONT_SIZE, FONT_THICKNESS, COLOR, SPACING, BORDER_RADIUS, ICON_SIZE, LAYOUT, OPACITY, SHADOW, Z_INDEX, TEXT_ALIGN, BUTTON_HEIGHT, INPUT_HEIGHT, POPUP
+- ❌ **Using Tailwind utility classes for positioning/flex** - left-3, top-1/2, flex, items-center, justify-center, etc.
 - ❌ Using English for UI text (must be French)
 - ❌ Implementing mobile responsiveness
 - ❌ Creating dark mode themes
@@ -219,19 +239,24 @@ This is a front-end rebuild of the Dataxx platform - a sponsoring management pla
 When requested to create or modify anything, you MUST:
 1. ✅ **Scan project for existing reusables** - Check ALL constants, components, utilities
 2. ✅ **Check if the item already exists** - Search thoroughly before creating anything
-3. ✅ **Use existing constants** - FONT_SIZE, FONT_THICKNESS, COLOR, SPACING, BORDER_RADIUS, ICON_SIZE, LAYOUT
+3. ✅ **Use existing constants** - FONT_SIZE, FONT_THICKNESS, COLOR, SPACING, BORDER_RADIUS, ICON_SIZE, LAYOUT, OPACITY, SHADOW, Z_INDEX, TEXT_ALIGN, BUTTON_HEIGHT, BUTTON_OVERLAY, INPUT_HEIGHT, POPUP
 4. ✅ **Use existing components** - Button, Input, Label, Link, Text, Heading, Container, PageContainer, Form, FormGroup, Checkbox, Card, Spacer, IconButton, HeaderSection
-5. ✅ **Never hardcode ANY values** - All colors, sizes, spacing, layout values must use constants
+5. ✅ **Never hardcode ANY values** - All colors, sizes, spacing, layout values, opacity, shadows, z-index, rgba, rem units must use constants
 6. ✅ **Never use Tailwind spacing/layout classes** - Use inline styles with constants or reusable components
-7. ✅ **Never use raw HTML for styled elements** - Use reusable components
-8. ✅ **Request approval for new reusables if needed** - Only after confirming nothing exists
-9. ✅ **Create file per entity** - One file per component/constant/utility
-10. ✅ **Verify French language** - All text in French
-11. ✅ **Verify Space Grotesk font** - Applied everywhere
-12. ✅ **Ensure desktop-only approach** - No mobile code
-13. ✅ **Maintain white theme compatibility** - Light theme only
-14. ✅ **Verify all values use constants** - No hardcoded pixels, colors, sizes, spacing, or layout values
-15. ✅ **Verify no Tailwind spacing/layout classes** - All spacing/layout must use constants or components
+7. ✅ **Never use Tailwind positioning/flex classes** - left-3, top-1/2, flex, items-center, justify-center, transform, etc. - Use inline styles with constants
+8. ✅ **Never use raw HTML for styled elements** - Use reusable components
+9. ✅ **Never hardcode rgba() values** - Always use OPACITY constants
+10. ✅ **Never hardcode rem units** - Always use SPACING constants (1rem = 16px = SPACING.L)
+11. ✅ **Never hardcode font weights** - Always use FONT_THICKNESS constants
+12. ✅ **Request approval for new reusables if needed** - Only after confirming nothing exists
+13. ✅ **Create file per entity** - One file per component/constant/utility
+14. ✅ **Verify French language** - All text in French
+15. ✅ **Verify Space Grotesk font** - Applied everywhere
+16. ✅ **Ensure desktop-only approach** - No mobile code
+17. ✅ **Maintain white theme compatibility** - Light theme only
+18. ✅ **Verify all values use constants** - No hardcoded pixels, colors, sizes, spacing, layout, opacity, shadows, z-index, or rgba values
+19. ✅ **Verify no Tailwind utility classes** - All styling must use inline styles with constants or reusable components
+20. ✅ **Use PageContainer for full-page layouts** - Or use LAYOUT.MIN_SCREEN_HEIGHT constant
 
 ## Remember
 This is a clean rebuild focusing on:

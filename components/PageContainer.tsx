@@ -9,8 +9,10 @@ interface PageContainerProps {
 export const PageContainer = ({ children }: PageContainerProps) => {
   return (
     <div
-      className="flex items-center justify-center"
       style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         minHeight: LAYOUT.MIN_SCREEN_HEIGHT,
       }}
     >

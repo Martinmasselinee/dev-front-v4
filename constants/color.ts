@@ -4,7 +4,7 @@ export const COLOR = {
   WHITE: '#ffffff',
   GREY: {
     LIGHT: '#f5f5f5',
-    MEDIUM: '#9ca3af',
+    MEDIUM: '#b8bcc4',
     DARK: '#4b5563',
   },
 } as const

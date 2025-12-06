@@ -1,0 +1,7 @@
+export const OPACITY = {
+  OVERLAY: 0.5,
+  BUTTON_GRADIENT_START: 0.5,
+  BUTTON_GRADIENT_END: 0,
+  SHADOW: 0.2,
+} as const
+

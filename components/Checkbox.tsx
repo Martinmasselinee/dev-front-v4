@@ -13,7 +13,13 @@ export const Checkbox = ({
   ...props
 }: CheckboxProps) => {
   return (
-    <label className={`flex items-center ${className}`}>
+    <label
+      className={className}
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+      }}
+    >
       <input
         type="checkbox"
         {...props}

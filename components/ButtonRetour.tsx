@@ -10,25 +10,25 @@ import { BUTTON_OVERLAY } from '../constants/buttonOverlay'
 import { OPACITY } from '../constants/opacity'
 import { lightenColor, darkenColor } from '../lib/colorUtils'
 
-type ButtonVariant = 'BLACK' | 'PURPLE' | 'WHITE'
+type ButtonRetourVariant = 'BLACK' | 'PURPLE' | 'WHITE'
 
-interface ButtonProps {
+interface ButtonRetourProps {
   children: ReactNode
-  variant?: ButtonVariant
+  variant?: ButtonRetourVariant
   onClick?: () => void
   type?: 'button' | 'submit' | 'reset'
   className?: string
   icon?: ReactNode
 }
 
-export const Button = ({
+export const ButtonRetour = ({
   children,
-  variant = 'BLACK',
+  variant = 'WHITE',
   onClick,
   type = 'button',
   className = '',
   icon,
-}: ButtonProps) => {
+}: ButtonRetourProps) => {
   const buttonStyle = BUTTON_MAIN[variant]
   const buttonHeight = BUTTON_HEIGHT.MAIN
   const borderRadius = BORDER_RADIUS.M
@@ -44,16 +44,16 @@ export const Button = ({
     <>
       <style dangerouslySetInnerHTML={{
         __html: `
-          button[data-button-variant="${variant}"]:hover {
+          button[data-button-retour-variant="${variant}"]:hover {
             background-color: ${hoverBackgroundColor};
           }
-          button[data-button-variant="${variant}"]:hover .button-overlay-inner {
+          button[data-button-retour-variant="${variant}"]:hover .button-overlay-inner {
             background-color: ${hoverBackgroundColor};
           }
         `
       }} />
       <button
-        data-button-variant={variant}
+        data-button-retour-variant={variant}
         type={type}
         onClick={onClick}
         className={`flex items-center justify-center relative ${className}`}
@@ -64,7 +64,9 @@ export const Button = ({
           height: buttonHeight,
           border: variant === 'WHITE' ? `1px solid ${COLOR.GREY.MEDIUM}` : 'none',
           cursor: 'pointer',
-          width: '100%',
+          width: 'auto',
+          paddingLeft: SPACING.L,
+          paddingRight: SPACING.L,
           fontSize: FONT_SIZE.M,
           fontWeight: FONT_THICKNESS.L,
           transition: 'background-color 0.2s ease',
@@ -99,14 +101,15 @@ export const Button = ({
           alignItems: 'center',
         }}
       >
-        {children}
         {icon && (
-          <span style={{ marginLeft: SPACING.S, display: 'flex', alignItems: 'center' }}>
+          <span style={{ marginRight: SPACING.S, display: 'flex', alignItems: 'center' }}>
             {icon}
           </span>
         )}
+        {children}
       </span>
     </button>
     </>
   )
 }
+
