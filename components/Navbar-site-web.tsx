@@ -12,6 +12,7 @@ import { FONT_SIZE } from '../constants/fontSize'
 import { FONT_THICKNESS } from '../constants/fontThickness'
 import { LAYOUT } from '../constants/layout'
 import { WIDTH } from '../constants/width'
+import { ICON_SIZE } from '../constants/iconSize'
 
 export const NavbarSiteWeb = () => {
   const router = useRouter()
@@ -48,8 +49,19 @@ export const NavbarSiteWeb = () => {
             cursor: 'pointer',
             margin: 0,
             padding: 0,
+            display: 'flex',
+            alignItems: 'center',
+            gap: SPACING.M,
           }}
         >
+          <img
+            src="/dataxx_logo.png"
+            alt="Dataxx Logo"
+            style={{
+              height: ICON_SIZE.XL,
+              width: WIDTH.AUTO,
+            }}
+          />
           Dataxx
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

@@ -48,7 +48,11 @@ export default function AuthSignInPage() {
       <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <Container>
             <HeaderSection>
-              <Heading>Bienvenue sur Dataxx, la plateforme IA qui réinvente le sponsoring sportif</Heading>
+              <Heading>
+                La plateforme IA qui réinvente
+                <br />
+                le sponsoring sportif
+              </Heading>
             </HeaderSection>
 
             <Form onSubmit={handleSubmit}>
