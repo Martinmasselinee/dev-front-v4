@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { Scale } from 'lucide-react'
 import { Text } from './Text'
 import { Popup } from './Popup'
 import { COLOR } from '../constants/color'
@@ -9,6 +10,9 @@ import { BORDER_RADIUS } from '../constants/borderRadius'
 import { LAYOUT } from '../constants/layout'
 import { FONT_SIZE } from '../constants/fontSize'
 import { Z_INDEX } from '../constants/zIndex'
+import { WIDTH } from '../constants/width'
+import { BORDER } from '../constants/border'
+import { ICON_SIZE } from '../constants/iconSize'
 import { ConditionsUtilisation } from '../content/conditionsUtilisation'
 import { MentionsLegales } from '../content/mentionsLegales'
 
@@ -24,7 +28,7 @@ export const Footer = () => {
           bottom: 0,
           left: 0,
           right: 0,
-          width: '100%',
+          width: WIDTH.FULL,
           backgroundColor: COLOR.WHITE,
           borderTop: `1px solid ${COLOR.GREY.MEDIUM}`,
           borderBottomLeftRadius: BORDER_RADIUS.L,
@@ -41,7 +45,7 @@ export const Footer = () => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            width: '100%',
+            width: WIDTH.FULL,
             gap: SPACING.M,
           }}
         >
@@ -50,7 +54,7 @@ export const Footer = () => {
             onClick={() => setShowMentionsPopup(true)}
             style={{
               background: 'none',
-              border: 'none',
+              border: BORDER.NONE,
               padding: 0,
               cursor: 'pointer',
               color: COLOR.GREY.DARK,
@@ -68,7 +72,7 @@ export const Footer = () => {
             onClick={() => setShowConditionsPopup(true)}
             style={{
               background: 'none',
-              border: 'none',
+              border: BORDER.NONE,
               padding: 0,
               cursor: 'pointer',
               color: COLOR.GREY.DARK,
@@ -91,6 +95,7 @@ export const Footer = () => {
         isOpen={showConditionsPopup}
         onClose={() => setShowConditionsPopup(false)}
         title="Conditions Générales d'Utilisation"
+        icon={<Scale size={ICON_SIZE.M} style={{ color: COLOR.GREY.DARK }} />}
       >
         <ConditionsUtilisation />
       </Popup>
@@ -99,6 +104,7 @@ export const Footer = () => {
         isOpen={showMentionsPopup}
         onClose={() => setShowMentionsPopup(false)}
         title="Mentions Légales"
+        icon={<Scale size={ICON_SIZE.M} style={{ color: COLOR.GREY.DARK }} />}
       >
         <MentionsLegales />
       </Popup>

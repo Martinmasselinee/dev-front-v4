@@ -14,6 +14,7 @@ import { FormGroup } from '../../components/FormGroup'
 import { Spacer } from '../../components/Spacer'
 import { IconButton } from '../../components/IconButton'
 import { Footer } from '../../components/Footer'
+import { SecurityNotice } from '../../components/SecurityNotice'
 import { ICON_SIZE } from '../../constants/iconSize'
 import { SPACING } from '../../constants/spacing'
 import { LAYOUT } from '../../constants/layout'
@@ -52,12 +53,12 @@ export default function AuthSignUpPage() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          paddingLeft: '64px',
-          paddingRight: '64px',
+          paddingLeft: SPACING.AUTH_PAGE_HORIZONTAL,
+          paddingRight: SPACING.AUTH_PAGE_HORIZONTAL,
         }}
       >
         <Container>
-            <HeaderSection>
+            <HeaderSection style={{ marginBottom: SPACING.L }}>
               <Heading>Inscription</Heading>
             </HeaderSection>
 
@@ -68,6 +69,7 @@ export default function AuthSignUpPage() {
                   Créez votre compte pour commencer
                 </Text>
               </div>
+              <SecurityNotice />
               <FormGroup>
                 <div style={{ display: 'flex', gap: SPACING.M }}>
                   <div style={{ flex: 1 }}>

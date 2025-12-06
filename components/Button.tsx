@@ -8,6 +8,10 @@ import { COLOR } from '../constants/color'
 import { BUTTON_HEIGHT } from '../constants/buttonHeight'
 import { BUTTON_OVERLAY } from '../constants/buttonOverlay'
 import { OPACITY } from '../constants/opacity'
+import { Z_INDEX } from '../constants/zIndex'
+import { BORDER } from '../constants/border'
+import { WIDTH } from '../constants/width'
+import { INSET } from '../constants/inset'
 import { lightenColor, darkenColor } from '../lib/colorUtils'
 
 type ButtonVariant = 'BLACK' | 'PURPLE' | 'WHITE'
@@ -20,6 +24,7 @@ interface ButtonProps {
   className?: string
   icon?: ReactNode
   style?: React.CSSProperties
+  disabled?: boolean
 }
 
 export const Button = ({
@@ -30,6 +35,7 @@ export const Button = ({
   className = '',
   icon,
   style,
+  disabled = false,
 }: ButtonProps) => {
   const buttonStyle = BUTTON_MAIN[variant]
   const buttonHeight = BUTTON_HEIGHT.MAIN
@@ -58,36 +64,42 @@ export const Button = ({
         data-button-variant={variant}
         type={type}
         onClick={onClick}
-        className={`flex items-center justify-center relative ${className}`}
+        className={className}
+        disabled={disabled}
         style={{
           backgroundColor: buttonStyle.backgroundColor,
           color: buttonStyle.color,
           borderRadius: borderRadius,
           height: buttonHeight,
-          border: variant === 'WHITE' ? `1px solid ${COLOR.GREY.MEDIUM}` : 'none',
-          cursor: 'pointer',
-          width: '100%',
+          border: variant === 'WHITE' ? `1px solid ${COLOR.GREY.MEDIUM}` : BORDER.NONE,
+          cursor: disabled ? 'not-allowed' : 'pointer',
+          width: WIDTH.FULL,
           fontSize: FONT_SIZE.M,
           fontWeight: FONT_THICKNESS.L,
           transition: 'background-color 0.2s ease',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          position: 'relative',
+          opacity: disabled ? OPACITY.DISABLED : 1,
           ...style,
         }}
       >
       <div
         style={{
           position: 'absolute',
-          inset: '1px',
+          inset: INSET.BUTTON_OVERLAY,
           borderRadius: overlayBorderRadius,
           background: `linear-gradient(to bottom, rgba(255, 255, 255, ${OPACITY.BUTTON_GRADIENT_START}), rgba(255, 255, 255, ${OPACITY.BUTTON_GRADIENT_END}))`,
           pointerEvents: 'none',
-          zIndex: 1,
+          zIndex: Z_INDEX.COMPONENT_OVERLAY,
         }}
       >
         <div
           className="button-overlay-inner"
           style={{
             position: 'absolute',
-            inset: '1px',
+            inset: INSET.BUTTON_OVERLAY,
             borderRadius: innerBorderRadius,
             background: buttonStyle.backgroundColor,
             transition: 'background-color 0.2s ease',
@@ -97,7 +109,7 @@ export const Button = ({
       <span
         style={{
           position: 'relative',
-          zIndex: 2,
+          zIndex: Z_INDEX.COMPONENT_CONTENT,
           display: 'flex',
           alignItems: 'center',
         }}

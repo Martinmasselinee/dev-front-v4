@@ -1,5 +1,7 @@
 export const Z_INDEX = {
   NAVBAR: 100,
   POPUP: 1000,
+  COMPONENT_OVERLAY: 1,
+  COMPONENT_CONTENT: 2,
 } as const
 

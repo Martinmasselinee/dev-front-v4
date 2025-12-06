@@ -10,6 +10,8 @@ import { BORDER_RADIUS } from '../constants/borderRadius'
 import { Z_INDEX } from '../constants/zIndex'
 import { FONT_SIZE } from '../constants/fontSize'
 import { FONT_THICKNESS } from '../constants/fontThickness'
+import { LAYOUT } from '../constants/layout'
+import { WIDTH } from '../constants/width'
 
 export const NavbarSiteWeb = () => {
   const router = useRouter()
@@ -29,8 +31,8 @@ export const NavbarSiteWeb = () => {
         borderRadius: BORDER_RADIUS.L,
         border: `1px solid ${COLOR.GREY.MEDIUM}`,
         marginTop: SPACING.L,
-        marginLeft: '12.5%',
-        marginRight: '12.5%',
+        marginLeft: LAYOUT.NAVBAR_MARGIN_HORIZONTAL,
+        marginRight: LAYOUT.NAVBAR_MARGIN_HORIZONTAL,
         paddingLeft: SPACING.S,
         paddingRight: SPACING.S,
         zIndex: Z_INDEX.NAVBAR,
@@ -52,7 +54,7 @@ export const NavbarSiteWeb = () => {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mx-auto" style={{ display: 'flex', alignItems: 'center', gap: SPACING.XL }}>
+          <Nav style={{ display: 'flex', alignItems: 'center', gap: SPACING.XL, marginLeft: 'auto', marginRight: 'auto' }}>
             {navItems.map((item, index) => (
               <Fragment key={item.href}>
                 <Nav.Link
@@ -61,7 +63,7 @@ export const NavbarSiteWeb = () => {
                   style={{
                     color: COLOR.BLACK,
                     fontSize: FONT_SIZE.M,
-                    fontWeight: FONT_THICKNESS.M,
+                    fontWeight: FONT_THICKNESS.L,
                     padding: 0,
                     transition: 'color 0.2s ease, fontWeight 0.2s ease',
                   }}
@@ -78,7 +80,7 @@ export const NavbarSiteWeb = () => {
         __html: `
           .nav-link-custom:hover {
             color: ${COLOR.PURPLE} !important;
-            font-weight: ${FONT_THICKNESS.L} !important;
+            font-weight: ${FONT_THICKNESS.XL} !important;
           }
         `
       }} />
@@ -89,7 +91,7 @@ export const NavbarSiteWeb = () => {
               // TODO: Add demo request logic
             }}
             style={{
-              width: 'auto',
+              width: WIDTH.AUTO,
               paddingLeft: SPACING.L,
               paddingRight: SPACING.L,
             }}

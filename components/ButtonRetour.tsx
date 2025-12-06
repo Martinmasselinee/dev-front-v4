@@ -8,6 +8,10 @@ import { COLOR } from '../constants/color'
 import { BUTTON_HEIGHT } from '../constants/buttonHeight'
 import { BUTTON_OVERLAY } from '../constants/buttonOverlay'
 import { OPACITY } from '../constants/opacity'
+import { Z_INDEX } from '../constants/zIndex'
+import { BORDER } from '../constants/border'
+import { WIDTH } from '../constants/width'
+import { INSET } from '../constants/inset'
 import { lightenColor, darkenColor } from '../lib/colorUtils'
 
 type ButtonRetourVariant = 'BLACK' | 'PURPLE' | 'WHITE'
@@ -56,37 +60,41 @@ export const ButtonRetour = ({
         data-button-retour-variant={variant}
         type={type}
         onClick={onClick}
-        className={`flex items-center justify-center relative ${className}`}
+        className={className}
         style={{
           backgroundColor: buttonStyle.backgroundColor,
           color: buttonStyle.color,
           borderRadius: borderRadius,
           height: buttonHeight,
-          border: variant === 'WHITE' ? `1px solid ${COLOR.GREY.MEDIUM}` : 'none',
+          border: variant === 'WHITE' ? `1px solid ${COLOR.GREY.MEDIUM}` : BORDER.NONE,
           cursor: 'pointer',
-          width: 'auto',
+          width: WIDTH.AUTO,
           paddingLeft: SPACING.L,
           paddingRight: SPACING.L,
           fontSize: FONT_SIZE.M,
           fontWeight: FONT_THICKNESS.L,
           transition: 'background-color 0.2s ease',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          position: 'relative',
         }}
       >
       <div
         style={{
           position: 'absolute',
-          inset: '1px',
+          inset: INSET.BUTTON_OVERLAY,
           borderRadius: overlayBorderRadius,
           background: `linear-gradient(to bottom, rgba(255, 255, 255, ${OPACITY.BUTTON_GRADIENT_START}), rgba(255, 255, 255, ${OPACITY.BUTTON_GRADIENT_END}))`,
           pointerEvents: 'none',
-          zIndex: 1,
+          zIndex: Z_INDEX.COMPONENT_OVERLAY,
         }}
       >
         <div
           className="button-overlay-inner"
           style={{
             position: 'absolute',
-            inset: '1px',
+            inset: INSET.BUTTON_OVERLAY,
             borderRadius: innerBorderRadius,
             background: buttonStyle.backgroundColor,
             transition: 'background-color 0.2s ease',
@@ -96,7 +104,7 @@ export const ButtonRetour = ({
       <span
         style={{
           position: 'relative',
-          zIndex: 2,
+          zIndex: Z_INDEX.COMPONENT_CONTENT,
           display: 'flex',
           alignItems: 'center',
         }}

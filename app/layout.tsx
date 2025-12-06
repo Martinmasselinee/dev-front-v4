@@ -3,6 +3,7 @@ import { Space_Grotesk } from 'next/font/google'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '../styles/globals.css'
 import { NavbarSiteWeb } from '../components/Navbar-site-web'
+import { HelpButtonWrapper } from '../components/HelpButtonWrapper'
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -24,6 +25,7 @@ export default function RootLayout({
       <body className={spaceGrotesk.variable}>
         <NavbarSiteWeb />
         {children}
+        <HelpButtonWrapper />
       </body>
     </html>
   )

@@ -1,5 +1,4 @@
-import { ReactNode, InputHTMLAttributes, forwardRef, useState } from 'react'
-import { INPUT_HEIGHT } from '../constants/inputHeight'
+import { ReactNode, TextareaHTMLAttributes, forwardRef, useState } from 'react'
 import { INPUT_PADDING } from '../constants/inputPadding'
 import { COLOR } from '../constants/color'
 import { BORDER_RADIUS } from '../constants/borderRadius'
@@ -11,23 +10,17 @@ import { POSITION } from '../constants/position'
 import { TRANSFORM } from '../constants/transform'
 import { Z_INDEX } from '../constants/zIndex'
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   icon?: ReactNode
-  actionButton?: ReactNode
 }
 
-export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ icon, actionButton, style, ...props }, ref) => {
+export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
+  ({ icon, style, ...props }, ref) => {
     const [isFocused, setIsFocused] = useState(false)
     const hasIcon = !!icon
-    const hasActionButton = !!actionButton
 
     const paddingLeft = hasIcon
       ? INPUT_PADDING.HORIZONTAL.WITH_ICON
-      : INPUT_PADDING.HORIZONTAL.WITHOUT_ICON
-
-    const paddingRight = hasActionButton
-      ? INPUT_PADDING.HORIZONTAL.WITH_ACTION
       : INPUT_PADDING.HORIZONTAL.WITHOUT_ICON
 
     return (
@@ -42,8 +35,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             style={{
               position: 'absolute',
               left: SPACING.M,
-              top: POSITION.CENTER,
-              transform: TRANSFORM.CENTER_VERTICAL,
+              top: SPACING.M,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -57,14 +49,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           </div>
         )}
 
-        <input
+        <textarea
           ref={ref}
           {...props}
           style={{
             width: WIDTH.FULL,
-            height: INPUT_HEIGHT.MAIN,
+            minHeight: '100px',
             paddingLeft: paddingLeft,
-            paddingRight: paddingRight,
+            paddingRight: INPUT_PADDING.HORIZONTAL.WITHOUT_ICON,
             paddingTop: INPUT_PADDING.VERTICAL,
             paddingBottom: INPUT_PADDING.VERTICAL,
             fontSize: FONT_SIZE.M,
@@ -74,6 +66,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             borderRadius: BORDER_RADIUS.M,
             outline: 'none',
             transition: 'border-color 0.2s ease',
+            resize: 'vertical',
+            fontFamily: 'inherit',
             ...style,
           }}
           onFocus={(e) => {
@@ -87,27 +81,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             props.onBlur?.(e)
           }}
         />
-
-        {actionButton && (
-          <div
-            style={{
-              position: 'absolute',
-              right: SPACING.S,
-              top: POSITION.CENTER,
-              transform: TRANSFORM.CENTER_VERTICAL,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              zIndex: Z_INDEX.COMPONENT_OVERLAY,
-            }}
-          >
-            {actionButton}
-          </div>
-        )}
       </div>
     )
   }
 )
 
-Input.displayName = 'Input'
+Textarea.displayName = 'Textarea'
 

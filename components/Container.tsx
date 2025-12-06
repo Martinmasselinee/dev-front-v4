@@ -1,5 +1,6 @@
 import { ReactNode } from 'react'
 import { LAYOUT } from '../constants/layout'
+import { WIDTH } from '../constants/width'
 
 interface ContainerProps {
   children: ReactNode
@@ -11,7 +12,7 @@ export const Container = ({ children, className = '' }: ContainerProps) => {
     <div
       className={className}
       style={{
-        width: '100%',
+        width: WIDTH.FULL,
         maxWidth: LAYOUT.CONTAINER_MAX_WIDTH,
         paddingLeft: LAYOUT.CONTAINER_PADDING_X,
         paddingRight: LAYOUT.CONTAINER_PADDING_X,

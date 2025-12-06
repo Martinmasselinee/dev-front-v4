@@ -10,6 +10,8 @@ import { POPUP } from '../constants/popup'
 import { OPACITY } from '../constants/opacity'
 import { SHADOW } from '../constants/shadow'
 import { Z_INDEX } from '../constants/zIndex'
+import { WIDTH } from '../constants/width'
+import { POSITION } from '../constants/position'
 import { IconButton } from './IconButton'
 import { Heading } from './Heading'
 import { Text } from './Text'
@@ -61,7 +63,7 @@ export const Popup = ({ isOpen, onClose, title, children }: PopupProps) => {
           position: 'relative',
           backgroundColor: COLOR.WHITE,
           borderRadius: BORDER_RADIUS.M,
-          width: '100%',
+          width: WIDTH.FULL,
           maxWidth: POPUP.MAX_WIDTH,
           maxHeight: POPUP.MAX_HEIGHT,
           display: 'flex',
@@ -98,7 +100,7 @@ export const Popup = ({ isOpen, onClose, title, children }: PopupProps) => {
             <Heading
               level={1}
               style={{
-                marginBottom: 0,
+                marginBottom: POSITION.ZERO,
                 fontSize: FONT_SIZE.L,
               }}
             >

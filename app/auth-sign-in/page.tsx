@@ -15,6 +15,7 @@ import { FormGroup } from '../../components/FormGroup'
 import { Spacer } from '../../components/Spacer'
 import { IconButton } from '../../components/IconButton'
 import { Footer } from '../../components/Footer'
+import { SecurityNotice } from '../../components/SecurityNotice'
 import { ICON_SIZE } from '../../constants/iconSize'
 import { LAYOUT } from '../../constants/layout'
 import { SPACING } from '../../constants/spacing'
@@ -57,6 +58,7 @@ export default function AuthSignInPage() {
                   Connectez-vous à votre compte
                 </Text>
               </div>
+              <SecurityNotice />
               <FormGroup>
                 <Input
                   id="email"

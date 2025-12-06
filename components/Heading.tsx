@@ -3,6 +3,7 @@ import { FONT_SIZE } from '../constants/fontSize'
 import { FONT_THICKNESS } from '../constants/fontThickness'
 import { COLOR } from '../constants/color'
 import { SPACING } from '../constants/spacing'
+import { LINE_HEIGHT } from '../constants/lineHeight'
 
 interface HeadingProps {
   children: ReactNode
@@ -26,8 +27,8 @@ export const Heading = ({
   }
 
   const getLineHeight = () => {
-    if (level === 1) return '1.5'
-    return 'normal'
+    if (level === 1) return LINE_HEIGHT.TIGHT
+    return LINE_HEIGHT.NORMAL
   }
 
   return (
