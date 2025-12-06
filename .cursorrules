@@ -1,0 +1,245 @@
+# Dataxx Front-End - Cursor Rules
+
+## Project Overview
+This is a front-end rebuild of the Dataxx platform - a sponsoring management platform for the sports industry. This project focuses exclusively on front-end development using Next.js, TypeScript, and Tailwind CSS.
+
+## Core Technology Stack
+- **Framework**: Next.js (App Router)
+- **Styling**: Tailwind CSS
+- **Language**: TypeScript (strict mode)
+- **Package Manager**: npm
+- **Development Command**: `npm run dev`
+
+## Critical Rules - MUST ALWAYS FOLLOW
+
+### 1. Front-End Only
+- **NEVER** modify or create back-end code, API routes, or server-side logic
+- **ONLY** work on front-end components, pages, layouts, and UI/UX
+- All API calls should be client-side only
+
+### 2. File Organization - One File Per Entity
+- **Every page, sub-page, component, utility, hook, type, constant, and style class MUST have its own dedicated file**
+- No shared files containing multiple components or utilities
+- Organize files logically in appropriate directories:
+  - `app/` - Next.js app router pages and layouts
+  - `components/` - Reusable UI components (subdivide by feature/type)
+  - `lib/` - Utilities, helpers, and shared logic
+  - `hooks/` - Custom React hooks
+  - `types/` - TypeScript type definitions
+  - `constants/` - Constants and configuration
+  - `styles/` - Global styles and Tailwind configuration
+
+### 3. MANDATORY USE OF REUSABLES - ABSOLUTE REQUIREMENT
+**EVERY SINGLE THING MUST USE REUSABLES. NO EXCEPTIONS.**
+
+#### CRITICAL RULE: ALWAYS USE REUSABLES FIRST
+**BEFORE writing ANY code, styling, or value:**
+
+1. **MUST scan the entire project** using codebase_search or grep to find existing reusables
+2. **MUST check for:**
+   - Existing components (Button, Input, Label, Link, Text, Heading, Container, PageContainer, Form, FormGroup, Checkbox, Card, Spacer, IconButton, HeaderSection) - **USE THEM, DON'T RECREATE**
+   - Existing constants (FONT_SIZE, FONT_THICKNESS, COLOR, SPACING, BORDER_RADIUS, ICON_SIZE, LAYOUT) - **USE THEM, DON'T HARDCODE**
+   - Existing color variables (COLOR.PURPLE, COLOR.BLACK, COLOR.WHITE, COLOR.GREY.*) - **USE THEM, NEVER WRITE HEX VALUES**
+   - Existing font configurations (FONT_SIZE.M, FONT_THICKNESS.L, etc.) - **USE THEM, NEVER WRITE PIXEL VALUES**
+   - Existing spacing values (SPACING.S, SPACING.M, etc.) - **USE THEM, NEVER WRITE MARGIN/PADDING VALUES OR USE TAILWIND SPACING CLASSES**
+   - Existing border radius (BORDER_RADIUS.M, etc.) - **USE THEM, NEVER WRITE BORDER RADIUS VALUES**
+   - Existing icon sizes (ICON_SIZE.M, etc.) - **USE THEM, NEVER WRITE SIZE NUMBERS**
+   - Existing layout values (LAYOUT.CONTAINER_MAX_WIDTH, etc.) - **USE THEM, NEVER WRITE LAYOUT VALUES OR USE TAILWIND LAYOUT CLASSES**
+   - Existing utility functions
+   - Existing types/interfaces
+   - Existing CSS classes or Tailwind custom classes
+
+3. **IF something exists that can be reused:**
+   - **MUST reuse it** - import and use the existing item
+   - **NEVER create duplicates**
+   - **NEVER hardcode values that exist as constants**
+   - **NEVER recreate components that already exist**
+
+4. **IF nothing exists that can be reused:**
+   - **MUST request explicit user acceptance** before creating a new reusable item
+   - Clearly explain what you plan to create and why
+   - Wait for user confirmation before proceeding
+
+5. **ABSOLUTE PROHIBITIONS - ZERO HARDCODED VALUES:**
+   - ❌ **NEVER hardcode colors** - ALWAYS use COLOR constants
+   - ❌ **NEVER hardcode font sizes** - ALWAYS use FONT_SIZE constants
+   - ❌ **NEVER hardcode font weights** - ALWAYS use FONT_THICKNESS constants
+   - ❌ **NEVER hardcode spacing/margins/padding** - ALWAYS use SPACING constants
+   - ❌ **NEVER hardcode border radius** - ALWAYS use BORDER_RADIUS constants
+   - ❌ **NEVER hardcode icon sizes** - ALWAYS use ICON_SIZE constants
+   - ❌ **NEVER hardcode layout values** - ALWAYS use LAYOUT constants
+   - ❌ **NEVER use Tailwind spacing classes** (mb-8, mt-6, px-6, etc.) - ALWAYS use SPACING constants in inline styles
+   - ❌ **NEVER use Tailwind layout classes** (max-w-md, min-h-screen, etc.) - ALWAYS use LAYOUT constants or components
+   - ❌ **NEVER recreate existing components** - ALWAYS import and use them (Button, Input, Label, Link, Text, Heading, Container, PageContainer, Form, FormGroup, Checkbox, Card, Spacer, IconButton, HeaderSection)
+   - ❌ **NEVER use raw HTML elements** for styled content - ALWAYS use reusable components
+   - ❌ **NEVER write inline styles with hardcoded values** - ALWAYS use constants
+   - ❌ **NEVER use className for spacing/layout** - Use inline styles with constants or reusable components
+
+6. **Examples of FORBIDDEN practices:**
+   - ❌ `style={{ fontSize: '13px' }}` → ✅ `style={{ fontSize: FONT_SIZE.M }}`
+   - ❌ `style={{ color: '#5218F9' }}` → ✅ `style={{ color: COLOR.PURPLE }}`
+   - ❌ `style={{ marginBottom: '8px' }}` → ✅ `style={{ marginBottom: SPACING.S }}`
+   - ❌ `className="mb-8"` → ✅ `style={{ marginBottom: SPACING.XXL }}` or use `<Spacer />`
+   - ❌ `className="px-6"` → ✅ Use `<Container />` component
+   - ❌ `className="max-w-md"` → ✅ Use `<Container />` component or `style={{ maxWidth: LAYOUT.CONTAINER_MAX_WIDTH }}`
+   - ❌ `className="min-h-screen"` → ✅ Use `<PageContainer />` component
+   - ❌ `size={18}` → ✅ `size={ICON_SIZE.M}`
+   - ❌ `<input className="..." />` → ✅ `<Input ... />`
+   - ❌ `<label>...</label>` → ✅ `<Label>...</Label>`
+   - ❌ `<a href="...">...</a>` → ✅ `<Link href="...">...</Link>`
+   - ❌ `<p>...</p>` → ✅ `<Text>...</Text>`
+   - ❌ `<h1>...</h1>` → ✅ `<Heading>...</Heading>`
+   - ❌ `<div className="mb-8">...</div>` → ✅ `<HeaderSection>...</HeaderSection>` or use Spacer
+   - ❌ `<form className="space-y-6">...</form>` → ✅ `<Form>...</Form>`
+
+7. **Exceptions requiring explicit acceptance:**
+   - New color values or theme colors
+   - New font configurations
+   - New reusable components
+   - New utility functions
+   - New constants or types
+   - New CSS classes or Tailwind extensions
+
+### 4. Code Quality Standards
+
+#### Components
+- Use functional components with TypeScript
+- Export components as named exports from their own files
+- Components should be pure and reusable
+- Use props interfaces defined in the same file or imported from types
+- Keep components focused and single-purpose
+
+#### Naming Conventions
+- **Files**: PascalCase for components (e.g., `UserCard.tsx`), camelCase for utilities (e.g., `formatDate.ts`)
+- **Components**: PascalCase (e.g., `UserProfile`)
+- **Functions/Utilities**: camelCase (e.g., `formatCurrency`)
+- **Constants**: UPPER_SNAKE_CASE (e.g., `MAX_FILE_SIZE`)
+- **Types/Interfaces**: PascalCase (e.g., `UserProfileProps`)
+- Keep names simple, clear, and descriptive
+- Avoid abbreviations unless widely understood
+
+#### TypeScript
+- Use strict TypeScript
+- Define proper types for all props, functions, and data structures
+- Avoid `any` type - use proper typing or `unknown` if necessary
+- Export types from dedicated type files when shared
+
+#### Tailwind CSS
+- Use Tailwind utility classes exclusively
+- Avoid custom CSS unless absolutely necessary (then use CSS modules)
+- Standardize color usage - reuse existing color values
+- Create reusable component patterns, not duplicate classes
+
+### 5. Project-Specific Requirements
+
+#### Language
+- **ALL text content MUST be in French**
+- All labels, buttons, placeholders, error messages, and UI text must be in French
+- This applies to all components, pages, and user-facing elements
+
+#### Typography
+- **Font**: Space Grotesk (loaded from Google Fonts)
+- Must be configured as the default font in both CSS and Tailwind config
+- Apply Space Grotesk to all text elements throughout the application
+
+#### Theme
+- **Default theme**: White/light mode only
+- No dark mode implementation
+- Ensure all components work properly in white/light theme
+
+#### Responsive Design
+- **Desktop-only application**
+- Do NOT implement mobile responsiveness
+- Focus on desktop/computer screen sizes (laptops, desktops, large monitors)
+- Responsive across different desktop screen sizes is acceptable
+- Do NOT code for mobile devices or small screens
+
+### 6. Standardization Requirements
+
+#### Colors
+- Centralize color definitions in Tailwind config
+- Reuse existing color values - never create duplicates
+- Request approval before adding new colors
+
+#### Components
+- Break down complex components into smaller, reusable pieces
+- Eliminate duplicate components
+- Create shared component libraries for common patterns (buttons, inputs, cards, etc.)
+
+#### Classes and Styles
+- Standardize class usage across components
+- Reuse common class combinations as components
+- Remove unused or duplicate CSS/styling
+
+#### Code Structure
+- Keep files organized and clean
+- Remove unused imports and code
+- Maintain consistent indentation and formatting
+
+### 7. Development Workflow
+
+#### Before Making Changes
+1. Search for existing implementations
+2. Check for reusable components/utilities
+3. Request approval for new reusables if needed
+4. Plan file organization
+
+#### During Development
+1. Create one file per component/page/utility
+2. Use TypeScript types properly
+3. Follow naming conventions
+4. Write clean, maintainable code
+5. Comment complex logic
+
+#### After Implementation
+1. Ensure no duplicates were created
+2. Verify French language is used
+3. Check Space Grotesk font is applied
+4. Verify desktop-only responsiveness
+5. Test white theme compatibility
+
+### 8. Prohibited Practices
+
+- ❌ Creating back-end code or API routes
+- ❌ Sharing files for multiple components/utilities
+- ❌ Creating duplicates without checking for existing items
+- ❌ Creating new reusables without user approval
+- ❌ **Hardcoding ANY values** - colors, font sizes, spacing, border radius, icon sizes
+- ❌ **Recreating existing components** - Button, Input, Label, Link, etc.
+- ❌ **Not using constants** - FONT_SIZE, FONT_THICKNESS, COLOR, SPACING, BORDER_RADIUS, ICON_SIZE
+- ❌ Using English for UI text (must be French)
+- ❌ Implementing mobile responsiveness
+- ❌ Creating dark mode themes
+- ❌ Using fonts other than Space Grotesk (unless explicitly approved)
+- ❌ Skipping the reusable check before creation
+- ❌ Writing inline styles with hardcoded values instead of constants
+
+### 9. Required Checks Before Every Code Change
+
+When requested to create or modify anything, you MUST:
+1. ✅ **Scan project for existing reusables** - Check ALL constants, components, utilities
+2. ✅ **Check if the item already exists** - Search thoroughly before creating anything
+3. ✅ **Use existing constants** - FONT_SIZE, FONT_THICKNESS, COLOR, SPACING, BORDER_RADIUS, ICON_SIZE, LAYOUT
+4. ✅ **Use existing components** - Button, Input, Label, Link, Text, Heading, Container, PageContainer, Form, FormGroup, Checkbox, Card, Spacer, IconButton, HeaderSection
+5. ✅ **Never hardcode ANY values** - All colors, sizes, spacing, layout values must use constants
+6. ✅ **Never use Tailwind spacing/layout classes** - Use inline styles with constants or reusable components
+7. ✅ **Never use raw HTML for styled elements** - Use reusable components
+8. ✅ **Request approval for new reusables if needed** - Only after confirming nothing exists
+9. ✅ **Create file per entity** - One file per component/constant/utility
+10. ✅ **Verify French language** - All text in French
+11. ✅ **Verify Space Grotesk font** - Applied everywhere
+12. ✅ **Ensure desktop-only approach** - No mobile code
+13. ✅ **Maintain white theme compatibility** - Light theme only
+14. ✅ **Verify all values use constants** - No hardcoded pixels, colors, sizes, spacing, or layout values
+15. ✅ **Verify no Tailwind spacing/layout classes** - All spacing/layout must use constants or components
+
+## Remember
+This is a clean rebuild focusing on:
+- **Reusability** over duplication
+- **Standardization** over inconsistency  
+- **Clean architecture** over quick fixes
+- **Explicit approval** over assumptions
+- **Front-end only** focus
+
+Always prioritize finding and reusing existing code before creating anything new.
+
