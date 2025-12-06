@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, CSSProperties } from 'react'
 import { FONT_SIZE } from '../constants/fontSize'
 import { FONT_THICKNESS } from '../constants/fontThickness'
 import { COLOR } from '../constants/color'
@@ -8,12 +8,14 @@ interface HeadingProps {
   children: ReactNode
   level?: 1 | 2 | 3 | 4 | 5 | 6
   className?: string
+  style?: CSSProperties
 }
 
 export const Heading = ({
   children,
   level = 1,
   className = '',
+  style,
 }: HeadingProps) => {
   const Tag = `h${level}` as keyof JSX.IntrinsicElements
 
@@ -37,6 +39,7 @@ export const Heading = ({
         color: COLOR.BLACK,
         marginBottom: SPACING.M,
         lineHeight: getLineHeight(),
+        ...style,
       }}
     >
       {children}

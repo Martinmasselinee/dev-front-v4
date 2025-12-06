@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Mail, ArrowLeft, ArrowRight, RefreshCw, Sparkles } from 'lucide-react'
+import { Mail, ArrowLeft, ArrowRight, RefreshCw, KeyRound, Send } from 'lucide-react'
 import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
 import { Link } from '../../components/Link'
@@ -51,7 +51,7 @@ export default function AuthPasswordResetPage() {
             {!isSubmitted ? (
               <Form onSubmit={handleSubmit}>
                 <div style={{ marginBottom: SPACING.M, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: SPACING.S }}>
-                  <Sparkles size={ICON_SIZE.M} style={{ color: COLOR.GREY.DARK }} />
+                  <KeyRound size={ICON_SIZE.M} style={{ color: COLOR.GREY.DARK }} />
                   <Text size="M" color="GREY_DARK" style={{ textAlign: TEXT_ALIGN.CENTER }}>
                     Entrez votre email pour recevoir un lien
                   </Text>
@@ -68,11 +68,11 @@ export default function AuthPasswordResetPage() {
                   />
                 </FormGroup>
 
-                <Button variant="PURPLE" type="submit" icon={<ArrowRight size={ICON_SIZE.M} />}>
+                <Button variant="PURPLE" type="submit" icon={<Send size={ICON_SIZE.M} />}>
                   Envoyer le lien
                 </Button>
 
-                <div style={{ textAlign: TEXT_ALIGN.CENTER }}>
+                <div style={{ textAlign: TEXT_ALIGN.CENTER, marginTop: SPACING.L }}>
                   <Link
                     href="/auth-sign-in"
                     style={{ display: 'inline-flex', alignItems: 'center', fontSize: FONT_SIZE.M }}

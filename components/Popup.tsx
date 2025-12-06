@@ -1,5 +1,5 @@
 import { ReactNode, useEffect } from 'react'
-import { X } from 'lucide-react'
+import { X, FileText } from 'lucide-react'
 import { COLOR } from '../constants/color'
 import { SPACING } from '../constants/spacing'
 import { BORDER_RADIUS } from '../constants/borderRadius'
@@ -74,19 +74,43 @@ export const Popup = ({ isOpen, onClose, title, children }: PopupProps) => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            paddingTop: SPACING.L,
+            paddingTop: SPACING.M,
             paddingLeft: SPACING.L,
-            paddingRight: SPACING.L,
-            paddingBottom: SPACING.S,
+            paddingRight: SPACING.M,
+            paddingBottom: SPACING.M,
             borderBottom: `1px solid ${COLOR.GREY.LIGHT}`,
           }}
         >
-          <Heading level={1}>{title}</Heading>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              flex: 1,
+            }}
+          >
+            <FileText
+              size={ICON_SIZE.M}
+              style={{
+                color: COLOR.GREY.DARK,
+                marginRight: SPACING.M,
+              }}
+            />
+            <Heading
+              level={1}
+              style={{
+                marginBottom: 0,
+                fontSize: FONT_SIZE.L,
+              }}
+            >
+              {title}
+            </Heading>
+          </div>
           <IconButton
             onClick={onClose}
             icon={<X size={ICON_SIZE.M} />}
             style={{
               color: COLOR.GREY.DARK,
+              marginLeft: SPACING.M,
             }}
           />
         </div>
