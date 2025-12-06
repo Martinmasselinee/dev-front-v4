@@ -39,7 +39,7 @@ export const NavbarSiteWeb = () => {
         zIndex: Z_INDEX.NAVBAR,
       }}
     >
-      <Container fluid style={{ paddingLeft: SPACING.S, paddingRight: SPACING.S }}>
+      <Container fluid style={{ paddingLeft: SPACING.S, paddingRight: SPACING.XS }}>
         <Navbar.Brand
           onClick={() => router.push('/')}
           style={{
@@ -108,7 +108,7 @@ export const NavbarSiteWeb = () => {
               paddingRight: SPACING.L,
             }}
           >
-            Demo
+            Contactez-nous
           </Button>
         </Navbar.Collapse>
       </Container>
