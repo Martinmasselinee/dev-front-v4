@@ -25,8 +25,13 @@ import { FONT_SIZE, FONT_THICKNESS, LINE_HEIGHT, FONT_STYLE } from '../../consta
 import { TIME } from '../../constants/time'
 import { DISPLAY } from '../../constants/display'
 import { FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT, FLEX } from '../../constants/flex'
-import { POSITION_TYPE } from '../../constants/position'
+import { POSITION_TYPE, POSITION, TRANSFORM } from '../../constants/position'
 import { Loading } from '../../components/Loading'
+import { Z_INDEX } from '../../constants/zIndex'
+import { TRANSITION_DURATION, TRANSITION_EASING } from '../../constants/transition'
+import { DIMENSION } from '../../constants/dimension'
+import { WIDTH } from '../../constants/width'
+import { OVERFLOW } from '../../constants/overflow'
 
 const rotatingTexts = [
   'Clubs de football',
@@ -42,13 +47,22 @@ export default function AuthSignInPage() {
   const [password, setPassword] = useState('')
   const [currentTextIndex, setCurrentTextIndex] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
+  const [showSplash, setShowSplash] = useState(true)
 
   useEffect(() => {
+    // Hide splash screen after animation duration
+    const splashTimer = setTimeout(() => {
+      setShowSplash(false)
+    }, TIME.SPLASH_SCREEN + TIME.DELAY.SHORT)
+
     const interval = setInterval(() => {
       setCurrentTextIndex((prevIndex) => (prevIndex + 1) % rotatingTexts.length)
     }, TIME.INTERVAL.ROTATING_TEXT)
 
-    return () => clearInterval(interval)
+    return () => {
+      clearTimeout(splashTimer)
+      clearInterval(interval)
+    }
   }, [])
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -60,16 +74,24 @@ export default function AuthSignInPage() {
   }
 
   return (
-    <div
-      style={{
-        display: DISPLAY.FLEX,
-        flexDirection: FLEX_DIRECTION.COLUMN,
-        height: LAYOUT.MIN_SCREEN_HEIGHT,
-        position: POSITION_TYPE.RELATIVE,
-        paddingTop: SPACING.XXL,
-        paddingBottom: SPACING.XXL,
-      }}
-    >
+    <>
+      {showSplash && (
+        <div style={{ position: POSITION_TYPE.FIXED, top: POSITION.ZERO, left: POSITION.ZERO, right: POSITION.ZERO, bottom: POSITION.ZERO, zIndex: Z_INDEX.POPUP }}>
+          <SplashScreenWithoutRedirect onComplete={() => setShowSplash(false)} />
+        </div>
+      )}
+      <div
+        style={{
+          display: DISPLAY.FLEX,
+          flexDirection: FLEX_DIRECTION.COLUMN,
+          height: LAYOUT.MIN_SCREEN_HEIGHT,
+          position: POSITION_TYPE.RELATIVE,
+          paddingTop: SPACING.XXL,
+          paddingBottom: SPACING.XXL,
+          opacity: showSplash ? 0 : 1,
+          transition: `opacity ${TIME.DELAY.MEDIUM}ms ease-in`,
+        }}
+      >
       <div style={{ flex: FLEX.ONE, display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER, justifyContent: JUSTIFY_CONTENT.CENTER, flexDirection: FLEX_DIRECTION.COLUMN }}>
         <Container variant="title">
           <HeaderSection>
@@ -182,6 +204,138 @@ export default function AuthSignInPage() {
       </div>
       <Footer />
       {isLoading && <Loading message="Connexion en cours..." />}
+    </div>
+    </>
+  )
+}
+
+// SplashScreen component without redirect - just shows animation
+const SplashScreenWithoutRedirect = ({ onComplete }: { onComplete: () => void }) => {
+  const [animationStep, setAnimationStep] = useState(0)
+  const [percentage, setPercentage] = useState(0)
+
+  useEffect(() => {
+    const startTime = Date.now()
+    const duration = TIME.SPLASH_SCREEN
+
+    // Animation timeline - Logo Dataxx grows at center
+    const timers = [
+      setTimeout(() => setAnimationStep(1), TIME.DELAY.SHORT),
+    ]
+
+    // Percentage counter animation - very granular using requestAnimationFrame
+    let animationFrameId: number
+    const animate = () => {
+      const elapsed = Date.now() - startTime
+      const progress = Math.min(elapsed / duration, 0.99)
+      const newPercentage = Math.floor(progress * 100)
+      setPercentage(newPercentage)
+
+      if (progress >= 0.99 || newPercentage >= 99) {
+        setPercentage(99)
+        setTimeout(() => {
+          onComplete()
+        }, TIME.DELAY.SHORT)
+      } else {
+        animationFrameId = requestAnimationFrame(animate)
+      }
+    }
+
+    animationFrameId = requestAnimationFrame(animate)
+
+    return () => {
+      timers.forEach(timer => clearTimeout(timer))
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId)
+      }
+    }
+  }, [onComplete])
+
+  return (
+    <div
+      style={{
+        minHeight: LAYOUT.MIN_SCREEN_HEIGHT,
+        width: WIDTH.FULL,
+        position: POSITION_TYPE.RELATIVE,
+        overflow: OVERFLOW.HIDDEN,
+        backgroundImage: "url('/background_picture.png')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        zIndex: Z_INDEX.POPUP,
+      }}
+    >
+      <div
+        style={{
+          minHeight: LAYOUT.MIN_SCREEN_HEIGHT,
+          width: WIDTH.FULL,
+          position: POSITION_TYPE.RELATIVE,
+          display: DISPLAY.FLEX,
+          alignItems: ALIGN_ITEMS.CENTER,
+          justifyContent: JUSTIFY_CONTENT.CENTER,
+        }}
+      >
+        <div
+          style={{
+            position: POSITION_TYPE.ABSOLUTE,
+            top: POSITION.ZERO,
+            left: POSITION.ZERO,
+            right: POSITION.ZERO,
+            bottom: POSITION.ZERO,
+            display: DISPLAY.FLEX,
+            alignItems: ALIGN_ITEMS.CENTER,
+            justifyContent: JUSTIFY_CONTENT.CENTER,
+          }}
+        >
+          <div
+            style={{
+              position: POSITION_TYPE.ABSOLUTE,
+              left: POSITION.CENTER,
+              top: POSITION.CENTER,
+              transform: `${TRANSFORM.CENTER_HORIZONTAL} ${TRANSFORM.CENTER_VERTICAL}`,
+            }}
+          >
+            <div
+              style={{
+                transformOrigin: 'center center',
+                transition: `transform ${TRANSITION_DURATION.VERY_SLOW} ${TRANSITION_EASING.EASE_IN_OUT}`,
+                transform: animationStep === 0 ? 'scale(0)' : 'scale(1)',
+              }}
+            >
+              <img
+                src="/dataxx_logo.png"
+                alt="Dataxx Logo"
+                style={{
+                  display: DISPLAY.BLOCK,
+                  width: DIMENSION.SPLASH_LOGO_SIZE,
+                  height: DIMENSION.SPLASH_LOGO_SIZE,
+                }}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div
+          style={{
+            position: POSITION_TYPE.ABSOLUTE,
+            bottom: SPACING.XXL,
+            left: POSITION.ZERO,
+            right: POSITION.ZERO,
+            textAlign: TEXT_ALIGN.CENTER,
+            zIndex: Z_INDEX.COMPONENT_CONTENT,
+          }}
+        >
+          <div
+            style={{
+              fontSize: FONT_SIZE.XXXL,
+              fontWeight: FONT_THICKNESS.XXXL,
+              color: COLOR.GREY.MEDIUM,
+            }}
+          >
+            {percentage}%
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
