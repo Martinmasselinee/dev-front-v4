@@ -161,7 +161,7 @@ export const Sidebar = () => {
                   color="GREY_DARK"
                   style={{
                     textTransform: TEXT_TRANSFORM.UPPERCASE,
-                    marginTop: SPACING.L,
+                    marginTop: SPACING.XL,
                     marginBottom: SPACING.M,
                     marginLeft: SPACING.L,
                     letterSpacing: LETTER_SPACING.TIGHT,
