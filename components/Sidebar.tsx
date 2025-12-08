@@ -114,7 +114,7 @@ export const Sidebar = () => {
           bottom: POSITION.ZERO,
           width: LAYOUT.SIDEBAR_WIDTH,
           backgroundColor: lightenColor(COLOR.GREY.LIGHT, 40),
-          borderRight: `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.MEDIUM}`,
+          borderRight: `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.LIGHT_MEDIUM}`,
           zIndex: Z_INDEX.NAVBAR,
           display: DISPLAY.FLEX,
           flexDirection: FLEX_DIRECTION.COLUMN,

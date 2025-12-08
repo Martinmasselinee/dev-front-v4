@@ -7,6 +7,7 @@ export const COLOR = {
   WHITE: '#ffffff',
   GREY: {
     LIGHT: '#f5f5f5',
+    LIGHT_MEDIUM: '#e0e0e0',
     MEDIUM: '#b8bcc4',
     DARK: '#4b5563',
   },

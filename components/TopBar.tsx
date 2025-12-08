@@ -23,7 +23,7 @@ export const TopBar = () => {
         width: `calc(${WIDTH.FULL} - ${LAYOUT.SIDEBAR_WIDTH})`,
         height: `calc(${SPACING.XXXL} + ${SPACING.M})`,
         backgroundColor: COLOR.WHITE,
-        borderBottom: `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.MEDIUM}`,
+        borderBottom: `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.LIGHT_MEDIUM}`,
         zIndex: Z_INDEX.NAVBAR,
         paddingLeft: SPACING.L,
         paddingRight: SPACING.L,
