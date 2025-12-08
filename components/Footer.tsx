@@ -95,7 +95,7 @@ export const Footer = () => {
         isOpen={showConditionsPopup}
         onClose={() => setShowConditionsPopup(false)}
         title="Conditions Générales d'Utilisation"
-        icon={<Scale size={ICON_SIZE.M} style={{ color: COLOR.GREY.DARK }} />}
+        icon={Scale}
       >
         <ConditionsUtilisation />
       </Popup>
@@ -104,7 +104,7 @@ export const Footer = () => {
         isOpen={showMentionsPopup}
         onClose={() => setShowMentionsPopup(false)}
         title="Mentions Légales"
-        icon={<Scale size={ICON_SIZE.M} style={{ color: COLOR.GREY.DARK }} />}
+        icon={Scale}
       >
         <MentionsLegales />
       </Popup>

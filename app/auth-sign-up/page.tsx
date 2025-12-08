@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { Mail, Lock, Eye, EyeOff, User, ArrowRight, UserPlus, CheckCircle, FileCheck, Scale } from 'lucide-react'
 import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
@@ -38,6 +39,7 @@ const rotatingTexts = [
 ]
 
 export default function AuthSignUpPage() {
+  const router = useRouter()
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [firstName, setFirstName] = useState('')
@@ -69,7 +71,8 @@ export default function AuthSignUpPage() {
     if (acceptedCGU && acceptedMentions) {
       setShowSignUpPopup(false)
       // TODO: Add registration logic here
-      // For now, just close the popup
+      // Redirect to workspace selection/creation page
+      router.push('/workspace-selection-or-creation')
     }
   }
 

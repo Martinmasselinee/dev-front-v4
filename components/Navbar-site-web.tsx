@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter, usePathname } from 'next/navigation'
-import { Handshake, HelpCircle, TrendingUp, Users, LogIn, UserPlus, KeyRound } from 'lucide-react'
+import { Handshake, HelpCircle, TrendingUp, Users, LogIn, UserPlus, KeyRound, LogOut } from 'lucide-react'
 import { Button } from './Button'
 import { COLOR } from '../constants/color'
 import { SPACING } from '../constants/spacing'
@@ -25,6 +25,8 @@ export const NavbarSiteWeb = () => {
       return { text: 'Se connecter', icon: <LogIn size={ICON_SIZE.M} />, onClick: () => router.push('/auth-sign-in') }
     } else if (pathname === '/auth-password-reset') {
       return { text: 'Se connecter', icon: <LogIn size={ICON_SIZE.M} />, onClick: () => router.push('/auth-sign-in') }
+    } else if (pathname === '/workspace-selection-or-creation') {
+      return { text: 'Se déconnecter', icon: <LogOut size={ICON_SIZE.M} />, onClick: () => router.push('/auth-sign-in') }
     }
     return { text: 'Commencer', icon: null, onClick: () => router.push('/auth-sign-in') }
   }
