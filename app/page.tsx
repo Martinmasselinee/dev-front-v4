@@ -1,8 +1,6 @@
-'use client'
-
-import { SplashScreen } from '../components/SplashScreen'
+import { redirect } from 'next/navigation'
 
 export default function Home() {
-  return <SplashScreen />
+  redirect('/auth-sign-in')
 }
 
