@@ -17,7 +17,7 @@ export const HeaderSection = ({
     <div
       className={className}
       style={{
-        marginBottom: SPACING.XXL,
+        marginBottom: SPACING.L,
         textAlign: TEXT_ALIGN.CENTER,
         ...style,
       }}

@@ -1,57 +1,79 @@
 'use client'
 
-import { Fragment } from 'react'
-import { useRouter } from 'next/navigation'
-import { Navbar, Nav, Container } from 'react-bootstrap'
+import { useRouter, usePathname } from 'next/navigation'
+import { Handshake, HelpCircle, TrendingUp, Users, LogIn, UserPlus, KeyRound } from 'lucide-react'
 import { Button } from './Button'
 import { COLOR } from '../constants/color'
 import { SPACING } from '../constants/spacing'
-import { BORDER_RADIUS } from '../constants/borderRadius'
 import { Z_INDEX } from '../constants/zIndex'
 import { FONT_SIZE } from '../constants/fontSize'
 import { FONT_THICKNESS } from '../constants/fontThickness'
-import { LAYOUT } from '../constants/layout'
 import { WIDTH } from '../constants/width'
 import { ICON_SIZE } from '../constants/iconSize'
+import { POSITION } from '../constants/position'
+import { TRANSFORM } from '../constants/transform'
 
 export const NavbarSiteWeb = () => {
   const router = useRouter()
+  const pathname = usePathname()
+
+  // Determine button text, icon, and action based on current page
+  const getButtonConfig = () => {
+    if (pathname === '/auth-sign-in') {
+      return { text: 'Commencer', icon: <UserPlus size={ICON_SIZE.M} />, onClick: () => {} }
+    } else if (pathname === '/auth-sign-up') {
+      return { text: 'Se connecter', icon: <LogIn size={ICON_SIZE.M} />, onClick: () => router.push('/auth-sign-in') }
+    } else if (pathname === '/auth-password-reset') {
+      return { text: 'Se connecter', icon: <LogIn size={ICON_SIZE.M} />, onClick: () => router.push('/auth-sign-in') }
+    }
+    return { text: 'Commencer', icon: null, onClick: () => router.push('/auth-sign-in') }
+  }
+
+  const buttonConfig = getButtonConfig()
 
   const navItems = [
-    { label: 'Nos partenaires', href: '#partenaires' },
-    { label: 'Comment ça marche', href: '#comment-ca-marche' },
-    { label: 'Bénéfices', href: '#benefices' },
-    { label: 'Équipe', href: '#equipe' },
+    { label: 'Nos partenaires', href: '#partenaires', icon: Handshake },
+    { label: 'Comment ça marche', href: '#comment-ca-marche', icon: HelpCircle },
+    { label: 'Bénéfices', href: '#benefices', icon: TrendingUp },
+    { label: 'Équipe', href: '#equipe', icon: Users },
   ]
 
   return (
-    <Navbar
-      fixed="top"
+    <nav
       style={{
+        position: 'fixed',
+        top: POSITION.ZERO,
+        left: POSITION.ZERO,
+        right: POSITION.ZERO,
+        width: WIDTH.FULL,
         backgroundColor: COLOR.WHITE,
-        borderRadius: BORDER_RADIUS.L,
-        border: `1px solid ${COLOR.GREY.MEDIUM}`,
-        marginTop: SPACING.L,
-        marginLeft: LAYOUT.NAVBAR_MARGIN_HORIZONTAL,
-        marginRight: LAYOUT.NAVBAR_MARGIN_HORIZONTAL,
-        paddingLeft: SPACING.S,
-        paddingRight: SPACING.S,
+        borderBottom: `1px solid ${COLOR.GREY.MEDIUM}`,
         zIndex: Z_INDEX.NAVBAR,
+        paddingTop: SPACING.M,
+        paddingBottom: SPACING.M,
+        paddingLeft: SPACING.XL,
+        paddingRight: SPACING.XL,
       }}
     >
-      <Container fluid style={{ paddingLeft: SPACING.S, paddingRight: SPACING.XS }}>
-        <Navbar.Brand
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          width: WIDTH.FULL,
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          position: 'relative',
+        }}
+      >
+        {/* Logo */}
+        <div
           onClick={() => router.push('/')}
           style={{
-            color: COLOR.BLACK,
-            fontSize: FONT_SIZE.XL,
-            fontWeight: FONT_THICKNESS.XL,
-            cursor: 'pointer',
-            margin: 0,
-            padding: 0,
             display: 'flex',
             alignItems: 'center',
             gap: SPACING.M,
+            cursor: 'pointer',
           }}
         >
           <img
@@ -62,57 +84,83 @@ export const NavbarSiteWeb = () => {
               width: WIDTH.AUTO,
             }}
           />
-          Dataxx
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav style={{ display: 'flex', alignItems: 'center', gap: SPACING.XL, marginLeft: 'auto', marginRight: 'auto' }}>
-            {navItems.map((item, index) => (
-              <Fragment key={item.href}>
-                <Nav.Link
-                  href={item.href}
-                  className="nav-link-custom"
-                  style={{
-                    color: COLOR.BLACK,
-                    fontSize: FONT_SIZE.M,
-                    fontWeight: FONT_THICKNESS.L,
-                    padding: 0,
-                    transition: 'color 0.2s ease, fontWeight 0.2s ease',
-                  }}
-                >
-                  {item.label}
-                </Nav.Link>
-                {index < navItems.length - 1 && (
-                  <span style={{ color: COLOR.BLACK, fontSize: FONT_SIZE.S }}>•</span>
-                )}
-              </Fragment>
-            ))}
-          </Nav>
-      <style dangerouslySetInnerHTML={{
-        __html: `
-          .nav-link-custom:hover {
-            color: ${COLOR.PURPLE} !important;
-            font-weight: ${FONT_THICKNESS.XL} !important;
-          }
-        `
-      }} />
+          <span
+            style={{
+              color: COLOR.BLACK,
+              fontSize: FONT_SIZE.XL,
+              fontWeight: FONT_THICKNESS.XL,
+            }}
+          >
+            Dataxx
+          </span>
+        </div>
+
+        {/* Navigation Links - Center */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: SPACING.XXL,
+            position: 'absolute',
+            left: POSITION.CENTER,
+            transform: TRANSFORM.CENTER_HORIZONTAL,
+          }}
+        >
+          {navItems.map((item) => {
+            const IconComponent = item.icon
+            return (
+              <a
+                key={item.href}
+                href={item.href}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: SPACING.XS,
+                  color: COLOR.BLACK,
+                  fontSize: FONT_SIZE.M,
+                  fontWeight: FONT_THICKNESS.M,
+                  textDecoration: 'none',
+                  transition: 'color 0.2s ease, fontWeight 0.2s ease',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = COLOR.PURPLE
+                  e.currentTarget.style.fontWeight = FONT_THICKNESS.L
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = COLOR.BLACK
+                  e.currentTarget.style.fontWeight = FONT_THICKNESS.M
+                }}
+              >
+                <IconComponent size={ICON_SIZE.M} />
+                {item.label}
+              </a>
+            )
+          })}
+        </div>
+
+        {/* Right Side - Button */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
           <Button
             variant="BLACK"
             type="button"
-            onClick={() => {
-              // TODO: Add demo request logic
-            }}
+            onClick={buttonConfig.onClick}
+            icon={buttonConfig.icon}
             style={{
               width: WIDTH.AUTO,
               paddingLeft: SPACING.L,
               paddingRight: SPACING.L,
             }}
           >
-            Contactez-nous
+            {buttonConfig.text}
           </Button>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+        </div>
+      </div>
+    </nav>
   )
 }
 

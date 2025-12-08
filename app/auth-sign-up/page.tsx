@@ -1,11 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Mail, Lock, Eye, EyeOff, User, ArrowRight, UserPlus } from 'lucide-react'
 import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
 import { Link } from '../../components/Link'
 import { Container } from '../../components/Container'
+import { TitleContainer } from '../../components/TitleContainer'
 import { HeaderSection } from '../../components/HeaderSection'
 import { Heading } from '../../components/Heading'
 import { Text } from '../../components/Text'
@@ -20,6 +21,16 @@ import { SPACING } from '../../constants/spacing'
 import { LAYOUT } from '../../constants/layout'
 import { TEXT_ALIGN } from '../../constants/textAlign'
 import { COLOR } from '../../constants/color'
+import { FONT_SIZE } from '../../constants/fontSize'
+import { FONT_THICKNESS } from '../../constants/fontThickness'
+import { LINE_HEIGHT } from '../../constants/lineHeight'
+
+const rotatingTexts = [
+  'Clubs de football',
+  'Athlètes',
+  'Événements sportifs',
+  'Clubs de rugby',
+]
 
 export default function AuthSignUpPage() {
   const [showPassword, setShowPassword] = useState(false)
@@ -29,6 +40,15 @@ export default function AuthSignUpPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [currentTextIndex, setCurrentTextIndex] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTextIndex((prevIndex) => (prevIndex + 1) % rotatingTexts.length)
+    }, 1500) // Switch every 1.5 seconds
+
+    return () => clearInterval(interval)
+  }, [])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -53,14 +73,37 @@ export default function AuthSignUpPage() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          paddingLeft: SPACING.AUTH_PAGE_HORIZONTAL,
-          paddingRight: SPACING.AUTH_PAGE_HORIZONTAL,
+          flexDirection: 'column',
         }}
       >
+        <TitleContainer>
+          <HeaderSection>
+            <Heading
+              style={{
+                fontSize: FONT_SIZE.XXXL,
+                fontWeight: FONT_THICKNESS.XXXL,
+                lineHeight: LINE_HEIGHT.TIGHTER,
+              }}
+            >
+              La plateforme IA qui réinvente
+              <br />
+              le sponsoring sportif pour les
+              <br />
+              <span
+                style={{
+                  color: COLOR.PURPLE,
+                  fontStyle: 'italic',
+                  paddingLeft: SPACING.S, // 0.5rem = 8px
+                  paddingRight: SPACING.S, // 0.5rem = 8px
+                }}
+              >
+                {rotatingTexts[currentTextIndex]}
+              </span>
+            </Heading>
+          </HeaderSection>
+        </TitleContainer>
+        
         <Container>
-            <HeaderSection style={{ marginBottom: SPACING.L }}>
-              <Heading>Inscription</Heading>
-            </HeaderSection>
 
             <Form onSubmit={handleSubmit}>
               <div style={{ marginBottom: SPACING.M, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: SPACING.S }}>

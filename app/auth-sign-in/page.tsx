@@ -1,12 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Mail, Lock, Eye, EyeOff, LogIn } from 'lucide-react'
 import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
 import { Link } from '../../components/Link'
 import { Container } from '../../components/Container'
+import { TitleContainer } from '../../components/TitleContainer'
 import { HeaderSection } from '../../components/HeaderSection'
 import { Heading } from '../../components/Heading'
 import { Text } from '../../components/Text'
@@ -15,18 +16,36 @@ import { FormGroup } from '../../components/FormGroup'
 import { Spacer } from '../../components/Spacer'
 import { IconButton } from '../../components/IconButton'
 import { Footer } from '../../components/Footer'
-import { SecurityNotice } from '../../components/SecurityNotice'
 import { ICON_SIZE } from '../../constants/iconSize'
 import { LAYOUT } from '../../constants/layout'
 import { SPACING } from '../../constants/spacing'
 import { TEXT_ALIGN } from '../../constants/textAlign'
 import { COLOR } from '../../constants/color'
+import { FONT_SIZE } from '../../constants/fontSize'
+import { FONT_THICKNESS } from '../../constants/fontThickness'
+import { LINE_HEIGHT } from '../../constants/lineHeight'
+
+const rotatingTexts = [
+  'Clubs de football',
+  'Athlètes',
+  'Événements sportifs',
+  'Clubs de rugby',
+]
 
 export default function AuthSignInPage() {
   const router = useRouter()
   const [showPassword, setShowPassword] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [currentTextIndex, setCurrentTextIndex] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTextIndex((prevIndex) => (prevIndex + 1) % rotatingTexts.length)
+    }, 1500) // Switch every 1.5 seconds
+
+    return () => clearInterval(interval)
+  }, [])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -45,15 +64,35 @@ export default function AuthSignInPage() {
         paddingBottom: SPACING.XXL,
       }}
     >
-      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
+        <TitleContainer>
+          <HeaderSection>
+            <Heading
+              style={{
+                fontSize: FONT_SIZE.XXXL,
+                fontWeight: FONT_THICKNESS.XXXL,
+                lineHeight: LINE_HEIGHT.TIGHTER,
+              }}
+            >
+              La plateforme IA qui réinvente
+              <br />
+              le sponsoring sportif pour les
+              <br />
+              <span
+                style={{
+                  color: COLOR.PURPLE,
+                  fontStyle: 'italic',
+                  paddingLeft: SPACING.S, // 0.5rem = 8px
+                  paddingRight: SPACING.S, // 0.5rem = 8px
+                }}
+              >
+                {rotatingTexts[currentTextIndex]}
+              </span>
+            </Heading>
+          </HeaderSection>
+        </TitleContainer>
+        
         <Container>
-            <HeaderSection>
-              <Heading>
-                La plateforme IA qui réinvente
-                <br />
-                le sponsoring sportif
-              </Heading>
-            </HeaderSection>
 
             <Form onSubmit={handleSubmit}>
               <div style={{ marginBottom: SPACING.M, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: SPACING.S }}>
@@ -62,7 +101,6 @@ export default function AuthSignInPage() {
                   Connectez-vous à votre compte
                 </Text>
               </div>
-              <SecurityNotice />
               <FormGroup>
                 <Input
                   id="email"
