@@ -24,6 +24,7 @@ import { OPACITY } from '../../constants/opacity'
 import { TRANSITION } from '../../constants/transition'
 import { TIME } from '../../constants/time'
 import { COLOR_RGBA } from '../../constants/color'
+import { Loading } from '../../components/Loading'
 
 export default function WorkspaceSelectionOrCreationPage() {
   const router = useRouter()
@@ -32,6 +33,7 @@ export default function WorkspaceSelectionOrCreationPage() {
   const [showJoinPopup, setShowJoinPopup] = useState(false)
   const [hoverEmail, setHoverEmail] = useState(false)
   const [copied, setCopied] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   
   // Hardcoded email for now
   const userEmail = 'user@example.com'
@@ -126,7 +128,10 @@ export default function WorkspaceSelectionOrCreationPage() {
 
             <div
               onClick={() => {
-                router.push('/create-workspace')
+                setIsLoading(true)
+                setTimeout(() => {
+                  router.push('/create-workspace')
+                }, TIME.DELAY.LOADING_REDIRECT)
               }}
               onMouseEnter={() => setHoverCreate(true)}
               onMouseLeave={() => setHoverCreate(false)}
@@ -283,6 +288,8 @@ export default function WorkspaceSelectionOrCreationPage() {
           </Button>
         </div>
       </Popup>
+
+      {isLoading && <Loading message="Préparation de votre workspace..." />}
     </div>
   )
 }

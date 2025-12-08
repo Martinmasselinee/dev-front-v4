@@ -31,6 +31,7 @@ import { FONT_SIZE } from '../../constants/fontSize'
 import { FONT_THICKNESS } from '../../constants/fontThickness'
 import { LINE_HEIGHT } from '../../constants/lineHeight'
 import { TIME } from '../../constants/time'
+import { Loading } from '../../components/Loading'
 
 const rotatingTexts = [
   'Clubs de football',
@@ -54,6 +55,7 @@ export default function AuthSignUpPage() {
   const [showMentionsPopup, setShowMentionsPopup] = useState(false)
   const [acceptedCGU, setAcceptedCGU] = useState(false)
   const [acceptedMentions, setAcceptedMentions] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -71,9 +73,10 @@ export default function AuthSignUpPage() {
   const handleConfirmSignUp = () => {
     if (acceptedCGU && acceptedMentions) {
       setShowSignUpPopup(false)
-    // TODO: Add registration logic here
-      // Redirect to workspace selection/creation page
-      router.push('/workspace-selection-or-creation')
+      setIsLoading(true)
+      setTimeout(() => {
+        router.push('/workspace-selection-or-creation')
+      }, TIME.DELAY.LOADING_REDIRECT)
     }
   }
 
@@ -375,6 +378,8 @@ export default function AuthSignUpPage() {
       >
         <MentionsLegales />
       </Popup>
+
+      {isLoading && <Loading message="Création de votre compte..." />}
     </div>
   )
 }

@@ -2,9 +2,10 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { ArrowLeft, Building2, Users, Shield, Settings, Database, Check, FolderPlus } from 'lucide-react'
+import { ArrowLeft, Building2, FolderPlus, Users, User, Calendar, Video } from 'lucide-react'
 import { LAYOUT } from '../../constants/layout'
 import { SPACING } from '../../constants/spacing'
+import { ICON_SIZE } from '../../constants/iconSize'
 import { Footer } from '../../components/Footer'
 import { Container } from '../../components/Container'
 import { HeaderSection } from '../../components/HeaderSection'
@@ -15,22 +16,23 @@ import { Button } from '../../components/Button'
 import { ButtonRetour } from '../../components/ButtonRetour'
 import { Input } from '../../components/Input'
 import { Textarea } from '../../components/Textarea'
+import { Select } from '../../components/Select'
 import { Form } from '../../components/Form'
 import { FormGroup } from '../../components/FormGroup'
 import { AdminInfoCard } from '../../components/AdminInfoCard'
 import { FileUpload } from '../../components/FileUpload'
-import { ICON_SIZE } from '../../constants/iconSize'
+import { Loading } from '../../components/Loading'
 import { COLOR } from '../../constants/color'
 import { Z_INDEX } from '../../constants/zIndex'
-import { TRANSITION } from '../../constants/transition'
+import { TIME } from '../../constants/time'
 
 type WorkspaceType = 'club-sportif' | 'athlete' | 'evenement-sportif' | 'media-sportif' | ''
 
 const workspaceTypes = [
-  { value: 'club-sportif' as const, label: 'Club sportif', emoji: '⚽' },
-  { value: 'athlete' as const, label: 'Athlète', emoji: '🏃' },
-  { value: 'evenement-sportif' as const, label: 'Événement sportif', emoji: '🎯' },
-  { value: 'media-sportif' as const, label: 'Média sportif', emoji: '📺' },
+  { value: 'club-sportif' as const, label: 'Club sportif', icon: Users },
+  { value: 'athlete' as const, label: 'Athlète', icon: User },
+  { value: 'evenement-sportif' as const, label: 'Événement sportif', icon: Calendar },
+  { value: 'media-sportif' as const, label: 'Média sportif', icon: Video },
 ]
 
 export default function CreateWorkspacePage() {
@@ -38,11 +40,14 @@ export default function CreateWorkspacePage() {
   const [workspaceName, setWorkspaceName] = useState('')
   const [workspaceType, setWorkspaceType] = useState<WorkspaceType>('')
   const [description, setDescription] = useState('')
-  const [hoveredType, setHoveredType] = useState<WorkspaceType | ''>('')
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // TODO: Add workspace creation logic here
+    setIsLoading(true)
+    setTimeout(() => {
+      router.push('/radar-ai')
+    }, TIME.DELAY.LOADING_REDIRECT)
   }
 
   return (
@@ -101,7 +106,7 @@ export default function CreateWorkspacePage() {
 
           <Form onSubmit={handleSubmit}>
             {/* File Upload at Top */}
-            <FormGroup>
+            <FormGroup style={{ marginTop: SPACING.M }}>
               <FileUpload
                 onFileSelect={(file) => {
                   // TODO: Handle file selection
@@ -111,7 +116,7 @@ export default function CreateWorkspacePage() {
             </FormGroup>
 
             {/* Nom du workspace */}
-            <FormGroup style={{ marginTop: SPACING.XL }}>
+            <FormGroup style={{ marginTop: SPACING.M }}>
               <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
                 Nom du workspace *
               </Text>
@@ -126,76 +131,37 @@ export default function CreateWorkspacePage() {
               />
             </FormGroup>
 
-            {/* Type de workspace - Card buttons */}
-            <FormGroup style={{ marginTop: SPACING.XL }}>
+            {/* Type de workspace - Dropdown */}
+            <FormGroup style={{ marginTop: SPACING.M }}>
               <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
                 Type de workspace *
               </Text>
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: SPACING.S,
-                }}
+              <Select
+                value={workspaceType}
+                onChange={(e) => setWorkspaceType(e.target.value as WorkspaceType)}
+                required
+                icon={
+                  workspaceType
+                    ? (() => {
+                        const selectedType = workspaceTypes.find((type) => type.value === workspaceType)
+                        return selectedType ? (
+                          <selectedType.icon size={ICON_SIZE.M} />
+                        ) : undefined
+                      })()
+                    : undefined
+                }
               >
-                {workspaceTypes.map((type) => {
-                  const isSelected = workspaceType === type.value
-                  const isHovered = hoveredType === type.value
-                  return (
-                    <div
-                      key={type.value}
-                      onClick={() => setWorkspaceType(type.value)}
-                      onMouseEnter={() => setHoveredType(type.value)}
-                      onMouseLeave={() => setHoveredType('')}
-                      style={{
-                        cursor: 'pointer',
-                      }}
-                    >
-                      <Card
-                        style={{
-                          display: 'flex',
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                          gap: SPACING.M,
-                          backgroundColor: COLOR.WHITE,
-                          border: `1px solid ${isSelected || isHovered ? COLOR.PURPLE : COLOR.GREY.MEDIUM}`,
-                          transition: `border-color ${TRANSITION.FAST_EASE}`,
-                          paddingTop: `calc(${SPACING.S} * 0.72)`,
-                          paddingBottom: `calc(${SPACING.S} * 0.72)`,
-                        }}
-                      >
-                        <span style={{ fontSize: ICON_SIZE.M }}>{type.emoji}</span>
-                        <div
-                          style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: SPACING.XS,
-                            flex: 1,
-                          }}
-                        >
-                          <Text
-                            size="M"
-                            weight="L"
-                            style={{
-                              color: isSelected || isHovered ? COLOR.PURPLE : COLOR.BLACK,
-                              transition: `color ${TRANSITION.FAST_EASE}`,
-                            }}
-                          >
-                            {type.label}
-                          </Text>
-                        </div>
-                        {isSelected && (
-                          <Check size={ICON_SIZE.M} style={{ color: COLOR.PURPLE }} />
-                        )}
-                      </Card>
-                    </div>
-                  )
-                })}
-              </div>
+                <option value="">Sélectionnez un type</option>
+                {workspaceTypes.map((type) => (
+                  <option key={type.value} value={type.value}>
+                    {type.label}
+                  </option>
+                ))}
+              </Select>
             </FormGroup>
 
             {/* Description */}
-            <FormGroup style={{ marginTop: SPACING.XL }}>
+            <FormGroup style={{ marginTop: SPACING.M }}>
               <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
                 Description (optionnel)
               </Text>
@@ -220,6 +186,7 @@ export default function CreateWorkspacePage() {
         </Container>
       </div>
       <Footer />
+      {isLoading && <Loading message="Création de votre workspace..." />}
     </div>
   )
 }

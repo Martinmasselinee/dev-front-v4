@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Mail, ArrowLeft, ArrowRight, RefreshCw, KeyRound, Send } from 'lucide-react'
 import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
@@ -21,14 +22,22 @@ import { LAYOUT } from '../../constants/layout'
 import { FONT_THICKNESS } from '../../constants/fontThickness'
 import { TEXT_ALIGN } from '../../constants/textAlign'
 import { FONT_SIZE } from '../../constants/fontSize'
+import { TIME } from '../../constants/time'
+import { Loading } from '../../components/Loading'
 
 export default function AuthPasswordResetPage() {
+  const router = useRouter()
   const [email, setEmail] = useState('')
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitted(true)
+    setIsLoading(true)
+    setTimeout(() => {
+      router.push('/auth-sign-in')
+    }, TIME.DELAY.LOADING_REDIRECT)
   }
 
   return (
@@ -128,6 +137,7 @@ export default function AuthPasswordResetPage() {
           </Container>
       </div>
       <Footer />
+      {isLoading && <Loading message="Envoi du lien de réinitialisation..." />}
     </div>
   )
 }

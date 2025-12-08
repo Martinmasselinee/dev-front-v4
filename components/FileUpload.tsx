@@ -93,7 +93,10 @@ export const FileUpload = ({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       style={{
-        padding: SPACING.XL,
+        paddingTop: SPACING.XL,
+        paddingLeft: SPACING.XL,
+        paddingRight: SPACING.XL,
+        paddingBottom: SPACING.XXL,
         backgroundColor: isDragging ? COLOR.GREY.MEDIUM : COLOR.GREY.LIGHT,
         border: `2px dashed ${isHovered || isDragging ? COLOR.PURPLE : COLOR.GREY.MEDIUM}`,
         borderRadius: BORDER_RADIUS.L,

@@ -26,6 +26,7 @@ import { FONT_SIZE } from '../../constants/fontSize'
 import { FONT_THICKNESS } from '../../constants/fontThickness'
 import { LINE_HEIGHT } from '../../constants/lineHeight'
 import { TIME } from '../../constants/time'
+import { Loading } from '../../components/Loading'
 
 const rotatingTexts = [
   'Clubs de football',
@@ -40,6 +41,7 @@ export default function AuthSignInPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [currentTextIndex, setCurrentTextIndex] = useState(0)
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -51,8 +53,10 @@ export default function AuthSignInPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // TODO: Add authentication logic here
-    // For now, prevent default form submission
+    setIsLoading(true)
+    setTimeout(() => {
+      router.push('/radar-ai')
+    }, TIME.DELAY.LOADING_REDIRECT)
   }
 
   return (
@@ -178,6 +182,7 @@ export default function AuthSignInPage() {
           </Container>
       </div>
       <Footer />
+      {isLoading && <Loading message="Connexion en cours..." />}
     </div>
   )
 }

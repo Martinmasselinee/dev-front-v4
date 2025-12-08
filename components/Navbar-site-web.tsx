@@ -1,8 +1,10 @@
 'use client'
 
+import { useState } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import { Handshake, HelpCircle, TrendingUp, Users, LogIn, UserPlus, KeyRound, LogOut } from 'lucide-react'
 import { Button } from './Button'
+import { Loading } from './Loading'
 import { COLOR } from '../constants/color'
 import { SPACING } from '../constants/spacing'
 import { Z_INDEX } from '../constants/zIndex'
@@ -13,10 +15,12 @@ import { ICON_SIZE } from '../constants/iconSize'
 import { POSITION } from '../constants/position'
 import { TRANSFORM } from '../constants/transform'
 import { TRANSITION } from '../constants/transition'
+import { TIME } from '../constants/time'
 
 export const NavbarSiteWeb = () => {
   const router = useRouter()
   const pathname = usePathname()
+  const [isLoading, setIsLoading] = useState(false)
 
   // Determine button text, icon, and action based on current page
   const getButtonConfig = () => {
@@ -27,9 +31,27 @@ export const NavbarSiteWeb = () => {
     } else if (pathname === '/auth-password-reset') {
       return { text: 'Se connecter', icon: <LogIn size={ICON_SIZE.M} />, onClick: () => router.push('/auth-sign-in') }
     } else if (pathname === '/workspace-selection-or-creation') {
-      return { text: 'Se déconnecter', icon: <LogOut size={ICON_SIZE.M} />, onClick: () => router.push('/auth-sign-in') }
+      return {
+        text: 'Se déconnecter',
+        icon: <LogOut size={ICON_SIZE.M} />,
+        onClick: () => {
+          setIsLoading(true)
+          setTimeout(() => {
+            router.push('/auth-sign-in')
+          }, TIME.DELAY.LOADING_REDIRECT)
+        },
+      }
     } else if (pathname === '/create-workspace') {
-      return { text: 'Se déconnecter', icon: <LogOut size={ICON_SIZE.M} />, onClick: () => router.push('/auth-sign-in') }
+      return {
+        text: 'Se déconnecter',
+        icon: <LogOut size={ICON_SIZE.M} />,
+        onClick: () => {
+          setIsLoading(true)
+          setTimeout(() => {
+            router.push('/auth-sign-in')
+          }, TIME.DELAY.LOADING_REDIRECT)
+        },
+      }
     }
     return { text: 'Commencer', icon: null, onClick: () => router.push('/auth-sign-in') }
   }
@@ -129,11 +151,11 @@ export const NavbarSiteWeb = () => {
                   }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.color = COLOR.PURPLE
-                  e.currentTarget.style.fontWeight = FONT_THICKNESS.L
+                  e.currentTarget.style.fontWeight = String(FONT_THICKNESS.L)
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.color = COLOR.BLACK
-                  e.currentTarget.style.fontWeight = FONT_THICKNESS.M
+                  e.currentTarget.style.fontWeight = String(FONT_THICKNESS.M)
                 }}
               >
                 <IconComponent size={ICON_SIZE.M} />
@@ -165,6 +187,7 @@ export const NavbarSiteWeb = () => {
           </Button>
         </div>
       </div>
+      {isLoading && <Loading message="Déconnexion en cours..." />}
     </nav>
   )
 }

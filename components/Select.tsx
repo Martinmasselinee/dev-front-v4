@@ -1,4 +1,5 @@
 import { ReactNode, SelectHTMLAttributes, forwardRef, useState } from 'react'
+import { ChevronDown } from 'lucide-react'
 import { INPUT_HEIGHT } from '../constants/inputHeight'
 import { INPUT_PADDING } from '../constants/inputPadding'
 import { COLOR } from '../constants/color'
@@ -11,6 +12,7 @@ import { POSITION } from '../constants/position'
 import { TRANSFORM } from '../constants/transform'
 import { Z_INDEX } from '../constants/zIndex'
 import { TRANSITION } from '../constants/transition'
+import { LINE_HEIGHT } from '../constants/lineHeight'
 
 interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   icon?: ReactNode
@@ -24,6 +26,8 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
     const paddingLeft = hasIcon
       ? INPUT_PADDING.HORIZONTAL.WITH_ICON
       : INPUT_PADDING.HORIZONTAL.WITHOUT_ICON
+
+    const paddingRight = INPUT_PADDING.HORIZONTAL.WITH_ICON
 
     return (
       <div
@@ -52,6 +56,25 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
           </div>
         )}
 
+        {/* Dropdown Arrow */}
+        <div
+          style={{
+            position: 'absolute',
+            right: SPACING.M,
+            top: POSITION.CENTER,
+            transform: TRANSFORM.CENTER_VERTICAL,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: isFocused ? COLOR.PURPLE : COLOR.GREY.DARK,
+            zIndex: Z_INDEX.COMPONENT_OVERLAY,
+            pointerEvents: 'none',
+            transition: `color ${TRANSITION.FAST_EASE}`,
+          }}
+        >
+          <ChevronDown size={ICON_SIZE.M} />
+        </div>
+
         <select
           ref={ref}
           {...props}
@@ -59,10 +82,11 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             width: WIDTH.FULL,
             height: INPUT_HEIGHT.MAIN,
             paddingLeft: paddingLeft,
-            paddingRight: INPUT_PADDING.HORIZONTAL.WITHOUT_ICON,
-            paddingTop: INPUT_PADDING.VERTICAL,
-            paddingBottom: INPUT_PADDING.VERTICAL,
+            paddingRight: paddingRight,
+            paddingTop: 0,
+            paddingBottom: 0,
             fontSize: FONT_SIZE.M,
+            lineHeight: INPUT_HEIGHT.MAIN,
             color: COLOR.BLACK,
             backgroundColor: COLOR.WHITE,
             border: `1px solid ${COLOR.GREY.MEDIUM}`,

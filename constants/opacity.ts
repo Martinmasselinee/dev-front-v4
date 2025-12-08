@@ -5,5 +5,6 @@ export const OPACITY = {
   SHADOW: 0.2,
   NAVBAR_SHADOW: 0.05,
   DISABLED: 0.6,
+  LOADING_OVERLAY: 0.9,
 } as const
 
