@@ -70,7 +70,7 @@ export default function AuthSignUpPage() {
   const handleConfirmSignUp = () => {
     if (acceptedCGU && acceptedMentions) {
       setShowSignUpPopup(false)
-      // TODO: Add registration logic here
+    // TODO: Add registration logic here
       // Redirect to workspace selection/creation page
       router.push('/workspace-selection-or-creation')
     }
@@ -116,8 +116,8 @@ export default function AuthSignUpPage() {
                   fontStyle: 'italic',
                   paddingLeft: SPACING.XS, // 4px
                   paddingRight: SPACING.S, // 0.5rem = 8px
-                }}
-              >
+        }}
+      >
                 {rotatingTexts[currentTextIndex]}
               </span>
             </Heading>

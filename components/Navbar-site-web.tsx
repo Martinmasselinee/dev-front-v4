@@ -93,7 +93,7 @@ export const NavbarSiteWeb = () => {
               fontWeight: FONT_THICKNESS.XL,
             }}
           >
-            Dataxx
+          Dataxx
           </span>
         </div>
 
@@ -113,17 +113,17 @@ export const NavbarSiteWeb = () => {
             return (
               <a
                 key={item.href}
-                href={item.href}
-                style={{
+                  href={item.href}
+                  style={{
                   display: 'flex',
                   alignItems: 'center',
                   gap: SPACING.XS,
-                  color: COLOR.BLACK,
-                  fontSize: FONT_SIZE.M,
+                    color: COLOR.BLACK,
+                    fontSize: FONT_SIZE.M,
                   fontWeight: FONT_THICKNESS.M,
                   textDecoration: 'none',
-                  transition: 'color 0.2s ease, fontWeight 0.2s ease',
-                }}
+                    transition: 'color 0.2s ease, fontWeight 0.2s ease',
+                  }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.color = COLOR.PURPLE
                   e.currentTarget.style.fontWeight = FONT_THICKNESS.L
@@ -134,7 +134,7 @@ export const NavbarSiteWeb = () => {
                 }}
               >
                 <IconComponent size={ICON_SIZE.M} />
-                {item.label}
+                  {item.label}
               </a>
             )
           })}

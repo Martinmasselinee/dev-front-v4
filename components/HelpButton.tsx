@@ -67,7 +67,7 @@ export const HelpButton = () => {
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
         title="Besoin d'aide ?"
-        icon={<HelpCircle size={ICON_SIZE.M} style={{ color: COLOR.GREY.DARK }} />}
+        icon={HelpCircle}
       >
         <div
           style={{
