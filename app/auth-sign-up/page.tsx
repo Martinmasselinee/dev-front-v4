@@ -37,6 +37,9 @@ import { BORDER } from '../../constants/border'
 import { CURSOR } from '../../constants/interaction'
 import { POSITION } from '../../constants/position'
 import { Loading } from '../../components/Loading'
+import { Z_INDEX } from '../../constants/zIndex'
+import { DIMENSION } from '../../constants/dimension'
+import { TRANSITION_DURATION, TRANSITION_EASING } from '../../constants/transition'
 
 const rotatingTexts = [
   'Clubs de football',
@@ -61,11 +64,17 @@ export default function AuthSignUpPage() {
   const [acceptedCGU, setAcceptedCGU] = useState(false)
   const [acceptedMentions, setAcceptedMentions] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [showSecurityNotice, setShowSecurityNotice] = useState(false)
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTextIndex((prevIndex) => (prevIndex + 1) % rotatingTexts.length)
     }, TIME.INTERVAL.ROTATING_TEXT)
+
+    // Trigger pop-in animation for security notice
+    setTimeout(() => {
+      setShowSecurityNotice(true)
+    }, TIME.DELAY.SHORT)
 
     return () => clearInterval(interval)
   }, [])
@@ -96,6 +105,21 @@ export default function AuthSignUpPage() {
         paddingBottom: SPACING.XXL,
       }}
     >
+      {/* Security Notice - Top Right, Fixed (stays visible while scrolling) */}
+      <div
+        style={{
+          position: POSITION_TYPE.FIXED,
+          top: `calc(${SPACING.AUTH_PAGE_HORIZONTAL} + ${SPACING.L})`,
+          right: SPACING.L,
+          zIndex: Z_INDEX.COMPONENT_CONTENT,
+          width: DIMENSION.SECURITY_NOTICE_WIDTH,
+          transform: showSecurityNotice ? 'scale(1)' : 'scale(0.8)',
+          opacity: showSecurityNotice ? 1 : 0,
+          transition: `transform ${TRANSITION_DURATION.NORMAL} ${TRANSITION_EASING.EASE_OUT}, opacity ${TRANSITION_DURATION.NORMAL} ${TRANSITION_EASING.EASE_OUT}`,
+        }}
+      >
+        <SecurityNotice />
+      </div>
       <div
         style={{
           flex: FLEX.ONE,
@@ -142,7 +166,6 @@ export default function AuthSignUpPage() {
                   Créez votre compte pour commencer
                 </Text>
               </div>
-              <SecurityNotice />
               <FormGroup>
                 <div style={{ display: DISPLAY.FLEX, gap: SPACING.M }}>
                   <div style={{ flex: FLEX.ONE }}>
