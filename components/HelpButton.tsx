@@ -20,7 +20,11 @@ import { DISPLAY } from '../constants/display'
 import { FLEX_DIRECTION, ALIGN_ITEMS } from '../constants/flex'
 import { Mail, Phone } from 'lucide-react'
 
-export const HelpButton = () => {
+interface HelpButtonProps {
+  bottomOffset?: string
+}
+
+export const HelpButton = ({ bottomOffset = SPACING.L }: HelpButtonProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const [bugDescription, setBugDescription] = useState('')
   const [isSuccess, setIsSuccess] = useState(false)
@@ -49,7 +53,7 @@ export const HelpButton = () => {
       <div
         style={{
           position: POSITION_TYPE.FIXED,
-          bottom: SPACING.L,
+          bottom: bottomOffset,
           right: SPACING.L,
           zIndex: Z_INDEX.NAVBAR,
         }}

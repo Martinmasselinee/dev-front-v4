@@ -5,6 +5,7 @@ import { SPACING } from '../../constants/spacing'
 import { POSITION_TYPE } from '../../constants/position'
 import { Sidebar } from '../../components/Sidebar'
 import { TopBar } from '../../components/TopBar'
+import { HelpButton } from '../../components/HelpButton'
 
 export default function DashboardPage() {
   return (
@@ -18,6 +19,7 @@ export default function DashboardPage() {
     >
       <Sidebar />
       <TopBar />
+      <HelpButton />
     </div>
   )
 }

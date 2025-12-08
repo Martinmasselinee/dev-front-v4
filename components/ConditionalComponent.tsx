@@ -12,11 +12,30 @@ interface ConditionalComponentProps {
 export function ConditionalComponent({ type }: ConditionalComponentProps) {
   const pathname = usePathname()
   
+  // Sidebar pages (pages with left-sticked navbar) - HelpButton is added directly to these pages
+  const sidebarPages = [
+    '/dashboard',
+    '/decideurs',
+    '/entreprises',
+    '/marques',
+    '/activations',
+    '/prospect-hunter',
+    '/smartsearch',
+    '/radar-ai',
+    '/admin',
+  ]
+  
+  const isSidebarPage = sidebarPages.includes(pathname)
+  
   if (pathname === '/radar-ai') {
     return null
   }
   
   if (type === 'helpButton') {
+    // Don't show HelpButton on sidebar pages - it's added directly to those pages
+    if (isSidebarPage) {
+      return null
+    }
     return <HelpButtonWrapper />
   }
   
