@@ -75,7 +75,7 @@ export default function AuthSignUpPage() {
       setShowSignUpPopup(false)
       setIsLoading(true)
       setTimeout(() => {
-        router.push('/workspace-selection-or-creation')
+      router.push('/workspace-selection-or-creation')
       }, TIME.DELAY.LOADING_REDIRECT)
     }
   }

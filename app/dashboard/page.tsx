@@ -5,7 +5,7 @@ import { SPACING } from '../../constants/spacing'
 import { Sidebar } from '../../components/Sidebar'
 import { TopBar } from '../../components/TopBar'
 
-export default function RadarAIPage() {
+export default function DashboardPage() {
   return (
     <div
       style={{

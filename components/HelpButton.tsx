@@ -46,7 +46,7 @@ export const HelpButton = () => {
       <div
         style={{
           position: 'fixed',
-          bottom: `calc(${SPACING.XL} + ${SPACING.L} + ${SPACING.XXL})`,
+          bottom: SPACING.L,
           right: SPACING.L,
           zIndex: Z_INDEX.NAVBAR,
         }}
