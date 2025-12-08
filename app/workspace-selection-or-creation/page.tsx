@@ -20,6 +20,9 @@ import { FONT_THICKNESS } from '../../constants/fontThickness'
 import { TEXT_ALIGN } from '../../constants/textAlign'
 import { BORDER_RADIUS } from '../../constants/borderRadius'
 import { OPACITY } from '../../constants/opacity'
+import { TRANSITION } from '../../constants/transition'
+import { TIME } from '../../constants/time'
+import { COLOR_RGBA } from '../../constants/color'
 
 export default function WorkspaceSelectionOrCreationPage() {
   const [hoverJoin, setHoverJoin] = useState(false)
@@ -37,7 +40,7 @@ export default function WorkspaceSelectionOrCreationPage() {
       setCopied(true)
       setTimeout(() => {
         setCopied(false)
-      }, 1500)
+      }, TIME.INTERVAL.ROTATING_TEXT)
     } catch (err) {
       console.error('Failed to copy email:', err)
     }
@@ -98,11 +101,11 @@ export default function WorkspaceSelectionOrCreationPage() {
                   gap: SPACING.M,
                   backgroundColor: COLOR.WHITE,
                   border: `1px solid ${hoverJoin ? COLOR.PURPLE : COLOR.GREY.MEDIUM}`,
-                  transition: 'border-color 0.2s ease',
+                  transition: `border-color ${TRANSITION.FAST_EASE}`,
                   position: 'relative',
                 }}
               >
-                <Users size={ICON_SIZE.M} style={{ color: hoverJoin ? COLOR.PURPLE : COLOR.GREY.DARK, transition: 'color 0.2s ease' }} />
+                <Users size={ICON_SIZE.M} style={{ color: hoverJoin ? COLOR.PURPLE : COLOR.GREY.DARK, transition: `color ${TRANSITION.FAST_EASE}` }} />
                 <div
                   style={{
                     display: 'flex',
@@ -111,11 +114,11 @@ export default function WorkspaceSelectionOrCreationPage() {
                     flex: 1,
                   }}
                 >
-                  <Text size="M" weight="L" style={{ color: hoverJoin ? COLOR.PURPLE : COLOR.BLACK, transition: 'color 0.2s ease' }}>
+                  <Text size="M" weight="L" style={{ color: hoverJoin ? COLOR.PURPLE : COLOR.BLACK, transition: `color ${TRANSITION.FAST_EASE}` }}>
                     Je rejoins mon équipe
                   </Text>
                 </div>
-                <ArrowRight size={ICON_SIZE.M} style={{ color: hoverJoin ? COLOR.PURPLE : COLOR.GREY.DARK, transition: 'color 0.2s ease' }} />
+                <ArrowRight size={ICON_SIZE.M} style={{ color: hoverJoin ? COLOR.PURPLE : COLOR.GREY.DARK, transition: `color ${TRANSITION.FAST_EASE}` }} />
               </Card>
             </div>
 
@@ -137,11 +140,11 @@ export default function WorkspaceSelectionOrCreationPage() {
                   gap: SPACING.M,
                   backgroundColor: COLOR.WHITE,
                   border: `1px solid ${hoverCreate ? COLOR.PURPLE : COLOR.GREY.MEDIUM}`,
-                  transition: 'border-color 0.2s ease',
+                  transition: `border-color ${TRANSITION.FAST_EASE}`,
                   position: 'relative',
                 }}
               >
-                <Building2 size={ICON_SIZE.M} style={{ color: hoverCreate ? COLOR.PURPLE : COLOR.GREY.DARK, transition: 'color 0.2s ease' }} />
+                <Building2 size={ICON_SIZE.M} style={{ color: hoverCreate ? COLOR.PURPLE : COLOR.GREY.DARK, transition: `color ${TRANSITION.FAST_EASE}` }} />
                 <div
                   style={{
                     display: 'flex',
@@ -150,11 +153,11 @@ export default function WorkspaceSelectionOrCreationPage() {
                     flex: 1,
                   }}
                 >
-                  <Text size="M" weight="L" style={{ color: hoverCreate ? COLOR.PURPLE : COLOR.BLACK, transition: 'color 0.2s ease' }}>
+                  <Text size="M" weight="L" style={{ color: hoverCreate ? COLOR.PURPLE : COLOR.BLACK, transition: `color ${TRANSITION.FAST_EASE}` }}>
                     Je crée un nouveau workspace
                   </Text>
                 </div>
-                <ArrowRight size={ICON_SIZE.M} style={{ color: hoverCreate ? COLOR.PURPLE : COLOR.GREY.DARK, transition: 'color 0.2s ease' }} />
+                <ArrowRight size={ICON_SIZE.M} style={{ color: hoverCreate ? COLOR.PURPLE : COLOR.GREY.DARK, transition: `color ${TRANSITION.FAST_EASE}` }} />
               </Card>
             </div>
           </div>
@@ -199,14 +202,14 @@ export default function WorkspaceSelectionOrCreationPage() {
                   alignItems: 'center',
                   gap: SPACING.S,
                   backgroundColor: COLOR.WHITE,
-                  border: `1px solid rgba(82, 24, 249, 0.25)`,
+                  border: `1px solid ${COLOR_RGBA.PURPLE_LIGHT}`,
                   paddingLeft: SPACING.M,
                   paddingRight: SPACING.M,
                   paddingTop: SPACING.S,
                   paddingBottom: SPACING.S,
                   borderRadius: BORDER_RADIUS.M,
                   cursor: 'pointer',
-                  transition: 'all 0.2s ease',
+                  transition: `all ${TRANSITION.FAST_EASE}`,
                 }}
               >
                 <Mail size={ICON_SIZE.S} style={{ color: COLOR.PURPLE }} />

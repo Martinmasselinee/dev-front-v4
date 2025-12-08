@@ -12,6 +12,7 @@ import { Z_INDEX } from '../constants/zIndex'
 import { BORDER } from '../constants/border'
 import { WIDTH } from '../constants/width'
 import { INSET } from '../constants/inset'
+import { TRANSITION } from '../constants/transition'
 import { lightenColor, darkenColor } from '../lib/colorUtils'
 
 type ButtonVariant = 'BLACK' | 'PURPLE' | 'WHITE'
@@ -76,7 +77,7 @@ export const Button = ({
           width: WIDTH.FULL,
           fontSize: FONT_SIZE.M,
           fontWeight: FONT_THICKNESS.L,
-          transition: 'background-color 0.2s ease',
+          transition: `background-color ${TRANSITION.FAST_EASE}`,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -102,7 +103,7 @@ export const Button = ({
             inset: INSET.BUTTON_OVERLAY,
             borderRadius: innerBorderRadius,
             background: buttonStyle.backgroundColor,
-            transition: 'background-color 0.2s ease',
+            transition: `background-color ${TRANSITION.FAST_EASE}`,
           }}
         />
       </div>

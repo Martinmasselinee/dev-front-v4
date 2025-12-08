@@ -12,6 +12,7 @@ import { WIDTH } from '../constants/width'
 import { ICON_SIZE } from '../constants/iconSize'
 import { POSITION } from '../constants/position'
 import { TRANSFORM } from '../constants/transform'
+import { TRANSITION } from '../constants/transition'
 
 export const NavbarSiteWeb = () => {
   const router = useRouter()
@@ -122,7 +123,7 @@ export const NavbarSiteWeb = () => {
                     fontSize: FONT_SIZE.M,
                   fontWeight: FONT_THICKNESS.M,
                   textDecoration: 'none',
-                    transition: 'color 0.2s ease, fontWeight 0.2s ease',
+                    transition: `color ${TRANSITION.FAST_EASE}, fontWeight ${TRANSITION.FAST_EASE}`,
                   }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.color = COLOR.PURPLE

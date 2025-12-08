@@ -25,6 +25,7 @@ import { COLOR } from '../../constants/color'
 import { FONT_SIZE } from '../../constants/fontSize'
 import { FONT_THICKNESS } from '../../constants/fontThickness'
 import { LINE_HEIGHT } from '../../constants/lineHeight'
+import { TIME } from '../../constants/time'
 
 const rotatingTexts = [
   'Clubs de football',
@@ -43,7 +44,7 @@ export default function AuthSignInPage() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTextIndex((prevIndex) => (prevIndex + 1) % rotatingTexts.length)
-    }, 1500) // Switch every 1.5 seconds
+    }, TIME.INTERVAL.ROTATING_TEXT)
 
     return () => clearInterval(interval)
   }, [])

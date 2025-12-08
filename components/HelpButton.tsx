@@ -13,6 +13,8 @@ import { COLOR } from '../constants/color'
 import { ICON_SIZE } from '../constants/iconSize'
 import { Z_INDEX } from '../constants/zIndex'
 import { WIDTH } from '../constants/width'
+import { TIME } from '../constants/time'
+import { TRANSITION } from '../constants/transition'
 import { Mail, Phone } from 'lucide-react'
 
 export const HelpButton = () => {
@@ -26,7 +28,7 @@ export const HelpButton = () => {
         setIsOpen(false)
         setIsSuccess(false)
         setBugDescription('')
-      }, 1000)
+      }, TIME.INTERVAL.SUCCESS_MESSAGE)
 
       return () => clearTimeout(timer)
     }
@@ -143,7 +145,7 @@ export const HelpButton = () => {
                   <Check
                     size={ICON_SIZE.M}
                     style={{
-                      animation: 'checkmarkAnimation 0.3s ease-out',
+                      animation: `checkmarkAnimation ${TRANSITION.NORMAL_EASE_OUT}`,
                     }}
                   />
                   Signalement envoyé. Merci !

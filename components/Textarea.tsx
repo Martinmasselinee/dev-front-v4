@@ -9,6 +9,8 @@ import { WIDTH } from '../constants/width'
 import { POSITION } from '../constants/position'
 import { TRANSFORM } from '../constants/transform'
 import { Z_INDEX } from '../constants/zIndex'
+import { TRANSITION } from '../constants/transition'
+import { DIMENSION } from '../constants/dimension'
 
 interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   icon?: ReactNode
@@ -42,7 +44,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
               color: isFocused ? COLOR.PURPLE : COLOR.GREY.DARK,
               zIndex: Z_INDEX.COMPONENT_OVERLAY,
               pointerEvents: 'none',
-              transition: 'color 0.2s ease',
+              transition: `color ${TRANSITION.FAST_EASE}`,
             }}
           >
             {icon}
@@ -54,7 +56,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           {...props}
           style={{
             width: WIDTH.FULL,
-            minHeight: '100px',
+            minHeight: DIMENSION.TEXTAREA_MIN_HEIGHT,
             paddingLeft: paddingLeft,
             paddingRight: INPUT_PADDING.HORIZONTAL.WITHOUT_ICON,
             paddingTop: INPUT_PADDING.VERTICAL,
@@ -65,7 +67,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
             border: `1px solid ${COLOR.GREY.MEDIUM}`,
             borderRadius: BORDER_RADIUS.M,
             outline: 'none',
-            transition: 'border-color 0.2s ease',
+            transition: `border-color ${TRANSITION.FAST_EASE}`,
             resize: 'vertical',
             fontFamily: 'inherit',
             ...style,

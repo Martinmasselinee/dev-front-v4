@@ -10,6 +10,7 @@ import { WIDTH } from '../constants/width'
 import { POSITION } from '../constants/position'
 import { TRANSFORM } from '../constants/transform'
 import { Z_INDEX } from '../constants/zIndex'
+import { TRANSITION } from '../constants/transition'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   icon?: ReactNode
@@ -50,7 +51,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               color: isFocused ? COLOR.PURPLE : COLOR.GREY.DARK,
               zIndex: Z_INDEX.COMPONENT_OVERLAY,
               pointerEvents: 'none',
-              transition: 'color 0.2s ease',
+              transition: `color ${TRANSITION.FAST_EASE}`,
             }}
           >
             {icon}
@@ -73,7 +74,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             border: `1px solid ${COLOR.GREY.MEDIUM}`,
             borderRadius: BORDER_RADIUS.M,
             outline: 'none',
-            transition: 'border-color 0.2s ease',
+            transition: `border-color ${TRANSITION.FAST_EASE}`,
             ...style,
           }}
           onFocus={(e) => {

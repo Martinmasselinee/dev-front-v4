@@ -2,6 +2,7 @@ import { ReactNode } from 'react'
 import { WIDTH } from '../constants/width'
 import { SPACING } from '../constants/spacing'
 import { TEXT_ALIGN } from '../constants/textAlign'
+import { DIMENSION } from '../constants/dimension'
 
 interface TitleContainerProps {
   children: ReactNode
@@ -25,7 +26,7 @@ export const TitleContainer = ({ children, className = '' }: TitleContainerProps
       <div
         style={{
           width: WIDTH.FULL,
-          maxWidth: '1000px',
+          maxWidth: DIMENSION.TITLE_CONTAINER_MAX_WIDTH,
           textAlign: TEXT_ALIGN.CENTER,
         }}
       >

@@ -20,3 +20,14 @@ export function darkenColor(hex: string, percent: number): string {
   return `#${((r << 16) | (g << 8) | b).toString(16).padStart(6, '0')}`
 }
 
+/**
+ * Converts a hex color to rgba format with a given opacity
+ */
+export function hexToRgba(hex: string, opacity: number): string {
+  const num = parseInt(hex.replace('#', ''), 16)
+  const r = (num >> 16) & 255
+  const g = (num >> 8) & 255
+  const b = num & 255
+  return `rgba(${r}, ${g}, ${b}, ${opacity})`
+}
+
