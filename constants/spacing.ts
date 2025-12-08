@@ -5,6 +5,7 @@ export const SPACING = {
   L: '16px',
   XL: '24px',
   XXL: '32px',
+  XXXL: '48px',
   AUTH_PAGE_HORIZONTAL: '64px',
 } as const
 

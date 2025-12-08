@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Users, Building2, Sparkles, ArrowRight, Mail, Phone, HelpCircle } from 'lucide-react'
 import { LAYOUT } from '../../constants/layout'
 import { SPACING } from '../../constants/spacing'
@@ -25,6 +26,7 @@ import { TIME } from '../../constants/time'
 import { COLOR_RGBA } from '../../constants/color'
 
 export default function WorkspaceSelectionOrCreationPage() {
+  const router = useRouter()
   const [hoverJoin, setHoverJoin] = useState(false)
   const [hoverCreate, setHoverCreate] = useState(false)
   const [showJoinPopup, setShowJoinPopup] = useState(false)
@@ -124,7 +126,7 @@ export default function WorkspaceSelectionOrCreationPage() {
 
             <div
               onClick={() => {
-                // TODO: Add create workspace logic
+                router.push('/create-workspace')
               }}
               onMouseEnter={() => setHoverCreate(true)}
               onMouseLeave={() => setHoverCreate(false)}

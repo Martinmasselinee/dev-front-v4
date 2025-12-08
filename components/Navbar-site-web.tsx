@@ -28,6 +28,8 @@ export const NavbarSiteWeb = () => {
       return { text: 'Se connecter', icon: <LogIn size={ICON_SIZE.M} />, onClick: () => router.push('/auth-sign-in') }
     } else if (pathname === '/workspace-selection-or-creation') {
       return { text: 'Se déconnecter', icon: <LogOut size={ICON_SIZE.M} />, onClick: () => router.push('/auth-sign-in') }
+    } else if (pathname === '/create-workspace') {
+      return { text: 'Se déconnecter', icon: <LogOut size={ICON_SIZE.M} />, onClick: () => router.push('/auth-sign-in') }
     }
     return { text: 'Commencer', icon: null, onClick: () => router.push('/auth-sign-in') }
   }
