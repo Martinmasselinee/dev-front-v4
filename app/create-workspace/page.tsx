@@ -135,7 +135,7 @@ export default function CreateWorkspacePage() {
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: SPACING.M,
+                  gap: SPACING.S,
                 }}
               >
                 {workspaceTypes.map((type) => {
@@ -160,8 +160,8 @@ export default function CreateWorkspacePage() {
                           backgroundColor: COLOR.WHITE,
                           border: `1px solid ${isSelected || isHovered ? COLOR.PURPLE : COLOR.GREY.MEDIUM}`,
                           transition: `border-color ${TRANSITION.FAST_EASE}`,
-                          paddingTop: SPACING.S,
-                          paddingBottom: SPACING.S,
+                          paddingTop: `calc(${SPACING.S} * 0.72)`,
+                          paddingBottom: `calc(${SPACING.S} * 0.72)`,
                         }}
                       >
                         <span style={{ fontSize: ICON_SIZE.M }}>{type.emoji}</span>
