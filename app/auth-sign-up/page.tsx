@@ -87,13 +87,14 @@ export default function AuthSignUpPage() {
             >
               La plateforme IA qui réinvente
               <br />
-              le sponsoring sportif pour les
+              le sponsoring sportif pour
               <br />
+              les{' '}
               <span
                 style={{
                   color: COLOR.PURPLE,
                   fontStyle: 'italic',
-                  paddingLeft: SPACING.S, // 0.5rem = 8px
+                  paddingLeft: SPACING.XS, // 4px
                   paddingRight: SPACING.S, // 0.5rem = 8px
                 }}
               >
