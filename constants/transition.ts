@@ -2,6 +2,7 @@ export const TRANSITION_DURATION = {
   FAST: '0.2s',
   NORMAL: '0.3s',
   SLOW: '0.5s',
+  VERY_SLOW: '1s',
 } as const
 
 export const TRANSITION_EASING = {

@@ -9,5 +9,6 @@ export const TIME = {
     LONG: 1000, // milliseconds
     LOADING_REDIRECT: 1000, // milliseconds (1 second)
   },
+  SPLASH_SCREEN: 2000, // milliseconds (2 seconds)
 } as const
 
