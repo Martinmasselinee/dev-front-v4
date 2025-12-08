@@ -7,7 +7,7 @@ export const TIME = {
     SHORT: 100, // milliseconds
     MEDIUM: 500, // milliseconds
     LONG: 1000, // milliseconds
-    LOADING_REDIRECT: 2000, // milliseconds (2 seconds)
+    LOADING_REDIRECT: 1000, // milliseconds (1 second)
   },
 } as const
 

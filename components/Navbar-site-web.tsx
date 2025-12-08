@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import { Handshake, HelpCircle, TrendingUp, Users, LogIn, UserPlus, KeyRound, LogOut } from 'lucide-react'
 import { Button } from './Button'
@@ -21,6 +21,16 @@ export const NavbarSiteWeb = () => {
   const router = useRouter()
   const pathname = usePathname()
   const [isLoading, setIsLoading] = useState(false)
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [])
 
   // Determine button text, icon, and action based on current page
   const getButtonConfig = () => {
@@ -30,30 +40,26 @@ export const NavbarSiteWeb = () => {
       return { text: 'Se connecter', icon: <LogIn size={ICON_SIZE.M} />, onClick: () => router.push('/auth-sign-in') }
     } else if (pathname === '/auth-password-reset') {
       return { text: 'Se connecter', icon: <LogIn size={ICON_SIZE.M} />, onClick: () => router.push('/auth-sign-in') }
-    } else if (pathname === '/workspace-selection-or-creation') {
+    } else {
+      // Se déconnecter button for all other pages
       return {
         text: 'Se déconnecter',
         icon: <LogOut size={ICON_SIZE.M} />,
         onClick: () => {
           setIsLoading(true)
-          setTimeout(() => {
-            router.push('/auth-sign-in')
-          }, TIME.DELAY.LOADING_REDIRECT)
-        },
-      }
-    } else if (pathname === '/create-workspace') {
-      return {
-        text: 'Se déconnecter',
-        icon: <LogOut size={ICON_SIZE.M} />,
-        onClick: () => {
-          setIsLoading(true)
-          setTimeout(() => {
-            router.push('/auth-sign-in')
+          // Clear any existing timeout
+          if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current)
+          }
+          // Set new timeout and store reference
+          timeoutRef.current = setTimeout(() => {
+            setIsLoading(false)
+            // Use window.location for a hard redirect to ensure it always works
+            window.location.href = '/auth-sign-in'
           }, TIME.DELAY.LOADING_REDIRECT)
         },
       }
     }
-    return { text: 'Commencer', icon: null, onClick: () => router.push('/auth-sign-in') }
   }
 
   const buttonConfig = getButtonConfig()

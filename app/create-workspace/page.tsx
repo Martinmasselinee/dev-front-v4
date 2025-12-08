@@ -174,7 +174,7 @@ export default function CreateWorkspacePage() {
               />
             </FormGroup>
 
-            <div style={{ marginTop: SPACING.L }}>
+            <div style={{ marginTop: SPACING.XS }}>
               <Button variant="PURPLE" type="submit">
                 Créer le workspace
               </Button>
