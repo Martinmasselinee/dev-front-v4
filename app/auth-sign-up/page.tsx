@@ -16,6 +16,7 @@ import { Spacer } from '../../components/Spacer'
 import { IconButton } from '../../components/IconButton'
 import { Footer } from '../../components/Footer'
 import { SecurityNotice } from '../../components/SecurityNotice'
+import { GoogleIcon } from '../../components/GoogleIcon'
 import { ICON_SIZE } from '../../constants/iconSize'
 import { SPACING } from '../../constants/spacing'
 import { LAYOUT } from '../../constants/layout'
@@ -202,9 +203,17 @@ export default function AuthSignUpPage() {
                 variant="PURPLE" 
                 type="submit" 
                 icon={<ArrowRight size={ICON_SIZE.M} />}
-                style={{ marginBottom: SPACING.S }}
               >
                 S'inscrire
+              </Button>
+
+              <Button
+                variant="WHITE"
+                type="button"
+                icon={<GoogleIcon size={ICON_SIZE.M} />}
+                style={{ marginBottom: SPACING.S }}
+              >
+                Se connecter avec Google
               </Button>
 
               <div style={{ textAlign: TEXT_ALIGN.CENTER }}>
