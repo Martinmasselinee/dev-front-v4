@@ -15,10 +15,9 @@ import { Z_INDEX } from '../constants/zIndex'
 import { WIDTH } from '../constants/width'
 import { TIME } from '../constants/time'
 import { TRANSITION } from '../constants/transition'
-import { POSITION_TYPE } from '../constants/positionType'
+import { POSITION_TYPE } from '../constants/position'
 import { DISPLAY } from '../constants/display'
-import { FLEX_DIRECTION } from '../constants/flexDirection'
-import { ALIGN_ITEMS } from '../constants/alignItems'
+import { FLEX_DIRECTION, ALIGN_ITEMS } from '../constants/flex'
 import { Mail, Phone } from 'lucide-react'
 
 export const HelpButton = () => {

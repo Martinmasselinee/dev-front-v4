@@ -1,8 +1,7 @@
 import { ReactNode, AnchorHTMLAttributes } from 'react'
-import { FONT_SIZE } from '../constants/fontSize'
-import { FONT_THICKNESS } from '../constants/fontThickness'
+import { FONT_SIZE, FONT_THICKNESS } from '../constants/font'
 import { COLOR } from '../constants/color'
-import { TEXT_DECORATION } from '../constants/textDecoration'
+import { TEXT_DECORATION } from '../constants/text'
 
 interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   children: ReactNode

@@ -2,8 +2,7 @@ import type { Metadata } from 'next'
 import { Space_Grotesk } from 'next/font/google'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '../styles/globals.css'
-import { ConditionalNavbar } from '../components/ConditionalNavbar'
-import { ConditionalHelpButton } from '../components/ConditionalHelpButton'
+import { ConditionalComponent } from '../components/ConditionalComponent'
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -23,9 +22,9 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body className={spaceGrotesk.variable}>
-        <ConditionalNavbar />
+        <ConditionalComponent type="navbar" />
         {children}
-        <ConditionalHelpButton />
+        <ConditionalComponent type="helpButton" />
       </body>
     </html>
   )

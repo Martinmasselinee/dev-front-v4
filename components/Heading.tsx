@@ -1,9 +1,7 @@
 import { ReactNode, CSSProperties } from 'react'
-import { FONT_SIZE } from '../constants/fontSize'
-import { FONT_THICKNESS } from '../constants/fontThickness'
+import { FONT_SIZE, FONT_THICKNESS, LINE_HEIGHT } from '../constants/font'
 import { COLOR } from '../constants/color'
 import { SPACING } from '../constants/spacing'
-import { LINE_HEIGHT } from '../constants/lineHeight'
 
 interface HeadingProps {
   children: ReactNode

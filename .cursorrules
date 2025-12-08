@@ -37,8 +37,10 @@ This is a front-end rebuild of the Dataxx platform - a sponsoring management pla
 
 1. **MUST scan the entire project** using codebase_search or grep to find existing reusables
 2. **MUST check for:**
-   - Existing components (Button, Input, Label, Link, Text, Heading, Container, PageContainer, Form, FormGroup, Checkbox, Card, Spacer, IconButton, HeaderSection) - **USE THEM, DON'T RECREATE**
-   - Existing constants (FONT_SIZE, FONT_THICKNESS, COLOR, SPACING, BORDER_RADIUS, ICON_SIZE, LAYOUT, BUTTON_HEIGHT, BUTTON_OVERLAY, INPUT_HEIGHT, POPUP, OPACITY, SHADOW, Z_INDEX, TEXT_ALIGN, BORDER, WIDTH, POSITION, LINE_HEIGHT, INSET, TRANSFORM, TRANSITION, TIME, DIMENSION) - **USE THEM, DON'T HARDCODE**
+   - Existing components (Button, Input, Label, Link, Text, Heading, Container, Form, FormGroup, Checkbox, Card, Spacer, IconButton, HeaderSection, ConditionalComponent) - **USE THEM, DON'T RECREATE**
+   - Existing constants (FONT_SIZE, FONT_THICKNESS, COLOR, SPACING, BORDER_RADIUS, BORDER_WIDTH, ICON_SIZE, LAYOUT, BUTTON_HEIGHT, BUTTON_OVERLAY, BUTTON_MAIN, INPUT_HEIGHT, INPUT_PADDING, POPUP, OPACITY, SHADOW, Z_INDEX, TEXT_ALIGN, TEXT_DECORATION, TEXT_OVERFLOW, TEXT_TRANSFORM, WHITE_SPACE, LETTER_SPACING, BORDER, WIDTH, POSITION, POSITION_TYPE, INSET, TRANSFORM, LINE_HEIGHT, FONT_STYLE, TRANSITION, TIME, DIMENSION, DISPLAY, FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT, FLEX, CURSOR, POINTER_EVENTS, OVERFLOW, BACKGROUND, BACKDROP_FILTER) - **USE THEM, DON'T HARDCODE**
+   - **Note**: Constants are now organized in combined files: `border.ts` (BORDER, BORDER_WIDTH, BORDER_RADIUS), `button.ts` (BUTTON_HEIGHT, BUTTON_OVERLAY, BUTTON_MAIN), `input.ts` (INPUT_HEIGHT, INPUT_PADDING), `text.ts` (TEXT_ALIGN, TEXT_DECORATION, TEXT_OVERFLOW, TEXT_TRANSFORM, WHITE_SPACE, LETTER_SPACING), `position.ts` (POSITION, POSITION_TYPE, INSET, TRANSFORM), `flex.ts` (FLEX, FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT), `font.ts` (FONT_SIZE, FONT_THICKNESS, FONT_STYLE, LINE_HEIGHT), `interaction.ts` (CURSOR, POINTER_EVENTS), `background.ts` (BACKGROUND, BACKDROP_FILTER)
+   - **Note**: Components are now combined: `Card` (with variant prop: 'default' | 'dashed'), `Container` (with variant prop: 'default' | 'page' | 'title'), `ConditionalComponent` (with type prop: 'helpButton' | 'navbar')
    - Existing color variables (COLOR.PURPLE, COLOR.BLACK, COLOR.WHITE, COLOR.GREY.*) - **USE THEM, NEVER WRITE HEX VALUES**
    - Existing font configurations (FONT_SIZE.M, FONT_THICKNESS.L, etc.) - **USE THEM, NEVER WRITE PIXEL VALUES**
    - Existing spacing values (SPACING.S, SPACING.M, etc.) - **USE THEM, NEVER WRITE MARGIN/PADDING VALUES OR USE TAILWIND SPACING CLASSES**
@@ -65,7 +67,8 @@ This is a front-end rebuild of the Dataxx platform - a sponsoring management pla
    - ❌ **NEVER hardcode font sizes** - ALWAYS use FONT_SIZE constants
    - ❌ **NEVER hardcode font weights** - ALWAYS use FONT_THICKNESS constants
    - ❌ **NEVER hardcode spacing/margins/padding** - ALWAYS use SPACING constants
-   - ❌ **NEVER hardcode border radius** - ALWAYS use BORDER_RADIUS constants
+   - ❌ **NEVER hardcode border radius** - ALWAYS use BORDER_RADIUS constants (from `border.ts`)
+   - ❌ **NEVER hardcode border width** - ALWAYS use BORDER_WIDTH constants (from `border.ts`)
    - ❌ **NEVER hardcode icon sizes** - ALWAYS use ICON_SIZE constants
    - ❌ **NEVER hardcode layout values** - ALWAYS use LAYOUT constants
    - ❌ **NEVER hardcode rgba() values** - ALWAYS use OPACITY constants
@@ -73,31 +76,37 @@ This is a front-end rebuild of the Dataxx platform - a sponsoring management pla
    - ❌ **NEVER hardcode opacity values** - ALWAYS use OPACITY constants
    - ❌ **NEVER hardcode shadow values** - ALWAYS use SHADOW constants
    - ❌ **NEVER hardcode z-index values** - ALWAYS use Z_INDEX constants (including component-level values like 1, 2)
-   - ❌ **NEVER hardcode inset values** - ALWAYS use INSET constants
-   - ❌ **NEVER hardcode positioning values** - ALWAYS use POSITION constants (50%, 100%, auto, none, 0)
-   - ❌ **NEVER hardcode transform values** - ALWAYS use TRANSFORM constants
+   - ❌ **NEVER hardcode inset values** - ALWAYS use INSET constants (from `position.ts`)
+   - ❌ **NEVER hardcode positioning values** - ALWAYS use POSITION constants (50%, 100%, auto, none, 0) (from `position.ts`)
+   - ❌ **NEVER hardcode transform values** - ALWAYS use TRANSFORM constants (from `position.ts`)
+   - ❌ **NEVER hardcode position types** - ALWAYS use POSITION_TYPE constants (from `position.ts`)
    - ❌ **NEVER hardcode line height values** - ALWAYS use LINE_HEIGHT constants
    - ❌ **NEVER hardcode border 'none'** - ALWAYS use BORDER.NONE constant
    - ❌ **NEVER hardcode width 'auto' or '100%'** - ALWAYS use WIDTH constants
    - ❌ **NEVER hardcode percentage values** - ALWAYS use constants (12.5%, 50%, 100%, etc.)
-   - ❌ **NEVER hardcode text alignment** - ALWAYS use TEXT_ALIGN constants
+   - ❌ **NEVER hardcode text alignment** - ALWAYS use TEXT_ALIGN constants (from `text.ts`)
+   - ❌ **NEVER hardcode text decoration** - ALWAYS use TEXT_DECORATION constants (from `text.ts`)
+   - ❌ **NEVER hardcode text overflow** - ALWAYS use TEXT_OVERFLOW constants (from `text.ts`)
+   - ❌ **NEVER hardcode text transform** - ALWAYS use TEXT_TRANSFORM constants (from `text.ts`)
+   - ❌ **NEVER hardcode white space** - ALWAYS use WHITE_SPACE constants (from `text.ts`)
+   - ❌ **NEVER hardcode letter spacing** - ALWAYS use LETTER_SPACING constants (from `text.ts`)
    - ❌ **NEVER hardcode component-specific dimensions** - ALWAYS use component-specific constants (BUTTON_HEIGHT, INPUT_HEIGHT, POPUP, etc.)
    - ❌ **NEVER hardcode dimension values** (minHeight, maxWidth, etc.) - ALWAYS use DIMENSION constants
    - ❌ **NEVER hardcode time/duration values** (milliseconds, seconds) - ALWAYS use TIME constants (TIME.INTERVAL.*, TIME.DELAY.*)
    - ❌ **NEVER hardcode transition strings** ('0.2s ease', '0.3s ease-out', etc.) - ALWAYS use TRANSITION constants (TRANSITION.FAST_EASE, TRANSITION.NORMAL_EASE, etc.)
    - ❌ **NEVER hardcode '0' values** - Use POSITION.ZERO or SPACING.ZERO constants
    - ❌ **NEVER hardcode display values** - ALWAYS use DISPLAY constants (flex, none, inline-flex, block)
-   - ❌ **NEVER hardcode flex direction** - ALWAYS use FLEX_DIRECTION constants (column, row)
-   - ❌ **NEVER hardcode align items** - ALWAYS use ALIGN_ITEMS constants (center, flex-start, flex-end)
-   - ❌ **NEVER hardcode justify content** - ALWAYS use JUSTIFY_CONTENT constants (center, flex-start, flex-end, space-between)
-   - ❌ **NEVER hardcode position types** - ALWAYS use POSITION_TYPE constants (fixed, absolute, relative, sticky)
-   - ❌ **NEVER hardcode cursor values** - ALWAYS use CURSOR constants (pointer, not-allowed, default)
+   - ❌ **NEVER hardcode flex direction** - ALWAYS use FLEX_DIRECTION constants (from `flex.ts`)
+   - ❌ **NEVER hardcode align items** - ALWAYS use ALIGN_ITEMS constants (from `flex.ts`)
+   - ❌ **NEVER hardcode justify content** - ALWAYS use JUSTIFY_CONTENT constants (from `flex.ts`)
+   - ❌ **NEVER hardcode flex values** - ALWAYS use FLEX constants (from `flex.ts`)
+   - ❌ **NEVER hardcode cursor values** - ALWAYS use CURSOR constants (from `interaction.ts`)
+   - ❌ **NEVER hardcode pointer events** - ALWAYS use POINTER_EVENTS constants (from `interaction.ts`)
    - ❌ **NEVER hardcode overflow values** - ALWAYS use OVERFLOW constants (hidden, auto, visible)
-   - ❌ **NEVER hardcode text overflow** - ALWAYS use TEXT_OVERFLOW constants (ellipsis, clip)
-   - ❌ **NEVER hardcode white space** - ALWAYS use WHITE_SPACE constants (nowrap, normal, pre)
-   - ❌ **NEVER hardcode text transform** - ALWAYS use TEXT_TRANSFORM constants (uppercase, lowercase, capitalize, none)
-   - ❌ **NEVER hardcode flex values** - ALWAYS use FLEX constants (1, 0, auto)
-   - ❌ **NEVER hardcode font style** - ALWAYS use FONT_STYLE constants (italic, normal)
+   - ❌ **NEVER hardcode font style** - ALWAYS use FONT_STYLE constants (from `font.ts`)
+   - ❌ **NEVER hardcode font sizes** - ALWAYS use FONT_SIZE constants (from `font.ts`)
+   - ❌ **NEVER hardcode font thickness** - ALWAYS use FONT_THICKNESS constants (from `font.ts`)
+   - ❌ **NEVER hardcode line height** - ALWAYS use LINE_HEIGHT constants (from `font.ts`)
    - ❌ **NEVER hardcode text decoration** - ALWAYS use TEXT_DECORATION constants (underline, none)
    - ❌ **NEVER hardcode background values** - ALWAYS use BACKGROUND constants (none, transparent)
    - ❌ **NEVER hardcode backdrop filter** - ALWAYS use BACKDROP_FILTER constants (blur(20px), etc.)

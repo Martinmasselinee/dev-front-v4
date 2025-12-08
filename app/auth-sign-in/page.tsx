@@ -7,7 +7,6 @@ import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
 import { Link } from '../../components/Link'
 import { Container } from '../../components/Container'
-import { TitleContainer } from '../../components/TitleContainer'
 import { HeaderSection } from '../../components/HeaderSection'
 import { Heading } from '../../components/Heading'
 import { Text } from '../../components/Text'
@@ -20,19 +19,13 @@ import { GoogleIcon } from '../../components/GoogleIcon'
 import { ICON_SIZE } from '../../constants/iconSize'
 import { LAYOUT } from '../../constants/layout'
 import { SPACING } from '../../constants/spacing'
-import { TEXT_ALIGN } from '../../constants/textAlign'
+import { TEXT_ALIGN } from '../../constants/text'
 import { COLOR } from '../../constants/color'
-import { FONT_SIZE } from '../../constants/fontSize'
-import { FONT_THICKNESS } from '../../constants/fontThickness'
-import { LINE_HEIGHT } from '../../constants/lineHeight'
+import { FONT_SIZE, FONT_THICKNESS, LINE_HEIGHT, FONT_STYLE } from '../../constants/font'
 import { TIME } from '../../constants/time'
 import { DISPLAY } from '../../constants/display'
-import { FLEX_DIRECTION } from '../../constants/flexDirection'
-import { ALIGN_ITEMS } from '../../constants/alignItems'
-import { JUSTIFY_CONTENT } from '../../constants/justifyContent'
-import { POSITION_TYPE } from '../../constants/positionType'
-import { FLEX } from '../../constants/flex'
-import { FONT_STYLE } from '../../constants/fontStyle'
+import { FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT, FLEX } from '../../constants/flex'
+import { POSITION_TYPE } from '../../constants/position'
 import { Loading } from '../../components/Loading'
 
 const rotatingTexts = [
@@ -78,7 +71,7 @@ export default function AuthSignInPage() {
       }}
     >
       <div style={{ flex: FLEX.ONE, display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER, justifyContent: JUSTIFY_CONTENT.CENTER, flexDirection: FLEX_DIRECTION.COLUMN }}>
-        <TitleContainer>
+        <Container variant="title">
           <HeaderSection>
             <Heading
               style={{
@@ -104,7 +97,7 @@ export default function AuthSignInPage() {
               </span>
             </Heading>
           </HeaderSection>
-        </TitleContainer>
+        </Container>
         
         <Container>
 

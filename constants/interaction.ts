@@ -4,3 +4,8 @@ export const CURSOR = {
   DEFAULT: 'default',
 } as const
 
+export const POINTER_EVENTS = {
+  NONE: 'none',
+  AUTO: 'auto',
+} as const
+

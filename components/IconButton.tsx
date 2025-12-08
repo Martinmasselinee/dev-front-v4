@@ -2,10 +2,9 @@ import { ReactNode, ButtonHTMLAttributes } from 'react'
 import { COLOR } from '../constants/color'
 import { BORDER } from '../constants/border'
 import { BACKGROUND } from '../constants/background'
-import { CURSOR } from '../constants/cursor'
+import { CURSOR } from '../constants/interaction'
 import { DISPLAY } from '../constants/display'
-import { ALIGN_ITEMS } from '../constants/alignItems'
-import { JUSTIFY_CONTENT } from '../constants/justifyContent'
+import { ALIGN_ITEMS, JUSTIFY_CONTENT } from '../constants/flex'
 import { POSITION } from '../constants/position'
 
 interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {

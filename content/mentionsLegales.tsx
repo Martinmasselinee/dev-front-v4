@@ -3,7 +3,7 @@ import { Text } from '../components/Text'
 import { Spacer } from '../components/Spacer'
 import { SPACING } from '../constants/spacing'
 import { DISPLAY } from '../constants/display'
-import { FLEX_DIRECTION } from '../constants/flexDirection'
+import { FLEX_DIRECTION } from '../constants/flex'
 
 export const MentionsLegales = () => {
   return (

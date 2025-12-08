@@ -7,10 +7,10 @@ import { POSITION } from '../constants/position'
 import { WIDTH } from '../constants/width'
 import { BORDER } from '../constants/border'
 import { LAYOUT } from '../constants/layout'
-import { POSITION_TYPE } from '../constants/positionType'
+import { POSITION_TYPE } from '../constants/position'
 import { DISPLAY } from '../constants/display'
-import { ALIGN_ITEMS } from '../constants/alignItems'
-import { BORDER_WIDTH } from '../constants/borderWidth'
+import { ALIGN_ITEMS } from '../constants/flex'
+import { BORDER_WIDTH } from '../constants/border'
 
 export const TopBar = () => {
   return (

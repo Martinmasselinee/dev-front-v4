@@ -1,6 +1,6 @@
 import { ReactNode, CSSProperties } from 'react'
 import { SPACING } from '../constants/spacing'
-import { TEXT_ALIGN } from '../constants/textAlign'
+import { TEXT_ALIGN } from '../constants/text'
 
 interface HeaderSectionProps {
   children: ReactNode

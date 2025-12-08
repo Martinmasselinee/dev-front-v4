@@ -2,7 +2,7 @@
 
 import { LAYOUT } from '../../constants/layout'
 import { SPACING } from '../../constants/spacing'
-import { POSITION_TYPE } from '../../constants/positionType'
+import { POSITION_TYPE } from '../../constants/position'
 import { Sidebar } from '../../components/Sidebar'
 import { TopBar } from '../../components/TopBar'
 

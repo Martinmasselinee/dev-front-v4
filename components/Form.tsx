@@ -1,7 +1,7 @@
 import { ReactNode, FormHTMLAttributes } from 'react'
 import { SPACING } from '../constants/spacing'
 import { DISPLAY } from '../constants/display'
-import { FLEX_DIRECTION } from '../constants/flexDirection'
+import { FLEX_DIRECTION } from '../constants/flex'
 
 interface FormProps extends FormHTMLAttributes<HTMLFormElement> {
   children: ReactNode

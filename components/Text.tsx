@@ -1,6 +1,5 @@
 import { ReactNode } from 'react'
-import { FONT_SIZE } from '../constants/fontSize'
-import { FONT_THICKNESS } from '../constants/fontThickness'
+import { FONT_SIZE, FONT_THICKNESS } from '../constants/font'
 import { COLOR } from '../constants/color'
 
 interface TextProps {

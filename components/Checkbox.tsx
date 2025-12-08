@@ -2,7 +2,7 @@ import { InputHTMLAttributes, ReactNode } from 'react'
 import { COLOR } from '../constants/color'
 import { SPACING } from '../constants/spacing'
 import { DISPLAY } from '../constants/display'
-import { ALIGN_ITEMS } from '../constants/alignItems'
+import { ALIGN_ITEMS } from '../constants/flex'
 
 interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: ReactNode

@@ -1,3 +1,7 @@
+export const INPUT_HEIGHT = {
+  MAIN: '40px',
+} as const
+
 export const INPUT_PADDING = {
   HORIZONTAL: {
     WITH_ICON: '40px', // pl-10

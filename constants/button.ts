@@ -1,5 +1,15 @@
 import { COLOR } from './color'
 
+export const BUTTON_HEIGHT = {
+  MAIN: '35px',
+  OVERLAY: '34px',
+} as const
+
+export const BUTTON_OVERLAY = {
+  BORDER_RADIUS: '7px',
+  INNER_BORDER_RADIUS: '6px',
+} as const
+
 export const BUTTON_MAIN = {
   BLACK: {
     backgroundColor: COLOR.BLACK,

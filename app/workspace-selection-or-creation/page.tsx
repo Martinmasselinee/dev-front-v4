@@ -11,27 +11,21 @@ import { HeaderSection } from '../../components/HeaderSection'
 import { Heading } from '../../components/Heading'
 import { Text } from '../../components/Text'
 import { Card } from '../../components/Card'
-import { DashedCard } from '../../components/DashedCard'
 import { Popup } from '../../components/Popup'
 import { Button } from '../../components/Button'
 import { ICON_SIZE } from '../../constants/iconSize'
 import { COLOR } from '../../constants/color'
-import { FONT_SIZE } from '../../constants/fontSize'
-import { FONT_THICKNESS } from '../../constants/fontThickness'
-import { TEXT_ALIGN } from '../../constants/textAlign'
-import { BORDER_RADIUS } from '../../constants/borderRadius'
+import { FONT_SIZE, FONT_THICKNESS } from '../../constants/font'
+import { TEXT_ALIGN } from '../../constants/text'
+import { BORDER_RADIUS, BORDER_WIDTH } from '../../constants/border'
 import { OPACITY } from '../../constants/opacity'
 import { TRANSITION } from '../../constants/transition'
 import { TIME } from '../../constants/time'
 import { COLOR_RGBA } from '../../constants/color'
 import { DISPLAY } from '../../constants/display'
-import { FLEX_DIRECTION } from '../../constants/flexDirection'
-import { ALIGN_ITEMS } from '../../constants/alignItems'
-import { JUSTIFY_CONTENT } from '../../constants/justifyContent'
-import { POSITION_TYPE } from '../../constants/positionType'
-import { FLEX } from '../../constants/flex'
-import { CURSOR } from '../../constants/cursor'
-import { BORDER_WIDTH } from '../../constants/borderWidth'
+import { FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT, FLEX } from '../../constants/flex'
+import { POSITION_TYPE } from '../../constants/position'
+import { CURSOR } from '../../constants/interaction'
 import { Loading } from '../../components/Loading'
 
 export default function WorkspaceSelectionOrCreationPage() {
@@ -197,7 +191,7 @@ export default function WorkspaceSelectionOrCreationPage() {
             L'administrateur du workspace de votre organisation peut vous ajouter à l'équipe depuis son interface d'administration.
           </Text>
           
-          <DashedCard>
+          <Card variant="dashed">
             <div
               style={{
                 display: DISPLAY.FLEX,
@@ -239,7 +233,7 @@ export default function WorkspaceSelectionOrCreationPage() {
                 )}
               </div>
             </div>
-          </DashedCard>
+          </Card>
 
           <Card>
             <div
