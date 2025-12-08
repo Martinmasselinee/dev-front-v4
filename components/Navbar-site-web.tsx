@@ -20,7 +20,7 @@ export const NavbarSiteWeb = () => {
   // Determine button text, icon, and action based on current page
   const getButtonConfig = () => {
     if (pathname === '/auth-sign-in') {
-      return { text: 'Commencer', icon: <UserPlus size={ICON_SIZE.M} />, onClick: () => {} }
+      return { text: 'Commencer', icon: <UserPlus size={ICON_SIZE.M} />, onClick: () => router.push('/auth-sign-up') }
     } else if (pathname === '/auth-sign-up') {
       return { text: 'Se connecter', icon: <LogIn size={ICON_SIZE.M} />, onClick: () => router.push('/auth-sign-in') }
     } else if (pathname === '/auth-password-reset') {

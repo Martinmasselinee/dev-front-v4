@@ -230,6 +230,7 @@ export default function AuthSignUpPage() {
                 variant="WHITE"
                 type="button"
                 icon={<GoogleIcon size={ICON_SIZE.M} />}
+                onClick={() => setShowSignUpPopup(true)}
                 style={{ marginBottom: SPACING.S }}
               >
                 Se connecter avec Google
