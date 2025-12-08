@@ -3,7 +3,7 @@ import { OPACITY } from './opacity'
 
 export const COLOR = {
   PURPLE: '#5218F9',
-  BLACK: '#1a1a1a', // fake black
+  BLACK: '#000000',
   WHITE: '#ffffff',
   GREY: {
     LIGHT: '#f5f5f5',
