@@ -35,7 +35,7 @@ import { Loading } from './Loading'
 interface NavItem {
   label: string
   path: string
-  icon: React.ComponentType<{ size?: number; style?: React.CSSProperties }>
+  icon: React.ComponentType<any>
   beta?: boolean
 }
 
@@ -49,6 +49,10 @@ export const Sidebar = () => {
   const pathname = usePathname()
   const [isLoading, setIsLoading] = useState(false)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+  // Workspace and user data
+  const workspaceName = 'SRFC'
+  const userFullName = 'Martin Masseline'
 
   useEffect(() => {
     return () => {
@@ -297,7 +301,7 @@ export const Sidebar = () => {
                   flex: 1,
                 }}
               >
-                TEST 3
+                {workspaceName}
               </Text>
             </div>
             <div
@@ -377,7 +381,7 @@ export const Sidebar = () => {
                   flex: 1,
                 }}
               >
-                MARTIN MASSELINE2
+                {userFullName}
               </Text>
             </div>
             <div
