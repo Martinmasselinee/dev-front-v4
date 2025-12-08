@@ -13,6 +13,14 @@ import { Z_INDEX } from '../constants/zIndex'
 import { WIDTH } from '../constants/width'
 import { BORDER } from '../constants/border'
 import { ICON_SIZE } from '../constants/iconSize'
+import { POSITION_TYPE } from '../constants/positionType'
+import { POSITION } from '../constants/position'
+import { DISPLAY } from '../constants/display'
+import { ALIGN_ITEMS } from '../constants/alignItems'
+import { JUSTIFY_CONTENT } from '../constants/justifyContent'
+import { CURSOR } from '../constants/cursor'
+import { BACKGROUND } from '../constants/background'
+import { BORDER_WIDTH } from '../constants/borderWidth'
 import { ConditionsUtilisation } from '../content/conditionsUtilisation'
 import { MentionsLegales } from '../content/mentionsLegales'
 
@@ -24,13 +32,13 @@ export const Footer = () => {
     <>
       <div
         style={{
-          position: 'fixed',
-          bottom: 0,
-          left: 0,
-          right: 0,
+          position: POSITION_TYPE.FIXED,
+          bottom: POSITION.ZERO,
+          left: POSITION.ZERO,
+          right: POSITION.ZERO,
           width: WIDTH.FULL,
           backgroundColor: COLOR.WHITE,
-          borderTop: `1px solid ${COLOR.GREY.MEDIUM}`,
+          borderTop: `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.MEDIUM}`,
           borderBottomLeftRadius: BORDER_RADIUS.L,
           borderBottomRightRadius: BORDER_RADIUS.L,
           paddingTop: SPACING.L,
@@ -42,9 +50,9 @@ export const Footer = () => {
       >
         <div
           style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+            display: DISPLAY.FLEX,
+            alignItems: ALIGN_ITEMS.CENTER,
+            justifyContent: JUSTIFY_CONTENT.CENTER,
             width: WIDTH.FULL,
             gap: SPACING.M,
           }}
@@ -53,10 +61,10 @@ export const Footer = () => {
             type="button"
             onClick={() => setShowMentionsPopup(true)}
             style={{
-              background: 'none',
+              background: BACKGROUND.NONE,
               border: BORDER.NONE,
-              padding: 0,
-              cursor: 'pointer',
+              padding: POSITION.ZERO,
+              cursor: CURSOR.POINTER,
               color: COLOR.GREY.DARK,
             }}
           >
@@ -71,10 +79,10 @@ export const Footer = () => {
             type="button"
             onClick={() => setShowConditionsPopup(true)}
             style={{
-              background: 'none',
+              background: BACKGROUND.NONE,
               border: BORDER.NONE,
-              padding: 0,
-              cursor: 'pointer',
+              padding: POSITION.ZERO,
+              cursor: CURSOR.POINTER,
               color: COLOR.GREY.DARK,
             }}
           >

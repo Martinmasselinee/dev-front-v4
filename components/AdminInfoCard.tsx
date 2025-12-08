@@ -4,6 +4,10 @@ import { SPACING } from '../constants/spacing'
 import { COLOR } from '../constants/color'
 import { ICON_SIZE } from '../constants/iconSize'
 import { Z_INDEX } from '../constants/zIndex'
+import { POSITION_TYPE } from '../constants/positionType'
+import { DISPLAY } from '../constants/display'
+import { ALIGN_ITEMS } from '../constants/alignItems'
+import { BORDER_WIDTH } from '../constants/borderWidth'
 import { Text } from './Text'
 import { Card } from './Card'
 import { IconButton } from './IconButton'
@@ -17,15 +21,15 @@ export const AdminInfoCard = () => {
     <Card
       style={{
         backgroundColor: COLOR.WHITE,
-        border: `1px solid ${COLOR.GREY.MEDIUM}`,
+        border: `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.MEDIUM}`,
         marginTop: SPACING.L,
-        position: 'relative',
+        position: POSITION_TYPE.RELATIVE,
       }}
     >
       <IconButton
         onClick={() => setIsVisible(false)}
         style={{
-          position: 'absolute',
+          position: POSITION_TYPE.ABSOLUTE,
           top: SPACING.S,
           right: SPACING.S,
           color: COLOR.GREY.DARK,
@@ -35,8 +39,8 @@ export const AdminInfoCard = () => {
       />
       <div
         style={{
-          display: 'flex',
-          alignItems: 'flex-start',
+          display: DISPLAY.FLEX,
+          alignItems: ALIGN_ITEMS.FLEX_START,
           gap: SPACING.M,
         }}
       >

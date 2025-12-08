@@ -3,5 +3,6 @@ export const LINE_HEIGHT = {
   TIGHT: '1.5',
   TIGHTER: '1.2',
   DEFAULT: '1.2',
+  SINGLE: '1',
 } as const
 

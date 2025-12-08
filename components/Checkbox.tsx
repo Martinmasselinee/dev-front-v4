@@ -1,6 +1,8 @@
 import { InputHTMLAttributes, ReactNode } from 'react'
 import { COLOR } from '../constants/color'
 import { SPACING } from '../constants/spacing'
+import { DISPLAY } from '../constants/display'
+import { ALIGN_ITEMS } from '../constants/alignItems'
 
 interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: ReactNode
@@ -16,8 +18,8 @@ export const Checkbox = ({
     <label
       className={className}
       style={{
-        display: 'flex',
-        alignItems: 'center',
+        display: DISPLAY.FLEX,
+        alignItems: ALIGN_ITEMS.CENTER,
       }}
     >
       <input

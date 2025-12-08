@@ -31,6 +31,18 @@ import { FONT_SIZE } from '../../constants/fontSize'
 import { FONT_THICKNESS } from '../../constants/fontThickness'
 import { LINE_HEIGHT } from '../../constants/lineHeight'
 import { TIME } from '../../constants/time'
+import { DISPLAY } from '../../constants/display'
+import { FLEX_DIRECTION } from '../../constants/flexDirection'
+import { ALIGN_ITEMS } from '../../constants/alignItems'
+import { JUSTIFY_CONTENT } from '../../constants/justifyContent'
+import { POSITION_TYPE } from '../../constants/positionType'
+import { FLEX } from '../../constants/flex'
+import { FONT_STYLE } from '../../constants/fontStyle'
+import { TEXT_DECORATION } from '../../constants/textDecoration'
+import { BACKGROUND } from '../../constants/background'
+import { BORDER } from '../../constants/border'
+import { CURSOR } from '../../constants/cursor'
+import { POSITION } from '../../constants/position'
 import { Loading } from '../../components/Loading'
 
 const rotatingTexts = [
@@ -83,21 +95,21 @@ export default function AuthSignUpPage() {
   return (
     <div
       style={{
-        display: 'flex',
-        flexDirection: 'column',
+        display: DISPLAY.FLEX,
+        flexDirection: FLEX_DIRECTION.COLUMN,
         height: LAYOUT.MIN_SCREEN_HEIGHT,
-        position: 'relative',
+        position: POSITION_TYPE.RELATIVE,
         paddingTop: SPACING.XXL,
         paddingBottom: SPACING.XXL,
       }}
     >
       <div
         style={{
-          flex: 1,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          flexDirection: 'column',
+          flex: FLEX.ONE,
+          display: DISPLAY.FLEX,
+          alignItems: ALIGN_ITEMS.CENTER,
+          justifyContent: JUSTIFY_CONTENT.CENTER,
+          flexDirection: FLEX_DIRECTION.COLUMN,
         }}
       >
         <TitleContainer>
@@ -117,7 +129,7 @@ export default function AuthSignUpPage() {
               <span
                 style={{
                   color: COLOR.PURPLE,
-                  fontStyle: 'italic',
+                  fontStyle: FONT_STYLE.ITALIC,
                   paddingLeft: SPACING.XS, // 4px
                   paddingRight: SPACING.S, // 0.5rem = 8px
         }}
@@ -131,7 +143,7 @@ export default function AuthSignUpPage() {
         <Container>
 
             <Form onSubmit={handleSubmit}>
-              <div style={{ marginBottom: SPACING.M, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: SPACING.S }}>
+              <div style={{ marginBottom: SPACING.M, display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER, justifyContent: JUSTIFY_CONTENT.CENTER, gap: SPACING.S }}>
                 <UserPlus size={ICON_SIZE.M} style={{ color: COLOR.GREY.DARK }} />
                 <Text size="M" color="GREY_DARK" style={{ textAlign: TEXT_ALIGN.CENTER }}>
                   Créez votre compte pour commencer
@@ -139,8 +151,8 @@ export default function AuthSignUpPage() {
               </div>
               <SecurityNotice />
               <FormGroup>
-                <div style={{ display: 'flex', gap: SPACING.M }}>
-                  <div style={{ flex: 1 }}>
+                <div style={{ display: DISPLAY.FLEX, gap: SPACING.M }}>
+                  <div style={{ flex: FLEX.ONE }}>
                     <Input
                       id="firstName"
                       type="text"
@@ -150,7 +162,7 @@ export default function AuthSignUpPage() {
                       icon={<User size={ICON_SIZE.M} />}
                     />
                   </div>
-                  <div style={{ flex: 1 }}>
+                  <div style={{ flex: FLEX.ONE }}>
                     <Input
                       id="lastName"
                       type="text"
@@ -262,15 +274,15 @@ export default function AuthSignUpPage() {
       >
         <div
           style={{
-            display: 'flex',
-            flexDirection: 'column',
+            display: DISPLAY.FLEX,
+            flexDirection: FLEX_DIRECTION.COLUMN,
             gap: SPACING.L,
           }}
         >
           <div
             style={{
-              display: 'flex',
-              flexDirection: 'column',
+              display: DISPLAY.FLEX,
+              flexDirection: FLEX_DIRECTION.COLUMN,
               gap: SPACING.M,
             }}
           >
@@ -290,14 +302,14 @@ export default function AuthSignUpPage() {
                       setShowConditionsPopup(true)
                     }}
                     style={{
-                      background: 'none',
-                      border: 'none',
-                      padding: 0,
-                      cursor: 'pointer',
+                      background: BACKGROUND.NONE,
+                      border: BORDER.NONE,
+                      padding: POSITION.ZERO,
+                      cursor: CURSOR.POINTER,
                       color: COLOR.PURPLE,
                       fontSize: FONT_SIZE.M,
                       fontWeight: FONT_THICKNESS.M,
-                      textDecoration: 'underline',
+                      textDecoration: TEXT_DECORATION.UNDERLINE,
                     }}
                   >
                     Conditions Générales d'Utilisation
@@ -322,14 +334,14 @@ export default function AuthSignUpPage() {
                       setShowMentionsPopup(true)
                     }}
                     style={{
-                      background: 'none',
-                      border: 'none',
-                      padding: 0,
-                      cursor: 'pointer',
+                      background: BACKGROUND.NONE,
+                      border: BORDER.NONE,
+                      padding: POSITION.ZERO,
+                      cursor: CURSOR.POINTER,
                       color: COLOR.PURPLE,
                       fontSize: FONT_SIZE.M,
                       fontWeight: FONT_THICKNESS.M,
-                      textDecoration: 'underline',
+                      textDecoration: TEXT_DECORATION.UNDERLINE,
                     }}
                   >
                     Mentions Légales
@@ -341,9 +353,9 @@ export default function AuthSignUpPage() {
 
           <div
             style={{
-              display: 'flex',
+              display: DISPLAY.FLEX,
               gap: SPACING.M,
-              justifyContent: 'flex-end',
+              justifyContent: JUSTIFY_CONTENT.FLEX_END,
               marginTop: SPACING.L,
             }}
           >

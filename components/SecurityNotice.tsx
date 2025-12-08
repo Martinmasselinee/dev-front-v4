@@ -7,6 +7,12 @@ import { FONT_THICKNESS } from '../constants/fontThickness'
 import { ICON_SIZE } from '../constants/iconSize'
 import { Z_INDEX } from '../constants/zIndex'
 import { POSITION } from '../constants/position'
+import { POSITION_TYPE } from '../constants/positionType'
+import { DISPLAY } from '../constants/display'
+import { ALIGN_ITEMS } from '../constants/alignItems'
+import { JUSTIFY_CONTENT } from '../constants/justifyContent'
+import { FLEX_DIRECTION } from '../constants/flexDirection'
+import { FLEX } from '../constants/flex'
 import { Text } from './Text'
 import { Card } from './Card'
 import { IconButton } from './IconButton'
@@ -50,13 +56,13 @@ export const SecurityNotice = () => {
       style={{
         backgroundColor: COLOR.WHITE,
         marginBottom: SPACING.L,
-        position: 'relative',
+        position: POSITION_TYPE.RELATIVE,
       }}
     >
       <IconButton
         onClick={() => setIsVisible(false)}
         style={{
-          position: 'absolute',
+          position: POSITION_TYPE.ABSOLUTE,
           top: SPACING.S,
           right: SPACING.S,
           color: COLOR.GREY.DARK,
@@ -66,25 +72,25 @@ export const SecurityNotice = () => {
       />
       <div
         style={{
-          display: 'flex',
-          alignItems: 'center',
+          display: DISPLAY.FLEX,
+          alignItems: ALIGN_ITEMS.CENTER,
           gap: SPACING.M,
         }}
       >
         <div
           style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexShrink: 0,
+            display: DISPLAY.FLEX,
+            alignItems: ALIGN_ITEMS.CENTER,
+            justifyContent: JUSTIFY_CONTENT.CENTER,
+            flexShrink: FLEX.ZERO,
           }}
         >
           <GoogleIcon size={ICON_SIZE.XL} />
         </div>
         <div
           style={{
-            display: 'flex',
-            flexDirection: 'column',
+            display: DISPLAY.FLEX,
+            flexDirection: FLEX_DIRECTION.COLUMN,
             gap: SPACING.XS,
           }}
         >

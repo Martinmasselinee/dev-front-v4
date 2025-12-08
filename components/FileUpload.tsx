@@ -7,6 +7,13 @@ import { BORDER_RADIUS } from '../constants/borderRadius'
 import { SPACING } from '../constants/spacing'
 import { ICON_SIZE } from '../constants/iconSize'
 import { TRANSITION } from '../constants/transition'
+import { DISPLAY } from '../constants/display'
+import { FLEX_DIRECTION } from '../constants/flexDirection'
+import { ALIGN_ITEMS } from '../constants/alignItems'
+import { JUSTIFY_CONTENT } from '../constants/justifyContent'
+import { CURSOR } from '../constants/cursor'
+import { TEXT_ALIGN } from '../constants/textAlign'
+import { BORDER_WIDTH } from '../constants/borderWidth'
 import { Text } from './Text'
 
 interface FileUploadProps {
@@ -98,9 +105,9 @@ export const FileUpload = ({
         paddingRight: SPACING.XL,
         paddingBottom: SPACING.XXL,
         backgroundColor: isDragging ? COLOR.GREY.MEDIUM : COLOR.GREY.LIGHT,
-        border: `2px dashed ${isHovered || isDragging ? COLOR.PURPLE : COLOR.GREY.MEDIUM}`,
+        border: `${BORDER_WIDTH.MEDIUM} dashed ${isHovered || isDragging ? COLOR.PURPLE : COLOR.GREY.MEDIUM}`,
         borderRadius: BORDER_RADIUS.L,
-        cursor: 'pointer',
+        cursor: CURSOR.POINTER,
         transition: `background-color ${TRANSITION.FAST_EASE}, border-color ${TRANSITION.FAST_EASE}`,
       }}
     >
@@ -110,24 +117,24 @@ export const FileUpload = ({
         accept={acceptedFormats.map((format) => `.${format.toLowerCase()}`).join(',')}
         onChange={handleFileInput}
         style={{
-          display: 'none',
+          display: DISPLAY.NONE,
         }}
       />
 
       <div
         style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
+          display: DISPLAY.FLEX,
+          flexDirection: FLEX_DIRECTION.COLUMN,
+          alignItems: ALIGN_ITEMS.CENTER,
           gap: SPACING.M,
         }}
       >
         {/* Icon */}
         <div
           style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+            display: DISPLAY.FLEX,
+            alignItems: ALIGN_ITEMS.CENTER,
+            justifyContent: JUSTIFY_CONTENT.CENTER,
           }}
         >
           <CloudUpload
@@ -142,9 +149,9 @@ export const FileUpload = ({
         {/* Text content */}
         <div
           style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: DISPLAY.FLEX,
+            flexDirection: FLEX_DIRECTION.COLUMN,
+            alignItems: ALIGN_ITEMS.CENTER,
             gap: SPACING.XS,
           }}
         >
@@ -153,7 +160,7 @@ export const FileUpload = ({
             weight="XL"
             color="BLACK"
             style={{
-              textAlign: 'center',
+              textAlign: TEXT_ALIGN.CENTER,
             }}
           >
             Glissez-déposez votre deck commercial
@@ -163,7 +170,7 @@ export const FileUpload = ({
             weight="M"
             color="GREY_DARK"
             style={{
-              textAlign: 'center',
+              textAlign: TEXT_ALIGN.CENTER,
             }}
           >
             ou cliquez pour sélectionner un fichier

@@ -13,6 +13,13 @@ import { BORDER } from '../constants/border'
 import { WIDTH } from '../constants/width'
 import { INSET } from '../constants/inset'
 import { TRANSITION } from '../constants/transition'
+import { DISPLAY } from '../constants/display'
+import { ALIGN_ITEMS } from '../constants/alignItems'
+import { JUSTIFY_CONTENT } from '../constants/justifyContent'
+import { POSITION_TYPE } from '../constants/positionType'
+import { CURSOR } from '../constants/cursor'
+import { POINTER_EVENTS } from '../constants/pointerEvents'
+import { BORDER_WIDTH } from '../constants/borderWidth'
 import { lightenColor, darkenColor } from '../lib/colorUtils'
 
 type ButtonVariant = 'BLACK' | 'PURPLE' | 'WHITE'
@@ -72,34 +79,34 @@ export const Button = ({
           color: buttonStyle.color,
           borderRadius: borderRadius,
           height: buttonHeight,
-          border: variant === 'WHITE' ? `1px solid ${COLOR.GREY.MEDIUM}` : BORDER.NONE,
-          cursor: disabled ? 'not-allowed' : 'pointer',
+          border: variant === 'WHITE' ? `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.MEDIUM}` : BORDER.NONE,
+          cursor: disabled ? CURSOR.NOT_ALLOWED : CURSOR.POINTER,
           width: WIDTH.FULL,
           fontSize: FONT_SIZE.M,
           fontWeight: FONT_THICKNESS.L,
           transition: `background-color ${TRANSITION.FAST_EASE}`,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          position: 'relative',
+          display: DISPLAY.FLEX,
+          alignItems: ALIGN_ITEMS.CENTER,
+          justifyContent: JUSTIFY_CONTENT.CENTER,
+          position: POSITION_TYPE.RELATIVE,
           opacity: disabled ? OPACITY.DISABLED : 1,
           ...style,
         }}
       >
       <div
         style={{
-          position: 'absolute',
+          position: POSITION_TYPE.ABSOLUTE,
           inset: INSET.BUTTON_OVERLAY,
           borderRadius: overlayBorderRadius,
           background: `linear-gradient(to bottom, rgba(255, 255, 255, ${OPACITY.BUTTON_GRADIENT_START}), rgba(255, 255, 255, ${OPACITY.BUTTON_GRADIENT_END}))`,
-          pointerEvents: 'none',
+          pointerEvents: POINTER_EVENTS.NONE,
           zIndex: Z_INDEX.COMPONENT_OVERLAY,
         }}
       >
         <div
           className="button-overlay-inner"
           style={{
-            position: 'absolute',
+            position: POSITION_TYPE.ABSOLUTE,
             inset: INSET.BUTTON_OVERLAY,
             borderRadius: innerBorderRadius,
             background: buttonStyle.backgroundColor,
@@ -109,15 +116,15 @@ export const Button = ({
       </div>
       <span
         style={{
-          position: 'relative',
+          position: POSITION_TYPE.RELATIVE,
           zIndex: Z_INDEX.COMPONENT_CONTENT,
-          display: 'flex',
-          alignItems: 'center',
+          display: DISPLAY.FLEX,
+          alignItems: ALIGN_ITEMS.CENTER,
         }}
       >
         {children}
         {icon && (
-          <span style={{ marginLeft: SPACING.S, display: 'flex', alignItems: 'center' }}>
+          <span style={{ marginLeft: SPACING.S, display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER }}>
             {icon}
           </span>
         )}

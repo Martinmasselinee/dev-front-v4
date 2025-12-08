@@ -5,6 +5,12 @@ import { TRANSITION } from '../constants/transition'
 import { FONT_SIZE } from '../constants/fontSize'
 import { FONT_THICKNESS } from '../constants/fontThickness'
 import { TEXT_ALIGN } from '../constants/textAlign'
+import { DISPLAY } from '../constants/display'
+import { ALIGN_ITEMS } from '../constants/alignItems'
+import { JUSTIFY_CONTENT } from '../constants/justifyContent'
+import { CURSOR } from '../constants/cursor'
+import { FLEX } from '../constants/flex'
+import { BORDER_WIDTH } from '../constants/borderWidth'
 import { Text } from './Text'
 
 type WorkspaceType = 'club-sportif' | 'athlete' | 'evenement-sportif' | 'media-sportif' | ''
@@ -25,7 +31,7 @@ export const WorkspaceTypeSelector = ({ value, onChange }: WorkspaceTypeSelector
   return (
     <div
       style={{
-        display: 'flex',
+        display: DISPLAY.FLEX,
         gap: SPACING.M,
       }}
     >
@@ -36,16 +42,16 @@ export const WorkspaceTypeSelector = ({ value, onChange }: WorkspaceTypeSelector
             key={type.value}
             onClick={() => onChange(type.value)}
             style={{
-              cursor: 'pointer',
-              flex: 1,
+              cursor: CURSOR.POINTER,
+              flex: FLEX.ONE,
               padding: SPACING.M,
               backgroundColor: isSelected ? COLOR.BLACK : COLOR.WHITE,
-              border: `1px solid ${isSelected ? COLOR.BLACK : COLOR.GREY.MEDIUM}`,
+              border: `${BORDER_WIDTH.THIN} solid ${isSelected ? COLOR.BLACK : COLOR.GREY.MEDIUM}`,
               borderRadius: BORDER_RADIUS.M,
               transition: `background-color ${TRANSITION.FAST_EASE}, border-color ${TRANSITION.FAST_EASE}, color ${TRANSITION.FAST_EASE}`,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+              display: DISPLAY.FLEX,
+              alignItems: ALIGN_ITEMS.CENTER,
+              justifyContent: JUSTIFY_CONTENT.CENTER,
               gap: SPACING.S,
             }}
           >

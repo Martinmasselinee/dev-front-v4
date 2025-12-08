@@ -3,6 +3,9 @@ import { WIDTH } from '../constants/width'
 import { SPACING } from '../constants/spacing'
 import { TEXT_ALIGN } from '../constants/textAlign'
 import { DIMENSION } from '../constants/dimension'
+import { DISPLAY } from '../constants/display'
+import { JUSTIFY_CONTENT } from '../constants/justifyContent'
+import { ALIGN_ITEMS } from '../constants/alignItems'
 
 interface TitleContainerProps {
   children: ReactNode
@@ -18,9 +21,9 @@ export const TitleContainer = ({ children, className = '' }: TitleContainerProps
         paddingLeft: SPACING.XL,
         paddingRight: SPACING.XL,
         marginBottom: SPACING.XXL,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
+        display: DISPLAY.FLEX,
+        justifyContent: JUSTIFY_CONTENT.CENTER,
+        alignItems: ALIGN_ITEMS.CENTER,
       }}
     >
       <div

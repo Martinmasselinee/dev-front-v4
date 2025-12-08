@@ -15,6 +15,10 @@ import { Z_INDEX } from '../constants/zIndex'
 import { WIDTH } from '../constants/width'
 import { TIME } from '../constants/time'
 import { TRANSITION } from '../constants/transition'
+import { POSITION_TYPE } from '../constants/positionType'
+import { DISPLAY } from '../constants/display'
+import { FLEX_DIRECTION } from '../constants/flexDirection'
+import { ALIGN_ITEMS } from '../constants/alignItems'
 import { Mail, Phone } from 'lucide-react'
 
 export const HelpButton = () => {
@@ -45,7 +49,7 @@ export const HelpButton = () => {
     <>
       <div
         style={{
-          position: 'fixed',
+          position: POSITION_TYPE.FIXED,
           bottom: SPACING.L,
           right: SPACING.L,
           zIndex: Z_INDEX.NAVBAR,
@@ -73,15 +77,15 @@ export const HelpButton = () => {
       >
         <div
           style={{
-            display: 'flex',
-            flexDirection: 'column',
+            display: DISPLAY.FLEX,
+            flexDirection: FLEX_DIRECTION.COLUMN,
             gap: SPACING.L,
           }}
         >
           <div
             style={{
-              display: 'flex',
-              flexDirection: 'column',
+              display: DISPLAY.FLEX,
+              flexDirection: FLEX_DIRECTION.COLUMN,
               gap: SPACING.M,
             }}
           >
@@ -90,8 +94,8 @@ export const HelpButton = () => {
             </Text>
             <div
               style={{
-                display: 'flex',
-                alignItems: 'center',
+                display: DISPLAY.FLEX,
+                alignItems: ALIGN_ITEMS.CENTER,
                 gap: SPACING.M,
               }}
             >
@@ -102,8 +106,8 @@ export const HelpButton = () => {
             </div>
             <div
               style={{
-                display: 'flex',
-                alignItems: 'center',
+                display: DISPLAY.FLEX,
+                alignItems: ALIGN_ITEMS.CENTER,
                 gap: SPACING.M,
               }}
             >
@@ -137,8 +141,8 @@ export const HelpButton = () => {
               {isSuccess ? (
                 <span
                   style={{
-                    display: 'flex',
-                    alignItems: 'center',
+                    display: DISPLAY.FLEX,
+                    alignItems: ALIGN_ITEMS.CENTER,
                     gap: SPACING.S,
                   }}
                 >

@@ -3,6 +3,15 @@ import { COLOR } from '../constants/color'
 import { Z_INDEX } from '../constants/zIndex'
 import { OPACITY } from '../constants/opacity'
 import { TEXT_ALIGN } from '../constants/textAlign'
+import { DISPLAY } from '../constants/display'
+import { ALIGN_ITEMS } from '../constants/alignItems'
+import { JUSTIFY_CONTENT } from '../constants/justifyContent'
+import { FLEX_DIRECTION } from '../constants/flexDirection'
+import { POSITION } from '../constants/position'
+import { POSITION_TYPE } from '../constants/positionType'
+import { BORDER_RADIUS } from '../constants/borderRadius'
+import { BORDER_WIDTH } from '../constants/borderWidth'
+import { BACKDROP_FILTER } from '../constants/backdropFilter'
 import { Text } from './Text'
 import { hexToRgba } from '../lib/colorUtils'
 
@@ -19,19 +28,19 @@ export const Loading = ({ message = 'Chargement de vos workspaces...', isVisible
   return (
     <div
       style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
+        position: POSITION_TYPE.FIXED,
+        top: POSITION.ZERO,
+        left: POSITION.ZERO,
+        right: POSITION.ZERO,
+        bottom: POSITION.ZERO,
         backgroundColor: whiteOverlay,
-        backdropFilter: 'blur(20px)',
-        WebkitBackdropFilter: 'blur(20px)',
+        backdropFilter: BACKDROP_FILTER.BLUR_20,
+        WebkitBackdropFilter: BACKDROP_FILTER.BLUR_20,
         zIndex: Z_INDEX.POPUP,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'column',
+        display: DISPLAY.FLEX,
+        alignItems: ALIGN_ITEMS.CENTER,
+        justifyContent: JUSTIFY_CONTENT.CENTER,
+        flexDirection: FLEX_DIRECTION.COLUMN,
         gap: SPACING.L,
       }}
     >
@@ -41,9 +50,9 @@ export const Loading = ({ message = 'Chargement de vos workspaces...', isVisible
         style={{
           width: SPACING.XXXL,
           height: SPACING.XXXL,
-          border: `4px solid ${COLOR.GREY.LIGHT}`,
-          borderTop: `4px solid ${COLOR.PURPLE}`,
-          borderRadius: '50%',
+          border: `${BORDER_WIDTH.THICK} solid ${COLOR.GREY.LIGHT}`,
+          borderTop: `${BORDER_WIDTH.THICK} solid ${COLOR.PURPLE}`,
+          borderRadius: BORDER_RADIUS.CIRCLE,
         }}
       />
       

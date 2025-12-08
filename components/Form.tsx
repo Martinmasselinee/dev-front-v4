@@ -1,5 +1,7 @@
 import { ReactNode, FormHTMLAttributes } from 'react'
 import { SPACING } from '../constants/spacing'
+import { DISPLAY } from '../constants/display'
+import { FLEX_DIRECTION } from '../constants/flexDirection'
 
 interface FormProps extends FormHTMLAttributes<HTMLFormElement> {
   children: ReactNode
@@ -11,8 +13,8 @@ export const Form = ({ children, className = '', style, ...props }: FormProps) =
       {...props}
       className={className}
       style={{
-        display: 'flex',
-        flexDirection: 'column',
+        display: DISPLAY.FLEX,
+        flexDirection: FLEX_DIRECTION.COLUMN,
         gap: SPACING.M,
         ...style,
       }}

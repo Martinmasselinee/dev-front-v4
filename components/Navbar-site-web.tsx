@@ -13,9 +13,16 @@ import { FONT_THICKNESS } from '../constants/fontThickness'
 import { WIDTH } from '../constants/width'
 import { ICON_SIZE } from '../constants/iconSize'
 import { POSITION } from '../constants/position'
+import { POSITION_TYPE } from '../constants/positionType'
 import { TRANSFORM } from '../constants/transform'
 import { TRANSITION } from '../constants/transition'
 import { TIME } from '../constants/time'
+import { DISPLAY } from '../constants/display'
+import { ALIGN_ITEMS } from '../constants/alignItems'
+import { JUSTIFY_CONTENT } from '../constants/justifyContent'
+import { CURSOR } from '../constants/cursor'
+import { TEXT_DECORATION } from '../constants/textDecoration'
+import { BORDER_WIDTH } from '../constants/borderWidth'
 
 export const NavbarSiteWeb = () => {
   const router = useRouter()
@@ -74,13 +81,13 @@ export const NavbarSiteWeb = () => {
   return (
     <nav
       style={{
-        position: 'fixed',
+        position: POSITION_TYPE.FIXED,
         top: POSITION.ZERO,
         left: POSITION.ZERO,
         right: POSITION.ZERO,
         width: WIDTH.FULL,
         backgroundColor: COLOR.WHITE,
-        borderBottom: `1px solid ${COLOR.GREY.MEDIUM}`,
+        borderBottom: `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.MEDIUM}`,
         zIndex: Z_INDEX.NAVBAR,
         paddingTop: SPACING.M,
         paddingBottom: SPACING.M,
@@ -90,23 +97,23 @@ export const NavbarSiteWeb = () => {
     >
       <div
         style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
+          display: DISPLAY.FLEX,
+          alignItems: ALIGN_ITEMS.CENTER,
+          justifyContent: JUSTIFY_CONTENT.SPACE_BETWEEN,
           width: WIDTH.FULL,
           marginLeft: 'auto',
           marginRight: 'auto',
-          position: 'relative',
+          position: POSITION_TYPE.RELATIVE,
         }}
       >
         {/* Logo */}
         <div
           onClick={() => router.push('/')}
           style={{
-            display: 'flex',
-            alignItems: 'center',
+            display: DISPLAY.FLEX,
+            alignItems: ALIGN_ITEMS.CENTER,
             gap: SPACING.M,
-            cursor: 'pointer',
+            cursor: CURSOR.POINTER,
           }}
         >
           <img
@@ -131,10 +138,10 @@ export const NavbarSiteWeb = () => {
         {/* Navigation Links - Center */}
         <div
           style={{
-            display: 'flex',
-            alignItems: 'center',
+            display: DISPLAY.FLEX,
+            alignItems: ALIGN_ITEMS.CENTER,
             gap: SPACING.XXL,
-            position: 'absolute',
+            position: POSITION_TYPE.ABSOLUTE,
             left: POSITION.CENTER,
             transform: TRANSFORM.CENTER_HORIZONTAL,
           }}
@@ -146,13 +153,13 @@ export const NavbarSiteWeb = () => {
                 key={item.href}
                   href={item.href}
                   style={{
-                  display: 'flex',
-                  alignItems: 'center',
+                  display: DISPLAY.FLEX,
+                  alignItems: ALIGN_ITEMS.CENTER,
                   gap: SPACING.XS,
                     color: COLOR.BLACK,
                     fontSize: FONT_SIZE.M,
                   fontWeight: FONT_THICKNESS.M,
-                  textDecoration: 'none',
+                  textDecoration: TEXT_DECORATION.NONE,
                     transition: `color ${TRANSITION.FAST_EASE}, fontWeight ${TRANSITION.FAST_EASE}`,
                   }}
                 onMouseEnter={(e) => {
@@ -174,8 +181,8 @@ export const NavbarSiteWeb = () => {
         {/* Right Side - Button */}
         <div
           style={{
-            display: 'flex',
-            alignItems: 'center',
+            display: DISPLAY.FLEX,
+            alignItems: ALIGN_ITEMS.CENTER,
           }}
         >
           <Button

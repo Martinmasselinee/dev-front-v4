@@ -1,6 +1,12 @@
 import { ReactNode, ButtonHTMLAttributes } from 'react'
 import { COLOR } from '../constants/color'
 import { BORDER } from '../constants/border'
+import { BACKGROUND } from '../constants/background'
+import { CURSOR } from '../constants/cursor'
+import { DISPLAY } from '../constants/display'
+import { ALIGN_ITEMS } from '../constants/alignItems'
+import { JUSTIFY_CONTENT } from '../constants/justifyContent'
+import { POSITION } from '../constants/position'
 
 interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   icon: ReactNode
@@ -19,13 +25,13 @@ export const IconButton = ({
       type="button"
       style={{
         color: COLOR.GREY.MEDIUM,
-        background: 'none',
+        background: BACKGROUND.NONE,
         border: BORDER.NONE,
-        cursor: 'pointer',
-        padding: 0,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        cursor: CURSOR.POINTER,
+        padding: POSITION.ZERO,
+        display: DISPLAY.FLEX,
+        alignItems: ALIGN_ITEMS.CENTER,
+        justifyContent: JUSTIFY_CONTENT.CENTER,
         ...style,
       }}
     >

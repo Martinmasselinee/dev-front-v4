@@ -13,6 +13,14 @@ import { TRANSFORM } from '../constants/transform'
 import { Z_INDEX } from '../constants/zIndex'
 import { TRANSITION } from '../constants/transition'
 import { LINE_HEIGHT } from '../constants/lineHeight'
+import { POSITION_TYPE } from '../constants/positionType'
+import { DISPLAY } from '../constants/display'
+import { ALIGN_ITEMS } from '../constants/alignItems'
+import { JUSTIFY_CONTENT } from '../constants/justifyContent'
+import { POINTER_EVENTS } from '../constants/pointerEvents'
+import { OUTLINE } from '../constants/outline'
+import { CURSOR } from '../constants/cursor'
+import { BORDER_WIDTH } from '../constants/borderWidth'
 
 interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   icon?: ReactNode
@@ -32,23 +40,23 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
     return (
       <div
         style={{
-          position: 'relative',
+          position: POSITION_TYPE.RELATIVE,
           width: WIDTH.FULL,
         }}
       >
         {icon && (
           <div
             style={{
-              position: 'absolute',
+              position: POSITION_TYPE.ABSOLUTE,
               left: SPACING.M,
               top: POSITION.CENTER,
               transform: TRANSFORM.CENTER_VERTICAL,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+              display: DISPLAY.FLEX,
+              alignItems: ALIGN_ITEMS.CENTER,
+              justifyContent: JUSTIFY_CONTENT.CENTER,
               color: isFocused ? COLOR.PURPLE : COLOR.GREY.DARK,
               zIndex: Z_INDEX.COMPONENT_OVERLAY,
-              pointerEvents: 'none',
+              pointerEvents: POINTER_EVENTS.NONE,
               transition: `color ${TRANSITION.FAST_EASE}`,
             }}
           >
@@ -59,16 +67,16 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
         {/* Dropdown Arrow */}
         <div
           style={{
-            position: 'absolute',
+            position: POSITION_TYPE.ABSOLUTE,
             right: SPACING.M,
             top: POSITION.CENTER,
             transform: TRANSFORM.CENTER_VERTICAL,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+            display: DISPLAY.FLEX,
+            alignItems: ALIGN_ITEMS.CENTER,
+            justifyContent: JUSTIFY_CONTENT.CENTER,
             color: isFocused ? COLOR.PURPLE : COLOR.GREY.DARK,
             zIndex: Z_INDEX.COMPONENT_OVERLAY,
-            pointerEvents: 'none',
+            pointerEvents: POINTER_EVENTS.NONE,
             transition: `color ${TRANSITION.FAST_EASE}`,
           }}
         >
@@ -89,12 +97,12 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             lineHeight: INPUT_HEIGHT.MAIN,
             color: COLOR.BLACK,
             backgroundColor: COLOR.WHITE,
-            border: `1px solid ${COLOR.GREY.MEDIUM}`,
+            border: `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.MEDIUM}`,
             borderRadius: BORDER_RADIUS.M,
-            outline: 'none',
+            outline: OUTLINE.NONE,
             transition: `border-color ${TRANSITION.FAST_EASE}`,
             appearance: 'none',
-            cursor: 'pointer',
+            cursor: CURSOR.POINTER,
             ...style,
           }}
           onFocus={(e) => {

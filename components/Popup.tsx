@@ -12,6 +12,14 @@ import { SHADOW } from '../constants/shadow'
 import { Z_INDEX } from '../constants/zIndex'
 import { WIDTH } from '../constants/width'
 import { POSITION } from '../constants/position'
+import { POSITION_TYPE } from '../constants/positionType'
+import { DISPLAY } from '../constants/display'
+import { ALIGN_ITEMS } from '../constants/alignItems'
+import { JUSTIFY_CONTENT } from '../constants/justifyContent'
+import { FLEX_DIRECTION } from '../constants/flexDirection'
+import { FLEX } from '../constants/flex'
+import { OVERFLOW } from '../constants/overflow'
+import { BORDER_WIDTH } from '../constants/borderWidth'
 import { IconButton } from './IconButton'
 import { Heading } from './Heading'
 import { Text } from './Text'
@@ -42,53 +50,53 @@ export const Popup = ({ isOpen, onClose, title, children, icon: Icon = FileText 
   return (
     <div
       style={{
-        position: 'fixed',
-        inset: 0,
+        position: POSITION_TYPE.FIXED,
+        inset: POSITION.ZERO,
         zIndex: Z_INDEX.POPUP,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        display: DISPLAY.FLEX,
+        alignItems: ALIGN_ITEMS.CENTER,
+        justifyContent: JUSTIFY_CONTENT.CENTER,
         padding: SPACING.L,
       }}
       onClick={onClose}
     >
       <div
         style={{
-          position: 'absolute',
-          inset: 0,
+          position: POSITION_TYPE.ABSOLUTE,
+          inset: POSITION.ZERO,
           backgroundColor: `rgba(0, 0, 0, ${OPACITY.OVERLAY})`,
         }}
       />
       <div
         style={{
-          position: 'relative',
+          position: POSITION_TYPE.RELATIVE,
           backgroundColor: COLOR.WHITE,
           borderRadius: BORDER_RADIUS.M,
           width: WIDTH.FULL,
           maxWidth: POPUP.MAX_WIDTH,
           maxHeight: POPUP.MAX_HEIGHT,
-          display: 'flex',
-          flexDirection: 'column',
+          display: DISPLAY.FLEX,
+          flexDirection: FLEX_DIRECTION.COLUMN,
         }}
         onClick={(e) => e.stopPropagation()}
       >
         <div
           style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
+            display: DISPLAY.FLEX,
+            alignItems: ALIGN_ITEMS.CENTER,
+            justifyContent: JUSTIFY_CONTENT.SPACE_BETWEEN,
             paddingTop: SPACING.M,
             paddingLeft: SPACING.L,
             paddingRight: SPACING.M,
             paddingBottom: SPACING.M,
-            borderBottom: `1px solid ${COLOR.GREY.LIGHT}`,
+            borderBottom: `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.LIGHT}`,
           }}
         >
           <div
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              flex: 1,
+              display: DISPLAY.FLEX,
+              alignItems: ALIGN_ITEMS.CENTER,
+              flex: FLEX.ONE,
             }}
           >
             <Icon
@@ -120,8 +128,8 @@ export const Popup = ({ isOpen, onClose, title, children, icon: Icon = FileText 
         <div
           style={{
             padding: SPACING.L,
-            overflowY: 'auto',
-            flex: 1,
+            overflowY: OVERFLOW.AUTO,
+            flex: FLEX.ONE,
           }}
         >
           {children}

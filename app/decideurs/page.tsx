@@ -2,6 +2,7 @@
 
 import { LAYOUT } from '../../constants/layout'
 import { SPACING } from '../../constants/spacing'
+import { POSITION_TYPE } from '../../constants/positionType'
 import { Sidebar } from '../../components/Sidebar'
 import { TopBar } from '../../components/TopBar'
 
@@ -10,8 +11,8 @@ export default function DecideursPage() {
     <div
       style={{
         minHeight: LAYOUT.MIN_SCREEN_HEIGHT,
-        position: 'relative',
-        marginLeft: '220px',
+        position: POSITION_TYPE.RELATIVE,
+        marginLeft: LAYOUT.SIDEBAR_WIDTH,
         paddingTop: `calc(${SPACING.XXXL} + ${SPACING.M})`,
       }}
     >

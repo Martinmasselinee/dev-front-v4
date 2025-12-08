@@ -86,6 +86,25 @@ This is a front-end rebuild of the Dataxx platform - a sponsoring management pla
    - ❌ **NEVER hardcode time/duration values** (milliseconds, seconds) - ALWAYS use TIME constants (TIME.INTERVAL.*, TIME.DELAY.*)
    - ❌ **NEVER hardcode transition strings** ('0.2s ease', '0.3s ease-out', etc.) - ALWAYS use TRANSITION constants (TRANSITION.FAST_EASE, TRANSITION.NORMAL_EASE, etc.)
    - ❌ **NEVER hardcode '0' values** - Use POSITION.ZERO or SPACING.ZERO constants
+   - ❌ **NEVER hardcode display values** - ALWAYS use DISPLAY constants (flex, none, inline-flex, block)
+   - ❌ **NEVER hardcode flex direction** - ALWAYS use FLEX_DIRECTION constants (column, row)
+   - ❌ **NEVER hardcode align items** - ALWAYS use ALIGN_ITEMS constants (center, flex-start, flex-end)
+   - ❌ **NEVER hardcode justify content** - ALWAYS use JUSTIFY_CONTENT constants (center, flex-start, flex-end, space-between)
+   - ❌ **NEVER hardcode position types** - ALWAYS use POSITION_TYPE constants (fixed, absolute, relative, sticky)
+   - ❌ **NEVER hardcode cursor values** - ALWAYS use CURSOR constants (pointer, not-allowed, default)
+   - ❌ **NEVER hardcode overflow values** - ALWAYS use OVERFLOW constants (hidden, auto, visible)
+   - ❌ **NEVER hardcode text overflow** - ALWAYS use TEXT_OVERFLOW constants (ellipsis, clip)
+   - ❌ **NEVER hardcode white space** - ALWAYS use WHITE_SPACE constants (nowrap, normal, pre)
+   - ❌ **NEVER hardcode text transform** - ALWAYS use TEXT_TRANSFORM constants (uppercase, lowercase, capitalize, none)
+   - ❌ **NEVER hardcode flex values** - ALWAYS use FLEX constants (1, 0, auto)
+   - ❌ **NEVER hardcode font style** - ALWAYS use FONT_STYLE constants (italic, normal)
+   - ❌ **NEVER hardcode text decoration** - ALWAYS use TEXT_DECORATION constants (underline, none)
+   - ❌ **NEVER hardcode background values** - ALWAYS use BACKGROUND constants (none, transparent)
+   - ❌ **NEVER hardcode backdrop filter** - ALWAYS use BACKDROP_FILTER constants (blur(20px), etc.)
+   - ❌ **NEVER hardcode border width** - ALWAYS use BORDER_WIDTH constants (1px, 2px, 3px)
+   - ❌ **NEVER hardcode letter spacing** - ALWAYS use LETTER_SPACING constants (0.5px, normal)
+   - ❌ **NEVER hardcode outline** - ALWAYS use OUTLINE constants (none)
+   - ❌ **NEVER hardcode pointer events** - ALWAYS use POINTER_EVENTS constants (none, auto)
    - ❌ **NEVER use ANY Tailwind utility classes** - This includes but is not limited to: flex, items-center, justify-center, relative, absolute, fixed, text-center, mx-auto, and ALL other utility classes
    - ❌ **NEVER use Tailwind spacing classes** (mb-8, mt-6, px-6, etc.) - ALWAYS use SPACING constants in inline styles
    - ❌ **NEVER use Tailwind layout classes** (max-w-md, min-h-screen, etc.) - ALWAYS use LAYOUT constants or components
@@ -132,7 +151,7 @@ This is a front-end rebuild of the Dataxx platform - a sponsoring management pla
    - ❌ `transition: 'color 0.2s ease, fontWeight 0.2s ease'` → ✅ `transition: \`color ${TRANSITION.FAST_EASE}, fontWeight ${TRANSITION.FAST_EASE}\``
    - ❌ `minHeight: '100px'` → ✅ `minHeight: DIMENSION.TEXTAREA_MIN_HEIGHT`
    - ❌ `maxWidth: '1000px'` → ✅ `maxWidth: DIMENSION.TITLE_CONTAINER_MAX_WIDTH`
-   - ❌ `border: '1px solid rgba(82, 24, 249, 0.25)'` → ✅ `border: \`1px solid ${COLOR_RGBA.PURPLE_LIGHT}\``
+   - ❌ `border: '1px solid rgba(82, 24, 249, 0.25)'` → ✅ `border: \`${BORDER_WIDTH.THIN} solid ${COLOR_RGBA.PURPLE_LIGHT}\``
    - ❌ `<input className="..." />` → ✅ `<Input ... />`
    - ❌ `<label>...</label>` → ✅ `<Label>...</Label>`
    - ❌ `<a href="...">...</a>` → ✅ `<Link href="...">...</Link>`
@@ -140,6 +159,33 @@ This is a front-end rebuild of the Dataxx platform - a sponsoring management pla
    - ❌ `<h1>...</h1>` → ✅ `<Heading>...</Heading>`
    - ❌ `<div className="mb-8">...</div>` → ✅ `<HeaderSection>...</HeaderSection>` or use Spacer
    - ❌ `<form className="space-y-6">...</form>` → ✅ `<Form>...</Form>`
+   - ❌ `style={{ display: 'flex' }}` → ✅ `style={{ display: DISPLAY.FLEX }}`
+   - ❌ `style={{ flexDirection: 'column' }}` → ✅ `style={{ flexDirection: FLEX_DIRECTION.COLUMN }}`
+   - ❌ `style={{ alignItems: 'center' }}` → ✅ `style={{ alignItems: ALIGN_ITEMS.CENTER }}`
+   - ❌ `style={{ justifyContent: 'center' }}` → ✅ `style={{ justifyContent: JUSTIFY_CONTENT.CENTER }}`
+   - ❌ `style={{ position: 'fixed' }}` → ✅ `style={{ position: POSITION_TYPE.FIXED }}`
+   - ❌ `style={{ cursor: 'pointer' }}` → ✅ `style={{ cursor: CURSOR.POINTER }}`
+   - ❌ `style={{ overflow: 'hidden' }}` → ✅ `style={{ overflow: OVERFLOW.HIDDEN }}`
+   - ❌ `style={{ textOverflow: 'ellipsis' }}` → ✅ `style={{ textOverflow: TEXT_OVERFLOW.ELLIPSIS }}`
+   - ❌ `style={{ whiteSpace: 'nowrap' }}` → ✅ `style={{ whiteSpace: WHITE_SPACE.NOWRAP }}`
+   - ❌ `style={{ textTransform: 'uppercase' }}` → ✅ `style={{ textTransform: TEXT_TRANSFORM.UPPERCASE }}`
+   - ❌ `style={{ flex: 1 }}` → ✅ `style={{ flex: FLEX.ONE }}`
+   - ❌ `style={{ fontStyle: 'italic' }}` → ✅ `style={{ fontStyle: FONT_STYLE.ITALIC }}`
+   - ❌ `style={{ textDecoration: 'underline' }}` → ✅ `style={{ textDecoration: TEXT_DECORATION.UNDERLINE }}`
+   - ❌ `style={{ background: 'none' }}` → ✅ `style={{ background: BACKGROUND.NONE }}`
+   - ❌ `style={{ backdropFilter: 'blur(20px)' }}` → ✅ `style={{ backdropFilter: BACKDROP_FILTER.BLUR_20 }}`
+   - ❌ `style={{ border: '2px dashed' }}` → ✅ `style={{ border: \`${BORDER_WIDTH.MEDIUM} dashed\` }}`
+   - ❌ `style={{ letterSpacing: '0.5px' }}` → ✅ `style={{ letterSpacing: LETTER_SPACING.TIGHT }}`
+   - ❌ `style={{ borderRadius: '50%' }}` → ✅ `style={{ borderRadius: BORDER_RADIUS.CIRCLE }}`
+   - ❌ `style={{ outline: 'none' }}` → ✅ `style={{ outline: OUTLINE.NONE }}`
+   - ❌ `style={{ pointerEvents: 'none' }}` → ✅ `style={{ pointerEvents: POINTER_EVENTS.NONE }}`
+   - ❌ `top: 0, left: 0, right: 0, bottom: 0` → ✅ `top: POSITION.ZERO, left: POSITION.ZERO, right: POSITION.ZERO, bottom: POSITION.ZERO`
+   - ❌ `style={{ flexShrink: 0 }}` → ✅ `style={{ flexShrink: FLEX.ZERO }}`
+   - ❌ `style={{ backgroundColor: 'transparent' }}` → ✅ `style={{ backgroundColor: BACKGROUND.TRANSPARENT }}`
+   - ❌ `marginLeft: '220px'` → ✅ `marginLeft: LAYOUT.SIDEBAR_WIDTH`
+   - ❌ `width: '220px'` → ✅ `width: LAYOUT.SIDEBAR_WIDTH`
+   - ❌ `left: '220px'` → ✅ `left: LAYOUT.SIDEBAR_WIDTH`
+   - ❌ `lineHeight: '1'` → ✅ `lineHeight: LINE_HEIGHT.SINGLE`
 
 7. **Exceptions requiring explicit acceptance:**
    - New color values or theme colors
@@ -255,9 +301,9 @@ This is a front-end rebuild of the Dataxx platform - a sponsoring management pla
 - ❌ Sharing files for multiple components/utilities
 - ❌ Creating duplicates without checking for existing items
 - ❌ Creating new reusables without user approval
-- ❌ **Hardcoding ANY values** - colors, font sizes, spacing, border radius, icon sizes, opacity, shadows, z-index, rem units, rgba values
+- ❌ **Hardcoding ANY values** - colors, font sizes, spacing, border radius, icon sizes, opacity, shadows, z-index, rem units, rgba values, display, flex direction, align items, justify content, position types, cursor, overflow, text overflow, white space, text transform, flex, font style, text decoration, background, backdrop filter, border width, letter spacing, outline, pointer events
 - ❌ **Recreating existing components** - Button, Input, Label, Link, etc.
-- ❌ **Not using constants** - FONT_SIZE, FONT_THICKNESS, COLOR, SPACING, BORDER_RADIUS, ICON_SIZE, LAYOUT, OPACITY, SHADOW, Z_INDEX, TEXT_ALIGN, BUTTON_HEIGHT, INPUT_HEIGHT, POPUP, BORDER, WIDTH, POSITION, LINE_HEIGHT, INSET, TRANSFORM, TRANSITION, TIME, DIMENSION
+- ❌ **Not using constants** - FONT_SIZE, FONT_THICKNESS, COLOR, SPACING, BORDER_RADIUS, ICON_SIZE, LAYOUT, OPACITY, SHADOW, Z_INDEX, TEXT_ALIGN, BUTTON_HEIGHT, INPUT_HEIGHT, POPUP, BORDER, WIDTH, POSITION, LINE_HEIGHT, INSET, TRANSFORM, TRANSITION, TIME, DIMENSION, DISPLAY, FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT, POSITION_TYPE, CURSOR, OVERFLOW, TEXT_OVERFLOW, WHITE_SPACE, TEXT_TRANSFORM, FLEX, FONT_STYLE, TEXT_DECORATION, BACKGROUND, BACKDROP_FILTER, BORDER_WIDTH, LETTER_SPACING, OUTLINE, POINTER_EVENTS
 - ❌ **Using Tailwind utility classes for positioning/flex** - left-3, top-1/2, flex, items-center, justify-center, etc.
 - ❌ Using English for UI text (must be French)
 - ❌ Implementing mobile responsiveness
@@ -271,9 +317,9 @@ This is a front-end rebuild of the Dataxx platform - a sponsoring management pla
 When requested to create or modify anything, you MUST:
 1. ✅ **Scan project for existing reusables** - Check ALL constants, components, utilities
 2. ✅ **Check if the item already exists** - Search thoroughly before creating anything
-3. ✅ **Use existing constants** - FONT_SIZE, FONT_THICKNESS, COLOR, SPACING, BORDER_RADIUS, ICON_SIZE, LAYOUT, OPACITY, SHADOW, Z_INDEX, TEXT_ALIGN, BUTTON_HEIGHT, BUTTON_OVERLAY, INPUT_HEIGHT, POPUP, BORDER, WIDTH, POSITION, LINE_HEIGHT, INSET, TRANSFORM, TRANSITION, TIME, DIMENSION
+3. ✅ **Use existing constants** - FONT_SIZE, FONT_THICKNESS, COLOR, SPACING, BORDER_RADIUS, ICON_SIZE, LAYOUT, OPACITY, SHADOW, Z_INDEX, TEXT_ALIGN, BUTTON_HEIGHT, BUTTON_OVERLAY, INPUT_HEIGHT, POPUP, BORDER, WIDTH, POSITION, LINE_HEIGHT, INSET, TRANSFORM, TRANSITION, TIME, DIMENSION, DISPLAY, FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT, POSITION_TYPE, CURSOR, OVERFLOW, TEXT_OVERFLOW, WHITE_SPACE, TEXT_TRANSFORM, FLEX, FONT_STYLE, TEXT_DECORATION, BACKGROUND, BACKDROP_FILTER, BORDER_WIDTH, LETTER_SPACING, OUTLINE, POINTER_EVENTS
 4. ✅ **Use existing components** - Button, Input, Label, Link, Text, Heading, Container, PageContainer, Form, FormGroup, Checkbox, Card, Spacer, IconButton, HeaderSection
-5. ✅ **Never hardcode ANY values** - All colors, sizes, spacing, layout values, opacity, shadows, z-index, rgba, rem units, time/duration, transitions, dimensions must use constants
+5. ✅ **Never hardcode ANY values** - All colors, sizes, spacing, layout values, opacity, shadows, z-index, rgba, rem units, time/duration, transitions, dimensions, display, flex direction, align items, justify content, position types, cursor, overflow, text overflow, white space, text transform, flex, font style, text decoration, background, backdrop filter, border width, letter spacing, outline, pointer events must use constants
 6. ✅ **Never use Tailwind spacing/layout classes** - Use inline styles with constants or reusable components
 7. ✅ **Never use Tailwind positioning/flex classes** - left-3, top-1/2, flex, items-center, justify-center, transform, etc. - Use inline styles with constants
 8. ✅ **Never use raw HTML for styled elements** - Use reusable components
@@ -283,16 +329,35 @@ When requested to create or modify anything, you MUST:
 12. ✅ **Never hardcode time/duration values** - Always use TIME constants (setTimeout, setInterval, etc.)
 13. ✅ **Never hardcode transition strings** - Always use TRANSITION constants
 14. ✅ **Never hardcode dimension values** - Always use DIMENSION constants (minHeight, maxWidth, etc.)
-15. ✅ **Request approval for new reusables if needed** - Only after confirming nothing exists
-16. ✅ **Create file per entity** - One file per component/constant/utility
-17. ✅ **Verify French language** - All text in French
-18. ✅ **Verify Space Grotesk font** - Applied everywhere
-19. ✅ **Ensure desktop-only approach** - No mobile code
-20. ✅ **Maintain white theme compatibility** - Light theme only
-21. ✅ **Verify all values use constants** - No hardcoded pixels, colors, sizes, spacing, layout, opacity, shadows, z-index, rgba values, time/duration, transitions, or dimensions
-22. ✅ **Verify no Tailwind utility classes** - ALL Tailwind utility classes are prohibited (spacing, layout, positioning, flex, display, typography, and ALL other categories) - All styling must use inline styles with constants or reusable components
-23. ✅ **Use PageContainer for full-page layouts** - Or use LAYOUT.MIN_SCREEN_HEIGHT constant
-24. ✅ **Verify CSS files use CSS variables** - For values that need to be used in CSS files, use CSS variables defined in globals.css
+15. ✅ **Never hardcode display values** - Always use DISPLAY constants (flex, none, inline-flex, block)
+16. ✅ **Never hardcode flex direction** - Always use FLEX_DIRECTION constants (column, row)
+17. ✅ **Never hardcode align items** - Always use ALIGN_ITEMS constants (center, flex-start, flex-end)
+18. ✅ **Never hardcode justify content** - Always use JUSTIFY_CONTENT constants (center, flex-start, flex-end, space-between)
+19. ✅ **Never hardcode position types** - Always use POSITION_TYPE constants (fixed, absolute, relative, sticky)
+20. ✅ **Never hardcode cursor values** - Always use CURSOR constants (pointer, not-allowed, default)
+21. ✅ **Never hardcode overflow values** - Always use OVERFLOW constants (hidden, auto, visible)
+22. ✅ **Never hardcode text overflow** - Always use TEXT_OVERFLOW constants (ellipsis, clip)
+23. ✅ **Never hardcode white space** - Always use WHITE_SPACE constants (nowrap, normal, pre)
+24. ✅ **Never hardcode text transform** - Always use TEXT_TRANSFORM constants (uppercase, lowercase, capitalize, none)
+25. ✅ **Never hardcode flex values** - Always use FLEX constants (1, 0, auto)
+26. ✅ **Never hardcode font style** - Always use FONT_STYLE constants (italic, normal)
+27. ✅ **Never hardcode text decoration** - Always use TEXT_DECORATION constants (underline, none)
+28. ✅ **Never hardcode background values** - Always use BACKGROUND constants (none, transparent)
+29. ✅ **Never hardcode backdrop filter** - Always use BACKDROP_FILTER constants
+30. ✅ **Never hardcode border width** - Always use BORDER_WIDTH constants (1px, 2px, 3px)
+31. ✅ **Never hardcode letter spacing** - Always use LETTER_SPACING constants (0.5px, normal)
+32. ✅ **Never hardcode outline** - Always use OUTLINE constants (none)
+33. ✅ **Never hardcode pointer events** - Always use POINTER_EVENTS constants (none, auto)
+34. ✅ **Request approval for new reusables if needed** - Only after confirming nothing exists
+35. ✅ **Create file per entity** - One file per component/constant/utility
+36. ✅ **Verify French language** - All text in French
+37. ✅ **Verify Space Grotesk font** - Applied everywhere
+38. ✅ **Ensure desktop-only approach** - No mobile code
+39. ✅ **Maintain white theme compatibility** - Light theme only
+40. ✅ **Verify all values use constants** - No hardcoded pixels, colors, sizes, spacing, layout, opacity, shadows, z-index, rgba values, time/duration, transitions, dimensions, display, flex, position, cursor, overflow, text overflow, white space, text transform, flex values, font style, text decoration, background, backdrop filter, border width, letter spacing, outline, pointer events
+41. ✅ **Verify no Tailwind utility classes** - ALL Tailwind utility classes are prohibited (spacing, layout, positioning, flex, display, typography, and ALL other categories) - All styling must use inline styles with constants or reusable components
+42. ✅ **Use PageContainer for full-page layouts** - Or use LAYOUT.MIN_SCREEN_HEIGHT constant
+43. ✅ **Verify CSS files use CSS variables** - For values that need to be used in CSS files, use CSS variables defined in globals.css
 
 ## Remember
 This is a clean rebuild focusing on:

@@ -27,6 +27,22 @@ import { WIDTH } from '../constants/width'
 import { POSITION } from '../constants/position'
 import { TRANSITION } from '../constants/transition'
 import { TIME } from '../constants/time'
+import { LAYOUT } from '../constants/layout'
+import { DISPLAY } from '../constants/display'
+import { FLEX_DIRECTION } from '../constants/flexDirection'
+import { ALIGN_ITEMS } from '../constants/alignItems'
+import { JUSTIFY_CONTENT } from '../constants/justifyContent'
+import { POSITION_TYPE } from '../constants/positionType'
+import { OVERFLOW } from '../constants/overflow'
+import { CURSOR } from '../constants/cursor'
+import { TEXT_TRANSFORM } from '../constants/textTransform'
+import { FLEX } from '../constants/flex'
+import { TEXT_OVERFLOW } from '../constants/textOverflow'
+import { WHITE_SPACE } from '../constants/whiteSpace'
+import { LINE_HEIGHT } from '../constants/lineHeight'
+import { BORDER_WIDTH } from '../constants/borderWidth'
+import { LETTER_SPACING } from '../constants/letterSpacing'
+import { BACKGROUND } from '../constants/background'
 import { Text } from './Text'
 import { Card } from './Card'
 import { useState, useRef, useEffect } from 'react'
@@ -102,17 +118,17 @@ export const Sidebar = () => {
     <>
       <aside
         style={{
-          position: 'fixed',
+          position: POSITION_TYPE.FIXED,
           left: POSITION.ZERO,
           top: POSITION.ZERO,
           bottom: POSITION.ZERO,
-          width: '220px',
+          width: LAYOUT.SIDEBAR_WIDTH,
           backgroundColor: lightenColor(COLOR.GREY.LIGHT, 40),
-          borderRight: `1px solid ${COLOR.GREY.MEDIUM}`,
+          borderRight: `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.MEDIUM}`,
           zIndex: Z_INDEX.NAVBAR,
-          display: 'flex',
-          flexDirection: 'column',
-          overflowY: 'auto',
+          display: DISPLAY.FLEX,
+          flexDirection: FLEX_DIRECTION.COLUMN,
+          overflowY: OVERFLOW.AUTO,
           paddingTop: SPACING.XL,
           paddingBottom: SPACING.XL,
           paddingLeft: POSITION.ZERO,
@@ -123,12 +139,12 @@ export const Sidebar = () => {
         <div
           onClick={() => router.push('/')}
           style={{
-            display: 'flex',
-            alignItems: 'center',
+            display: DISPLAY.FLEX,
+            alignItems: ALIGN_ITEMS.CENTER,
             gap: SPACING.M,
             marginBottom: SPACING.XXL,
             marginLeft: SPACING.L,
-            cursor: 'pointer',
+            cursor: CURSOR.POINTER,
           }}
         >
           <img
@@ -145,7 +161,7 @@ export const Sidebar = () => {
         </div>
 
         {/* Navigation Sections */}
-        <div style={{ flex: 1 }}>
+        <div style={{ flex: FLEX.ONE }}>
           {navSections.map((section, sectionIndex) => (
             <div key={sectionIndex} style={{ marginBottom: SPACING.L }}>
               {section.title && (
@@ -154,11 +170,11 @@ export const Sidebar = () => {
                   weight="S"
                   color="GREY_DARK"
                   style={{
-                    textTransform: 'uppercase',
+                    textTransform: TEXT_TRANSFORM.UPPERCASE,
                     marginTop: SPACING.L,
                     marginBottom: SPACING.M,
                     marginLeft: SPACING.L,
-                    letterSpacing: '0.5px',
+                    letterSpacing: LETTER_SPACING.TIGHT,
                     fontSize: FONT_SIZE.S,
                   }}
                 >
@@ -173,18 +189,18 @@ export const Sidebar = () => {
                     key={item.path}
                     onClick={() => router.push(item.path)}
                     style={{
-                      display: 'flex',
-                      alignItems: 'center',
+                      display: DISPLAY.FLEX,
+                      alignItems: ALIGN_ITEMS.CENTER,
                       gap: SPACING.M,
                       paddingTop: SPACING.S,
                       paddingBottom: SPACING.S,
                       paddingLeft: SPACING.L,
                       paddingRight: SPACING.L,
                       marginBottom: POSITION.ZERO,
-                      backgroundColor: active ? hexToRgba(COLOR.PURPLE, 0.15) : 'transparent',
-                      cursor: 'pointer',
+                      backgroundColor: active ? hexToRgba(COLOR.PURPLE, 0.15) : BACKGROUND.TRANSPARENT,
+                      cursor: CURSOR.POINTER,
                       transition: `background-color ${TRANSITION.FAST_EASE}`,
-                      position: 'relative',
+                      position: POSITION_TYPE.RELATIVE,
                     }}
                     onMouseEnter={(e) => {
                       if (!active) {
@@ -193,18 +209,18 @@ export const Sidebar = () => {
                     }}
                     onMouseLeave={(e) => {
                       if (!active) {
-                        e.currentTarget.style.backgroundColor = 'transparent'
+                        e.currentTarget.style.backgroundColor = BACKGROUND.TRANSPARENT
                       }
                     }}
                   >
                     {active && (
                       <div
                         style={{
-                          position: 'absolute',
+                          position: POSITION_TYPE.ABSOLUTE,
                           left: POSITION.ZERO,
                           top: POSITION.ZERO,
                           bottom: POSITION.ZERO,
-                          width: '2px',
+                          width: BORDER_WIDTH.MEDIUM,
                           backgroundColor: COLOR.PURPLE,
                         }}
                       />
@@ -213,10 +229,10 @@ export const Sidebar = () => {
                       size={ICON_SIZE.S}
                       style={{
                         color: active ? COLOR.PURPLE : COLOR.BLACK,
-                        flexShrink: 0,
+                        flexShrink: FLEX.ZERO,
                       }}
                     />
-                    <div style={{ display: 'flex', alignItems: 'center', gap: SPACING.S, flex: 1 }}>
+                    <div style={{ display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER, gap: SPACING.S, flex: FLEX.ONE }}>
                       <Text
                         size="M"
                         weight={active ? 'L' : 'M'}
@@ -234,10 +250,10 @@ export const Sidebar = () => {
                             backgroundColor: active ? COLOR_RGBA.PURPLE_LIGHT : COLOR.GREY.LIGHT,
                             borderRadius: BORDER_RADIUS.S,
                             border: active 
-                              ? `1px solid ${hexToRgba(COLOR.PURPLE, 0.6)}`
-                              : `1px solid ${COLOR.GREY.MEDIUM}`,
-                            display: 'flex',
-                            alignItems: 'center',
+                              ? `${BORDER_WIDTH.THIN} solid ${hexToRgba(COLOR.PURPLE, 0.6)}`
+                              : `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.MEDIUM}`,
+                            display: DISPLAY.FLEX,
+                            alignItems: ALIGN_ITEMS.CENTER,
                             height: `calc(${FONT_SIZE.S} + ${SPACING.XS})`,
                           }}
                         >
@@ -245,7 +261,7 @@ export const Sidebar = () => {
                             size="S"
                             weight="M"
                             color={active ? 'PURPLE' : 'GREY_DARK'}
-                            style={{ lineHeight: '1', fontSize: `calc(${FONT_SIZE.S} - ${SPACING.XS} / 4)` }}
+                            style={{ lineHeight: LINE_HEIGHT.SINGLE, fontSize: `calc(${FONT_SIZE.S} - ${SPACING.XS} / 4)` }}
                           >
                             BETA
                           </Text>
@@ -267,8 +283,8 @@ export const Sidebar = () => {
             style={{ 
               marginBottom: SPACING.M, 
               backgroundColor: pathname === '/admin' ? hexToRgba(COLOR.PURPLE, 0.1) : COLOR.WHITE,
-              cursor: 'pointer',
-              border: pathname === '/admin' ? `1px solid ${COLOR.PURPLE}` : `1px solid ${COLOR.GREY.MEDIUM}`,
+              cursor: CURSOR.POINTER,
+              border: pathname === '/admin' ? `${BORDER_WIDTH.THIN} solid ${COLOR.PURPLE}` : `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.MEDIUM}`,
               transition: `border-color ${TRANSITION.FAST_EASE}, background-color ${TRANSITION.FAST_EASE}`,
             }}
             onMouseEnter={(e) => {
@@ -282,23 +298,23 @@ export const Sidebar = () => {
           >
             <div
               style={{
-                display: 'flex',
-                alignItems: 'center',
+                display: DISPLAY.FLEX,
+                alignItems: ALIGN_ITEMS.CENTER,
                 gap: SPACING.M,
                 marginBottom: SPACING.S,
               }}
             >
-              <FileText size={ICON_SIZE.M} style={{ color: COLOR.BLACK, flexShrink: 0 }} />
+              <FileText size={ICON_SIZE.M} style={{ color: COLOR.BLACK, flexShrink: FLEX.ZERO }} />
               <Text 
                 size="M" 
                 weight="XL" 
                 color="BLACK"
                 style={{
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap',
+                  overflow: OVERFLOW.HIDDEN,
+                  textOverflow: TEXT_OVERFLOW.ELLIPSIS,
+                  whiteSpace: WHITE_SPACE.NOWRAP,
                   minWidth: 0,
-                  flex: 1,
+                  flex: FLEX.ONE,
                 }}
               >
                 {workspaceName}
@@ -306,22 +322,22 @@ export const Sidebar = () => {
             </div>
             <div
               style={{
-                display: 'flex',
-                alignItems: 'center',
+                display: DISPLAY.FLEX,
+                alignItems: ALIGN_ITEMS.CENTER,
                 gap: SPACING.M,
               }}
             >
-              <Settings size={ICON_SIZE.M} style={{ color: pathname === '/admin' ? COLOR.PURPLE : COLOR.BLACK, flexShrink: 0 }} />
+              <Settings size={ICON_SIZE.M} style={{ color: pathname === '/admin' ? COLOR.PURPLE : COLOR.BLACK, flexShrink: FLEX.ZERO }} />
               <Text 
                 size="M" 
                 weight="M" 
                 color={pathname === '/admin' ? 'PURPLE' : 'BLACK'}
                 style={{
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap',
+                  overflow: OVERFLOW.HIDDEN,
+                  textOverflow: TEXT_OVERFLOW.ELLIPSIS,
+                  whiteSpace: WHITE_SPACE.NOWRAP,
                   minWidth: 0,
-                  flex: 1,
+                  flex: FLEX.ONE,
                 }}
               >
                 Administration
@@ -334,8 +350,8 @@ export const Sidebar = () => {
             onClick={handleLogout}
             style={{ 
               backgroundColor: COLOR.WHITE,
-              cursor: 'pointer',
-              border: `1px solid ${COLOR.GREY.MEDIUM}`,
+              cursor: CURSOR.POINTER,
+              border: `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.MEDIUM}`,
               transition: `border-color ${TRANSITION.FAST_EASE}`,
             }}
             onMouseEnter={(e) => {
@@ -347,8 +363,8 @@ export const Sidebar = () => {
           >
             <div
               style={{
-                display: 'flex',
-                alignItems: 'center',
+                display: DISPLAY.FLEX,
+                alignItems: ALIGN_ITEMS.CENTER,
                 gap: SPACING.M,
                 marginBottom: SPACING.S,
               }}
@@ -357,12 +373,12 @@ export const Sidebar = () => {
                 style={{
                   width: ICON_SIZE.L,
                   height: ICON_SIZE.L,
-                  borderRadius: '50%',
+                  borderRadius: BORDER_RADIUS.CIRCLE,
                   backgroundColor: COLOR.BLACK,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexShrink: 0,
+                  display: DISPLAY.FLEX,
+                  alignItems: ALIGN_ITEMS.CENTER,
+                  justifyContent: JUSTIFY_CONTENT.CENTER,
+                  flexShrink: FLEX.ZERO,
                 }}
               >
                 <Text size="S" weight="XL" color="WHITE">
@@ -374,11 +390,11 @@ export const Sidebar = () => {
                 weight="XL" 
                 color="BLACK"
                 style={{
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap',
+                  overflow: OVERFLOW.HIDDEN,
+                  textOverflow: TEXT_OVERFLOW.ELLIPSIS,
+                  whiteSpace: WHITE_SPACE.NOWRAP,
                   minWidth: 0,
-                  flex: 1,
+                  flex: FLEX.ONE,
                 }}
               >
                 {userFullName}
@@ -386,22 +402,22 @@ export const Sidebar = () => {
             </div>
             <div
               style={{
-                display: 'flex',
-                alignItems: 'center',
+                display: DISPLAY.FLEX,
+                alignItems: ALIGN_ITEMS.CENTER,
                 gap: SPACING.M,
               }}
             >
-              <LogOut size={ICON_SIZE.M} style={{ color: COLOR.BLACK, flexShrink: 0 }} />
+              <LogOut size={ICON_SIZE.M} style={{ color: COLOR.BLACK, flexShrink: FLEX.ZERO }} />
               <Text 
                 size="M" 
                 weight="M" 
                 color="BLACK"
                 style={{
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap',
+                  overflow: OVERFLOW.HIDDEN,
+                  textOverflow: TEXT_OVERFLOW.ELLIPSIS,
+                  whiteSpace: WHITE_SPACE.NOWRAP,
                   minWidth: 0,
-                  flex: 1,
+                  flex: FLEX.ONE,
                 }}
               >
                 Deconnexion

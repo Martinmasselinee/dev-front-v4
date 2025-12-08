@@ -26,6 +26,13 @@ import { FONT_SIZE } from '../../constants/fontSize'
 import { FONT_THICKNESS } from '../../constants/fontThickness'
 import { LINE_HEIGHT } from '../../constants/lineHeight'
 import { TIME } from '../../constants/time'
+import { DISPLAY } from '../../constants/display'
+import { FLEX_DIRECTION } from '../../constants/flexDirection'
+import { ALIGN_ITEMS } from '../../constants/alignItems'
+import { JUSTIFY_CONTENT } from '../../constants/justifyContent'
+import { POSITION_TYPE } from '../../constants/positionType'
+import { FLEX } from '../../constants/flex'
+import { FONT_STYLE } from '../../constants/fontStyle'
 import { Loading } from '../../components/Loading'
 
 const rotatingTexts = [
@@ -62,15 +69,15 @@ export default function AuthSignInPage() {
   return (
     <div
       style={{
-        display: 'flex',
-        flexDirection: 'column',
+        display: DISPLAY.FLEX,
+        flexDirection: FLEX_DIRECTION.COLUMN,
         height: LAYOUT.MIN_SCREEN_HEIGHT,
-        position: 'relative',
+        position: POSITION_TYPE.RELATIVE,
         paddingTop: SPACING.XXL,
         paddingBottom: SPACING.XXL,
       }}
     >
-      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
+      <div style={{ flex: FLEX.ONE, display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER, justifyContent: JUSTIFY_CONTENT.CENTER, flexDirection: FLEX_DIRECTION.COLUMN }}>
         <TitleContainer>
           <HeaderSection>
             <Heading
@@ -85,12 +92,12 @@ export default function AuthSignInPage() {
               le sponsoring sportif pour
               <br />
               les{' '}
-              <span
+                <span
                 style={{
                   color: COLOR.PURPLE,
-                  fontStyle: 'italic',
-                  paddingLeft: SPACING.XS, // 4px
-                  paddingRight: SPACING.S, // 0.5rem = 8px
+                  fontStyle: FONT_STYLE.ITALIC,
+                  paddingLeft: SPACING.XS,
+                  paddingRight: SPACING.S,
                 }}
               >
                 {rotatingTexts[currentTextIndex]}
@@ -102,7 +109,7 @@ export default function AuthSignInPage() {
         <Container>
 
             <Form onSubmit={handleSubmit}>
-              <div style={{ marginBottom: SPACING.M, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: SPACING.S }}>
+              <div style={{ marginBottom: SPACING.M, display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER, justifyContent: JUSTIFY_CONTENT.CENTER, gap: SPACING.S }}>
                 <LogIn size={ICON_SIZE.M} style={{ color: COLOR.GREY.DARK }} />
                 <Text size="M" color="GREY_DARK" style={{ textAlign: TEXT_ALIGN.CENTER }}>
                   Connectez-vous à votre compte
@@ -152,10 +159,9 @@ export default function AuthSignInPage() {
                 variant="WHITE"
                 type="button"
                 icon={<GoogleIcon size={ICON_SIZE.M} />}
-                onClick={(e) => {
-                  e.preventDefault()
+                onClick={() => {
                   // TODO: Add Google authentication logic here
-                  handleSubmit(e as React.FormEvent)
+                  handleSubmit({ preventDefault: () => {} } as React.FormEvent)
                 }}
               >
                 Se connecter avec Google

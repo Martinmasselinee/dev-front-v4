@@ -23,6 +23,12 @@ import { FONT_THICKNESS } from '../../constants/fontThickness'
 import { TEXT_ALIGN } from '../../constants/textAlign'
 import { FONT_SIZE } from '../../constants/fontSize'
 import { TIME } from '../../constants/time'
+import { DISPLAY } from '../../constants/display'
+import { FLEX_DIRECTION } from '../../constants/flexDirection'
+import { ALIGN_ITEMS } from '../../constants/alignItems'
+import { JUSTIFY_CONTENT } from '../../constants/justifyContent'
+import { POSITION_TYPE } from '../../constants/positionType'
+import { FLEX } from '../../constants/flex'
 import { Loading } from '../../components/Loading'
 
 export default function AuthPasswordResetPage() {
@@ -43,15 +49,15 @@ export default function AuthPasswordResetPage() {
   return (
     <div
       style={{
-        display: 'flex',
-        flexDirection: 'column',
+        display: DISPLAY.FLEX,
+        flexDirection: FLEX_DIRECTION.COLUMN,
         height: LAYOUT.MIN_SCREEN_HEIGHT,
-        position: 'relative',
+        position: POSITION_TYPE.RELATIVE,
         paddingTop: SPACING.XXL,
         paddingBottom: SPACING.XXL,
       }}
     >
-      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ flex: FLEX.ONE, display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER, justifyContent: JUSTIFY_CONTENT.CENTER }}>
         <Container>
             <HeaderSection>
               <Heading>Réinitialiser votre mot de passe</Heading>
@@ -59,7 +65,7 @@ export default function AuthPasswordResetPage() {
 
             {!isSubmitted ? (
               <Form onSubmit={handleSubmit}>
-                <div style={{ marginBottom: SPACING.M, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: SPACING.S }}>
+                <div style={{ marginBottom: SPACING.M, display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER, justifyContent: JUSTIFY_CONTENT.CENTER, gap: SPACING.S }}>
                   <KeyRound size={ICON_SIZE.M} style={{ color: COLOR.GREY.DARK }} />
                   <Text size="M" color="GREY_DARK" style={{ textAlign: TEXT_ALIGN.CENTER }}>
                     Entrez votre email pour recevoir un lien
@@ -84,7 +90,7 @@ export default function AuthPasswordResetPage() {
                 <div style={{ textAlign: TEXT_ALIGN.CENTER, marginTop: SPACING.L }}>
                   <Link
                     href="/auth-sign-in"
-                    style={{ display: 'inline-flex', alignItems: 'center', fontSize: FONT_SIZE.M }}
+                    style={{ display: DISPLAY.INLINE_FLEX, alignItems: ALIGN_ITEMS.CENTER, fontSize: FONT_SIZE.M }}
                   >
                     <ArrowLeft size={ICON_SIZE.S} style={{ marginRight: SPACING.S }} />
                     Retour à la connexion
@@ -92,7 +98,7 @@ export default function AuthPasswordResetPage() {
                 </div>
               </Form>
             ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: SPACING.L, textAlign: TEXT_ALIGN.CENTER }}>
+              <div style={{ display: DISPLAY.FLEX, flexDirection: FLEX_DIRECTION.COLUMN, gap: SPACING.L, textAlign: TEXT_ALIGN.CENTER }}>
                 <Card>
                   <Text
                     size="M"
@@ -126,7 +132,7 @@ export default function AuthPasswordResetPage() {
                 <div>
                   <Link
                     href="/auth-sign-in"
-                    style={{ display: 'inline-flex', alignItems: 'center', fontSize: FONT_SIZE.M }}
+                    style={{ display: DISPLAY.INLINE_FLEX, alignItems: ALIGN_ITEMS.CENTER, fontSize: FONT_SIZE.M }}
                   >
                     <ArrowLeft size={ICON_SIZE.S} style={{ marginRight: SPACING.S }} />
                     Retour à la connexion

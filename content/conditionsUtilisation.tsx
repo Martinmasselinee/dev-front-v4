@@ -2,13 +2,15 @@ import { Heading } from '../components/Heading'
 import { Text } from '../components/Text'
 import { Spacer } from '../components/Spacer'
 import { SPACING } from '../constants/spacing'
+import { DISPLAY } from '../constants/display'
+import { FLEX_DIRECTION } from '../constants/flexDirection'
 
 export const ConditionsUtilisation = () => {
   return (
     <div
       style={{
-        display: 'flex',
-        flexDirection: 'column',
+        display: DISPLAY.FLEX,
+        flexDirection: FLEX_DIRECTION.COLUMN,
         gap: SPACING.L,
       }}
     >

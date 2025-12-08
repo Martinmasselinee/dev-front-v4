@@ -24,6 +24,14 @@ import { OPACITY } from '../../constants/opacity'
 import { TRANSITION } from '../../constants/transition'
 import { TIME } from '../../constants/time'
 import { COLOR_RGBA } from '../../constants/color'
+import { DISPLAY } from '../../constants/display'
+import { FLEX_DIRECTION } from '../../constants/flexDirection'
+import { ALIGN_ITEMS } from '../../constants/alignItems'
+import { JUSTIFY_CONTENT } from '../../constants/justifyContent'
+import { POSITION_TYPE } from '../../constants/positionType'
+import { FLEX } from '../../constants/flex'
+import { CURSOR } from '../../constants/cursor'
+import { BORDER_WIDTH } from '../../constants/borderWidth'
 import { Loading } from '../../components/Loading'
 
 export default function WorkspaceSelectionOrCreationPage() {
@@ -52,22 +60,22 @@ export default function WorkspaceSelectionOrCreationPage() {
   return (
     <div
       style={{
-        display: 'flex',
-        flexDirection: 'column',
+        display: DISPLAY.FLEX,
+        flexDirection: FLEX_DIRECTION.COLUMN,
         height: LAYOUT.MIN_SCREEN_HEIGHT,
-        position: 'relative',
+        position: POSITION_TYPE.RELATIVE,
         paddingTop: SPACING.XXL,
         paddingBottom: SPACING.XXL,
       }}
     >
-      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ flex: FLEX.ONE, display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER, justifyContent: JUSTIFY_CONTENT.CENTER }}>
         <Container>
           <HeaderSection>
             <div
               style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
+                display: DISPLAY.FLEX,
+                flexDirection: FLEX_DIRECTION.COLUMN,
+                alignItems: ALIGN_ITEMS.CENTER,
                 gap: SPACING.M,
                 marginBottom: SPACING.M,
               }}
@@ -82,8 +90,8 @@ export default function WorkspaceSelectionOrCreationPage() {
 
           <div
             style={{
-              display: 'flex',
-              flexDirection: 'column',
+              display: DISPLAY.FLEX,
+              flexDirection: FLEX_DIRECTION.COLUMN,
               gap: SPACING.L,
             }}
           >
@@ -94,28 +102,28 @@ export default function WorkspaceSelectionOrCreationPage() {
               onMouseEnter={() => setHoverJoin(true)}
               onMouseLeave={() => setHoverJoin(false)}
               style={{
-                cursor: 'pointer',
+                cursor: CURSOR.POINTER,
               }}
             >
               <Card
                 style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'flex-start',
+                  display: DISPLAY.FLEX,
+                  flexDirection: FLEX_DIRECTION.ROW,
+                  alignItems: ALIGN_ITEMS.FLEX_START,
                   gap: SPACING.M,
                   backgroundColor: COLOR.WHITE,
-                  border: `1px solid ${hoverJoin ? COLOR.PURPLE : COLOR.GREY.MEDIUM}`,
+                  border: `${BORDER_WIDTH.THIN} solid ${hoverJoin ? COLOR.PURPLE : COLOR.GREY.MEDIUM}`,
                   transition: `border-color ${TRANSITION.FAST_EASE}`,
-                  position: 'relative',
+                  position: POSITION_TYPE.RELATIVE,
                 }}
               >
                 <Users size={ICON_SIZE.M} style={{ color: hoverJoin ? COLOR.PURPLE : COLOR.GREY.DARK, transition: `color ${TRANSITION.FAST_EASE}` }} />
                 <div
                   style={{
-                    display: 'flex',
-                    flexDirection: 'column',
+                    display: DISPLAY.FLEX,
+                    flexDirection: FLEX_DIRECTION.COLUMN,
                     gap: SPACING.XS,
-                    flex: 1,
+                    flex: FLEX.ONE,
                   }}
                 >
                   <Text size="M" weight="L" style={{ color: hoverJoin ? COLOR.PURPLE : COLOR.BLACK, transition: `color ${TRANSITION.FAST_EASE}` }}>
@@ -136,28 +144,28 @@ export default function WorkspaceSelectionOrCreationPage() {
               onMouseEnter={() => setHoverCreate(true)}
               onMouseLeave={() => setHoverCreate(false)}
               style={{
-                cursor: 'pointer',
+                cursor: CURSOR.POINTER,
               }}
             >
               <Card
                 style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'flex-start',
+                  display: DISPLAY.FLEX,
+                  flexDirection: FLEX_DIRECTION.ROW,
+                  alignItems: ALIGN_ITEMS.FLEX_START,
                   gap: SPACING.M,
                   backgroundColor: COLOR.WHITE,
-                  border: `1px solid ${hoverCreate ? COLOR.PURPLE : COLOR.GREY.MEDIUM}`,
+                  border: `${BORDER_WIDTH.THIN} solid ${hoverCreate ? COLOR.PURPLE : COLOR.GREY.MEDIUM}`,
                   transition: `border-color ${TRANSITION.FAST_EASE}`,
-                  position: 'relative',
+                  position: POSITION_TYPE.RELATIVE,
                 }}
               >
                 <Building2 size={ICON_SIZE.M} style={{ color: hoverCreate ? COLOR.PURPLE : COLOR.GREY.DARK, transition: `color ${TRANSITION.FAST_EASE}` }} />
                 <div
                   style={{
-                    display: 'flex',
-                    flexDirection: 'column',
+                    display: DISPLAY.FLEX,
+                    flexDirection: FLEX_DIRECTION.COLUMN,
                     gap: SPACING.XS,
-                    flex: 1,
+                    flex: FLEX.ONE,
                   }}
                 >
                   <Text size="M" weight="L" style={{ color: hoverCreate ? COLOR.PURPLE : COLOR.BLACK, transition: `color ${TRANSITION.FAST_EASE}` }}>
@@ -180,8 +188,8 @@ export default function WorkspaceSelectionOrCreationPage() {
       >
         <div
           style={{
-            display: 'flex',
-            flexDirection: 'column',
+            display: DISPLAY.FLEX,
+            flexDirection: FLEX_DIRECTION.COLUMN,
             gap: SPACING.L,
           }}
         >
@@ -192,9 +200,9 @@ export default function WorkspaceSelectionOrCreationPage() {
           <DashedCard>
             <div
               style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
+                display: DISPLAY.FLEX,
+                alignItems: ALIGN_ITEMS.CENTER,
+                justifyContent: JUSTIFY_CONTENT.SPACE_BETWEEN,
               }}
             >
               <Text size="M" weight="L" color="BLACK">
@@ -205,17 +213,17 @@ export default function WorkspaceSelectionOrCreationPage() {
                 onMouseEnter={() => setHoverEmail(true)}
                 onMouseLeave={() => setHoverEmail(false)}
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
+                  display: DISPLAY.FLEX,
+                  alignItems: ALIGN_ITEMS.CENTER,
                   gap: SPACING.S,
                   backgroundColor: COLOR.WHITE,
-                  border: `1px solid ${COLOR_RGBA.PURPLE_LIGHT}`,
+                  border: `${BORDER_WIDTH.THIN} solid ${COLOR_RGBA.PURPLE_LIGHT}`,
                   paddingLeft: SPACING.M,
                   paddingRight: SPACING.M,
                   paddingTop: SPACING.S,
                   paddingBottom: SPACING.S,
                   borderRadius: BORDER_RADIUS.M,
-                  cursor: 'pointer',
+                  cursor: CURSOR.POINTER,
                   transition: `all ${TRANSITION.FAST_EASE}`,
                 }}
               >
@@ -236,15 +244,15 @@ export default function WorkspaceSelectionOrCreationPage() {
           <Card>
             <div
               style={{
-                display: 'flex',
-                flexDirection: 'column',
+                display: DISPLAY.FLEX,
+                flexDirection: FLEX_DIRECTION.COLUMN,
                 gap: SPACING.M,
               }}
             >
               <div
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
+                  display: DISPLAY.FLEX,
+                  alignItems: ALIGN_ITEMS.CENTER,
                   gap: SPACING.M,
                 }}
               >
@@ -255,8 +263,8 @@ export default function WorkspaceSelectionOrCreationPage() {
               </div>
               <div
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
+                  display: DISPLAY.FLEX,
+                  alignItems: ALIGN_ITEMS.CENTER,
                   gap: SPACING.M,
                 }}
               >
@@ -267,8 +275,8 @@ export default function WorkspaceSelectionOrCreationPage() {
               </div>
               <div
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
+                  display: DISPLAY.FLEX,
+                  alignItems: ALIGN_ITEMS.CENTER,
                   gap: SPACING.M,
                 }}
               >

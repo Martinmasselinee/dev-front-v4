@@ -25,6 +25,13 @@ import { Loading } from '../../components/Loading'
 import { COLOR } from '../../constants/color'
 import { Z_INDEX } from '../../constants/zIndex'
 import { TIME } from '../../constants/time'
+import { DISPLAY } from '../../constants/display'
+import { FLEX_DIRECTION } from '../../constants/flexDirection'
+import { ALIGN_ITEMS } from '../../constants/alignItems'
+import { JUSTIFY_CONTENT } from '../../constants/justifyContent'
+import { POSITION_TYPE } from '../../constants/positionType'
+import { FLEX } from '../../constants/flex'
+import { WIDTH } from '../../constants/width'
 
 type WorkspaceType = 'club-sportif' | 'athlete' | 'evenement-sportif' | 'media-sportif' | ''
 
@@ -53,10 +60,10 @@ export default function CreateWorkspacePage() {
   return (
     <div
       style={{
-        display: 'flex',
-        flexDirection: 'column',
+        display: DISPLAY.FLEX,
+        flexDirection: FLEX_DIRECTION.COLUMN,
         minHeight: LAYOUT.MIN_SCREEN_HEIGHT,
-        position: 'relative',
+        position: POSITION_TYPE.RELATIVE,
         paddingTop: SPACING.XXXL,
         paddingBottom: SPACING.XXXL,
       }}
@@ -64,7 +71,7 @@ export default function CreateWorkspacePage() {
       {/* Retour Button - Sticky Left */}
       <div
         style={{
-          position: 'fixed',
+          position: POSITION_TYPE.FIXED,
           left: SPACING.L,
           top: `calc(${SPACING.M} + ${SPACING.M} + ${SPACING.L} + ${SPACING.XXL})`,
           zIndex: Z_INDEX.NAVBAR,
@@ -81,10 +88,10 @@ export default function CreateWorkspacePage() {
 
       <div
         style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: '100%',
+          display: DISPLAY.FLEX,
+          alignItems: ALIGN_ITEMS.CENTER,
+          justifyContent: JUSTIFY_CONTENT.CENTER,
+          width: WIDTH.FULL,
           paddingTop: SPACING.XXXL,
           paddingBottom: SPACING.XXXL,
         }}
@@ -93,13 +100,13 @@ export default function CreateWorkspacePage() {
           <HeaderSection>
             <div
               style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
+                display: DISPLAY.FLEX,
+                alignItems: ALIGN_ITEMS.CENTER,
+                justifyContent: JUSTIFY_CONTENT.CENTER,
                 gap: SPACING.M,
               }}
             >
-              <FolderPlus size={ICON_SIZE.L} style={{ color: COLOR.BLACK, flexShrink: 0 }} />
+              <FolderPlus size={ICON_SIZE.L} style={{ color: COLOR.BLACK, flexShrink: FLEX.ZERO }} />
               <Heading style={{ marginBottom: 0 }}>Créer un nouveau workspace</Heading>
             </div>
           </HeaderSection>

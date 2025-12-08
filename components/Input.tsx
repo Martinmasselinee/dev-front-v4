@@ -11,6 +11,13 @@ import { POSITION } from '../constants/position'
 import { TRANSFORM } from '../constants/transform'
 import { Z_INDEX } from '../constants/zIndex'
 import { TRANSITION } from '../constants/transition'
+import { DISPLAY } from '../constants/display'
+import { ALIGN_ITEMS } from '../constants/alignItems'
+import { JUSTIFY_CONTENT } from '../constants/justifyContent'
+import { POSITION_TYPE } from '../constants/positionType'
+import { OUTLINE } from '../constants/outline'
+import { POINTER_EVENTS } from '../constants/pointerEvents'
+import { BORDER_WIDTH } from '../constants/borderWidth'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   icon?: ReactNode
@@ -34,23 +41,23 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div
         style={{
-          position: 'relative',
+          position: POSITION_TYPE.RELATIVE,
           width: WIDTH.FULL,
         }}
       >
         {icon && (
           <div
             style={{
-              position: 'absolute',
+              position: POSITION_TYPE.ABSOLUTE,
               left: SPACING.M,
               top: POSITION.CENTER,
               transform: TRANSFORM.CENTER_VERTICAL,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+              display: DISPLAY.FLEX,
+              alignItems: ALIGN_ITEMS.CENTER,
+              justifyContent: JUSTIFY_CONTENT.CENTER,
               color: isFocused ? COLOR.PURPLE : COLOR.GREY.DARK,
               zIndex: Z_INDEX.COMPONENT_OVERLAY,
-              pointerEvents: 'none',
+              pointerEvents: POINTER_EVENTS.NONE,
               transition: `color ${TRANSITION.FAST_EASE}`,
             }}
           >
@@ -71,9 +78,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             fontSize: FONT_SIZE.M,
             color: COLOR.BLACK,
             backgroundColor: COLOR.WHITE,
-            border: `1px solid ${COLOR.GREY.MEDIUM}`,
+            border: `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.MEDIUM}`,
             borderRadius: BORDER_RADIUS.M,
-            outline: 'none',
+            outline: OUTLINE.NONE,
             transition: `border-color ${TRANSITION.FAST_EASE}`,
             ...style,
           }}
@@ -92,13 +99,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         {actionButton && (
           <div
             style={{
-              position: 'absolute',
+              position: POSITION_TYPE.ABSOLUTE,
               right: SPACING.S,
               top: POSITION.CENTER,
               transform: TRANSFORM.CENTER_VERTICAL,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+              display: DISPLAY.FLEX,
+              alignItems: ALIGN_ITEMS.CENTER,
+              justifyContent: JUSTIFY_CONTENT.CENTER,
               zIndex: Z_INDEX.COMPONENT_OVERLAY,
             }}
           >
