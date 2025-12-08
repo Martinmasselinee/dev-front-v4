@@ -1,5 +1,5 @@
 import { ReactNode, useEffect } from 'react'
-import { X, FileText } from 'lucide-react'
+import { X, FileText, LucideIcon } from 'lucide-react'
 import { COLOR } from '../constants/color'
 import { SPACING } from '../constants/spacing'
 import { BORDER_RADIUS } from '../constants/borderRadius'
@@ -21,9 +21,10 @@ interface PopupProps {
   onClose: () => void
   title: string
   children: ReactNode
+  icon?: LucideIcon
 }
 
-export const Popup = ({ isOpen, onClose, title, children }: PopupProps) => {
+export const Popup = ({ isOpen, onClose, title, children, icon: Icon = FileText }: PopupProps) => {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden'
@@ -90,7 +91,7 @@ export const Popup = ({ isOpen, onClose, title, children }: PopupProps) => {
               flex: 1,
             }}
           >
-            <FileText
+            <Icon
               size={ICON_SIZE.M}
               style={{
                 color: COLOR.GREY.DARK,

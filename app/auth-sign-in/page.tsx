@@ -16,7 +16,6 @@ import { FormGroup } from '../../components/FormGroup'
 import { Spacer } from '../../components/Spacer'
 import { IconButton } from '../../components/IconButton'
 import { Footer } from '../../components/Footer'
-import { GoogleIcon } from '../../components/GoogleIcon'
 import { ICON_SIZE } from '../../constants/iconSize'
 import { LAYOUT } from '../../constants/layout'
 import { SPACING } from '../../constants/spacing'
@@ -141,14 +140,6 @@ export default function AuthSignInPage() {
 
               <Button variant="PURPLE" type="submit" icon={<LogIn size={ICON_SIZE.M} />}>
                 Se connecter
-              </Button>
-
-              <Button
-                variant="WHITE"
-                type="button"
-                icon={<GoogleIcon size={ICON_SIZE.M} />}
-              >
-                Se connecter avec Google
               </Button>
 
               <Button

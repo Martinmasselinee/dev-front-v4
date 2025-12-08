@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Mail, Lock, Eye, EyeOff, User, ArrowRight, UserPlus } from 'lucide-react'
+import { Mail, Lock, Eye, EyeOff, User, ArrowRight, UserPlus, CheckCircle, FileCheck, Scale } from 'lucide-react'
 import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
 import { Link } from '../../components/Link'
@@ -17,6 +17,10 @@ import { IconButton } from '../../components/IconButton'
 import { Footer } from '../../components/Footer'
 import { SecurityNotice } from '../../components/SecurityNotice'
 import { GoogleIcon } from '../../components/GoogleIcon'
+import { Popup } from '../../components/Popup'
+import { Checkbox } from '../../components/Checkbox'
+import { ConditionsUtilisation } from '../../content/conditionsUtilisation'
+import { MentionsLegales } from '../../content/mentionsLegales'
 import { ICON_SIZE } from '../../constants/iconSize'
 import { SPACING } from '../../constants/spacing'
 import { LAYOUT } from '../../constants/layout'
@@ -42,6 +46,11 @@ export default function AuthSignUpPage() {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [currentTextIndex, setCurrentTextIndex] = useState(0)
+  const [showSignUpPopup, setShowSignUpPopup] = useState(false)
+  const [showConditionsPopup, setShowConditionsPopup] = useState(false)
+  const [showMentionsPopup, setShowMentionsPopup] = useState(false)
+  const [acceptedCGU, setAcceptedCGU] = useState(false)
+  const [acceptedMentions, setAcceptedMentions] = useState(false)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -53,8 +62,15 @@ export default function AuthSignUpPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // TODO: Add registration logic here
-    // For now, prevent default form submission
+    setShowSignUpPopup(true)
+  }
+
+  const handleConfirmSignUp = () => {
+    if (acceptedCGU && acceptedMentions) {
+      setShowSignUpPopup(false)
+      // TODO: Add registration logic here
+      // For now, just close the popup
+    }
   }
 
   return (
@@ -228,6 +244,132 @@ export default function AuthSignUpPage() {
           </Container>
       </div>
       <Footer />
+
+      {/* Sign Up Confirmation Popup */}
+      <Popup
+        isOpen={showSignUpPopup}
+        onClose={() => setShowSignUpPopup(false)}
+        title="Confirmer l'inscription"
+        icon={CheckCircle}
+      >
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: SPACING.L,
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: SPACING.M,
+            }}
+          >
+            <Checkbox
+              checked={acceptedCGU}
+              onChange={(e) => setAcceptedCGU(e.target.checked)}
+              label={
+                <span style={{
+                  fontSize: FONT_SIZE.M,
+                  fontWeight: FONT_THICKNESS.M,
+                }}>
+                  J'accepte les{' '}
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault()
+                      setShowConditionsPopup(true)
+                    }}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      padding: 0,
+                      cursor: 'pointer',
+                      color: COLOR.PURPLE,
+                      fontSize: FONT_SIZE.M,
+                      fontWeight: FONT_THICKNESS.M,
+                      textDecoration: 'underline',
+                    }}
+                  >
+                    Conditions Générales d'Utilisation
+                  </button>
+                </span>
+              }
+            />
+            
+            <Checkbox
+              checked={acceptedMentions}
+              onChange={(e) => setAcceptedMentions(e.target.checked)}
+              label={
+                <span style={{
+                  fontSize: FONT_SIZE.M,
+                  fontWeight: FONT_THICKNESS.M,
+                }}>
+                  J'accepte les{' '}
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault()
+                      setShowMentionsPopup(true)
+                    }}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      padding: 0,
+                      cursor: 'pointer',
+                      color: COLOR.PURPLE,
+                      fontSize: FONT_SIZE.M,
+                      fontWeight: FONT_THICKNESS.M,
+                      textDecoration: 'underline',
+                    }}
+                  >
+                    Mentions Légales
+                  </button>
+                </span>
+              }
+            />
+          </div>
+
+          <div
+            style={{
+              display: 'flex',
+              gap: SPACING.M,
+              justifyContent: 'flex-end',
+              marginTop: SPACING.L,
+            }}
+          >
+            <Button
+              variant="PURPLE"
+              type="button"
+              onClick={handleConfirmSignUp}
+              disabled={!acceptedCGU || !acceptedMentions}
+            >
+              Confirmer
+            </Button>
+          </div>
+        </div>
+      </Popup>
+
+      {/* CGU Popup */}
+      <Popup
+        isOpen={showConditionsPopup}
+        onClose={() => setShowConditionsPopup(false)}
+        title="Conditions Générales d'Utilisation"
+        icon={FileCheck}
+      >
+        <ConditionsUtilisation />
+      </Popup>
+
+      {/* Mentions Légales Popup */}
+      <Popup
+        isOpen={showMentionsPopup}
+        onClose={() => setShowMentionsPopup(false)}
+        title="Mentions Légales"
+        icon={Scale}
+      >
+        <MentionsLegales />
+      </Popup>
     </div>
   )
 }
