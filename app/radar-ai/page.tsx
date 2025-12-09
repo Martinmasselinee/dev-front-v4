@@ -241,6 +241,7 @@ export default function RadarAIPage() {
               >
                 <EmptyStateIcon
                   size={ICON_SIZE.XL * 2}
+                  strokeWidth={1.5}
                   style={{
                     color: COLOR.GREY.DARK,
                   }}

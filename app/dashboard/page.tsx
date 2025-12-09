@@ -112,6 +112,7 @@ export default function DashboardPage() {
             >
               <Inbox
                 size={ICON_SIZE.XL * 2}
+                strokeWidth={1.5}
                 style={{
                   color: COLOR.GREY.DARK,
                 }}
