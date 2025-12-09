@@ -15,7 +15,7 @@ import { ALIGN_ITEMS, JUSTIFY_CONTENT } from '../constants/flex'
 import { CURSOR, POINTER_EVENTS } from '../constants/interaction'
 import { lightenColor, darkenColor } from '../lib/colorUtils'
 
-type ButtonVariant = 'BLACK' | 'PURPLE' | 'WHITE'
+type ButtonVariant = 'BLACK' | 'PURPLE' | 'WHITE' | 'RED'
 
 interface ButtonProps {
   children: ReactNode

@@ -11,7 +11,6 @@ import { Container } from '../../components/Container'
 import { HeaderSection } from '../../components/HeaderSection'
 import { Heading } from '../../components/Heading'
 import { Text } from '../../components/Text'
-import { Card } from '../../components/Card'
 import { Button } from '../../components/Button'
 import { ButtonRetour } from '../../components/ButtonRetour'
 import { Input } from '../../components/Input'
@@ -22,13 +21,13 @@ import { FormGroup } from '../../components/FormGroup'
 import { AdminInfoCard } from '../../components/AdminInfoCard'
 import { FileUpload } from '../../components/FileUpload'
 import { Loading } from '../../components/Loading'
-import { COLOR } from '../../constants/color'
 import { Z_INDEX } from '../../constants/zIndex'
 import { TIME } from '../../constants/time'
 import { DISPLAY } from '../../constants/display'
 import { FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT, FLEX } from '../../constants/flex'
 import { POSITION_TYPE } from '../../constants/position'
 import { WIDTH } from '../../constants/width'
+import { COLOR } from '../../constants/color'
 
 type WorkspaceType = 'club-sportif' | 'athlete' | 'evenement-sportif' | 'media-sportif' | ''
 
@@ -50,9 +49,10 @@ export default function CreateWorkspacePage() {
     e.preventDefault()
     setIsLoading(true)
     setTimeout(() => {
-      router.push('/radar-ai')
+      router.push('/radar-ai?from=create-workspace')
     }, TIME.DELAY.LOADING_REDIRECT)
   }
+
 
   return (
     <div

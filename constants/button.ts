@@ -23,5 +23,9 @@ export const BUTTON_MAIN = {
     backgroundColor: COLOR.WHITE,
     color: COLOR.BLACK,
   },
+  RED: {
+    backgroundColor: COLOR.RED,
+    color: COLOR.WHITE,
+  },
 } as const
 

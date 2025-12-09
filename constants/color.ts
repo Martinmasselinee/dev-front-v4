@@ -5,6 +5,7 @@ export const COLOR = {
   PURPLE: '#5218F9',
   BLACK: '#000000',
   WHITE: '#ffffff',
+  RED: '#dc2626',
   GREY: {
     LIGHT: '#f5f5f5',
     LIGHT_MEDIUM: '#e0e0e0',

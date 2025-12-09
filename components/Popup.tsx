@@ -24,9 +24,10 @@ interface PopupProps {
   title: string
   children: ReactNode
   icon?: LucideIcon
+  size?: 'default' | 'small'
 }
 
-export const Popup = ({ isOpen, onClose, title, children, icon: Icon = FileText }: PopupProps) => {
+export const Popup = ({ isOpen, onClose, title, children, icon: Icon = FileText, size = 'default' }: PopupProps) => {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden'
@@ -67,7 +68,7 @@ export const Popup = ({ isOpen, onClose, title, children, icon: Icon = FileText 
           backgroundColor: COLOR.WHITE,
           borderRadius: BORDER_RADIUS.M,
           width: WIDTH.FULL,
-          maxWidth: POPUP.MAX_WIDTH,
+          maxWidth: size === 'small' ? POPUP.MAX_WIDTH_SMALL : POPUP.MAX_WIDTH,
           maxHeight: POPUP.MAX_HEIGHT,
           display: DISPLAY.FLEX,
           flexDirection: FLEX_DIRECTION.COLUMN,

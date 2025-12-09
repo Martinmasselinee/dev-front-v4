@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Users, Building2, Sparkles, ArrowRight, Mail, Phone, HelpCircle } from 'lucide-react'
+import { Users, Building2, Sparkles, ArrowRight, Mail, Phone, HelpCircle, Copy } from 'lucide-react'
 import { LAYOUT } from '../../constants/layout'
 import { SPACING } from '../../constants/spacing'
 import { Footer } from '../../components/Footer'
@@ -221,7 +221,7 @@ export default function WorkspaceSelectionOrCreationPage() {
                   transition: `all ${TRANSITION.FAST_EASE}`,
                 }}
               >
-                <Mail size={ICON_SIZE.S} style={{ color: COLOR.PURPLE }} />
+                <Copy size={ICON_SIZE.S} style={{ color: COLOR.PURPLE }} />
                 {copied ? (
                   <Text size="M" weight="L" style={{ color: COLOR.PURPLE }}>
                     Copié dans le presse-papiers !
