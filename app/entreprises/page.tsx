@@ -1,17 +1,51 @@
 'use client'
 
 import { useState } from 'react'
-import { Building2 } from 'lucide-react'
+import { 
+  Building2, 
+  UserPlus, 
+  Mail, 
+  CheckCircle, 
+  Sparkles,
+  RefreshCw, 
+  MessageCircle, 
+  Calendar, 
+  CalendarCheck, 
+  FileCheck, 
+  Zap, 
+  PlayCircle, 
+  CheckCircle2, 
+  Archive, 
+  XCircle 
+} from 'lucide-react'
 import { LAYOUT } from '../../constants/layout'
 import { SPACING } from '../../constants/spacing'
 import { POSITION_TYPE } from '../../constants/position'
 import { NavbarSidebar } from '../../components/NavbarSidebar'
 import { TopBar } from '../../components/TopBar'
 import { HelpButton } from '../../components/HelpButton'
-import { StatusFilterSidebar } from '../../components/StatusFilterSidebar'
+import { StatusFilterSidebar, StatusItem } from '../../components/StatusFilterSidebar'
 
 export default function EntreprisesPage() {
   const [searchValue, setSearchValue] = useState('')
+
+  const statusItems: StatusItem[] = [
+    { label: 'Tous', value: 'all', icon: Building2 },
+    { label: 'Prospects', value: 'prospects', icon: UserPlus },
+    { label: 'À contacter', value: 'a_contacter', icon: Mail },
+    { label: 'Contacté', value: 'contacte', icon: CheckCircle },
+    { label: 'Activation proposée', value: 'activation_proposee', icon: Sparkles },
+    { label: 'À relancer', value: 'a_relancer', icon: RefreshCw },
+    { label: 'Discussion en cours', value: 'discussion_en_cours', icon: MessageCircle },
+    { label: 'Meeting à venir', value: 'meeting_a_venir', icon: Calendar },
+    { label: 'Meetings effectués', value: 'meetings_effectues', icon: CalendarCheck },
+    { label: 'Contrat signé', value: 'contrat_signe', icon: FileCheck },
+    { label: 'Activation à venir', value: 'activation_a_venir', icon: Zap },
+    { label: 'Activation en cours', value: 'activation_en_cours', icon: PlayCircle },
+    { label: 'Contrat terminé', value: 'contrat_termine', icon: CheckCircle2 },
+    { label: 'Archivé', value: 'archive', icon: Archive },
+    { label: 'Expirés', value: 'expires', icon: XCircle },
+  ]
 
   return (
     <div
@@ -23,7 +57,7 @@ export default function EntreprisesPage() {
       }}
     >
       <NavbarSidebar />
-      <StatusFilterSidebar />
+      <StatusFilterSidebar statusItems={statusItems} />
       <TopBar 
         icon={Building2} 
         title="Entreprises" 
