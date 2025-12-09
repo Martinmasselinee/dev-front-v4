@@ -13,6 +13,8 @@ import {
   FileText,
   Settings,
   LogOut,
+  ChevronDown,
+  ChevronUp,
 } from 'lucide-react'
 import { COLOR, COLOR_RGBA } from '../constants/color'
 import { lightenColor, hexToRgba } from '../lib/colorUtils'
@@ -35,6 +37,8 @@ import { TEXT_TRANSFORM, TEXT_OVERFLOW, WHITE_SPACE, LETTER_SPACING } from '../c
 import { BACKGROUND } from '../constants/background'
 import { Text } from './Text'
 import { Card } from './Card'
+import { Popup } from './Popup'
+import { IconButton } from './IconButton'
 import { useState, useRef, useEffect } from 'react'
 import { Loading } from './Loading'
 
@@ -54,11 +58,21 @@ export const Sidebar = () => {
   const router = useRouter()
   const pathname = usePathname()
   const [isLoading, setIsLoading] = useState(false)
+  const [showWorkspacePopup, setShowWorkspacePopup] = useState(false)
+  const [hoverWorkspace, setHoverWorkspace] = useState(false)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   // Workspace and user data
   const workspaceName = 'SRFC'
   const userFullName = 'Martin Masseline'
+  
+  // Mock workspaces data (front-end only)
+  const workspaces = [
+    { id: '1', name: 'SRFC', role: 'owner' as const },
+    { id: '2', name: 'Paris Saint-Germain', role: 'member' as const },
+    { id: '3', name: 'Olympique de Marseille', role: 'member' as const },
+    { id: '4', name: 'AS Monaco', role: 'owner' as const },
+  ]
 
   useEffect(() => {
     return () => {
@@ -287,28 +301,57 @@ export const Sidebar = () => {
             }}
           >
             <div
+              onMouseEnter={() => setHoverWorkspace(true)}
+              onMouseLeave={() => setHoverWorkspace(false)}
               style={{
                 display: DISPLAY.FLEX,
                 alignItems: ALIGN_ITEMS.CENTER,
                 gap: SPACING.M,
                 marginBottom: SPACING.S,
+                justifyContent: JUSTIFY_CONTENT.SPACE_BETWEEN,
+                cursor: CURSOR.POINTER,
               }}
             >
-              <FileText size={ICON_SIZE.M} style={{ color: COLOR.BLACK, flexShrink: FLEX.ZERO }} />
-              <Text 
-                size="M" 
-                weight="XL" 
-                color="BLACK"
+              <div
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setShowWorkspacePopup(true)
+                }}
                 style={{
-                  overflow: OVERFLOW.HIDDEN,
-                  textOverflow: TEXT_OVERFLOW.ELLIPSIS,
-                  whiteSpace: WHITE_SPACE.NOWRAP,
-                  minWidth: 0,
+                  display: DISPLAY.FLEX,
+                  alignItems: ALIGN_ITEMS.CENTER,
+                  gap: SPACING.M,
                   flex: FLEX.ONE,
                 }}
               >
-                {workspaceName}
-              </Text>
+                <FileText size={ICON_SIZE.M} style={{ color: hoverWorkspace ? COLOR.PURPLE : COLOR.BLACK, flexShrink: FLEX.ZERO, transition: `color ${TRANSITION.FAST_EASE}` }} />
+                <Text 
+                  size="M" 
+                  weight="XL" 
+                  color={hoverWorkspace ? 'PURPLE' : 'BLACK'}
+                  style={{
+                    overflow: OVERFLOW.HIDDEN,
+                    textOverflow: TEXT_OVERFLOW.ELLIPSIS,
+                    whiteSpace: WHITE_SPACE.NOWRAP,
+                    minWidth: 0,
+                    transition: `color ${TRANSITION.FAST_EASE}`,
+                  }}
+                >
+                  {workspaceName}
+                </Text>
+              </div>
+              <IconButton
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setShowWorkspacePopup(true)
+                }}
+                icon={hoverWorkspace || showWorkspacePopup ? <ChevronUp size={ICON_SIZE.M} /> : <ChevronDown size={ICON_SIZE.M} />}
+                style={{ 
+                  color: hoverWorkspace ? COLOR.PURPLE : COLOR.GREY.DARK,
+                  flexShrink: FLEX.ZERO,
+                  transition: `color ${TRANSITION.FAST_EASE}`,
+                }}
+              />
             </div>
             <div
               style={{
@@ -416,6 +459,94 @@ export const Sidebar = () => {
           </Card>
         </div>
       </aside>
+      
+      <Popup
+        isOpen={showWorkspacePopup}
+        onClose={() => setShowWorkspacePopup(false)}
+        title="Sélectionner un workspace"
+        icon={Building2}
+      >
+        <div
+          style={{
+            display: DISPLAY.FLEX,
+            flexDirection: FLEX_DIRECTION.COLUMN,
+            gap: SPACING.S,
+          }}
+        >
+          {workspaces.map((workspace) => (
+            <Card
+              key={workspace.id}
+              onClick={() => {
+                // In a real app, this would switch the workspace context
+                setShowWorkspacePopup(false)
+                // For now, just close the popup
+              }}
+              style={{
+                display: DISPLAY.FLEX,
+                alignItems: ALIGN_ITEMS.CENTER,
+                justifyContent: JUSTIFY_CONTENT.SPACE_BETWEEN,
+                backgroundColor: workspace.name === workspaceName ? hexToRgba(COLOR.PURPLE, 0.1) : COLOR.WHITE,
+                border: workspace.name === workspaceName 
+                  ? `${BORDER_WIDTH.THIN} solid ${COLOR.PURPLE}` 
+                  : `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.MEDIUM}`,
+                cursor: CURSOR.POINTER,
+                transition: `border-color ${TRANSITION.FAST_EASE}, background-color ${TRANSITION.FAST_EASE}`,
+              }}
+              onMouseEnter={(e) => {
+                if (workspace.name !== workspaceName) {
+                  e.currentTarget.style.borderColor = COLOR.PURPLE
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (workspace.name !== workspaceName) {
+                  e.currentTarget.style.borderColor = COLOR.GREY.MEDIUM
+                }
+              }}
+            >
+              <div
+                style={{
+                  display: DISPLAY.FLEX,
+                  alignItems: ALIGN_ITEMS.CENTER,
+                  gap: SPACING.S,
+                  flex: FLEX.ONE,
+                }}
+              >
+                <FileText size={ICON_SIZE.M} style={{ color: workspace.name === workspaceName ? COLOR.PURPLE : COLOR.BLACK, flexShrink: FLEX.ZERO }} />
+                <Text 
+                  size="M" 
+                  weight="L" 
+                  color={workspace.name === workspaceName ? 'PURPLE' : 'BLACK'}
+                  style={{
+                    overflow: OVERFLOW.HIDDEN,
+                    textOverflow: TEXT_OVERFLOW.ELLIPSIS,
+                    whiteSpace: WHITE_SPACE.NOWRAP,
+                    flex: FLEX.ONE,
+                  }}
+                >
+                  {workspace.name}
+                </Text>
+                <div
+                  style={{
+                    paddingLeft: SPACING.XS,
+                    paddingRight: SPACING.XS,
+                    paddingTop: SPACING.XS,
+                    paddingBottom: SPACING.XS,
+                    backgroundColor: COLOR.WHITE,
+                    border: `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.MEDIUM}`,
+                    borderRadius: BORDER_RADIUS.S,
+                    flexShrink: FLEX.ZERO,
+                  }}
+                >
+                  <Text size="S" weight="M" color="GREY_DARK">
+                    {workspace.role === 'owner' ? 'admin' : 'membre'}
+                  </Text>
+                </div>
+                </div>
+              </Card>
+          ))}
+        </div>
+      </Popup>
+
       {isLoading && <Loading message="Déconnexion en cours..." />}
     </>
   )
