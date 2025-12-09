@@ -90,7 +90,7 @@ export const StickyStatsBar = ({
     </div>
   )
 
-  const statusSidebarWidth = `calc(${LAYOUT.SIDEBAR_WIDTH} * 0.9)`
+  const statusSidebarWidth = `calc(${LAYOUT.SIDEBAR_WIDTH} * ${MULTIPLIER.SIDEBAR_WIDTH_NINETY})`
   const totalSidebarWidth = `calc(${LAYOUT.SIDEBAR_WIDTH} + ${statusSidebarWidth})`
   const customLeft = totalSidebarWidth
   const customWidth = `calc(${WIDTH.FULL} - ${totalSidebarWidth})`
@@ -142,8 +142,8 @@ export const StickyStatsBar = ({
       secondDropdownOptions={ownerDropdownOptions}
       secondDropdownValue={ownerValue}
       onSecondDropdownChange={onOwnerChange}
-      dropdownWidth={`calc(${DIMENSION.DROPDOWN_WIDTH} * 1.5)`}
-      stickyTopOffset={`calc(${SPACING.XXXL} + ${SPACING.M} - 1px)`}
+      dropdownWidth={`calc(${DIMENSION.DROPDOWN_WIDTH} * ${MULTIPLIER.DROPDOWN_WIDTH_ONE_FIVE})`}
+      stickyTopOffset={`calc(${SPACING.XXXL} + ${SPACING.M} + ${SPACING.NEGATIVE_ONE_PX})`}
       customLeft={customLeft}
       customWidth={customWidth}
       rightElement={rightButton}

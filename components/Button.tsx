@@ -14,6 +14,7 @@ import { DISPLAY } from '../constants/display'
 import { ALIGN_ITEMS, JUSTIFY_CONTENT } from '../constants/flex'
 import { CURSOR, POINTER_EVENTS } from '../constants/interaction'
 import { lightenColor, darkenColor } from '../lib/colorUtils'
+import { MULTIPLIER } from '../constants/multiplier'
 
 type ButtonVariant = 'BLACK' | 'PURPLE' | 'WHITE' | 'RED'
 
@@ -46,8 +47,8 @@ export const Button = ({
 
   const hoverBackgroundColor =
     variant === 'WHITE'
-      ? darkenColor(buttonStyle.backgroundColor, 10)
-      : lightenColor(buttonStyle.backgroundColor, 10)
+      ? darkenColor(buttonStyle.backgroundColor, MULTIPLIER.COLOR_DARKEN_PERCENT)
+      : lightenColor(buttonStyle.backgroundColor, MULTIPLIER.COLOR_LIGHTEN_PERCENT)
 
   return (
     <>
@@ -82,7 +83,7 @@ export const Button = ({
           alignItems: ALIGN_ITEMS.CENTER,
           justifyContent: JUSTIFY_CONTENT.CENTER,
           position: POSITION_TYPE.RELATIVE,
-          opacity: disabled ? OPACITY.DISABLED : 1,
+          opacity: disabled ? OPACITY.DISABLED : OPACITY.FULL,
           ...style,
         }}
       >

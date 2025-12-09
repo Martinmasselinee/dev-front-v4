@@ -116,9 +116,9 @@ export const SplashScreen = () => {
           >
             <div
               style={{
-                transformOrigin: 'center center',
+                transformOrigin: `${POSITION.CENTER} ${POSITION.CENTER}`,
                 transition: `transform ${TRANSITION_DURATION.VERY_SLOW} ${TRANSITION_EASING.EASE_IN_OUT}`,
-                transform: animationStep === 0 ? 'scale(0)' : 'scale(1)',
+                transform: animationStep === 0 ? TRANSFORM.SCALE_ZERO : TRANSFORM.SCALE_ONE,
               }}
             >
               <img

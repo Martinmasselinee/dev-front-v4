@@ -14,6 +14,7 @@ import { DISPLAY } from '../constants/display'
 import { ALIGN_ITEMS, JUSTIFY_CONTENT } from '../constants/flex'
 import { CURSOR, POINTER_EVENTS } from '../constants/interaction'
 import { lightenColor, darkenColor } from '../lib/colorUtils'
+import { MULTIPLIER } from '../constants/multiplier'
 
 type ButtonRetourVariant = 'BLACK' | 'PURPLE' | 'WHITE'
 
@@ -42,8 +43,8 @@ export const ButtonRetour = ({
 
   const hoverBackgroundColor =
     variant === 'WHITE'
-      ? darkenColor(buttonStyle.backgroundColor, 10)
-      : lightenColor(buttonStyle.backgroundColor, 10)
+      ? darkenColor(buttonStyle.backgroundColor, MULTIPLIER.COLOR_DARKEN_PERCENT)
+      : lightenColor(buttonStyle.backgroundColor, MULTIPLIER.COLOR_LIGHTEN_PERCENT)
 
   return (
     <>

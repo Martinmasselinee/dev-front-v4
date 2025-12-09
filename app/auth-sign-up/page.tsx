@@ -35,11 +35,12 @@ import { TEXT_DECORATION } from '../../constants/text'
 import { BACKGROUND } from '../../constants/background'
 import { BORDER } from '../../constants/border'
 import { CURSOR } from '../../constants/interaction'
-import { POSITION } from '../../constants/position'
+import { POSITION, TRANSFORM } from '../../constants/position'
 import { Loading } from '../../components/Loading'
 import { Z_INDEX } from '../../constants/zIndex'
 import { DIMENSION } from '../../constants/dimension'
 import { TRANSITION_DURATION, TRANSITION_EASING } from '../../constants/transition'
+import { OPACITY } from '../../constants/opacity'
 
 const rotatingTexts = [
   'Clubs de football',
@@ -113,8 +114,8 @@ export default function AuthSignUpPage() {
           right: SPACING.L,
           zIndex: Z_INDEX.COMPONENT_CONTENT,
           width: DIMENSION.SECURITY_NOTICE_WIDTH,
-          transform: showSecurityNotice ? 'scale(1)' : 'scale(0.8)',
-          opacity: showSecurityNotice ? 1 : 0,
+          transform: showSecurityNotice ? TRANSFORM.SCALE_ONE : TRANSFORM.SCALE_EIGHTY,
+          opacity: showSecurityNotice ? OPACITY.FULL : OPACITY.ZERO,
           transition: `transform ${TRANSITION_DURATION.NORMAL} ${TRANSITION_EASING.EASE_OUT}, opacity ${TRANSITION_DURATION.NORMAL} ${TRANSITION_EASING.EASE_OUT}`,
         }}
       >

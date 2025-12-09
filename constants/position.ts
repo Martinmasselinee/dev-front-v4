@@ -20,5 +20,9 @@ export const INSET = {
 export const TRANSFORM = {
   CENTER_VERTICAL: 'translateY(-50%)',
   CENTER_HORIZONTAL: 'translateX(-50%)',
+  CENTER_BOTH: 'translate(-50%, -50%)',
+  SCALE_ZERO: 'scale(0)',
+  SCALE_ONE: 'scale(1)',
+  SCALE_EIGHTY: 'scale(0.8)',
 } as const
 

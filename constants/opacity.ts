@@ -1,4 +1,5 @@
 export const OPACITY = {
+  ZERO: 0,
   OVERLAY: 0.5,
   BUTTON_GRADIENT_START: 0.5,
   BUTTON_GRADIENT_END: 0,
@@ -6,5 +7,6 @@ export const OPACITY = {
   NAVBAR_SHADOW: 0.05,
   DISABLED: 0.6,
   LOADING_OVERLAY: 0.9,
+  FULL: 1,
 } as const
 

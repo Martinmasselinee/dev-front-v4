@@ -10,5 +10,6 @@ export const TIME = {
     LOADING_REDIRECT: 1000, // milliseconds (1 second)
   },
   SPLASH_SCREEN: 2000, // milliseconds (2 seconds)
+  ANIMATION_DURATION: 1000, // milliseconds
 } as const
 

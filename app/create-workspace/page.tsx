@@ -104,7 +104,7 @@ export default function CreateWorkspacePage() {
               }}
             >
               <FolderPlus size={ICON_SIZE.L} style={{ color: COLOR.BLACK, flexShrink: FLEX.ZERO }} />
-              <Heading style={{ marginBottom: 0 }}>Créer un nouveau workspace</Heading>
+              <Heading style={{ marginBottom: SPACING.ZERO }}>Créer un nouveau workspace</Heading>
             </div>
           </HeaderSection>
 

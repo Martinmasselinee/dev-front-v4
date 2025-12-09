@@ -5,12 +5,13 @@ import { Circle, CheckCircle, XCircle, AlertCircle } from 'lucide-react'
 import { COLOR } from '../constants/color'
 import { hexToRgba } from '../lib/colorUtils'
 import { SPACING } from '../constants/spacing'
+import { MULTIPLIER } from '../constants/multiplier'
+import { LAYOUT } from '../constants/layout'
 import { FONT_SIZE, FONT_THICKNESS } from '../constants/font'
 import { BORDER_WIDTH, BORDER } from '../constants/border'
 import { Z_INDEX } from '../constants/zIndex'
 import { POSITION, POSITION_TYPE } from '../constants/position'
 import { TRANSITION } from '../constants/transition'
-import { LAYOUT } from '../constants/layout'
 import { DISPLAY } from '../constants/display'
 import { FLEX_DIRECTION, ALIGN_ITEMS, FLEX } from '../constants/flex'
 import { OVERFLOW } from '../constants/overflow'
@@ -61,11 +62,11 @@ export const StatusFilterSidebar = ({ statusItems = defaultStatusItems, defaultS
         left: LAYOUT.SIDEBAR_WIDTH,
         top: `calc(${SPACING.XXXL} + ${SPACING.M})`,
         bottom: POSITION.ZERO,
-        width: `calc(${LAYOUT.SIDEBAR_WIDTH} * 0.9)`,
+        width: `calc(${LAYOUT.SIDEBAR_WIDTH} * ${MULTIPLIER.SIDEBAR_WIDTH_NINETY})`,
         backgroundColor: COLOR.WHITE,
         borderTop: BORDER.NONE,
         borderRight: `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.LIGHT_MEDIUM}`,
-        zIndex: Z_INDEX.NAVBAR - 1,
+        zIndex: Z_INDEX.NAVBAR_MINUS_ONE,
         display: DISPLAY.FLEX,
         flexDirection: FLEX_DIRECTION.COLUMN,
         overflowY: OVERFLOW.AUTO,
@@ -109,14 +110,14 @@ export const StatusFilterSidebar = ({ statusItems = defaultStatusItems, defaultS
                 paddingLeft: SPACING.L,
                 paddingRight: SPACING.L,
                 marginBottom: POSITION.ZERO,
-                backgroundColor: active ? hexToRgba(COLOR.PURPLE, 0.15) : BACKGROUND.TRANSPARENT,
+                backgroundColor: active ? hexToRgba(COLOR.PURPLE, MULTIPLIER.OPACITY_PURPLE_LIGHT) : BACKGROUND.TRANSPARENT,
                 cursor: CURSOR.POINTER,
                 transition: `background-color ${TRANSITION.FAST_EASE}`,
                 position: POSITION_TYPE.RELATIVE,
               }}
               onMouseEnter={(e) => {
                 if (!active) {
-                  e.currentTarget.style.backgroundColor = hexToRgba(COLOR.GREY.MEDIUM, 0.3)
+                  e.currentTarget.style.backgroundColor = hexToRgba(COLOR.GREY.MEDIUM, MULTIPLIER.OPACITY_GREY_MEDIUM)
                 }
               }}
               onMouseLeave={(e) => {

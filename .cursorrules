@@ -95,6 +95,18 @@ This is a front-end rebuild of the Dataxx platform - a sponsoring management pla
    - ❌ **NEVER hardcode time/duration values** (milliseconds, seconds) - ALWAYS use TIME constants (TIME.INTERVAL.*, TIME.DELAY.*)
    - ❌ **NEVER hardcode transition strings** ('0.2s ease', '0.3s ease-out', etc.) - ALWAYS use TRANSITION constants (TRANSITION.FAST_EASE, TRANSITION.NORMAL_EASE, etc.)
    - ❌ **NEVER hardcode '0' values** - Use POSITION.ZERO or SPACING.ZERO constants
+   - ❌ **NEVER hardcode opacity: 1** - ALWAYS use OPACITY.FULL constant
+   - ❌ **NEVER hardcode opacity: 0** - ALWAYS use OPACITY.ZERO constant
+   - ❌ **NEVER hardcode minWidth: 0** - ALWAYS use DIMENSION.MIN_WIDTH_ZERO constant
+   - ❌ **NEVER hardcode scale transforms** - ALWAYS use TRANSFORM constants (TRANSFORM.SCALE_ZERO, TRANSFORM.SCALE_ONE, TRANSFORM.SCALE_EIGHTY)
+   - ❌ **NEVER hardcode translate(-50%, -50%)** - ALWAYS use TRANSFORM.CENTER_BOTH constant
+   - ❌ **NEVER hardcode percentage multipliers** (0.9, 0.15, 0.25, 0.3, 0.6, 0.1, 1.5, etc.) - ALWAYS use MULTIPLIER constants
+   - ❌ **NEVER hardcode negative spacing** (-1px, etc.) - ALWAYS use SPACING.NEGATIVE_ONE_PX or appropriate constants
+   - ❌ **NEVER hardcode color function percentages** (10, 40, etc. for lightenColor/darkenColor) - ALWAYS use MULTIPLIER constants
+   - ❌ **NEVER hardcode paddingTop: 0 or paddingBottom: 0** - ALWAYS use SPACING.ZERO
+   - ❌ **NEVER hardcode marginBottom: 0** - ALWAYS use SPACING.ZERO
+   - ❌ **NEVER hardcode width: 'auto'** - ALWAYS use WIDTH.AUTO constant
+   - ❌ **NEVER hardcode z-index calculations** (Z_INDEX.NAVBAR - 1, etc.) - Create constants like Z_INDEX.NAVBAR_MINUS_ONE
    - ❌ **NEVER hardcode display values** - ALWAYS use DISPLAY constants (flex, none, inline-flex, block)
    - ❌ **NEVER hardcode flex direction** - ALWAYS use FLEX_DIRECTION constants (from `flex.ts`)
    - ❌ **NEVER hardcode align items** - ALWAYS use ALIGN_ITEMS constants (from `flex.ts`)

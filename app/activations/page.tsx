@@ -12,6 +12,7 @@ import {
 import { LAYOUT } from '../../constants/layout'
 import { SPACING } from '../../constants/spacing'
 import { MULTIPLIER } from '../../constants/multiplier'
+import { WIDTH } from '../../constants/width'
 import { POSITION_TYPE } from '../../constants/position'
 import { NavbarSidebar } from '../../components/NavbarSidebar'
 import { TopBar } from '../../components/TopBar'
@@ -87,7 +88,7 @@ export default function ActivationsPage() {
       style={{
         minHeight: LAYOUT.MIN_SCREEN_HEIGHT,
         position: POSITION_TYPE.RELATIVE,
-        marginLeft: `calc(${LAYOUT.SIDEBAR_WIDTH} + (${LAYOUT.SIDEBAR_WIDTH} * 0.9))`,
+        marginLeft: `calc(${LAYOUT.SIDEBAR_WIDTH} + (${LAYOUT.SIDEBAR_WIDTH} * ${MULTIPLIER.SIDEBAR_WIDTH_NINETY}))`,
         paddingTop: `calc((${SPACING.XXXL} + ${SPACING.M}) + ((${SPACING.XXXL} + ${SPACING.M}) * ${MULTIPLIER.STICKY_BAR_HEIGHT}))`,
       }}
     >
@@ -115,7 +116,7 @@ export default function ActivationsPage() {
         ownerValue={ownerFilter}
         onOwnerChange={setOwnerFilter}
         rightButton={
-          <Button variant="BLACK" onClick={() => {}} style={{ width: 'auto', height: INPUT_HEIGHT.SMALL, paddingLeft: SPACING.L, paddingRight: SPACING.L }}>
+          <Button variant="BLACK" onClick={() => {}} style={{ width: WIDTH.AUTO, height: INPUT_HEIGHT.SMALL, paddingLeft: SPACING.L, paddingRight: SPACING.L }}>
             Nouvelle activation
           </Button>
         }

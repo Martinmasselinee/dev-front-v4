@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
 import { FONT_SIZE, FONT_THICKNESS } from '../constants/font'
 import { COLOR } from '../constants/color'
+import { SPACING } from '../constants/spacing'
 
 interface TextProps {
   children: ReactNode
@@ -38,7 +39,7 @@ export const Text = ({
         fontSize: FONT_SIZE[size],
         fontWeight: FONT_THICKNESS[weight],
         color: getColor(),
-        margin: 0,
+        margin: SPACING.ZERO,
         ...style,
       }}
     >

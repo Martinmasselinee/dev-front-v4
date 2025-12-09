@@ -19,6 +19,8 @@ import {
 import { COLOR, COLOR_RGBA } from '../constants/color'
 import { lightenColor, hexToRgba } from '../lib/colorUtils'
 import { SPACING } from '../constants/spacing'
+import { MULTIPLIER } from '../constants/multiplier'
+import { DIMENSION } from '../constants/dimension'
 import { FONT_SIZE, FONT_THICKNESS, LINE_HEIGHT } from '../constants/font'
 import { ICON_SIZE } from '../constants/iconSize'
 import { BORDER_RADIUS, BORDER_WIDTH } from '../constants/border'
@@ -127,7 +129,7 @@ export const NavbarSidebar = () => {
           top: POSITION.ZERO,
           bottom: POSITION.ZERO,
           width: LAYOUT.SIDEBAR_WIDTH,
-          backgroundColor: lightenColor(COLOR.GREY.LIGHT, 40),
+          backgroundColor: lightenColor(COLOR.GREY.LIGHT, MULTIPLIER.COLOR_LIGHTEN_FORTY),
           borderRight: `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.LIGHT_MEDIUM}`,
           zIndex: Z_INDEX.NAVBAR,
           display: DISPLAY.FLEX,
@@ -201,14 +203,14 @@ export const NavbarSidebar = () => {
                       paddingLeft: SPACING.L,
                       paddingRight: SPACING.L,
                       marginBottom: POSITION.ZERO,
-                      backgroundColor: active ? hexToRgba(COLOR.PURPLE, 0.15) : BACKGROUND.TRANSPARENT,
+                      backgroundColor: active ? hexToRgba(COLOR.PURPLE, MULTIPLIER.OPACITY_PURPLE_LIGHT) : BACKGROUND.TRANSPARENT,
                       cursor: CURSOR.POINTER,
                       transition: `background-color ${TRANSITION.FAST_EASE}`,
                       position: POSITION_TYPE.RELATIVE,
                     }}
                     onMouseEnter={(e) => {
                       if (!active) {
-                        e.currentTarget.style.backgroundColor = hexToRgba(COLOR.GREY.MEDIUM, 0.3)
+                        e.currentTarget.style.backgroundColor = hexToRgba(COLOR.GREY.MEDIUM, MULTIPLIER.OPACITY_GREY_MEDIUM)
                       }
                     }}
                     onMouseLeave={(e) => {
@@ -254,7 +256,7 @@ export const NavbarSidebar = () => {
                             backgroundColor: active ? COLOR_RGBA.PURPLE_LIGHT : COLOR.GREY.LIGHT,
                             borderRadius: BORDER_RADIUS.S,
                             border: active 
-                              ? `${BORDER_WIDTH.THIN} solid ${hexToRgba(COLOR.PURPLE, 0.6)}`
+                              ? `${BORDER_WIDTH.THIN} solid ${hexToRgba(COLOR.PURPLE, MULTIPLIER.OPACITY_PURPLE_BORDER)}`
                               : `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.MEDIUM}`,
                             display: DISPLAY.FLEX,
                             alignItems: ALIGN_ITEMS.CENTER,
@@ -286,7 +288,7 @@ export const NavbarSidebar = () => {
             onClick={() => router.push('/admin')}
             style={{ 
               marginBottom: SPACING.M, 
-              backgroundColor: pathname === '/admin' ? hexToRgba(COLOR.PURPLE, 0.1) : COLOR.WHITE,
+              backgroundColor: pathname === '/admin' ? hexToRgba(COLOR.PURPLE, MULTIPLIER.OPACITY_PURPLE_BACKGROUND) : COLOR.WHITE,
               cursor: CURSOR.POINTER,
               border: pathname === '/admin' ? `${BORDER_WIDTH.THIN} solid ${COLOR.PURPLE}` : `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.MEDIUM}`,
               transition: `border-color ${TRANSITION.FAST_EASE}, background-color ${TRANSITION.FAST_EASE}`,
@@ -333,7 +335,7 @@ export const NavbarSidebar = () => {
                     overflow: OVERFLOW.HIDDEN,
                     textOverflow: TEXT_OVERFLOW.ELLIPSIS,
                     whiteSpace: WHITE_SPACE.NOWRAP,
-                    minWidth: 0,
+                    minWidth: DIMENSION.MIN_WIDTH_ZERO,
                     transition: `color ${TRANSITION.FAST_EASE}`,
                   }}
                 >
@@ -485,7 +487,7 @@ export const NavbarSidebar = () => {
                 display: DISPLAY.FLEX,
                 alignItems: ALIGN_ITEMS.CENTER,
                 justifyContent: JUSTIFY_CONTENT.SPACE_BETWEEN,
-                backgroundColor: workspace.name === workspaceName ? hexToRgba(COLOR.PURPLE, 0.1) : COLOR.WHITE,
+                backgroundColor: workspace.name === workspaceName ? hexToRgba(COLOR.PURPLE, MULTIPLIER.OPACITY_PURPLE_BACKGROUND) : COLOR.WHITE,
                 border: workspace.name === workspaceName 
                   ? `${BORDER_WIDTH.THIN} solid ${COLOR.PURPLE}` 
                   : `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.MEDIUM}`,

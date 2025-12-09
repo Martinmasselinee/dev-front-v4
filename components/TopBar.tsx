@@ -68,7 +68,7 @@ export const TopBar = ({ icon: Icon, title, showSearch = false, searchValue, onS
     ? (stickyTopOffset || `calc(${SPACING.XXXL} + ${SPACING.M})`)
     : POSITION.ZERO
   const purpleBorderColor = variant === 'stickyPurple' 
-    ? hexToRgba(COLOR.PURPLE, 0.25)
+    ? hexToRgba(COLOR.PURPLE, MULTIPLIER.OPACITY_PURPLE_MEDIUM)
     : undefined
   const height = variant === 'stickyPurple'
     ? `calc((${SPACING.XXXL} + ${SPACING.M}) * ${MULTIPLIER.STICKY_BAR_HEIGHT})`
