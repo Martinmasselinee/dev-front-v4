@@ -166,7 +166,7 @@ export default function RadarAIPage() {
       }}
     >
       <Text size="M" weight="M" color="PURPLE">
-        {nouveauxArticles} nouveaux articles
+        {nouveauxArticles} nouveaux articles scannés
       </Text>
       <Dot marginLeft={SPACING.XS} marginRight={SPACING.XS} />
       <Text size="M" weight="M" color="PURPLE">
@@ -197,7 +197,7 @@ export default function RadarAIPage() {
         />
         <TopBar 
           icon={ScanLine} 
-          title="Radar IA"
+          title=""
           variant="stickyPurple"
           additionalText={stickyPurpleTitle}
           dropdownOptions={articleOptions}

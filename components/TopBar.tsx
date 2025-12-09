@@ -42,9 +42,10 @@ interface TopBarProps {
   onSecondDropdownChange?: (value: string) => void
   hideBorder?: boolean
   stickyTopOffset?: string
+  dropdownWidth?: string
 }
 
-export const TopBar = ({ icon: Icon, title, showSearch = false, searchValue, onSearchChange, searchPlaceholder = 'Rechercher...', variant = 'default', additionalText, showRefresh = false, onRefresh, dropdownOptions, dropdownValue, onDropdownChange, secondDropdownOptions, secondDropdownValue, onSecondDropdownChange, hideBorder = false, stickyTopOffset }: TopBarProps) => {
+export const TopBar = ({ icon: Icon, title, showSearch = false, searchValue, onSearchChange, searchPlaceholder = 'Rechercher...', variant = 'default', additionalText, showRefresh = false, onRefresh, dropdownOptions, dropdownValue, onDropdownChange, secondDropdownOptions, secondDropdownValue, onSecondDropdownChange, hideBorder = false, stickyTopOffset, dropdownWidth }: TopBarProps) => {
   const [localSearchValue, setLocalSearchValue] = useState('')
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -107,23 +108,25 @@ export const TopBar = ({ icon: Icon, title, showSearch = false, searchValue, onS
         }}
       >
         <Icon size={iconSize} style={{ color: iconColor, flexShrink: 0 }} />
-        <Heading
-          level={1}
-          style={{
-            fontSize: titleFontSize,
-            fontWeight: FONT_THICKNESS.XL,
-            marginBottom: POSITION.ZERO,
-            color: titleColor,
-          }}
-        >
-          {title}
-        </Heading>
+        {title && (
+          <Heading
+            level={1}
+            style={{
+              fontSize: titleFontSize,
+              fontWeight: FONT_THICKNESS.XL,
+              marginBottom: POSITION.ZERO,
+              color: titleColor,
+            }}
+          >
+            {title}
+          </Heading>
+        )}
         {additionalText && (
           <div
             style={{
               display: DISPLAY.FLEX,
               alignItems: ALIGN_ITEMS.CENTER,
-              marginLeft: SPACING.M,
+              marginLeft: title ? SPACING.M : POSITION.ZERO,
             }}
           >
             {typeof additionalText === 'string' ? (
@@ -180,6 +183,7 @@ export const TopBar = ({ icon: Icon, title, showSearch = false, searchValue, onS
             <DropdownButton
               value={dropdownValue}
               onChange={(e) => onDropdownChange?.(e.target.value)}
+              style={dropdownWidth ? { width: dropdownWidth, minWidth: dropdownWidth } : undefined}
             >
               {dropdownOptions.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -192,6 +196,7 @@ export const TopBar = ({ icon: Icon, title, showSearch = false, searchValue, onS
             <DropdownButton
               value={secondDropdownValue}
               onChange={(e) => onSecondDropdownChange?.(e.target.value)}
+              style={dropdownWidth ? { width: dropdownWidth, minWidth: dropdownWidth } : undefined}
             >
               {secondDropdownOptions.map((option) => (
                 <option key={option.value} value={option.value}>

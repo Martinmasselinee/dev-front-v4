@@ -2,6 +2,8 @@
 
 import { useState } from 'react'
 import { BarChart3, FileText, Search, Building2, Users, MapPin, Mail, Handshake, Activity, Inbox } from 'lucide-react'
+import { Dot } from '../../components/Dot'
+import { Text } from '../../components/Text'
 import { LAYOUT } from '../../constants/layout'
 import { SPACING } from '../../constants/spacing'
 import { POSITION_TYPE } from '../../constants/position'
@@ -9,7 +11,6 @@ import { NavbarSidebar } from '../../components/NavbarSidebar'
 import { TopBar } from '../../components/TopBar'
 import { StatsBar } from '../../components/StatsBar'
 import { HelpButton } from '../../components/HelpButton'
-import { Text } from '../../components/Text'
 import { COLOR } from '../../constants/color'
 import { BORDER_RADIUS, BORDER_WIDTH } from '../../constants/border'
 import { ICON_SIZE } from '../../constants/iconSize'
@@ -22,6 +23,8 @@ import { Container } from '../../components/Container'
 export default function DashboardPage() {
   const [searchValue, setSearchValue] = useState('')
   const [timeRange, setTimeRange] = useState('all')
+  const [activitesAujourdhui, setActivitesAujourdhui] = useState('14')
+  const [activitesSemaine, setActivitesSemaine] = useState('200')
 
   const handleRefresh = () => {
     // TODO: Implement refresh logic
@@ -36,6 +39,24 @@ export default function DashboardPage() {
   ]
 
   const selectedOption = dropdownOptions.find(option => option.value === timeRange) || dropdownOptions[dropdownOptions.length - 1]
+
+  const stickyPurpleTitle = (
+    <div
+      style={{
+        display: DISPLAY.FLEX,
+        alignItems: ALIGN_ITEMS.CENTER,
+        gap: SPACING.S,
+      }}
+    >
+      <Text size="M" weight="M" color="PURPLE">
+        {activitesAujourdhui} activités aujourd'hui
+      </Text>
+      <Dot marginLeft={SPACING.XS} marginRight={SPACING.XS} />
+      <Text size="M" weight="M" color="PURPLE">
+        {activitesSemaine} activités cette semaine
+      </Text>
+    </div>
+  )
 
   const stats = [
     { icon: FileText, value: '0', label: 'articles lus' },
@@ -71,8 +92,9 @@ export default function DashboardPage() {
       <StatsBar stats={stats} />
       <TopBar 
         icon={Activity} 
-        title={`Activité récente : ${selectedOption.label}`}
+        title=""
         variant="stickyPurple"
+        additionalText={stickyPurpleTitle}
         dropdownOptions={dropdownOptions}
         dropdownValue={timeRange}
         onDropdownChange={setTimeRange}
