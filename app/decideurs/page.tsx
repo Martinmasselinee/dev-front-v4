@@ -20,14 +20,25 @@ import {
 } from 'lucide-react'
 import { LAYOUT } from '../../constants/layout'
 import { SPACING } from '../../constants/spacing'
+import { MULTIPLIER } from '../../constants/multiplier'
 import { POSITION_TYPE } from '../../constants/position'
 import { NavbarSidebar } from '../../components/NavbarSidebar'
 import { TopBar } from '../../components/TopBar'
 import { HelpButton } from '../../components/HelpButton'
 import { StatusFilterSidebar, StatusItem } from '../../components/StatusFilterSidebar'
+import { StickyStatsBar } from '../../components/StickyStatsBar'
 
 export default function DecideursPage() {
   const [searchValue, setSearchValue] = useState('')
+  const [ownerFilter, setOwnerFilter] = useState('all')
+
+  // Mock team members
+  const ownerOptions = [
+    { value: 'all', label: 'Tous les membres' },
+    { value: 'martin', label: 'Martin Masseline' },
+    { value: 'sarah', label: 'Sarah Dupont' },
+    { value: 'pierre', label: 'Pierre Martin' },
+  ]
 
   const statusItems: StatusItem[] = [
     { label: 'Tous', value: 'all', icon: Users },
@@ -53,7 +64,7 @@ export default function DecideursPage() {
         minHeight: LAYOUT.MIN_SCREEN_HEIGHT,
         position: POSITION_TYPE.RELATIVE,
         marginLeft: `calc(${LAYOUT.SIDEBAR_WIDTH} + (${LAYOUT.SIDEBAR_WIDTH} * 0.9))`,
-        paddingTop: `calc(${SPACING.XXXL} + ${SPACING.M})`,
+        paddingTop: `calc((${SPACING.XXXL} + ${SPACING.M}) + ((${SPACING.XXXL} + ${SPACING.M}) * ${MULTIPLIER.STICKY_BAR_HEIGHT}))`,
       }}
     >
       <NavbarSidebar />
@@ -65,6 +76,17 @@ export default function DecideursPage() {
         searchValue={searchValue}
         onSearchChange={setSearchValue}
         searchPlaceholder="Rechercher des décideurs..."
+      />
+      <StickyStatsBar
+        icon={Users}
+        stats={[
+          { label: 'décideurs au total', value: '142' },
+          { label: 'nouveaux cette semaine', value: '23' },
+          { label: 'à contacter', value: '8' },
+        ]}
+        ownerDropdownOptions={ownerOptions}
+        ownerValue={ownerFilter}
+        onOwnerChange={setOwnerFilter}
       />
       <HelpButton />
     </div>

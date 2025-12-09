@@ -44,9 +44,12 @@ interface TopBarProps {
   hideBorder?: boolean
   stickyTopOffset?: string
   dropdownWidth?: string
+  customLeft?: string
+  customWidth?: string
+  rightElement?: ReactNode
 }
 
-export const TopBar = ({ icon: Icon, title, showSearch = false, searchValue, onSearchChange, searchPlaceholder = 'Rechercher...', variant = 'default', additionalText, showRefresh = false, onRefresh, dropdownOptions, dropdownValue, onDropdownChange, secondDropdownOptions, secondDropdownValue, onSecondDropdownChange, hideBorder = false, stickyTopOffset, dropdownWidth }: TopBarProps) => {
+export const TopBar = ({ icon: Icon, title, showSearch = false, searchValue, onSearchChange, searchPlaceholder = 'Rechercher...', variant = 'default', additionalText, showRefresh = false, onRefresh, dropdownOptions, dropdownValue, onDropdownChange, secondDropdownOptions, secondDropdownValue, onSecondDropdownChange, hideBorder = false, stickyTopOffset, dropdownWidth, customLeft, customWidth, rightElement }: TopBarProps) => {
   const [localSearchValue, setLocalSearchValue] = useState('')
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -74,15 +77,17 @@ export const TopBar = ({ icon: Icon, title, showSearch = false, searchValue, onS
   const iconColor = variant === 'stickyPurple' ? COLOR.PURPLE : COLOR.BLACK
   const titleFontSize = variant === 'stickyPurple' ? FONT_SIZE.M : FONT_SIZE.XL
   const titleColor = variant === 'stickyPurple' ? COLOR.PURPLE : COLOR.BLACK
+  const leftPosition = customLeft || LAYOUT.SIDEBAR_WIDTH
+  const widthValue = customWidth || `calc(${WIDTH.FULL} - ${LAYOUT.SIDEBAR_WIDTH})`
 
   return (
     <div
       style={{
         position: POSITION_TYPE.FIXED,
         top: topPosition,
-        left: LAYOUT.SIDEBAR_WIDTH,
+        left: leftPosition,
         right: POSITION.ZERO,
-        width: `calc(${WIDTH.FULL} - ${LAYOUT.SIDEBAR_WIDTH})`,
+        width: widthValue,
         height: height,
         backgroundColor: backgroundColor,
         borderTop: variant === 'stickyPurple' && purpleBorderColor 
@@ -147,7 +152,7 @@ export const TopBar = ({ icon: Icon, title, showSearch = false, searchValue, onS
           </div>
         )}
       </div>
-      {(showRefresh || showSearch || dropdownOptions || secondDropdownOptions) && (
+      {(showRefresh || showSearch || dropdownOptions || secondDropdownOptions || rightElement) && (
         <div
           style={{
             display: DISPLAY.FLEX,
@@ -206,6 +211,7 @@ export const TopBar = ({ icon: Icon, title, showSearch = false, searchValue, onS
               ))}
             </DropdownButton>
           )}
+          {rightElement}
         </div>
       )}
     </div>
