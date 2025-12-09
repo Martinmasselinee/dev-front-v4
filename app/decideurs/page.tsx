@@ -16,7 +16,8 @@ import {
   PlayCircle, 
   CheckCircle2, 
   Archive, 
-  XCircle 
+  XCircle,
+  LucideIcon
 } from 'lucide-react'
 import { LAYOUT } from '../../constants/layout'
 import { SPACING } from '../../constants/spacing'
@@ -27,10 +28,15 @@ import { TopBar } from '../../components/TopBar'
 import { HelpButton } from '../../components/HelpButton'
 import { StatusFilterSidebar, StatusItem } from '../../components/StatusFilterSidebar'
 import { StickyStatsBar } from '../../components/StickyStatsBar'
+import { EmptyState } from '../../components/EmptyState'
 
 export default function DecideursPage() {
   const [searchValue, setSearchValue] = useState('')
   const [ownerFilter, setOwnerFilter] = useState('all')
+  const [selectedStatus, setSelectedStatus] = useState<string>('all')
+  const [contacteSubStatus, setContacteSubStatus] = useState<string>('all')
+  const [meetingsSubStatus, setMeetingsSubStatus] = useState<string>('all')
+  const [contratsSubStatus, setContratsSubStatus] = useState<string>('all')
 
   // Mock team members
   const ownerOptions = [
@@ -45,18 +51,175 @@ export default function DecideursPage() {
     { label: 'Prospects', value: 'prospects', icon: UserPlus },
     { label: 'À contacter', value: 'a_contacter', icon: Mail },
     { label: 'Contacté', value: 'contacte', icon: CheckCircle },
-    { label: 'Activation proposée', value: 'activation_proposee', icon: Sparkles },
-    { label: 'À relancer', value: 'a_relancer', icon: RefreshCw },
-    { label: 'Discussion en cours', value: 'discussion_en_cours', icon: MessageCircle },
-    { label: 'Meeting à venir', value: 'meeting_a_venir', icon: Calendar },
-    { label: 'Meetings effectués', value: 'meetings_effectues', icon: CalendarCheck },
-    { label: 'Contrat signé', value: 'contrat_signe', icon: FileCheck },
-    { label: 'Activation à venir', value: 'activation_a_venir', icon: Zap },
-    { label: 'Activation en cours', value: 'activation_en_cours', icon: PlayCircle },
-    { label: 'Contrat terminé', value: 'contrat_termine', icon: CheckCircle2 },
+    { label: 'Meetings', value: 'meetings', icon: Calendar },
+    { label: 'Contrats', value: 'contrats', icon: FileCheck },
     { label: 'Archivé', value: 'archive', icon: Archive },
-    { label: 'Expirés', value: 'expires', icon: XCircle },
   ]
+
+  const contacteSubStatusOptions = [
+    { value: 'all', label: 'Contactés' },
+    { value: 'a_relancer', label: 'À relancer' },
+    { value: '1x_relance', label: '1X relance' },
+    { value: '2x_relances', label: '2X relances' },
+    { value: '3x_relances', label: '3X relances' },
+    { value: 'discussion_en_cours', label: 'Discussion en cours' },
+    { value: 'aucune_reponse', label: 'Aucune réponse' },
+  ]
+
+  const meetingsSubStatusOptions = [
+    { value: 'all', label: 'Tous' },
+    { value: 'meeting_a_venir', label: 'Meeting à venir' },
+    { value: '1x_meeting', label: '1X meeting' },
+    { value: '2x_meetings', label: '2X meetings' },
+    { value: '3x_meetings', label: '3X meetings' },
+    { value: 'meetings_effectues', label: 'Meetings effectués' },
+  ]
+
+  const contratsSubStatusOptions = [
+    { value: 'all', label: 'Tous' },
+    { value: 'contrat_signe', label: 'Contrat signé' },
+    { value: 'contrat_a_venir', label: 'Contrat à venir' },
+    { value: 'contrat_termine', label: 'Contrat terminé' },
+  ]
+
+  const getEmptyStateContent = () => {
+    const statusLabel = statusItems.find(item => item.value === selectedStatus)?.label || 'Tous'
+    const ownerLabel = ownerOptions.find(opt => opt.value === ownerFilter)?.label || 'Tous les membres'
+    const ownerText = ownerFilter === 'all' ? '' : ` pour ${ownerLabel.toLowerCase()}`
+
+    // Handle sub-status for "Contacté"
+    if (selectedStatus === 'contacte' && contacteSubStatus !== 'all') {
+      if (contacteSubStatus === 'a_relancer') {
+        return {
+          title: 'Aucun décideur à relancer',
+          description: `Aucun décideur à relancer${ownerText}.`
+        }
+      }
+      if (contacteSubStatus === '1x_relance') {
+        return {
+          title: 'Aucun décideur avec 1X relance',
+          description: `Aucun décideur avec 1X relance${ownerText}.`
+        }
+      }
+      if (contacteSubStatus === '2x_relances') {
+        return {
+          title: 'Aucun décideur avec 2X relances',
+          description: `Aucun décideur avec 2X relances${ownerText}.`
+        }
+      }
+      if (contacteSubStatus === '3x_relances') {
+        return {
+          title: 'Aucun décideur avec 3X relances',
+          description: `Aucun décideur avec 3X relances${ownerText}.`
+        }
+      }
+      if (contacteSubStatus === 'discussion_en_cours') {
+        return {
+          title: 'Aucune discussion en cours',
+          description: `Aucune discussion en cours${ownerText}.`
+        }
+      }
+      if (contacteSubStatus === 'aucune_reponse') {
+        return {
+          title: 'Aucun décideur sans réponse',
+          description: `Aucun décideur sans réponse${ownerText}.`
+        }
+      }
+    }
+
+    // Handle sub-status for "Meetings"
+    if (selectedStatus === 'meetings' && meetingsSubStatus !== 'all') {
+      if (meetingsSubStatus === 'meeting_a_venir') {
+        return {
+          title: 'Aucun meeting à venir',
+          description: `Aucun meeting à venir${ownerText}.`
+        }
+      }
+      if (meetingsSubStatus === '1x_meeting') {
+        return {
+          title: 'Aucun décideur avec 1X meeting',
+          description: `Aucun décideur avec 1X meeting${ownerText}.`
+        }
+      }
+      if (meetingsSubStatus === '2x_meetings') {
+        return {
+          title: 'Aucun décideur avec 2X meetings',
+          description: `Aucun décideur avec 2X meetings${ownerText}.`
+        }
+      }
+      if (meetingsSubStatus === '3x_meetings') {
+        return {
+          title: 'Aucun décideur avec 3X meetings',
+          description: `Aucun décideur avec 3X meetings${ownerText}.`
+        }
+      }
+      if (meetingsSubStatus === 'meetings_effectues') {
+        return {
+          title: 'Aucun meeting effectué',
+          description: `Aucun meeting effectué${ownerText}.`
+        }
+      }
+    }
+
+    // Handle sub-status for "Contrats"
+    if (selectedStatus === 'contrats' && contratsSubStatus !== 'all') {
+      if (contratsSubStatus === 'contrat_signe') {
+        return {
+          title: 'Aucun contrat signé',
+          description: `Aucun contrat signé${ownerText}.`
+        }
+      }
+      if (contratsSubStatus === 'contrat_a_venir') {
+        return {
+          title: 'Aucun contrat à venir',
+          description: `Aucun contrat à venir${ownerText}.`
+        }
+      }
+      if (contratsSubStatus === 'contrat_termine') {
+        return {
+          title: 'Aucun contrat terminé',
+          description: `Aucun contrat terminé${ownerText}.`
+        }
+      }
+    }
+
+    const statusMessages: Record<string, { title: string; description: string }> = {
+      'all': {
+        title: 'Aucun décideur',
+        description: `Aucun décideur trouvé${ownerText}.`
+      },
+      'prospects': {
+        title: 'Aucun prospect',
+        description: `Aucun prospect trouvé${ownerText}.`
+      },
+      'a_contacter': {
+        title: 'Aucun décideur à contacter',
+        description: `Aucun décideur à contacter${ownerText}.`
+      },
+      'contacte': {
+        title: 'Aucun décideur contacté',
+        description: `Aucun décideur contacté${ownerText}.`
+      },
+      'meetings': {
+        title: 'Aucun meeting',
+        description: `Aucun meeting trouvé${ownerText}.`
+      },
+      'contrats': {
+        title: 'Aucun contrat',
+        description: `Aucun contrat trouvé${ownerText}.`
+      },
+      'archive': {
+        title: 'Aucun décideur archivé',
+        description: `Aucun décideur archivé${ownerText}.`
+      },
+    }
+
+    return statusMessages[selectedStatus] || statusMessages['all']
+  }
+
+  const emptyStateContent = getEmptyStateContent()
+  const selectedStatusItem = statusItems.find(item => item.value === selectedStatus)
+  const emptyStateIcon = (selectedStatusItem?.icon || Users) as LucideIcon
 
   return (
     <div
@@ -68,7 +231,11 @@ export default function DecideursPage() {
       }}
     >
       <NavbarSidebar />
-      <StatusFilterSidebar statusItems={statusItems} />
+      <StatusFilterSidebar 
+        statusItems={statusItems} 
+        selectedStatus={selectedStatus}
+        onStatusChange={setSelectedStatus}
+      />
       <TopBar 
         icon={Users} 
         title="Décideurs" 
@@ -82,11 +249,25 @@ export default function DecideursPage() {
         stats={[
           { label: 'décideurs au total', value: '142' },
           { label: 'nouveaux cette semaine', value: '23' },
-          { label: 'à contacter', value: '8' },
         ]}
         ownerDropdownOptions={ownerOptions}
         ownerValue={ownerFilter}
         onOwnerChange={setOwnerFilter}
+        contacteSubStatusOptions={contacteSubStatusOptions}
+        contacteSubStatusValue={contacteSubStatus}
+        onContacteSubStatusChange={setContacteSubStatus}
+        meetingsSubStatusOptions={meetingsSubStatusOptions}
+        meetingsSubStatusValue={meetingsSubStatus}
+        onMeetingsSubStatusChange={setMeetingsSubStatus}
+        contratsSubStatusOptions={contratsSubStatusOptions}
+        contratsSubStatusValue={contratsSubStatus}
+        onContratsSubStatusChange={setContratsSubStatus}
+        selectedStatus={selectedStatus}
+      />
+      <EmptyState
+        icon={emptyStateIcon}
+        title={emptyStateContent.title}
+        description={emptyStateContent.description}
       />
       <HelpButton />
     </div>

@@ -29,6 +29,8 @@ export interface StatusItem {
 interface StatusFilterSidebarProps {
   statusItems?: StatusItem[]
   defaultStatus?: string
+  selectedStatus?: string
+  onStatusChange?: (status: string) => void
 }
 
 const defaultStatusItems: StatusItem[] = [
@@ -38,8 +40,17 @@ const defaultStatusItems: StatusItem[] = [
   { label: 'Statut 3', value: 'status3', icon: AlertCircle },
 ]
 
-export const StatusFilterSidebar = ({ statusItems = defaultStatusItems, defaultStatus = 'all' }: StatusFilterSidebarProps) => {
-  const [selectedStatus, setSelectedStatus] = useState<string>(defaultStatus)
+export const StatusFilterSidebar = ({ statusItems = defaultStatusItems, defaultStatus = 'all', selectedStatus: controlledStatus, onStatusChange }: StatusFilterSidebarProps) => {
+  const [internalStatus, setInternalStatus] = useState<string>(defaultStatus)
+  const selectedStatus = controlledStatus !== undefined ? controlledStatus : internalStatus
+
+  const handleStatusChange = (status: string) => {
+    if (onStatusChange) {
+      onStatusChange(status)
+    } else {
+      setInternalStatus(status)
+    }
+  }
 
   const isActive = (value: string) => selectedStatus === value
 
@@ -88,7 +99,7 @@ export const StatusFilterSidebar = ({ statusItems = defaultStatusItems, defaultS
           return (
             <div
               key={item.value}
-              onClick={() => setSelectedStatus(item.value)}
+              onClick={() => handleStatusChange(item.value)}
               style={{
                 display: DISPLAY.FLEX,
                 alignItems: ALIGN_ITEMS.CENTER,

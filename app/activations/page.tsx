@@ -4,14 +4,10 @@ import { useState } from 'react'
 import { 
   Zap, 
   Sparkles,
-  MessageCircle, 
-  Calendar, 
-  CalendarCheck, 
-  FileCheck, 
   PlayCircle, 
   CheckCircle2, 
-  Archive, 
-  XCircle 
+  Archive,
+  LucideIcon
 } from 'lucide-react'
 import { LAYOUT } from '../../constants/layout'
 import { SPACING } from '../../constants/spacing'
@@ -24,10 +20,12 @@ import { StatusFilterSidebar, StatusItem } from '../../components/StatusFilterSi
 import { StickyStatsBar } from '../../components/StickyStatsBar'
 import { Button } from '../../components/Button'
 import { INPUT_HEIGHT } from '../../constants/input'
+import { EmptyState } from '../../components/EmptyState'
 
 export default function ActivationsPage() {
   const [searchValue, setSearchValue] = useState('')
   const [ownerFilter, setOwnerFilter] = useState('all')
+  const [selectedStatus, setSelectedStatus] = useState<string>('all')
 
   // Mock team members
   const ownerOptions = [
@@ -40,16 +38,49 @@ export default function ActivationsPage() {
   const statusItems: StatusItem[] = [
     { label: 'Tous', value: 'all', icon: Zap },
     { label: 'Activation proposée', value: 'activation_proposee', icon: Sparkles },
-    { label: 'Discussion en cours', value: 'discussion_en_cours', icon: MessageCircle },
-    { label: 'Meeting à venir', value: 'meeting_a_venir', icon: Calendar },
-    { label: 'Meetings effectués', value: 'meetings_effectues', icon: CalendarCheck },
-    { label: 'Contrat signé', value: 'contrat_signe', icon: FileCheck },
     { label: 'Activation à venir', value: 'activation_a_venir', icon: Zap },
     { label: 'Activation en cours', value: 'activation_en_cours', icon: PlayCircle },
-    { label: 'Contrat terminé', value: 'contrat_termine', icon: CheckCircle2 },
-    { label: 'Archivé', value: 'archive', icon: Archive },
-    { label: 'Expirés', value: 'expires', icon: XCircle },
+    { label: 'Activation terminée', value: 'activation_terminee', icon: CheckCircle2 },
+    { label: 'Archivés', value: 'archive', icon: Archive },
   ]
+
+  const getEmptyStateContent = () => {
+    const ownerLabel = ownerOptions.find(opt => opt.value === ownerFilter)?.label || 'Tous les membres'
+    const ownerText = ownerFilter === 'all' ? '' : ` pour ${ownerLabel.toLowerCase()}`
+
+    const statusMessages: Record<string, { title: string; description: string }> = {
+      'all': {
+        title: 'Aucune activation',
+        description: `Aucune activation trouvée${ownerText}.`
+      },
+      'activation_proposee': {
+        title: 'Aucune activation proposée',
+        description: `Aucune activation proposée${ownerText}.`
+      },
+      'activation_a_venir': {
+        title: 'Aucune activation à venir',
+        description: `Aucune activation à venir${ownerText}.`
+      },
+      'activation_en_cours': {
+        title: 'Aucune activation en cours',
+        description: `Aucune activation en cours${ownerText}.`
+      },
+      'activation_terminee': {
+        title: 'Aucune activation terminée',
+        description: `Aucune activation terminée${ownerText}.`
+      },
+      'archive': {
+        title: 'Aucune activation archivée',
+        description: `Aucune activation archivée${ownerText}.`
+      },
+    }
+
+    return statusMessages[selectedStatus] || statusMessages['all']
+  }
+
+  const emptyStateContent = getEmptyStateContent()
+  const selectedStatusItem = statusItems.find(item => item.value === selectedStatus)
+  const emptyStateIcon = (selectedStatusItem?.icon || Zap) as LucideIcon
 
   return (
     <div
@@ -61,7 +92,11 @@ export default function ActivationsPage() {
       }}
     >
       <NavbarSidebar />
-      <StatusFilterSidebar statusItems={statusItems} />
+      <StatusFilterSidebar 
+        statusItems={statusItems}
+        selectedStatus={selectedStatus}
+        onStatusChange={setSelectedStatus}
+      />
       <TopBar 
         icon={Zap} 
         title="Activations" 
@@ -75,7 +110,6 @@ export default function ActivationsPage() {
         stats={[
           { label: 'activations au total', value: '34' },
           { label: 'nouvelles cette semaine', value: '7' },
-          { label: 'en cours', value: '12' },
         ]}
         ownerDropdownOptions={ownerOptions}
         ownerValue={ownerFilter}
@@ -85,6 +119,11 @@ export default function ActivationsPage() {
             Nouvelle activation
           </Button>
         }
+      />
+      <EmptyState
+        icon={emptyStateIcon}
+        title={emptyStateContent.title}
+        description={emptyStateContent.description}
       />
       <HelpButton />
     </div>

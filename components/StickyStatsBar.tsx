@@ -25,6 +25,19 @@ interface StickyStatsBarProps {
   onOwnerChange?: (value: string) => void
   icon?: React.ComponentType<any>
   rightButton?: ReactNode
+  contacteSubStatusOptions?: { value: string; label: string }[]
+  contacteSubStatusValue?: string
+  onContacteSubStatusChange?: (value: string) => void
+  activationSubStatusOptions?: { value: string; label: string }[]
+  activationSubStatusValue?: string
+  onActivationSubStatusChange?: (value: string) => void
+  meetingsSubStatusOptions?: { value: string; label: string }[]
+  meetingsSubStatusValue?: string
+  onMeetingsSubStatusChange?: (value: string) => void
+  contratsSubStatusOptions?: { value: string; label: string }[]
+  contratsSubStatusValue?: string
+  onContratsSubStatusChange?: (value: string) => void
+  selectedStatus?: string
 }
 
 export const StickyStatsBar = ({ 
@@ -33,7 +46,20 @@ export const StickyStatsBar = ({
   ownerValue, 
   onOwnerChange,
   icon,
-  rightButton
+  rightButton,
+  contacteSubStatusOptions,
+  contacteSubStatusValue,
+  onContacteSubStatusChange,
+  activationSubStatusOptions,
+  activationSubStatusValue,
+  onActivationSubStatusChange,
+  meetingsSubStatusOptions,
+  meetingsSubStatusValue,
+  onMeetingsSubStatusChange,
+  contratsSubStatusOptions,
+  contratsSubStatusValue,
+  onContratsSubStatusChange,
+  selectedStatus
 }: StickyStatsBarProps) => {
   const IconComponent = icon || Activity
   const statsContent = (
@@ -69,12 +95,50 @@ export const StickyStatsBar = ({
   const customLeft = totalSidebarWidth
   const customWidth = `calc(${WIDTH.FULL} - ${totalSidebarWidth})`
 
+  const showContacteSubStatus = selectedStatus === 'contacte' && contacteSubStatusOptions && contacteSubStatusOptions.length > 0
+  const showActivationSubStatus = selectedStatus === 'activation' && activationSubStatusOptions && activationSubStatusOptions.length > 0
+  const showMeetingsSubStatus = selectedStatus === 'meetings' && meetingsSubStatusOptions && meetingsSubStatusOptions.length > 0
+  const showContratsSubStatus = selectedStatus === 'contrats' && contratsSubStatusOptions && contratsSubStatusOptions.length > 0
+
+  const firstDropdownOptions = showContacteSubStatus 
+    ? contacteSubStatusOptions 
+    : showActivationSubStatus 
+    ? activationSubStatusOptions 
+    : showMeetingsSubStatus 
+    ? meetingsSubStatusOptions 
+    : showContratsSubStatus
+    ? contratsSubStatusOptions
+    : undefined
+
+  const firstDropdownValue = showContacteSubStatus 
+    ? contacteSubStatusValue 
+    : showActivationSubStatus 
+    ? activationSubStatusValue 
+    : showMeetingsSubStatus 
+    ? meetingsSubStatusValue 
+    : showContratsSubStatus
+    ? contratsSubStatusValue
+    : undefined
+
+  const onFirstDropdownChange = showContacteSubStatus 
+    ? onContacteSubStatusChange 
+    : showActivationSubStatus 
+    ? onActivationSubStatusChange 
+    : showMeetingsSubStatus 
+    ? onMeetingsSubStatusChange 
+    : showContratsSubStatus
+    ? onContratsSubStatusChange
+    : undefined
+
   return (
     <TopBar
       icon={IconComponent}
       title=""
       variant="stickyPurple"
       additionalText={statsContent}
+      dropdownOptions={firstDropdownOptions}
+      dropdownValue={firstDropdownValue}
+      onDropdownChange={onFirstDropdownChange}
       secondDropdownOptions={ownerDropdownOptions}
       secondDropdownValue={ownerValue}
       onSecondDropdownChange={onOwnerChange}
