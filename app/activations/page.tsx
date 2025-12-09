@@ -1,13 +1,17 @@
 'use client'
 
+import { useState } from 'react'
+import { Zap } from 'lucide-react'
 import { LAYOUT } from '../../constants/layout'
 import { SPACING } from '../../constants/spacing'
 import { POSITION_TYPE } from '../../constants/position'
-import { Sidebar } from '../../components/Sidebar'
+import { NavbarSidebar } from '../../components/NavbarSidebar'
 import { TopBar } from '../../components/TopBar'
 import { HelpButton } from '../../components/HelpButton'
 
 export default function ActivationsPage() {
+  const [searchValue, setSearchValue] = useState('')
+
   return (
     <div
       style={{
@@ -17,8 +21,15 @@ export default function ActivationsPage() {
         paddingTop: `calc(${SPACING.XXXL} + ${SPACING.M})`,
       }}
     >
-      <Sidebar />
-      <TopBar />
+      <NavbarSidebar />
+      <TopBar 
+        icon={Zap} 
+        title="Activations" 
+        showSearch={true}
+        searchValue={searchValue}
+        onSearchChange={setSearchValue}
+        searchPlaceholder="Rechercher des activations..."
+      />
       <HelpButton />
     </div>
   )

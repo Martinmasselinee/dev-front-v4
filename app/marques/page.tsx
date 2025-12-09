@@ -1,13 +1,17 @@
 'use client'
 
+import { useState } from 'react'
+import { Tag } from 'lucide-react'
 import { LAYOUT } from '../../constants/layout'
 import { SPACING } from '../../constants/spacing'
 import { POSITION_TYPE } from '../../constants/position'
-import { Sidebar } from '../../components/Sidebar'
+import { NavbarSidebar } from '../../components/NavbarSidebar'
 import { TopBar } from '../../components/TopBar'
 import { HelpButton } from '../../components/HelpButton'
 
 export default function MarquesPage() {
+  const [searchValue, setSearchValue] = useState('')
+
   return (
     <div
       style={{
@@ -17,8 +21,15 @@ export default function MarquesPage() {
         paddingTop: `calc(${SPACING.XXXL} + ${SPACING.M})`,
       }}
     >
-      <Sidebar />
-      <TopBar />
+      <NavbarSidebar />
+      <TopBar 
+        icon={Tag} 
+        title="Marques" 
+        showSearch={true}
+        searchValue={searchValue}
+        onSearchChange={setSearchValue}
+        searchPlaceholder="Rechercher des marques..."
+      />
       <HelpButton />
     </div>
   )

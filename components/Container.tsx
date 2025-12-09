@@ -11,7 +11,7 @@ import { COLOR } from '../constants/color'
 interface ContainerProps {
   children: ReactNode
   className?: string
-  variant?: 'default' | 'page' | 'title'
+  variant?: 'default' | 'page' | 'title' | 'fullWidth'
 }
 
 export const Container = ({ children, className = '', variant = 'default' }: ContainerProps) => {
@@ -54,6 +54,21 @@ export const Container = ({ children, className = '', variant = 'default' }: Con
         >
           {children}
         </div>
+      </div>
+    )
+  }
+
+  if (variant === 'fullWidth') {
+    return (
+      <div
+        className={className}
+        style={{
+          width: WIDTH.FULL,
+          paddingLeft: SPACING.L,
+          paddingRight: SPACING.L,
+        }}
+      >
+        {children}
       </div>
     )
   }

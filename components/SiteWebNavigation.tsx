@@ -20,7 +20,7 @@ import { CURSOR } from '../constants/interaction'
 import { TEXT_DECORATION } from '../constants/text'
 import { BORDER_WIDTH } from '../constants/border'
 
-export const NavbarSiteWeb = () => {
+export const SiteWebNavigation = () => {
   const router = useRouter()
   const pathname = usePathname()
   const [isLoading, setIsLoading] = useState(false)

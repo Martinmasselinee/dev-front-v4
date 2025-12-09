@@ -1,5 +1,6 @@
 export const INPUT_HEIGHT = {
   MAIN: '40px',
+  SMALL: '32px',
 } as const
 
 export const INPUT_PADDING = {

@@ -3,7 +3,7 @@
 import { usePathname } from 'next/navigation'
 import { ReactNode } from 'react'
 import { HelpButtonWrapper } from './HelpButtonWrapper'
-import { NavbarSiteWeb } from './Navbar-site-web'
+import { SiteWebNavigation } from './SiteWebNavigation'
 
 interface ConditionalComponentProps {
   type: 'helpButton' | 'navbar'
@@ -39,6 +39,6 @@ export function ConditionalComponent({ type }: ConditionalComponentProps) {
     return <HelpButtonWrapper />
   }
   
-  return <NavbarSiteWeb />
+  return <SiteWebNavigation />
 }
 

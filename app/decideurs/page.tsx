@@ -1,13 +1,17 @@
 'use client'
 
+import { useState } from 'react'
+import { Users } from 'lucide-react'
 import { LAYOUT } from '../../constants/layout'
 import { SPACING } from '../../constants/spacing'
 import { POSITION_TYPE } from '../../constants/position'
-import { Sidebar } from '../../components/Sidebar'
+import { NavbarSidebar } from '../../components/NavbarSidebar'
 import { TopBar } from '../../components/TopBar'
 import { HelpButton } from '../../components/HelpButton'
 
 export default function DecideursPage() {
+  const [searchValue, setSearchValue] = useState('')
+
   return (
     <div
       style={{
@@ -17,8 +21,15 @@ export default function DecideursPage() {
         paddingTop: `calc(${SPACING.XXXL} + ${SPACING.M})`,
       }}
     >
-      <Sidebar />
-      <TopBar />
+      <NavbarSidebar />
+      <TopBar 
+        icon={Users} 
+        title="Décideurs" 
+        showSearch={true}
+        searchValue={searchValue}
+        onSearchChange={setSearchValue}
+        searchPlaceholder="Rechercher des décideurs..."
+      />
       <HelpButton />
     </div>
   )

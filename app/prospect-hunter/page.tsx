@@ -1,9 +1,10 @@
 'use client'
 
+import { Search } from 'lucide-react'
 import { LAYOUT } from '../../constants/layout'
 import { SPACING } from '../../constants/spacing'
 import { POSITION_TYPE } from '../../constants/position'
-import { Sidebar } from '../../components/Sidebar'
+import { NavbarSidebar } from '../../components/NavbarSidebar'
 import { TopBar } from '../../components/TopBar'
 import { HelpButton } from '../../components/HelpButton'
 
@@ -17,8 +18,8 @@ export default function ProspectHunterPage() {
         paddingTop: `calc(${SPACING.XXXL} + ${SPACING.M})`,
       }}
     >
-      <Sidebar />
-      <TopBar />
+      <NavbarSidebar />
+      <TopBar icon={Search} title="Prospect Hunter" />
       <HelpButton />
     </div>
   )
