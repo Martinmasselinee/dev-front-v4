@@ -14,6 +14,9 @@ import { TEXT_ALIGN } from '../../constants/text'
 import { COLOR } from '../../constants/color'
 import { BORDER_RADIUS, BORDER_WIDTH } from '../../constants/border'
 import { ICON_SIZE } from '../../constants/iconSize'
+import { DIMENSION } from '../../constants/dimension'
+import { BUSINESS } from '../../constants/business'
+import { MULTIPLIER } from '../../constants/multiplier'
 import { NavbarSidebar } from '../../components/NavbarSidebar'
 import { TopBar } from '../../components/TopBar'
 import { HelpButton } from '../../components/HelpButton'
@@ -30,7 +33,7 @@ export default function ProspectHunterPage() {
   const selectedViewOption = viewOptions.find(option => option.value === viewType) || viewOptions[0]
 
   const entreprisesCount = 103937
-  const decideursCount = entreprisesCount * 5
+  const decideursCount = entreprisesCount * BUSINESS.DECIDEURS_PER_ENTREPRISE
 
   const stickyPurpleTitle = (
     <div
@@ -56,7 +59,7 @@ export default function ProspectHunterPage() {
         minHeight: LAYOUT.MIN_SCREEN_HEIGHT,
         position: POSITION_TYPE.RELATIVE,
         marginLeft: LAYOUT.SIDEBAR_WIDTH,
-        paddingTop: `calc((${SPACING.XXXL} + ${SPACING.M}) + ((${SPACING.XXXL} + ${SPACING.M}) * 0.8))`,
+        paddingTop: `calc((${SPACING.XXXL} + ${SPACING.M}) + ((${SPACING.XXXL} + ${SPACING.M}) * ${MULTIPLIER.STICKY_BAR_HEIGHT}))`,
       }}
     >
       <NavbarSidebar />
@@ -77,7 +80,7 @@ export default function ProspectHunterPage() {
         dropdownOptions={viewOptions}
         dropdownValue={viewType}
         onDropdownChange={setViewType}
-        dropdownWidth="120px"
+        dropdownWidth={DIMENSION.DROPDOWN_WIDTH}
         />
       <HelpButton />
       

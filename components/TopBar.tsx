@@ -17,6 +17,7 @@ import { BORDER, BORDER_WIDTH } from '../constants/border'
 import { ICON_SIZE } from '../constants/iconSize'
 import { FONT_SIZE, FONT_THICKNESS } from '../constants/font'
 import { DIMENSION } from '../constants/dimension'
+import { MULTIPLIER } from '../constants/multiplier'
 import { Heading } from './Heading'
 import { Text } from './Text'
 import { Input } from './Input'
@@ -59,7 +60,7 @@ export const TopBar = ({ icon: Icon, title, showSearch = false, searchValue, onS
 
   const currentSearchValue = searchValue !== undefined ? searchValue : localSearchValue
 
-  const backgroundColor = variant === 'stickyPurple' ? '#E8DEFF' : COLOR.WHITE
+  const backgroundColor = variant === 'stickyPurple' ? COLOR.PURPLE_LIGHT : COLOR.WHITE
   const topPosition = variant === 'stickyPurple' 
     ? (stickyTopOffset || `calc(${SPACING.XXXL} + ${SPACING.M})`)
     : POSITION.ZERO
@@ -67,7 +68,7 @@ export const TopBar = ({ icon: Icon, title, showSearch = false, searchValue, onS
     ? hexToRgba(COLOR.PURPLE, 0.25)
     : undefined
   const height = variant === 'stickyPurple'
-    ? `calc((${SPACING.XXXL} + ${SPACING.M}) * 0.8)`
+    ? `calc((${SPACING.XXXL} + ${SPACING.M}) * ${MULTIPLIER.STICKY_BAR_HEIGHT})`
     : `calc(${SPACING.XXXL} + ${SPACING.M})`
   const iconSize = variant === 'stickyPurple' ? ICON_SIZE.M : ICON_SIZE.L
   const iconColor = variant === 'stickyPurple' ? COLOR.PURPLE : COLOR.BLACK
@@ -107,7 +108,7 @@ export const TopBar = ({ icon: Icon, title, showSearch = false, searchValue, onS
           gap: SPACING.M,
         }}
       >
-        <Icon size={iconSize} style={{ color: iconColor, flexShrink: 0 }} />
+        <Icon size={iconSize} style={{ color: iconColor, flexShrink: FLEX.ZERO }} />
         {title && (
           <Heading
             level={1}
@@ -158,7 +159,7 @@ export const TopBar = ({ icon: Icon, title, showSearch = false, searchValue, onS
             <div
               style={{
                 width: DIMENSION.SEARCH_INPUT_WIDTH,
-                flexShrink: 0,
+                flexShrink: FLEX.ZERO,
               }}
             >
               <Input

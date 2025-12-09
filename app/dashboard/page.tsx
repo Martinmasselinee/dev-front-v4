@@ -6,6 +6,7 @@ import { Dot } from '../../components/Dot'
 import { Text } from '../../components/Text'
 import { LAYOUT } from '../../constants/layout'
 import { SPACING } from '../../constants/spacing'
+import { MULTIPLIER } from '../../constants/multiplier'
 import { POSITION_TYPE } from '../../constants/position'
 import { NavbarSidebar } from '../../components/NavbarSidebar'
 import { TopBar } from '../../components/TopBar'
@@ -69,7 +70,7 @@ export default function DashboardPage() {
         minHeight: LAYOUT.MIN_SCREEN_HEIGHT,
         position: POSITION_TYPE.RELATIVE,
         marginLeft: LAYOUT.SIDEBAR_WIDTH,
-        paddingTop: `calc((${SPACING.XXXL} + ${SPACING.M}) + ((${SPACING.XXXL} + ${SPACING.M}) * 1.6) + ((${SPACING.XXXL} + ${SPACING.M}) * 0.8))`,
+        paddingTop: `calc((${SPACING.XXXL} + ${SPACING.M}) + ((${SPACING.XXXL} + ${SPACING.M}) * ${MULTIPLIER.STATS_BAR_HEIGHT}) + ((${SPACING.XXXL} + ${SPACING.M}) * ${MULTIPLIER.STICKY_BAR_HEIGHT}))`,
       }}
     >
       <NavbarSidebar />
@@ -93,7 +94,7 @@ export default function DashboardPage() {
         dropdownOptions={dropdownOptions}
         dropdownValue={timeRange}
         onDropdownChange={setTimeRange}
-        stickyTopOffset={`calc((${SPACING.XXXL} + ${SPACING.M}) + ((${SPACING.XXXL} + ${SPACING.M}) * 1.6))`}
+        stickyTopOffset={`calc((${SPACING.XXXL} + ${SPACING.M}) + ((${SPACING.XXXL} + ${SPACING.M}) * ${MULTIPLIER.STATS_BAR_HEIGHT}))`}
       />
       <HelpButton />
       

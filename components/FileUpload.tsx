@@ -11,6 +11,7 @@ import { DISPLAY } from '../constants/display'
 import { FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT } from '../constants/flex'
 import { CURSOR } from '../constants/interaction'
 import { TEXT_ALIGN } from '../constants/text'
+import { FILE_SIZE } from '../constants/fileSize'
 import { Text } from './Text'
 
 interface FileUploadProps {
@@ -72,7 +73,7 @@ export const FileUpload = ({
     }
 
     // Validate file size
-    const fileSizeMB = file.size / (1024 * 1024)
+    const fileSizeMB = file.size / FILE_SIZE.MB_TO_BYTES
     if (fileSizeMB > maxSize) {
       // TODO: Show error message
       return
@@ -135,7 +136,7 @@ export const FileUpload = ({
           }}
         >
           <CloudUpload
-            size={ICON_SIZE.XL * 2}
+            size={ICON_SIZE.XXL}
             style={{
               color: isHovered || isDragging ? COLOR.PURPLE : COLOR.GREY.DARK,
               transition: `color ${TRANSITION.FAST_EASE}`,

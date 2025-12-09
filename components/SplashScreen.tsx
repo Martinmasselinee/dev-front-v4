@@ -20,6 +20,7 @@ import { FONT_SIZE } from '../constants/font'
 import { FONT_THICKNESS } from '../constants/font'
 import { TEXT_ALIGN } from '../constants/text'
 import { TRANSITION_DURATION, TRANSITION_EASING } from '../constants/transition'
+import { MULTIPLIER } from '../constants/multiplier'
 import { LAYOUT } from '../constants/layout'
 
 export const SplashScreen = () => {
@@ -43,7 +44,7 @@ export const SplashScreen = () => {
     const animate = () => {
       const elapsed = Date.now() - startTime
       const progress = Math.min(elapsed / duration, 0.99) // Cap at 0.99 to stop at 99%
-      const newPercentage = Math.floor(progress * 100)
+      const newPercentage = Math.floor(progress * MULTIPLIER.PERCENTAGE_BASE)
       setPercentage(newPercentage)
 
       if (progress >= 0.99 || newPercentage >= 99) {

@@ -9,11 +9,12 @@ import { WIDTH } from '../constants/width'
 import { LAYOUT } from '../constants/layout'
 import { POSITION_TYPE } from '../constants/position'
 import { DISPLAY } from '../constants/display'
-import { FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT } from '../constants/flex'
+import { FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT, FLEX } from '../constants/flex'
 import { BORDER, BORDER_WIDTH } from '../constants/border'
 import { ICON_SIZE } from '../constants/iconSize'
 import { FONT_SIZE, FONT_THICKNESS } from '../constants/font'
 import { TEXT_ALIGN } from '../constants/text'
+import { MULTIPLIER } from '../constants/multiplier'
 import { Text } from './Text'
 
 interface StatItem {
@@ -35,7 +36,7 @@ export const StatsBar = ({ stats }: StatsBarProps) => {
         left: LAYOUT.SIDEBAR_WIDTH,
         right: POSITION.ZERO,
         width: `calc(${WIDTH.FULL} - ${LAYOUT.SIDEBAR_WIDTH})`,
-        height: `calc((${SPACING.XXXL} + ${SPACING.M}) * 1.6)`,
+        height: `calc((${SPACING.XXXL} + ${SPACING.M}) * ${MULTIPLIER.STATS_BAR_HEIGHT})`,
         backgroundColor: COLOR.WHITE,
         borderBottom: BORDER.NONE,
         zIndex: Z_INDEX.NAVBAR - 1,
@@ -56,7 +57,7 @@ export const StatsBar = ({ stats }: StatsBarProps) => {
               flexDirection: FLEX_DIRECTION.COLUMN,
               alignItems: ALIGN_ITEMS.CENTER,
               gap: SPACING.XS,
-              flex: 1,
+              flex: FLEX.ONE,
             }}
           >
             <div

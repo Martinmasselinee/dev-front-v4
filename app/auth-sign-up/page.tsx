@@ -143,16 +143,17 @@ export default function AuthSignUpPage() {
               le sponsoring sportif pour
               <br />
               les{' '}
-              <span
+              <Text
+                as="span"
                 style={{
                   color: COLOR.PURPLE,
                   fontStyle: FONT_STYLE.ITALIC,
-                  paddingLeft: SPACING.XS, // 4px
-                  paddingRight: SPACING.S, // 0.5rem = 8px
-        }}
-      >
+                  paddingLeft: SPACING.XS,
+                  paddingRight: SPACING.S,
+                }}
+              >
                 {rotatingTexts[currentTextIndex]}
-              </span>
+              </Text>
             </Heading>
           </HeaderSection>
         </Container>

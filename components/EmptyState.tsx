@@ -6,6 +6,7 @@ import { Text } from './Text'
 import { COLOR } from '../constants/color'
 import { BORDER_RADIUS, BORDER_WIDTH } from '../constants/border'
 import { ICON_SIZE } from '../constants/iconSize'
+import { ICON_STROKE_WIDTH } from '../constants/icon'
 import { SPACING } from '../constants/spacing'
 import { DISPLAY } from '../constants/display'
 import { FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT } from '../constants/flex'
@@ -50,8 +51,8 @@ export const EmptyState = ({ icon: Icon, title, description }: EmptyStateProps) 
             }}
           >
             <Icon
-              size={ICON_SIZE.XL * 2}
-              strokeWidth={1.5}
+              size={ICON_SIZE.XXL}
+              strokeWidth={ICON_STROKE_WIDTH.DEFAULT}
               style={{
                 color: COLOR.GREY.DARK,
               }}

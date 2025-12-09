@@ -23,6 +23,7 @@ import { BORDER_RADIUS, BORDER_WIDTH } from '../../constants/border'
 import { DISPLAY } from '../../constants/display'
 import { FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT, FLEX } from '../../constants/flex'
 import { TEXT_ALIGN } from '../../constants/text'
+import { MULTIPLIER } from '../../constants/multiplier'
 
 export default function RadarAIPage() {
   const searchParams = useSearchParams()
@@ -182,7 +183,7 @@ export default function RadarAIPage() {
           minHeight: LAYOUT.MIN_SCREEN_HEIGHT,
           position: POSITION_TYPE.RELATIVE,
           marginLeft: LAYOUT.SIDEBAR_WIDTH,
-          paddingTop: `calc((${SPACING.XXXL} + ${SPACING.M}) + ((${SPACING.XXXL} + ${SPACING.M}) * 0.8))`,
+          paddingTop: `calc((${SPACING.XXXL} + ${SPACING.M}) + ((${SPACING.XXXL} + ${SPACING.M}) * ${MULTIPLIER.STICKY_BAR_HEIGHT}))`,
         }}
       >
         <NavbarSidebar />
@@ -253,7 +254,7 @@ export default function RadarAIPage() {
               onClick={handleInviteUser}
               type="button"
               icon={<UserPlus size={ICON_SIZE.M} />}
-              style={{ width: `calc(${POSITION.CENTER} * 0.5)` }}
+              style={{ width: `calc(${POSITION.CENTER} * ${MULTIPLIER.BUTTON_WIDTH_HALF})` }}
             >
               Inviter
             </Button>

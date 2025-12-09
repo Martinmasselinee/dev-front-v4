@@ -14,6 +14,8 @@ import { TEXT_ALIGN } from '../../constants/text'
 import { COLOR } from '../../constants/color'
 import { BORDER_RADIUS, BORDER_WIDTH } from '../../constants/border'
 import { ICON_SIZE } from '../../constants/iconSize'
+import { DIMENSION } from '../../constants/dimension'
+import { MULTIPLIER } from '../../constants/multiplier'
 import { NavbarSidebar } from '../../components/NavbarSidebar'
 import { TopBar } from '../../components/TopBar'
 import { HelpButton } from '../../components/HelpButton'
@@ -54,7 +56,7 @@ export default function SmartSearchPage() {
         minHeight: LAYOUT.MIN_SCREEN_HEIGHT,
         position: POSITION_TYPE.RELATIVE,
         marginLeft: LAYOUT.SIDEBAR_WIDTH,
-        paddingTop: `calc((${SPACING.XXXL} + ${SPACING.M}) + ((${SPACING.XXXL} + ${SPACING.M}) * 0.8))`,
+        paddingTop: `calc((${SPACING.XXXL} + ${SPACING.M}) + ((${SPACING.XXXL} + ${SPACING.M}) * ${MULTIPLIER.STICKY_BAR_HEIGHT}))`,
       }}
     >
       <NavbarSidebar />
@@ -75,7 +77,7 @@ export default function SmartSearchPage() {
         dropdownOptions={viewOptions}
         dropdownValue={viewType}
         onDropdownChange={setViewType}
-        dropdownWidth="120px"
+        dropdownWidth={DIMENSION.DROPDOWN_WIDTH}
       />
       <HelpButton />
       
