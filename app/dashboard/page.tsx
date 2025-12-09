@@ -11,14 +11,9 @@ import { NavbarSidebar } from '../../components/NavbarSidebar'
 import { TopBar } from '../../components/TopBar'
 import { StatsBar } from '../../components/StatsBar'
 import { HelpButton } from '../../components/HelpButton'
-import { COLOR } from '../../constants/color'
-import { BORDER_RADIUS, BORDER_WIDTH } from '../../constants/border'
-import { ICON_SIZE } from '../../constants/iconSize'
-import { TRANSITION } from '../../constants/transition'
+import { EmptyState } from '../../components/EmptyState'
 import { DISPLAY } from '../../constants/display'
-import { FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT } from '../../constants/flex'
-import { TEXT_ALIGN } from '../../constants/text'
-import { Container } from '../../components/Container'
+import { ALIGN_ITEMS } from '../../constants/flex'
 
 export default function DashboardPage() {
   const [searchValue, setSearchValue] = useState('')
@@ -102,78 +97,11 @@ export default function DashboardPage() {
       />
       <HelpButton />
       
-      {/* Empty State */}
-      <Container variant="fullWidth">
-        <div
-          style={{
-            paddingTop: SPACING.XL,
-            paddingLeft: SPACING.XL,
-            paddingRight: SPACING.XL,
-            paddingBottom: SPACING.XXL,
-            backgroundColor: COLOR.GREY.LIGHT,
-            border: `${BORDER_WIDTH.MEDIUM} dashed ${COLOR.GREY.MEDIUM}`,
-            borderRadius: BORDER_RADIUS.L,
-            marginTop: SPACING.XL,
-          }}
-        >
-          <div
-            style={{
-              display: DISPLAY.FLEX,
-              flexDirection: FLEX_DIRECTION.COLUMN,
-              alignItems: ALIGN_ITEMS.CENTER,
-              gap: SPACING.M,
-            }}
-          >
-            {/* Icon */}
-            <div
-              style={{
-                display: DISPLAY.FLEX,
-                alignItems: ALIGN_ITEMS.CENTER,
-                justifyContent: JUSTIFY_CONTENT.CENTER,
-              }}
-            >
-              <Inbox
-                size={ICON_SIZE.XL * 2}
-                strokeWidth={1.5}
-                style={{
-                  color: COLOR.GREY.DARK,
-                }}
-              />
-            </div>
-
-            {/* Text content */}
-            <div
-              style={{
-                display: DISPLAY.FLEX,
-                flexDirection: FLEX_DIRECTION.COLUMN,
-                alignItems: ALIGN_ITEMS.CENTER,
-                gap: SPACING.XS,
-              }}
-            >
-              <Text
-                size="L"
-                weight="XL"
-                color="BLACK"
-                style={{
-                  textAlign: TEXT_ALIGN.CENTER,
-                }}
-              >
-                Aucune activité récente
-              </Text>
-              <Text
-                size="M"
-                weight="M"
-                color="GREY_DARK"
-                style={{
-                  textAlign: TEXT_ALIGN.CENTER,
-                }}
-              >
-                Vos activités récentes apparaîtront ici
-              </Text>
-            </div>
-          </div>
-        </div>
-      </Container>
+      <EmptyState
+        icon={Inbox}
+        title="Aucune activité récente"
+        description="Vos activités récentes apparaîtront ici"
+      />
     </div>
   )
 }

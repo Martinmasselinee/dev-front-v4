@@ -17,7 +17,7 @@ import { Input } from '../../components/Input'
 import { Button } from '../../components/Button'
 import { Card } from '../../components/Card'
 import { IconButton } from '../../components/IconButton'
-import { Container } from '../../components/Container'
+import { EmptyState } from '../../components/EmptyState'
 import { COLOR } from '../../constants/color'
 import { BORDER_RADIUS, BORDER_WIDTH } from '../../constants/border'
 import { DISPLAY } from '../../constants/display'
@@ -209,78 +209,11 @@ export default function RadarAIPage() {
         />
         <HelpButton />
         
-        {/* Empty State */}
-        <Container variant="fullWidth">
-          <div
-            style={{
-              paddingTop: SPACING.XL,
-              paddingLeft: SPACING.XL,
-              paddingRight: SPACING.XL,
-              paddingBottom: SPACING.XXL,
-              backgroundColor: COLOR.GREY.LIGHT,
-              border: `${BORDER_WIDTH.MEDIUM} dashed ${COLOR.GREY.MEDIUM}`,
-              borderRadius: BORDER_RADIUS.L,
-              marginTop: SPACING.XL,
-            }}
-          >
-            <div
-              style={{
-                display: DISPLAY.FLEX,
-                flexDirection: FLEX_DIRECTION.COLUMN,
-                alignItems: ALIGN_ITEMS.CENTER,
-                gap: SPACING.M,
-              }}
-            >
-              {/* Icon */}
-              <div
-                style={{
-                  display: DISPLAY.FLEX,
-                  alignItems: ALIGN_ITEMS.CENTER,
-                  justifyContent: JUSTIFY_CONTENT.CENTER,
-                }}
-              >
-                <EmptyStateIcon
-                  size={ICON_SIZE.XL * 2}
-                  strokeWidth={1.5}
-                  style={{
-                    color: COLOR.GREY.DARK,
-                  }}
-                />
-              </div>
-
-              {/* Text content */}
-              <div
-                style={{
-                  display: DISPLAY.FLEX,
-                  flexDirection: FLEX_DIRECTION.COLUMN,
-                  alignItems: ALIGN_ITEMS.CENTER,
-                  gap: SPACING.XS,
-                }}
-              >
-                <Text
-                  size="L"
-                  weight="XL"
-                  color="BLACK"
-                  style={{
-                    textAlign: TEXT_ALIGN.CENTER,
-                  }}
-                >
-                  {emptyStateContent.title}
-                </Text>
-                <Text
-                  size="M"
-                  weight="M"
-                  color="GREY_DARK"
-                  style={{
-                    textAlign: TEXT_ALIGN.CENTER,
-                  }}
-                >
-                  {emptyStateContent.description}
-                </Text>
-              </div>
-            </div>
-          </div>
-        </Container>
+        <EmptyState
+          icon={emptyStateContent.icon}
+          title={emptyStateContent.title}
+          description={emptyStateContent.description}
+        />
       </div>
 
       <Popup

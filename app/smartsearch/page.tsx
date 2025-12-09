@@ -1,14 +1,19 @@
 'use client'
 
 import { useState } from 'react'
-import { Sparkles } from 'lucide-react'
+import { Sparkles, Search } from 'lucide-react'
 import { Dot } from '../../components/Dot'
 import { Text } from '../../components/Text'
+import { EmptyState } from '../../components/EmptyState'
 import { LAYOUT } from '../../constants/layout'
 import { SPACING } from '../../constants/spacing'
 import { POSITION_TYPE } from '../../constants/position'
 import { DISPLAY } from '../../constants/display'
-import { ALIGN_ITEMS } from '../../constants/flex'
+import { ALIGN_ITEMS, FLEX_DIRECTION, JUSTIFY_CONTENT } from '../../constants/flex'
+import { TEXT_ALIGN } from '../../constants/text'
+import { COLOR } from '../../constants/color'
+import { BORDER_RADIUS, BORDER_WIDTH } from '../../constants/border'
+import { ICON_SIZE } from '../../constants/iconSize'
 import { NavbarSidebar } from '../../components/NavbarSidebar'
 import { TopBar } from '../../components/TopBar'
 import { HelpButton } from '../../components/HelpButton'
@@ -73,6 +78,12 @@ export default function SmartSearchPage() {
         dropdownWidth="120px"
       />
       <HelpButton />
+      
+      <EmptyState
+        icon={Search}
+        title="Décrivez votre recherche"
+        description="Utilisez le champ ci-dessus pour décrire en langage naturel le type d'entreprises et de décideurs que vous recherchez"
+      />
     </div>
   )
 }
