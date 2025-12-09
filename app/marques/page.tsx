@@ -8,6 +8,7 @@ import { POSITION_TYPE } from '../../constants/position'
 import { NavbarSidebar } from '../../components/NavbarSidebar'
 import { TopBar } from '../../components/TopBar'
 import { HelpButton } from '../../components/HelpButton'
+import { StatusFilterSidebar } from '../../components/StatusFilterSidebar'
 
 export default function MarquesPage() {
   const [searchValue, setSearchValue] = useState('')
@@ -17,11 +18,12 @@ export default function MarquesPage() {
       style={{
         minHeight: LAYOUT.MIN_SCREEN_HEIGHT,
         position: POSITION_TYPE.RELATIVE,
-        marginLeft: LAYOUT.SIDEBAR_WIDTH,
+        marginLeft: `calc(${LAYOUT.SIDEBAR_WIDTH} + (${LAYOUT.SIDEBAR_WIDTH} * 0.9))`,
         paddingTop: `calc(${SPACING.XXXL} + ${SPACING.M})`,
       }}
     >
       <NavbarSidebar />
+      <StatusFilterSidebar />
       <TopBar 
         icon={Tag} 
         title="Marques" 
