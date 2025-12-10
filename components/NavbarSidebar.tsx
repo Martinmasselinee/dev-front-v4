@@ -13,8 +13,6 @@ import {
   FileText,
   Settings,
   LogOut,
-  ChevronDown,
-  ChevronUp,
 } from 'lucide-react'
 import { COLOR, COLOR_RGBA } from '../constants/color'
 import { lightenColor, hexToRgba } from '../lib/colorUtils'
@@ -40,7 +38,6 @@ import { BACKGROUND } from '../constants/background'
 import { Text } from './Text'
 import { Card } from './Card'
 import { Popup } from './Popup'
-import { IconButton } from './IconButton'
 import { useState, useRef, useEffect } from 'react'
 import { Loading } from './Loading'
 
@@ -61,7 +58,6 @@ export const NavbarSidebar = () => {
   const pathname = usePathname()
   const [isLoading, setIsLoading] = useState(false)
   const [showWorkspacePopup, setShowWorkspacePopup] = useState(false)
-  const [hoverWorkspace, setHoverWorkspace] = useState(false)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   // Workspace and user data
@@ -303,57 +299,28 @@ export const NavbarSidebar = () => {
             }}
           >
             <div
-              onMouseEnter={() => setHoverWorkspace(true)}
-              onMouseLeave={() => setHoverWorkspace(false)}
               style={{
                 display: DISPLAY.FLEX,
                 alignItems: ALIGN_ITEMS.CENTER,
                 gap: SPACING.M,
                 marginBottom: SPACING.S,
-                justifyContent: JUSTIFY_CONTENT.SPACE_BETWEEN,
-                cursor: CURSOR.POINTER,
               }}
             >
-              <div
-                onClick={(e) => {
-                  e.stopPropagation()
-                  setShowWorkspacePopup(true)
-                }}
-                style={{
-                  display: DISPLAY.FLEX,
-                  alignItems: ALIGN_ITEMS.CENTER,
-                  gap: SPACING.M,
-                  flex: FLEX.ONE,
-                }}
-              >
-                <FileText size={ICON_SIZE.M} style={{ color: hoverWorkspace ? COLOR.PURPLE : COLOR.BLACK, flexShrink: FLEX.ZERO, transition: `color ${TRANSITION.FAST_EASE}` }} />
+              <FileText size={ICON_SIZE.M} style={{ color: pathname === '/admin' ? COLOR.PURPLE : COLOR.BLACK, flexShrink: FLEX.ZERO }} />
                 <Text 
                   size="M" 
                   weight="XL" 
-                  color={hoverWorkspace ? 'PURPLE' : 'BLACK'}
+                color={pathname === '/admin' ? 'PURPLE' : 'BLACK'}
                   style={{
                     overflow: OVERFLOW.HIDDEN,
                     textOverflow: TEXT_OVERFLOW.ELLIPSIS,
                     whiteSpace: WHITE_SPACE.NOWRAP,
                     minWidth: DIMENSION.MIN_WIDTH_ZERO,
-                    transition: `color ${TRANSITION.FAST_EASE}`,
+                  flex: FLEX.ONE,
                   }}
                 >
                   {workspaceName}
                 </Text>
-              </div>
-              <IconButton
-                onClick={(e) => {
-                  e.stopPropagation()
-                  setShowWorkspacePopup(true)
-                }}
-                icon={hoverWorkspace || showWorkspacePopup ? <ChevronUp size={ICON_SIZE.M} /> : <ChevronDown size={ICON_SIZE.M} />}
-                style={{ 
-                  color: hoverWorkspace ? COLOR.PURPLE : COLOR.GREY.DARK,
-                  flexShrink: FLEX.ZERO,
-                  transition: `color ${TRANSITION.FAST_EASE}`,
-                }}
-              />
             </div>
             <div
               style={{

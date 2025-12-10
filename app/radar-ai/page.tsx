@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { Users, Mail, X, UserPlus, AlertTriangle, Sparkles, ScanLine, Inbox, FileText, TrendingUp, Building2, Tag, Zap, Award, DollarSign, Youtube, Shirt } from 'lucide-react'
+import { Users, Mail, X, AlertTriangle, Sparkles, ScanLine, Inbox, FileText, TrendingUp, Building2, Tag, Zap, Award, DollarSign, Youtube, Shirt } from 'lucide-react'
 import { Dot } from '../../components/Dot'
 import { Text } from '../../components/Text'
 import { LAYOUT } from '../../constants/layout'
@@ -253,8 +253,7 @@ export default function RadarAIPage() {
               variant="BLACK"
               onClick={handleInviteUser}
               type="button"
-              icon={<UserPlus size={ICON_SIZE.M} />}
-              style={{ width: `calc(${POSITION.CENTER} * ${MULTIPLIER.BUTTON_WIDTH_HALF})` }}
+              style={{ width: `calc(${POSITION.CENTER} * ${MULTIPLIER.BUTTON_WIDTH_HALF} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY_FIVE})` }}
             >
               Inviter
             </Button>
