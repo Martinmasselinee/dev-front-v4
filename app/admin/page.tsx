@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Settings, ChevronDown, Building2, FileText, User, Mail, BookOpen, Search, Users, Phone, Award, Shield, Trash2, AlertTriangle, Brain, Presentation, Info, Share2, Globe, Linkedin, Instagram, Facebook, Plus, BarChart3, Users2, GraduationCap, DollarSign, Heart, Star, X } from 'lucide-react'
+import { Settings, ChevronDown, Building2, FileText, User, Mail, BookOpen, Search, Users, Phone, Award, Shield, Trash2, AlertTriangle, Brain, Presentation, Info, Share2, Globe, Linkedin, Instagram, Facebook, Plus, BarChart3, Users2, GraduationCap, DollarSign, Heart, Star, X, Calendar, Check } from 'lucide-react'
 import { LAYOUT } from '../../constants/layout'
 import { SPACING } from '../../constants/spacing'
 import { POSITION_TYPE, POSITION } from '../../constants/position'
@@ -99,6 +99,14 @@ export default function AdminPage() {
   const [cinquanteQuatreVingtK, setCinquanteQuatreVingtK] = useState('')
   const [plusQuatreVingtK, setPlusQuatreVingtK] = useState('')
   
+  // Répartition age fanbase states
+  const [enfants, setEnfants] = useState('')
+  const [dixSeptVingtCinq, setDixSeptVingtCinq] = useState('')
+  const [vingtCinqTrente, setVingtCinqTrente] = useState('')
+  const [trenteQuarante, setTrenteQuarante] = useState('')
+  const [quaranteSoixante, setQuaranteSoixante] = useState('')
+  const [plusSoixante, setPlusSoixante] = useState('')
+  
   // Centres d'intérêts fanbase states
   const [centresInterets, setCentresInterets] = useState<Array<{ id: string; value: string }>>([{ id: Date.now().toString(), value: '' }])
   
@@ -141,6 +149,12 @@ export default function AdminPage() {
     trenteCinquanteK: '',
     cinquanteQuatreVingtK: '',
     plusQuatreVingtK: '',
+    enfants: '',
+    dixSeptVingtCinq: '',
+    vingtCinqTrente: '',
+    trenteQuarante: '',
+    quaranteSoixante: '',
+    plusSoixante: '',
     centresInterets: [] as Array<{ id: string; value: string }>,
     valeursMarque: [] as Array<{ id: string; value: string }>,
   })
@@ -181,6 +195,12 @@ export default function AdminPage() {
     trenteCinquanteK !== initialValues.trenteCinquanteK ||
     cinquanteQuatreVingtK !== initialValues.cinquanteQuatreVingtK ||
     plusQuatreVingtK !== initialValues.plusQuatreVingtK ||
+    enfants !== initialValues.enfants ||
+    dixSeptVingtCinq !== initialValues.dixSeptVingtCinq ||
+    vingtCinqTrente !== initialValues.vingtCinqTrente ||
+    trenteQuarante !== initialValues.trenteQuarante ||
+    quaranteSoixante !== initialValues.quaranteSoixante ||
+    plusSoixante !== initialValues.plusSoixante ||
     JSON.stringify(centresInterets) !== JSON.stringify(initialValues.centresInterets) ||
     JSON.stringify(valeursMarque) !== JSON.stringify(initialValues.valeursMarque)
   
@@ -259,6 +279,7 @@ export default function AdminPage() {
       firstName: 'Martin',
       lastName: 'Masseline',
       email: 'martin@dataxx.fr',
+      emailConnecte: true,
       articlesLus: 45,
       recherchesLancees: 12,
       entreprisesIdentifiees: 8,
@@ -273,6 +294,7 @@ export default function AdminPage() {
       firstName: 'Jean',
       lastName: 'Dupont',
       email: 'jean@dataxx.fr',
+      emailConnecte: false,
       articlesLus: 32,
       recherchesLancees: 9,
       entreprisesIdentifiees: 5,
@@ -287,6 +309,7 @@ export default function AdminPage() {
       firstName: 'Marie',
       lastName: 'Martin',
       email: 'marie@dataxx.fr',
+      emailConnecte: true,
       articlesLus: 28,
       recherchesLancees: 7,
       entreprisesIdentifiees: 4,
@@ -393,6 +416,49 @@ export default function AdminPage() {
       ),
       meta: {
         width: `calc(10 * ${SPACING.L} * ${MULTIPLIER.DROPDOWN_WIDTH_ONE_FIVE})`,
+      },
+    },
+    {
+      accessorKey: 'emailConnecte',
+      header: () => (
+        <div style={{ display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.FLEX_START, gap: SPACING.S }}>
+          <Mail size={ICON_SIZE.S} style={{ color: COLOR.GREY.DARK, flexShrink: FLEX.ZERO }} />
+          <Text size="S" weight="XL" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP, textTransform: TEXT_TRANSFORM.UPPERCASE, letterSpacing: LETTER_SPACING.TIGHT, textAlign: TEXT_ALIGN.LEFT }}>Email connecté</Text>
+        </div>
+      ),
+      cell: ({ row }) => {
+        const isConnecte = row.original.emailConnecte
+        return (
+          <div
+            style={{
+              display: DISPLAY.FLEX,
+              alignItems: ALIGN_ITEMS.CENTER,
+              gap: SPACING.XS,
+              paddingLeft: SPACING.XS,
+              paddingRight: SPACING.XS,
+              paddingTop: SPACING.XS,
+              paddingBottom: SPACING.XS,
+              backgroundColor: isConnecte ? hexToRgba(COLOR.PURPLE, MULTIPLIER.OPACITY_PURPLE_BACKGROUND) : COLOR.WHITE,
+              border: `${BORDER_WIDTH.THIN} solid ${isConnecte ? COLOR.PURPLE : COLOR.GREY.MEDIUM}`,
+              borderRadius: BORDER_RADIUS.S,
+              flexShrink: FLEX.ZERO,
+              textAlign: TEXT_ALIGN.LEFT,
+            }}
+          >
+            {isConnecte ? (
+              <Check size={ICON_SIZE.S} style={{ color: COLOR.PURPLE, flexShrink: FLEX.ZERO }} />
+            ) : (
+              <X size={ICON_SIZE.S} style={{ color: COLOR.GREY.DARK, flexShrink: FLEX.ZERO }} />
+            )}
+            <Text size="S" weight="M" color={isConnecte ? 'PURPLE' : 'GREY_DARK'}>
+              {isConnecte ? 'connecté' : 'non'}
+            </Text>
+          </div>
+        )
+      },
+      meta: {
+        width: `calc(10 * ${SPACING.L})`,
+        align: 'left',
       },
     },
     {
@@ -1716,6 +1782,172 @@ export default function AdminPage() {
               <Slider
                 value={plusQuatreVingtK}
                 onChange={(value) => setPlusQuatreVingtK(value.toString())}
+                min={0}
+                max={100}
+                step={1}
+              />
+            </FormGroup>
+          </div>
+
+          {/* Répartition age fanbase subsection */}
+          <div
+            style={{
+              display: DISPLAY.FLEX,
+              flexDirection: FLEX_DIRECTION.COLUMN,
+              gap: SPACING.M,
+            }}
+          >
+            <div
+              style={{
+                display: DISPLAY.FLEX,
+                alignItems: ALIGN_ITEMS.CENTER,
+                gap: SPACING.S,
+              }}
+            >
+              <Calendar size={ICON_SIZE.M} style={{ color: COLOR.BLACK, flexShrink: FLEX.ZERO }} />
+              <Text size="L" weight="XL" color="BLACK">
+                Répartition age fanbase
+              </Text>
+            </div>
+            <FormGroup>
+              <div
+                style={{
+                  display: DISPLAY.FLEX,
+                  alignItems: ALIGN_ITEMS.CENTER,
+                  justifyContent: JUSTIFY_CONTENT.SPACE_BETWEEN,
+                  marginBottom: SPACING.NEGATIVE_ONE_PX,
+                }}
+              >
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  Enfants
+                </Text>
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  {enfants || '0'}%
+                </Text>
+              </div>
+              <Slider
+                value={enfants}
+                onChange={(value) => setEnfants(value.toString())}
+                min={0}
+                max={100}
+                step={1}
+              />
+            </FormGroup>
+            <FormGroup>
+              <div
+                style={{
+                  display: DISPLAY.FLEX,
+                  alignItems: ALIGN_ITEMS.CENTER,
+                  justifyContent: JUSTIFY_CONTENT.SPACE_BETWEEN,
+                  marginBottom: SPACING.NEGATIVE_ONE_PX,
+                }}
+              >
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  17-25 ans
+                </Text>
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  {dixSeptVingtCinq || '0'}%
+                </Text>
+              </div>
+              <Slider
+                value={dixSeptVingtCinq}
+                onChange={(value) => setDixSeptVingtCinq(value.toString())}
+                min={0}
+                max={100}
+                step={1}
+              />
+            </FormGroup>
+            <FormGroup>
+              <div
+                style={{
+                  display: DISPLAY.FLEX,
+                  alignItems: ALIGN_ITEMS.CENTER,
+                  justifyContent: JUSTIFY_CONTENT.SPACE_BETWEEN,
+                  marginBottom: SPACING.NEGATIVE_ONE_PX,
+                }}
+              >
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  25-30 ans
+                </Text>
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  {vingtCinqTrente || '0'}%
+                </Text>
+              </div>
+              <Slider
+                value={vingtCinqTrente}
+                onChange={(value) => setVingtCinqTrente(value.toString())}
+                min={0}
+                max={100}
+                step={1}
+              />
+            </FormGroup>
+            <FormGroup>
+              <div
+                style={{
+                  display: DISPLAY.FLEX,
+                  alignItems: ALIGN_ITEMS.CENTER,
+                  justifyContent: JUSTIFY_CONTENT.SPACE_BETWEEN,
+                  marginBottom: SPACING.NEGATIVE_ONE_PX,
+                }}
+              >
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  30-40 ans
+                </Text>
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  {trenteQuarante || '0'}%
+                </Text>
+              </div>
+              <Slider
+                value={trenteQuarante}
+                onChange={(value) => setTrenteQuarante(value.toString())}
+                min={0}
+                max={100}
+                step={1}
+              />
+            </FormGroup>
+            <FormGroup>
+              <div
+                style={{
+                  display: DISPLAY.FLEX,
+                  alignItems: ALIGN_ITEMS.CENTER,
+                  justifyContent: JUSTIFY_CONTENT.SPACE_BETWEEN,
+                  marginBottom: SPACING.NEGATIVE_ONE_PX,
+                }}
+              >
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  40-60 ans
+                </Text>
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  {quaranteSoixante || '0'}%
+                </Text>
+              </div>
+              <Slider
+                value={quaranteSoixante}
+                onChange={(value) => setQuaranteSoixante(value.toString())}
+                min={0}
+                max={100}
+                step={1}
+              />
+            </FormGroup>
+            <FormGroup>
+              <div
+                style={{
+                  display: DISPLAY.FLEX,
+                  alignItems: ALIGN_ITEMS.CENTER,
+                  justifyContent: JUSTIFY_CONTENT.SPACE_BETWEEN,
+                  marginBottom: SPACING.NEGATIVE_ONE_PX,
+                }}
+              >
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  &gt; 60 ans
+                </Text>
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  {plusSoixante || '0'}%
+                </Text>
+              </div>
+              <Slider
+                value={plusSoixante}
+                onChange={(value) => setPlusSoixante(value.toString())}
                 min={0}
                 max={100}
                 step={1}

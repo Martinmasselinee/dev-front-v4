@@ -39,6 +39,12 @@ export function ConditionalComponent({ type }: ConditionalComponentProps) {
     return <HelpButtonWrapper />
   }
   
+  // For navbar type: sidebar pages already have NavbarSidebar imported directly, so return null
+  // Other pages should show SiteWebNavigation
+  if (isSidebarPage) {
+    return null
+  }
+  
   return <SiteWebNavigation />
 }
 
