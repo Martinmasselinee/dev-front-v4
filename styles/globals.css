@@ -57,33 +57,43 @@ body {
   animation: spin 1s linear infinite;
 }
 
-/* rc-slider custom styles */
+/* rc-slider custom styles - thin black and grey */
 .rc-slider {
-  border-radius: 8px;
+  height: 2px;
 }
 
 .rc-slider-rail {
-  background-color: #e0e0e0 !important;
-  border-radius: 8px;
+  background-color: #b8bcc4 !important;
+  height: 2px !important;
 }
 
 .rc-slider-track {
-  background-color: #5218F9 !important;
-  border-radius: 8px;
+  background-color: #000000 !important;
+  height: 2px !important;
 }
 
 .rc-slider-handle {
-  border: 1px solid #ffffff !important;
-  background-color: #5218F9 !important;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
+  border: 2px solid #000000 !important;
+  background-color: #000000 !important;
+  width: 12px !important;
+  height: 12px !important;
+  margin-top: -5px !important;
+  margin-left: -6px !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
   border-radius: 50% !important;
 }
 
 .rc-slider-handle:focus {
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
+  border-color: #000000 !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
 }
 
 .rc-slider-handle:hover {
-  border-color: #ffffff !important;
+  border-color: #000000 !important;
+}
+
+.rc-slider-handle:active {
+  border-color: #000000 !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
 }
 

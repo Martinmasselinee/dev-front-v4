@@ -45,6 +45,7 @@ import { FileUpload } from '../../components/FileUpload'
 import { FormGroup } from '../../components/FormGroup'
 import { Textarea } from '../../components/Textarea'
 import { Select } from '../../components/Select'
+import { Slider } from '../../components/Slider'
 
 export default function AdminPage() {
   const router = useRouter()
@@ -164,20 +165,18 @@ export default function AdminPage() {
   }
   
   // Handle homme/femme interaction - they must sum to 100
-  const handleHommeChange = (value: string) => {
-    const numValue = parseInt(value) || 0
-    if (numValue >= 0 && numValue <= 100) {
-      setHomme(value)
-      const newFemme = Math.max(0, 100 - numValue)
+  const handleHommeChange = (value: number) => {
+    if (value >= 0 && value <= 100) {
+      setHomme(value.toString())
+      const newFemme = Math.max(0, 100 - value)
       setFemme(newFemme.toString())
     }
   }
   
-  const handleFemmeChange = (value: string) => {
-    const numValue = parseInt(value) || 0
-    if (numValue >= 0 && numValue <= 100) {
-      setFemme(value)
-      const newHomme = Math.max(0, 100 - numValue)
+  const handleFemmeChange = (value: number) => {
+    if (value >= 0 && value <= 100) {
+      setFemme(value.toString())
+      const newHomme = Math.max(0, 100 - value)
       setHomme(newHomme.toString())
     }
   }
@@ -1209,45 +1208,36 @@ export default function AdminPage() {
               <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
                 Homme
               </Text>
-              <Input
-                type="number"
+              <Slider
                 value={homme}
-                onChange={(e) => handleHommeChange(e.target.value)}
-                placeholder="0"
-                min="0"
-                max="100"
-                step="1"
-                icon={<User size={ICON_SIZE.M} />}
+                onChange={handleHommeChange}
+                min={0}
+                max={100}
+                step={1}
               />
             </FormGroup>
             <FormGroup>
               <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
                 Femme
               </Text>
-              <Input
-                type="number"
+              <Slider
                 value={femme}
-                onChange={(e) => handleFemmeChange(e.target.value)}
-                placeholder="0"
-                min="0"
-                max="100"
-                step="1"
-                icon={<User size={ICON_SIZE.M} />}
+                onChange={handleFemmeChange}
+                min={0}
+                max={100}
+                step={1}
               />
             </FormGroup>
             <FormGroup>
               <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
                 Famille
               </Text>
-              <Input
-                type="number"
+              <Slider
                 value={famille}
-                onChange={(e) => setFamille(e.target.value)}
-                placeholder="0"
-                min="0"
-                max="100"
-                step="1"
-                icon={<Users2 size={ICON_SIZE.M} />}
+                onChange={(value) => setFamille(value.toString())}
+                min={0}
+                max={100}
+                step={1}
               />
             </FormGroup>
           </div>
@@ -1276,105 +1266,84 @@ export default function AdminPage() {
               <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
                 Étudiants
               </Text>
-              <Input
-                type="number"
+              <Slider
                 value={etudiants}
-                onChange={(e) => setEtudiants(e.target.value)}
-                placeholder="0"
-                min="0"
-                max="100"
-                step="1"
-                icon={<GraduationCap size={ICON_SIZE.M} />}
+                onChange={(value) => setEtudiants(value.toString())}
+                min={0}
+                max={100}
+                step={1}
               />
             </FormGroup>
             <FormGroup>
               <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
                 Sans emploi
               </Text>
-              <Input
-                type="number"
+              <Slider
                 value={sansEmploi}
-                onChange={(e) => setSansEmploi(e.target.value)}
-                placeholder="0"
-                min="0"
-                max="100"
-                step="1"
-                icon={<User size={ICON_SIZE.M} />}
+                onChange={(value) => setSansEmploi(value.toString())}
+                min={0}
+                max={100}
+                step={1}
               />
             </FormGroup>
             <FormGroup>
               <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
                 Salariés
               </Text>
-              <Input
-                type="number"
+              <Slider
                 value={salaries}
-                onChange={(e) => setSalaries(e.target.value)}
-                placeholder="0"
-                min="0"
-                max="100"
-                step="1"
-                icon={<User size={ICON_SIZE.M} />}
+                onChange={(value) => setSalaries(value.toString())}
+                min={0}
+                max={100}
+                step={1}
               />
             </FormGroup>
             <FormGroup>
               <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
                 Ouvriers
               </Text>
-              <Input
-                type="number"
+              <Slider
                 value={ouvriers}
-                onChange={(e) => setOuvriers(e.target.value)}
-                placeholder="0"
-                min="0"
-                max="100"
-                step="1"
-                icon={<User size={ICON_SIZE.M} />}
+                onChange={(value) => setOuvriers(value.toString())}
+                min={0}
+                max={100}
+                step={1}
               />
             </FormGroup>
             <FormGroup>
               <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
                 Cadres
               </Text>
-              <Input
-                type="number"
+              <Slider
                 value={cadres}
-                onChange={(e) => setCadres(e.target.value)}
-                placeholder="0"
-                min="0"
-                max="100"
-                step="1"
-                icon={<User size={ICON_SIZE.M} />}
+                onChange={(value) => setCadres(value.toString())}
+                min={0}
+                max={100}
+                step={1}
               />
             </FormGroup>
             <FormGroup>
               <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
                 Cadres supérieurs
               </Text>
-              <Input
-                type="number"
+              <Slider
                 value={cadresSuperieurs}
-                onChange={(e) => setCadresSuperieurs(e.target.value)}
-                placeholder="0"
-                min="0"
-                max="100"
-                step="1"
-                icon={<User size={ICON_SIZE.M} />}
+                onChange={(value) => setCadresSuperieurs(value.toString())}
+                min={0}
+                max={100}
+                step={1}
               />
             </FormGroup>
             <FormGroup>
               <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
                 Retraités
               </Text>
-              <Input
-                type="number"
+              <Slider
                 value={retraites}
-                onChange={(e) => setRetraites(e.target.value)}
-                placeholder="0"
-                min="0"
-                max="100"
-                step="1"
-                icon={<User size={ICON_SIZE.M} />}
+                onChange={(value) => setRetraites(value.toString())}
+                min={0}
+                max={100}
+                step={1}
               />
             </FormGroup>
           </div>
