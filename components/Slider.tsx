@@ -30,8 +30,8 @@ export const Slider = ({
     <div
       style={{
         width: WIDTH.FULL,
-        paddingTop: SPACING.S,
-        paddingBottom: SPACING.S,
+        paddingTop: SPACING.NEGATIVE_ONE_PX,
+        paddingBottom: SPACING.XS,
       }}
     >
       <RcSlider
@@ -44,20 +44,21 @@ export const Slider = ({
         styles={{
           track: {
             backgroundColor: COLOR.BLACK,
-            height: '2px',
+            height: '3px',
           },
           rail: {
             backgroundColor: COLOR.GREY.MEDIUM,
-            height: '2px',
+            height: '3px',
           },
           handle: {
             borderColor: COLOR.BLACK,
             backgroundColor: COLOR.BLACK,
             width: '12px',
             height: '12px',
-            marginTop: '-5px',
-            marginLeft: '-6px',
+            marginTop: '-4.5px',
+            marginLeft: '6px',
             borderWidth: '2px',
+            opacity: OPACITY.FULL,
             boxShadow: `0 2px 4px rgba(0, 0, 0, ${OPACITY.OVERLAY})`,
           },
         }}
@@ -65,3 +66,4 @@ export const Slider = ({
     </div>
   )
 }
+

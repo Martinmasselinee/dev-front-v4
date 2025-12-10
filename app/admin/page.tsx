@@ -1205,9 +1205,21 @@ export default function AdminPage() {
               </Text>
             </div>
             <FormGroup>
-              <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
-                Homme
-              </Text>
+              <div
+                style={{
+                  display: DISPLAY.FLEX,
+                  alignItems: ALIGN_ITEMS.CENTER,
+                  justifyContent: JUSTIFY_CONTENT.SPACE_BETWEEN,
+                  marginBottom: SPACING.NEGATIVE_ONE_PX,
+                }}
+              >
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  Homme
+                </Text>
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  {homme || '0'}%
+                </Text>
+              </div>
               <Slider
                 value={homme}
                 onChange={handleHommeChange}
@@ -1217,9 +1229,21 @@ export default function AdminPage() {
               />
             </FormGroup>
             <FormGroup>
-              <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
-                Femme
-              </Text>
+              <div
+                style={{
+                  display: DISPLAY.FLEX,
+                  alignItems: ALIGN_ITEMS.CENTER,
+                  justifyContent: JUSTIFY_CONTENT.SPACE_BETWEEN,
+                  marginBottom: SPACING.NEGATIVE_ONE_PX,
+                }}
+              >
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  Femme
+                </Text>
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  {femme || '0'}%
+                </Text>
+              </div>
               <Slider
                 value={femme}
                 onChange={handleFemmeChange}
@@ -1229,9 +1253,21 @@ export default function AdminPage() {
               />
             </FormGroup>
             <FormGroup>
-              <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
-                Famille
-              </Text>
+              <div
+                style={{
+                  display: DISPLAY.FLEX,
+                  alignItems: ALIGN_ITEMS.CENTER,
+                  justifyContent: JUSTIFY_CONTENT.SPACE_BETWEEN,
+                  marginBottom: SPACING.NEGATIVE_ONE_PX,
+                }}
+              >
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  Famille
+                </Text>
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  {famille || '0'}%
+                </Text>
+              </div>
               <Slider
                 value={famille}
                 onChange={(value) => setFamille(value.toString())}
@@ -1263,9 +1299,21 @@ export default function AdminPage() {
               </Text>
             </div>
             <FormGroup>
-              <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
-                Étudiants
-              </Text>
+              <div
+                style={{
+                  display: DISPLAY.FLEX,
+                  alignItems: ALIGN_ITEMS.CENTER,
+                  justifyContent: JUSTIFY_CONTENT.SPACE_BETWEEN,
+                  marginBottom: SPACING.NEGATIVE_ONE_PX,
+                }}
+              >
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  Étudiants
+                </Text>
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  {etudiants || '0'}%
+                </Text>
+              </div>
               <Slider
                 value={etudiants}
                 onChange={(value) => setEtudiants(value.toString())}
@@ -1275,9 +1323,21 @@ export default function AdminPage() {
               />
             </FormGroup>
             <FormGroup>
-              <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
-                Sans emploi
-              </Text>
+              <div
+                style={{
+                  display: DISPLAY.FLEX,
+                  alignItems: ALIGN_ITEMS.CENTER,
+                  justifyContent: JUSTIFY_CONTENT.SPACE_BETWEEN,
+                  marginBottom: SPACING.NEGATIVE_ONE_PX,
+                }}
+              >
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  Sans emploi
+                </Text>
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  {sansEmploi || '0'}%
+                </Text>
+              </div>
               <Slider
                 value={sansEmploi}
                 onChange={(value) => setSansEmploi(value.toString())}
@@ -1287,9 +1347,21 @@ export default function AdminPage() {
               />
             </FormGroup>
             <FormGroup>
-              <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
-                Salariés
-              </Text>
+              <div
+                style={{
+                  display: DISPLAY.FLEX,
+                  alignItems: ALIGN_ITEMS.CENTER,
+                  justifyContent: JUSTIFY_CONTENT.SPACE_BETWEEN,
+                  marginBottom: SPACING.NEGATIVE_ONE_PX,
+                }}
+              >
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  Salariés
+                </Text>
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  {salaries || '0'}%
+                </Text>
+              </div>
               <Slider
                 value={salaries}
                 onChange={(value) => setSalaries(value.toString())}
@@ -1299,9 +1371,21 @@ export default function AdminPage() {
               />
             </FormGroup>
             <FormGroup>
-              <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
-                Ouvriers
-              </Text>
+              <div
+                style={{
+                  display: DISPLAY.FLEX,
+                  alignItems: ALIGN_ITEMS.CENTER,
+                  justifyContent: JUSTIFY_CONTENT.SPACE_BETWEEN,
+                  marginBottom: SPACING.NEGATIVE_ONE_PX,
+                }}
+              >
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  Ouvriers
+                </Text>
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  {ouvriers || '0'}%
+                </Text>
+              </div>
               <Slider
                 value={ouvriers}
                 onChange={(value) => setOuvriers(value.toString())}
@@ -1311,9 +1395,21 @@ export default function AdminPage() {
               />
             </FormGroup>
             <FormGroup>
-              <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
-                Cadres
-              </Text>
+              <div
+                style={{
+                  display: DISPLAY.FLEX,
+                  alignItems: ALIGN_ITEMS.CENTER,
+                  justifyContent: JUSTIFY_CONTENT.SPACE_BETWEEN,
+                  marginBottom: SPACING.NEGATIVE_ONE_PX,
+                }}
+              >
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  Cadres
+                </Text>
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  {cadres || '0'}%
+                </Text>
+              </div>
               <Slider
                 value={cadres}
                 onChange={(value) => setCadres(value.toString())}
@@ -1323,9 +1419,21 @@ export default function AdminPage() {
               />
             </FormGroup>
             <FormGroup>
-              <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
-                Cadres supérieurs
-              </Text>
+              <div
+                style={{
+                  display: DISPLAY.FLEX,
+                  alignItems: ALIGN_ITEMS.CENTER,
+                  justifyContent: JUSTIFY_CONTENT.SPACE_BETWEEN,
+                  marginBottom: SPACING.NEGATIVE_ONE_PX,
+                }}
+              >
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  Cadres supérieurs
+                </Text>
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  {cadresSuperieurs || '0'}%
+                </Text>
+              </div>
               <Slider
                 value={cadresSuperieurs}
                 onChange={(value) => setCadresSuperieurs(value.toString())}
@@ -1335,9 +1443,21 @@ export default function AdminPage() {
               />
             </FormGroup>
             <FormGroup>
-              <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
-                Retraités
-              </Text>
+              <div
+                style={{
+                  display: DISPLAY.FLEX,
+                  alignItems: ALIGN_ITEMS.CENTER,
+                  justifyContent: JUSTIFY_CONTENT.SPACE_BETWEEN,
+                  marginBottom: SPACING.NEGATIVE_ONE_PX,
+                }}
+              >
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  Retraités
+                </Text>
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  {retraites || '0'}%
+                </Text>
+              </div>
               <Slider
                 value={retraites}
                 onChange={(value) => setRetraites(value.toString())}

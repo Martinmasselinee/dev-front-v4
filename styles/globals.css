@@ -59,17 +59,17 @@ body {
 
 /* rc-slider custom styles - thin black and grey */
 .rc-slider {
-  height: 2px;
+  height: 3px;
 }
 
 .rc-slider-rail {
   background-color: #b8bcc4 !important;
-  height: 2px !important;
+  height: 3px !important;
 }
 
 .rc-slider-track {
   background-color: #000000 !important;
-  height: 2px !important;
+  height: 3px !important;
 }
 
 .rc-slider-handle {
@@ -77,8 +77,9 @@ body {
   background-color: #000000 !important;
   width: 12px !important;
   height: 12px !important;
-  margin-top: -5px !important;
-  margin-left: -6px !important;
+  margin-top: -4.5px !important;
+  margin-left: 6px !important;
+  opacity: 1 !important;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
   border-radius: 50% !important;
 }
