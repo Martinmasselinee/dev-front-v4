@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Settings, ChevronDown, Building2, FileText, User, Mail, BookOpen, Search, Users, Phone, Award, Shield, Trash2, AlertTriangle, Brain, Presentation, Info, Share2, Globe, Linkedin, Instagram, Facebook, Plus, BarChart3, Users2, GraduationCap, DollarSign, Heart, Star } from 'lucide-react'
+import { Settings, ChevronDown, Building2, FileText, User, Mail, BookOpen, Search, Users, Phone, Award, Shield, Trash2, AlertTriangle, Brain, Presentation, Info, Share2, Globe, Linkedin, Instagram, Facebook, Plus, BarChart3, Users2, GraduationCap, DollarSign, Heart, Star, X } from 'lucide-react'
 import { LAYOUT } from '../../constants/layout'
 import { SPACING } from '../../constants/spacing'
 import { POSITION_TYPE, POSITION } from '../../constants/position'
@@ -1068,6 +1068,21 @@ export default function AdminPage() {
                   }}
                   placeholder="https://..."
                   icon={<Globe size={ICON_SIZE.M} />}
+                  actionButton={
+                    <Button
+                      variant="RED"
+                      onClick={() => {
+                        setSocialUrls(socialUrls.filter((url) => url.id !== socialUrl.id))
+                      }}
+                      style={{
+                        width: `calc((10 * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY}) * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY})`,
+                        height: `calc(${INPUT_HEIGHT.SMALL} * ${MULTIPLIER.HEIGHT_EIGHTY})`,
+                        flexShrink: FLEX.ZERO,
+                      }}
+                    >
+                      Retirer
+                    </Button>
+                  }
                 />
               </FormGroup>
             ))}
@@ -1122,6 +1137,23 @@ export default function AdminPage() {
                     )
                   }}
                   placeholder="Ex: Innovation, Durabilité, Excellence..."
+                  actionButton={
+                    valeursMarque.length > 1 ? (
+                      <Button
+                        variant="RED"
+                        onClick={() => {
+                          setValeursMarque(valeursMarque.filter((item) => item.id !== valeurMarque.id))
+                        }}
+                        style={{
+                          width: `calc((10 * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY}) * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY})`,
+                          height: `calc(${INPUT_HEIGHT.SMALL} * ${MULTIPLIER.HEIGHT_EIGHTY})`,
+                          flexShrink: FLEX.ZERO,
+                        }}
+                      >
+                        Retirer
+                      </Button>
+                    ) : undefined
+                  }
                 />
               </FormGroup>
             ))}
@@ -1729,6 +1761,23 @@ export default function AdminPage() {
                     )
                   }}
                   placeholder="Ex: Sport, Musique, Voyage..."
+                  actionButton={
+                    centresInterets.length > 1 ? (
+                      <Button
+                        variant="RED"
+                        onClick={() => {
+                          setCentresInterets(centresInterets.filter((item) => item.id !== centreInteret.id))
+                        }}
+                        style={{
+                          width: `calc((10 * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY}) * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY})`,
+                          height: `calc(${INPUT_HEIGHT.SMALL} * ${MULTIPLIER.HEIGHT_EIGHTY})`,
+                          flexShrink: FLEX.ZERO,
+                        }}
+                      >
+                        Retirer
+                      </Button>
+                    ) : undefined
+                  }
                 />
               </FormGroup>
             ))}
