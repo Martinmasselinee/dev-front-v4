@@ -19,9 +19,10 @@ import { MULTIPLIER } from '../../constants/multiplier'
 import { NavbarSidebar } from '../../components/NavbarSidebar'
 import { TopBar } from '../../components/TopBar'
 import { HelpButton } from '../../components/HelpButton'
+import { Button } from '../../components/Button'
+import { WIDTH } from '../../constants/width'
 
 export default function SmartSearchPage() {
-  const [searchValue, setSearchValue] = useState('')
   const [viewType, setViewType] = useState('table')
   const [recherchesLancees, setRecherchesLancees] = useState('0')
 
@@ -63,11 +64,16 @@ export default function SmartSearchPage() {
       <TopBar 
         icon={Sparkles} 
         title="SmartSearch" 
-        showSearch={true}
-        searchValue={searchValue}
-        onSearchChange={setSearchValue}
-        searchPlaceholder="Rechercher..."
         hideBorder={true}
+        rightElement={
+          <Button
+            variant="PURPLE"
+            disabled={true}
+            style={{ width: WIDTH.AUTO, paddingLeft: SPACING.L, paddingRight: SPACING.L }}
+          >
+            Lancer la recherche
+          </Button>
+        }
       />
       <TopBar 
         icon={Sparkles} 

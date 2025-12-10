@@ -25,9 +25,10 @@ interface PopupProps {
   children: ReactNode
   icon?: LucideIcon
   size?: 'default' | 'small'
+  rightElement?: ReactNode
 }
 
-export const Popup = ({ isOpen, onClose, title, children, icon: Icon = FileText, size = 'default' }: PopupProps) => {
+export const Popup = ({ isOpen, onClose, title, children, icon: Icon = FileText, size = 'default', rightElement }: PopupProps) => {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden'
@@ -111,14 +112,23 @@ export const Popup = ({ isOpen, onClose, title, children, icon: Icon = FileText,
               {title}
             </Heading>
           </div>
+        <div
+          style={{
+            display: DISPLAY.FLEX,
+            alignItems: ALIGN_ITEMS.CENTER,
+            gap: SPACING.M,
+          }}
+        >
+          {rightElement}
           <IconButton
             onClick={onClose}
             icon={<X size={ICON_SIZE.M} />}
             style={{
               color: COLOR.GREY.DARK,
-              marginLeft: SPACING.M,
+              marginLeft: rightElement ? SPACING.ZERO : SPACING.M,
             }}
           />
+        </div>
         </div>
         <div
           style={{

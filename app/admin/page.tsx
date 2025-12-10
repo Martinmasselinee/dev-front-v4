@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Settings, ChevronDown, Building2, FileText, User, Mail, BookOpen, Search, Users, Phone, Award, Shield, Trash2, AlertTriangle } from 'lucide-react'
+import { Settings, ChevronDown, Building2, FileText, User, Mail, BookOpen, Search, Users, Phone, Award, Shield, Trash2, AlertTriangle, Brain, Presentation, Info, Share2, Globe, Linkedin, Instagram, Facebook, Plus, BarChart3, Users2, GraduationCap } from 'lucide-react'
 import { LAYOUT } from '../../constants/layout'
 import { SPACING } from '../../constants/spacing'
 import { POSITION_TYPE, POSITION } from '../../constants/position'
@@ -37,14 +37,185 @@ import { DropdownButton } from '../../components/DropdownButton'
 import { Table } from '../../components/Table'
 import { ColumnDef } from '@tanstack/react-table'
 import { INPUT_HEIGHT } from '../../constants/input'
+import { BUTTON_HEIGHT } from '../../constants/button'
 import { UserInitial } from '../../components/UserInitial'
 import { LINE_HEIGHT } from '../../constants/font'
+import { Input } from '../../components/Input'
+import { FileUpload } from '../../components/FileUpload'
+import { FormGroup } from '../../components/FormGroup'
+import { Textarea } from '../../components/Textarea'
+import { Select } from '../../components/Select'
 
 export default function AdminPage() {
   const router = useRouter()
   const [showWorkspacePopup, setShowWorkspacePopup] = useState(false)
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
   const [userToDelete, setUserToDelete] = useState<string | null>(null)
+  const [searchValue, setSearchValue] = useState('')
+  const [showPersonaliserPopup, setShowPersonaliserPopup] = useState(false)
+  
+  // Personaliser form states
+  const [workspaceNom, setWorkspaceNom] = useState('')
+  const [workspaceTypeNom, setWorkspaceTypeNom] = useState('')
+  const [nomAbrege, setNomAbrege] = useState('')
+  const [workspaceType, setWorkspaceType] = useState('')
+  const [description, setDescription] = useState('')
+  const [siteWeb, setSiteWeb] = useState('')
+  const [linkedin, setLinkedin] = useState('')
+  const [instagram, setInstagram] = useState('')
+  const [facebook, setFacebook] = useState('')
+  const [tiktok, setTiktok] = useState('')
+  const [socialUrls, setSocialUrls] = useState<Array<{ id: string; url: string }>>([])
+  const [deckFile, setDeckFile] = useState<File | null>(null)
+  
+  // Analytics fanbase states
+  const [abonnesStade, setAbonnesStade] = useState('')
+  const [abonnesLoges, setAbonnesLoges] = useState('')
+  const [visiteursSiteWeb, setVisiteursSiteWeb] = useState('')
+  const [abonnesLinkedin, setAbonnesLinkedin] = useState('')
+  const [abonnesInstagram, setAbonnesInstagram] = useState('')
+  const [abonnesFacebook, setAbonnesFacebook] = useState('')
+  const [abonnesTiktok, setAbonnesTiktok] = useState('')
+  
+  // Répartition genre fanbase states
+  const [homme, setHomme] = useState('')
+  const [femme, setFemme] = useState('')
+  const [famille, setFamille] = useState('')
+  
+  // Répartition socio-démographique fanbase states
+  const [etudiants, setEtudiants] = useState('')
+  const [sansEmploi, setSansEmploi] = useState('')
+  const [salaries, setSalaries] = useState('')
+  const [ouvriers, setOuvriers] = useState('')
+  const [cadres, setCadres] = useState('')
+  const [cadresSuperieurs, setCadresSuperieurs] = useState('')
+  const [retraites, setRetraites] = useState('')
+  
+  // Track initial values to detect changes
+  const [initialValues] = useState({
+    deckFile: null as File | null,
+    workspaceNom: '',
+    workspaceTypeNom: '',
+    nomAbrege: '',
+    workspaceType: '',
+    description: '',
+    siteWeb: '',
+    linkedin: '',
+    instagram: '',
+    facebook: '',
+    tiktok: '',
+    socialUrls: [] as Array<{ id: string; url: string }>,
+    abonnesStade: '',
+    abonnesLoges: '',
+    visiteursSiteWeb: '',
+    abonnesLinkedin: '',
+    abonnesInstagram: '',
+    abonnesFacebook: '',
+    abonnesTiktok: '',
+    homme: '',
+    femme: '',
+    famille: '',
+    etudiants: '',
+    sansEmploi: '',
+    salaries: '',
+    ouvriers: '',
+    cadres: '',
+    cadresSuperieurs: '',
+    retraites: '',
+  })
+  
+  // Check if anything has been edited
+  const hasChanges = 
+    deckFile !== initialValues.deckFile ||
+    workspaceNom !== initialValues.workspaceNom ||
+    workspaceTypeNom !== initialValues.workspaceTypeNom ||
+    nomAbrege !== initialValues.nomAbrege ||
+    workspaceType !== initialValues.workspaceType ||
+    description !== initialValues.description ||
+    siteWeb !== initialValues.siteWeb ||
+    linkedin !== initialValues.linkedin ||
+    instagram !== initialValues.instagram ||
+    facebook !== initialValues.facebook ||
+    tiktok !== initialValues.tiktok ||
+    JSON.stringify(socialUrls) !== JSON.stringify(initialValues.socialUrls) ||
+    abonnesStade !== initialValues.abonnesStade ||
+    abonnesLoges !== initialValues.abonnesLoges ||
+    visiteursSiteWeb !== initialValues.visiteursSiteWeb ||
+    abonnesLinkedin !== initialValues.abonnesLinkedin ||
+    abonnesInstagram !== initialValues.abonnesInstagram ||
+    abonnesFacebook !== initialValues.abonnesFacebook ||
+    abonnesTiktok !== initialValues.abonnesTiktok ||
+    homme !== initialValues.homme ||
+    femme !== initialValues.femme ||
+    famille !== initialValues.famille ||
+    etudiants !== initialValues.etudiants ||
+    sansEmploi !== initialValues.sansEmploi ||
+    salaries !== initialValues.salaries ||
+    ouvriers !== initialValues.ouvriers ||
+    cadres !== initialValues.cadres ||
+    cadresSuperieurs !== initialValues.cadresSuperieurs ||
+    retraites !== initialValues.retraites
+  
+  const handleSave = () => {
+    // TODO: Save logic
+    console.log('Saving personalisations...')
+    // Reset initial values after save
+    setShowPersonaliserPopup(false)
+  }
+  
+  // Handle homme/femme interaction - they must sum to 100
+  const handleHommeChange = (value: string) => {
+    const numValue = parseInt(value) || 0
+    if (numValue >= 0 && numValue <= 100) {
+      setHomme(value)
+      const newFemme = Math.max(0, 100 - numValue)
+      setFemme(newFemme.toString())
+    }
+  }
+  
+  const handleFemmeChange = (value: string) => {
+    const numValue = parseInt(value) || 0
+    if (numValue >= 0 && numValue <= 100) {
+      setFemme(value)
+      const newHomme = Math.max(0, 100 - numValue)
+      setHomme(newHomme.toString())
+    }
+  }
+  
+  // Calculate personalisations count
+  // Base fields: deck, workspaceNom, workspaceTypeNom, nomAbrege, workspaceType, description, siteWeb, linkedin, instagram, facebook, tiktok
+  const basePersonalisations = 11
+  const dynamicUrlsCount = socialUrls.length
+  const totalPersonalisations = basePersonalisations + dynamicUrlsCount
+  
+  const addedPersonalisations = [
+    deckFile,
+    workspaceNom.trim(),
+    workspaceTypeNom.trim(),
+    nomAbrege.trim(),
+    workspaceType,
+    description.trim(),
+    siteWeb.trim(),
+    linkedin.trim(),
+    instagram.trim(),
+    facebook.trim(),
+    tiktok.trim(),
+    ...socialUrls.map(url => url.url.trim()),
+  ].filter(value => value !== null && value !== '' && value !== undefined).length
+  
+  const stickyPurplePersonalisation = (
+    <div
+      style={{
+        display: DISPLAY.FLEX,
+        alignItems: ALIGN_ITEMS.CENTER,
+        gap: SPACING.S,
+      }}
+    >
+      <Text size="M" weight="M" color="PURPLE">
+        {addedPersonalisations}/{totalPersonalisations} personalisations ajoutées
+      </Text>
+    </div>
+  )
   
   // Workspace data (should match NavbarSidebar)
   const workspaceName = 'SRFC'
@@ -131,6 +302,21 @@ export default function AdminPage() {
     const user = users.find(u => u.id === userToDelete)
     return user ? `${user.firstName} ${user.lastName}` : ''
   }
+
+  // Filter users based on search value (firstName and lastName)
+  const filteredUsers = users.filter(user => {
+    if (!searchValue.trim()) {
+      return true
+    }
+    const searchLower = searchValue.toLowerCase().trim()
+    const fullName = `${user.firstName} ${user.lastName}`.toLowerCase()
+    const firstName = user.firstName.toLowerCase()
+    const lastName = user.lastName.toLowerCase()
+    
+    return fullName.includes(searchLower) || 
+           firstName.includes(searchLower) || 
+           lastName.includes(searchLower)
+  })
 
   type User = typeof users[0]
 
@@ -291,9 +477,9 @@ export default function AdminPage() {
     {
       accessorKey: 'role',
       header: () => (
-        <div style={{ display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER, justifyContent: JUSTIFY_CONTENT.FLEX_END, gap: SPACING.S }}>
+        <div style={{ display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER, justifyContent: JUSTIFY_CONTENT.CENTER, gap: SPACING.S }}>
           <Shield size={ICON_SIZE.S} style={{ color: COLOR.GREY.DARK, flexShrink: FLEX.ZERO }} />
-          <Text size="S" weight="XL" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP, textTransform: TEXT_TRANSFORM.UPPERCASE, letterSpacing: LETTER_SPACING.TIGHT, textAlign: TEXT_ALIGN.RIGHT }}>Statut</Text>
+          <Text size="S" weight="XL" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP, textTransform: TEXT_TRANSFORM.UPPERCASE, letterSpacing: LETTER_SPACING.TIGHT, textAlign: TEXT_ALIGN.CENTER }}>Statut</Text>
         </div>
       ),
       cell: ({ row }) => (
@@ -314,7 +500,7 @@ export default function AdminPage() {
       ),
       meta: {
         width: `calc(10 * ${SPACING.L})`,
-        align: 'right',
+        align: 'center',
         sticky: true,
         stickyRight: `calc(10 * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY})`,
         borderLeft: true,
@@ -377,23 +563,76 @@ export default function AdminPage() {
           minHeight: LAYOUT.MIN_SCREEN_HEIGHT,
           position: POSITION_TYPE.RELATIVE,
           marginLeft: LAYOUT.SIDEBAR_WIDTH,
-          paddingTop: `calc(${SPACING.XXXL} + ${SPACING.M})`,
+          paddingTop: `calc((${SPACING.XXXL} + ${SPACING.M}) + ((${SPACING.XXXL} + ${SPACING.M}) * ${MULTIPLIER.STICKY_BAR_HEIGHT}))`,
         }}
       >
         <NavbarSidebar />
-        <TopBar icon={Settings} title="Administration" rightElement={workspaceButton} />
+        <TopBar icon={Settings} title="Administration" rightElement={workspaceButton} hideBorder={true} />
+        <TopBar 
+          icon={Brain} 
+          title="Personalisez la mémoire IA" 
+          variant="stickyPurple"
+          additionalText={stickyPurplePersonalisation}
+          rightElement={
+            <Button
+              variant="BLACK"
+              style={{ width: WIDTH.AUTO, paddingLeft: SPACING.L, paddingRight: SPACING.L }}
+              icon={<Brain size={ICON_SIZE.M} />}
+              onClick={() => setShowPersonaliserPopup(true)}
+            >
+              Personaliser
+            </Button>
+          }
+        />
         <HelpButton />
         
         <div
           style={{
-            paddingLeft: SPACING.L,
-            paddingRight: SPACING.L,
             paddingTop: SPACING.XL,
             paddingBottom: SPACING.XL,
           }}
         >
+          <div
+            style={{
+              display: DISPLAY.FLEX,
+              alignItems: ALIGN_ITEMS.CENTER,
+              justifyContent: JUSTIFY_CONTENT.SPACE_BETWEEN,
+              gap: SPACING.S,
+              marginBottom: SPACING.L,
+              paddingLeft: SPACING.L,
+              paddingRight: SPACING.L,
+            }}
+          >
+            <div
+              style={{
+                display: DISPLAY.FLEX,
+                alignItems: ALIGN_ITEMS.CENTER,
+                gap: SPACING.S,
+              }}
+            >
+              <Users size={ICON_SIZE.M} style={{ color: COLOR.BLACK, flexShrink: FLEX.ZERO }} />
+              <Text size="L" weight="XL" color="BLACK">
+                Utilisateurs
+              </Text>
+            </div>
+            <div
+              style={{
+                width: DIMENSION.SEARCH_INPUT_WIDTH,
+                flexShrink: FLEX.ZERO,
+              }}
+            >
+              <Input
+                type="text"
+                placeholder="Rechercher un utilisateur..."
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
+                icon={<Search size={ICON_SIZE.M} />}
+                variant="search"
+              />
+            </div>
+          </div>
           <Table
-            data={users}
+            data={filteredUsers}
             columns={columns}
             getRowBackgroundColor={(row, index) => index % 2 === 0 ? COLOR.WHITE : COLOR.GREY.LIGHT}
           />
@@ -546,7 +785,603 @@ export default function AdminPage() {
           </div>
         </div>
       </Popup>
+
+      <Popup
+        isOpen={showPersonaliserPopup}
+        onClose={() => setShowPersonaliserPopup(false)}
+        title="Personaliser la mémoire IA"
+        icon={Brain}
+        rightElement={
+          <Button
+            variant="BLACK"
+            disabled={!hasChanges}
+            onClick={handleSave}
+            style={{ 
+              width: WIDTH.AUTO, 
+              paddingLeft: SPACING.L, 
+              paddingRight: SPACING.L,
+              height: BUTTON_HEIGHT.OVERLAY,
+            }}
+          >
+            Enregistrer
+          </Button>
+        }
+      >
+        <div
+          style={{
+            display: DISPLAY.FLEX,
+            flexDirection: FLEX_DIRECTION.COLUMN,
+            gap: SPACING.XXL,
+          }}
+        >
+          {/* Deck commercial subsection */}
+          <div
+            style={{
+              display: DISPLAY.FLEX,
+              flexDirection: FLEX_DIRECTION.COLUMN,
+              gap: SPACING.M,
+            }}
+          >
+            <div
+              style={{
+                display: DISPLAY.FLEX,
+                alignItems: ALIGN_ITEMS.CENTER,
+                gap: SPACING.S,
+              }}
+            >
+              <Presentation size={ICON_SIZE.M} style={{ color: COLOR.BLACK, flexShrink: FLEX.ZERO }} />
+              <Text size="L" weight="XL" color="BLACK">
+                Deck commercial
+              </Text>
+            </div>
+            <FileUpload
+              onFileSelect={(file) => {
+                setDeckFile(file)
+              }}
+            />
+          </div>
+
+          {/* Informations workspace subsection */}
+          <div
+            style={{
+              display: DISPLAY.FLEX,
+              flexDirection: FLEX_DIRECTION.COLUMN,
+              gap: SPACING.M,
+            }}
+          >
+            <div
+              style={{
+                display: DISPLAY.FLEX,
+                alignItems: ALIGN_ITEMS.CENTER,
+                gap: SPACING.S,
+              }}
+            >
+              <Info size={ICON_SIZE.M} style={{ color: COLOR.BLACK, flexShrink: FLEX.ZERO }} />
+              <Text size="L" weight="XL" color="BLACK">
+                Informations workspace
+              </Text>
+            </div>
+            <FormGroup>
+              <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
+                Nom du workspace
+              </Text>
+              <Input
+                type="text"
+                value={workspaceNom}
+                onChange={(e) => setWorkspaceNom(e.target.value)}
+                placeholder="Nom du workspace"
+                icon={<Building2 size={ICON_SIZE.M} />}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
+                {workspaceType === 'club-sportif' 
+                  ? 'Nom du club sportif'
+                  : workspaceType === 'athlete'
+                  ? "Nom de l'athlète"
+                  : workspaceType === 'evenement-sportif'
+                  ? "Nom de l'événement sportif"
+                  : workspaceType === 'media-sportif'
+                  ? 'Nom du média sportif'
+                  : 'Nom du "type de workspace"'}
+              </Text>
+              <Input
+                type="text"
+                value={workspaceTypeNom}
+                onChange={(e) => setWorkspaceTypeNom(e.target.value)}
+                placeholder={
+                  workspaceType === 'club-sportif' 
+                    ? 'Nom du club sportif'
+                    : workspaceType === 'athlete'
+                    ? "Nom de l'athlète"
+                    : workspaceType === 'evenement-sportif'
+                    ? "Nom de l'événement sportif"
+                    : workspaceType === 'media-sportif'
+                    ? 'Nom du média sportif'
+                    : 'Nom du "type de workspace"'
+                }
+                icon={<Building2 size={ICON_SIZE.M} />}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
+                Nom abrégé (optionnel)
+              </Text>
+              <Input
+                type="text"
+                value={nomAbrege}
+                onChange={(e) => setNomAbrege(e.target.value)}
+                placeholder="Nom abrégé"
+              />
+            </FormGroup>
+            <FormGroup>
+              <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
+                Type de workspace
+              </Text>
+              <Select
+                value={workspaceType}
+                onChange={(e) => setWorkspaceType(e.target.value)}
+                icon={<Building2 size={ICON_SIZE.M} />}
+              >
+                <option value="">Sélectionnez un type</option>
+                <option value="club-sportif">Club sportif</option>
+                <option value="athlete">Athlète</option>
+                <option value="evenement-sportif">Événement sportif</option>
+                <option value="media-sportif">Média sportif</option>
+              </Select>
+            </FormGroup>
+            <FormGroup>
+              <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
+                Description (optionnel)
+              </Text>
+              <Textarea
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="Description"
+                rows={4}
+              />
+            </FormGroup>
+          </div>
+
+          {/* Socials subsection */}
+          <div
+            style={{
+              display: DISPLAY.FLEX,
+              flexDirection: FLEX_DIRECTION.COLUMN,
+              gap: SPACING.M,
+            }}
+          >
+            <div
+              style={{
+                display: DISPLAY.FLEX,
+                alignItems: ALIGN_ITEMS.CENTER,
+                gap: SPACING.S,
+              }}
+            >
+              <Share2 size={ICON_SIZE.M} style={{ color: COLOR.BLACK, flexShrink: FLEX.ZERO }} />
+              <Text size="L" weight="XL" color="BLACK">
+                Socials
+              </Text>
+            </div>
+            <FormGroup>
+              <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
+                Url du site web
+              </Text>
+              <Input
+                type="url"
+                value={siteWeb}
+                onChange={(e) => setSiteWeb(e.target.value)}
+                placeholder="https://example.com"
+                icon={<Globe size={ICON_SIZE.M} />}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
+                Url du compte linkedin
+              </Text>
+              <Input
+                type="url"
+                value={linkedin}
+                onChange={(e) => setLinkedin(e.target.value)}
+                placeholder="https://linkedin.com/company/..."
+                icon={<Linkedin size={ICON_SIZE.M} />}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
+                Url du compte instagram
+              </Text>
+              <Input
+                type="url"
+                value={instagram}
+                onChange={(e) => setInstagram(e.target.value)}
+                placeholder="https://instagram.com/..."
+                icon={<Instagram size={ICON_SIZE.M} />}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
+                Url du compte facebook
+              </Text>
+              <Input
+                type="url"
+                value={facebook}
+                onChange={(e) => setFacebook(e.target.value)}
+                placeholder="https://facebook.com/..."
+                icon={<Facebook size={ICON_SIZE.M} />}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
+                Url du compte tiktok
+              </Text>
+              <Input
+                type="url"
+                value={tiktok}
+                onChange={(e) => setTiktok(e.target.value)}
+                placeholder="https://tiktok.com/@..."
+                icon={<Globe size={ICON_SIZE.M} />}
+              />
+            </FormGroup>
+            {socialUrls.map((socialUrl, index) => (
+              <FormGroup key={socialUrl.id}>
+                {index === 0 && (
+                  <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
+                    Url supplémentaire
+                  </Text>
+                )}
+                <Input
+                  type="url"
+                  value={socialUrl.url}
+                  onChange={(e) => {
+                    setSocialUrls(
+                      socialUrls.map((url) =>
+                        url.id === socialUrl.id ? { ...url, url: e.target.value } : url
+                      )
+                    )
+                  }}
+                  placeholder="https://..."
+                  icon={<Globe size={ICON_SIZE.M} />}
+                />
+              </FormGroup>
+            ))}
+            <Button
+              variant="BLACK"
+              style={{ width: WIDTH.AUTO, paddingLeft: SPACING.L, paddingRight: SPACING.L }}
+              icon={<Plus size={ICON_SIZE.M} />}
+              onClick={() => {
+                const newId = Date.now().toString()
+                setSocialUrls([...socialUrls, { id: newId, url: '' }])
+              }}
+            >
+              Ajouter un url
+            </Button>
+          </div>
+
+          {/* Analytics fanbase subsection */}
+          <div
+            style={{
+              display: DISPLAY.FLEX,
+              flexDirection: FLEX_DIRECTION.COLUMN,
+              gap: SPACING.M,
+            }}
+          >
+            <div
+              style={{
+                display: DISPLAY.FLEX,
+                alignItems: ALIGN_ITEMS.CENTER,
+                gap: SPACING.S,
+              }}
+            >
+              <BarChart3 size={ICON_SIZE.M} style={{ color: COLOR.BLACK, flexShrink: FLEX.ZERO }} />
+              <Text size="L" weight="XL" color="BLACK">
+                Analytics fanbase
+              </Text>
+            </div>
+            <FormGroup>
+              <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
+                Abonnés stade
+              </Text>
+              <Input
+                type="number"
+                value={abonnesStade}
+                onChange={(e) => setAbonnesStade(e.target.value)}
+                placeholder="0"
+                min="0"
+                max="100000"
+                step="1000"
+                icon={<Users size={ICON_SIZE.M} />}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
+                Abonnés loges & hospitalité
+              </Text>
+              <Input
+                type="number"
+                value={abonnesLoges}
+                onChange={(e) => setAbonnesLoges(e.target.value)}
+                placeholder="0"
+                min="0"
+                max="100000"
+                step="1000"
+                icon={<Users size={ICON_SIZE.M} />}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
+                Visiteurs mensuels site web
+              </Text>
+              <Input
+                type="number"
+                value={visiteursSiteWeb}
+                onChange={(e) => setVisiteursSiteWeb(e.target.value)}
+                placeholder="0"
+                min="0"
+                max="10000000"
+                step="1000"
+                icon={<Globe size={ICON_SIZE.M} />}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
+                Abonnés linkedin
+              </Text>
+              <Input
+                type="number"
+                value={abonnesLinkedin}
+                onChange={(e) => setAbonnesLinkedin(e.target.value)}
+                placeholder="0"
+                min="0"
+                max="10000000"
+                step="10000"
+                icon={<Linkedin size={ICON_SIZE.M} />}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
+                Abonnés instagram
+              </Text>
+              <Input
+                type="number"
+                value={abonnesInstagram}
+                onChange={(e) => setAbonnesInstagram(e.target.value)}
+                placeholder="0"
+                min="0"
+                max="10000000"
+                step="10000"
+                icon={<Instagram size={ICON_SIZE.M} />}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
+                Abonnés facebook
+              </Text>
+              <Input
+                type="number"
+                value={abonnesFacebook}
+                onChange={(e) => setAbonnesFacebook(e.target.value)}
+                placeholder="0"
+                min="0"
+                max="10000000"
+                step="10000"
+                icon={<Facebook size={ICON_SIZE.M} />}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
+                Abonnés tiktok
+              </Text>
+              <Input
+                type="number"
+                value={abonnesTiktok}
+                onChange={(e) => setAbonnesTiktok(e.target.value)}
+                placeholder="0"
+                min="0"
+                max="10000000"
+                step="10000"
+                icon={<Globe size={ICON_SIZE.M} />}
+              />
+            </FormGroup>
+          </div>
+
+          {/* Répartition genre fanbase subsection */}
+          <div
+            style={{
+              display: DISPLAY.FLEX,
+              flexDirection: FLEX_DIRECTION.COLUMN,
+              gap: SPACING.M,
+            }}
+          >
+            <div
+              style={{
+                display: DISPLAY.FLEX,
+                alignItems: ALIGN_ITEMS.CENTER,
+                gap: SPACING.S,
+              }}
+            >
+              <Users2 size={ICON_SIZE.M} style={{ color: COLOR.BLACK, flexShrink: FLEX.ZERO }} />
+              <Text size="L" weight="XL" color="BLACK">
+                Répartition genre fanbase
+              </Text>
+            </div>
+            <FormGroup>
+              <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
+                Homme
+              </Text>
+              <Input
+                type="number"
+                value={homme}
+                onChange={(e) => handleHommeChange(e.target.value)}
+                placeholder="0"
+                min="0"
+                max="100"
+                step="1"
+                icon={<User size={ICON_SIZE.M} />}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
+                Femme
+              </Text>
+              <Input
+                type="number"
+                value={femme}
+                onChange={(e) => handleFemmeChange(e.target.value)}
+                placeholder="0"
+                min="0"
+                max="100"
+                step="1"
+                icon={<User size={ICON_SIZE.M} />}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
+                Famille
+              </Text>
+              <Input
+                type="number"
+                value={famille}
+                onChange={(e) => setFamille(e.target.value)}
+                placeholder="0"
+                min="0"
+                max="100"
+                step="1"
+                icon={<Users2 size={ICON_SIZE.M} />}
+              />
+            </FormGroup>
+          </div>
+
+          {/* Répartition socio-démographique fanbase subsection */}
+          <div
+            style={{
+              display: DISPLAY.FLEX,
+              flexDirection: FLEX_DIRECTION.COLUMN,
+              gap: SPACING.M,
+            }}
+          >
+            <div
+              style={{
+                display: DISPLAY.FLEX,
+                alignItems: ALIGN_ITEMS.CENTER,
+                gap: SPACING.S,
+              }}
+            >
+              <GraduationCap size={ICON_SIZE.M} style={{ color: COLOR.BLACK, flexShrink: FLEX.ZERO }} />
+              <Text size="L" weight="XL" color="BLACK">
+                Répartition socio-démographique fanbase
+              </Text>
+            </div>
+            <FormGroup>
+              <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
+                Étudiants
+              </Text>
+              <Input
+                type="number"
+                value={etudiants}
+                onChange={(e) => setEtudiants(e.target.value)}
+                placeholder="0"
+                min="0"
+                max="100"
+                step="1"
+                icon={<GraduationCap size={ICON_SIZE.M} />}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
+                Sans emploi
+              </Text>
+              <Input
+                type="number"
+                value={sansEmploi}
+                onChange={(e) => setSansEmploi(e.target.value)}
+                placeholder="0"
+                min="0"
+                max="100"
+                step="1"
+                icon={<User size={ICON_SIZE.M} />}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
+                Salariés
+              </Text>
+              <Input
+                type="number"
+                value={salaries}
+                onChange={(e) => setSalaries(e.target.value)}
+                placeholder="0"
+                min="0"
+                max="100"
+                step="1"
+                icon={<User size={ICON_SIZE.M} />}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
+                Ouvriers
+              </Text>
+              <Input
+                type="number"
+                value={ouvriers}
+                onChange={(e) => setOuvriers(e.target.value)}
+                placeholder="0"
+                min="0"
+                max="100"
+                step="1"
+                icon={<User size={ICON_SIZE.M} />}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
+                Cadres
+              </Text>
+              <Input
+                type="number"
+                value={cadres}
+                onChange={(e) => setCadres(e.target.value)}
+                placeholder="0"
+                min="0"
+                max="100"
+                step="1"
+                icon={<User size={ICON_SIZE.M} />}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
+                Cadres supérieurs
+              </Text>
+              <Input
+                type="number"
+                value={cadresSuperieurs}
+                onChange={(e) => setCadresSuperieurs(e.target.value)}
+                placeholder="0"
+                min="0"
+                max="100"
+                step="1"
+                icon={<User size={ICON_SIZE.M} />}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
+                Retraités
+              </Text>
+              <Input
+                type="number"
+                value={retraites}
+                onChange={(e) => setRetraites(e.target.value)}
+                placeholder="0"
+                min="0"
+                max="100"
+                step="1"
+                icon={<User size={ICON_SIZE.M} />}
+              />
+            </FormGroup>
+          </div>
+        </div>
+      </Popup>
     </>
   )
 }
+
 

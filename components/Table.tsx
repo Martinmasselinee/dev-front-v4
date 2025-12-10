@@ -41,8 +41,9 @@ export function Table<T>({
       style={{
         width: WIDTH.FULL,
         overflowX: OVERFLOW.AUTO,
-        border: `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.LIGHT_MEDIUM}`,
-        borderRadius: BORDER_RADIUS.M,
+        borderTop: `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.LIGHT_MEDIUM}`,
+        borderBottom: `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.LIGHT_MEDIUM}`,
+        borderRadius: POSITION.ZERO,
         display: DISPLAY.FLEX,
         flexDirection: FLEX_DIRECTION.COLUMN,
       }}
@@ -68,8 +69,10 @@ export function Table<T>({
           }}
         >
           {table.getHeaderGroups().map(headerGroup =>
-            headerGroup.headers.map((header) => {
+            headerGroup.headers.map((header, headerIndex) => {
               const meta = header.column.columnDef.meta as any
+              const isFirstColumn = headerIndex === 0
+              const isLastColumn = headerIndex === headerGroup.headers.length - 1
               return (
                 <div
                   key={header.id}
@@ -77,11 +80,14 @@ export function Table<T>({
                     width: meta?.width || `calc(10 * ${SPACING.L})`,
                     minWidth: meta?.width || `calc(10 * ${SPACING.L})`,
                     flex: meta?.sticky ? FLEX.ZERO : FLEX.ONE,
-                    padding: SPACING.M,
+                    paddingTop: SPACING.M,
+                    paddingBottom: SPACING.M,
+                    paddingLeft: isFirstColumn ? SPACING.L : SPACING.M,
+                    paddingRight: isLastColumn ? SPACING.L : SPACING.M,
                     flexShrink: FLEX.ZERO,
                     display: DISPLAY.FLEX,
                     alignItems: ALIGN_ITEMS.CENTER,
-                    justifyContent: meta?.align === 'right' ? JUSTIFY_CONTENT.FLEX_END : JUSTIFY_CONTENT.FLEX_START,
+                    justifyContent: meta?.align === 'right' ? JUSTIFY_CONTENT.FLEX_END : meta?.align === 'center' ? JUSTIFY_CONTENT.CENTER : JUSTIFY_CONTENT.FLEX_START,
                     position: meta?.sticky ? POSITION_TYPE.STICKY : POSITION_TYPE.RELATIVE,
                     right: meta?.stickyRight,
                     backgroundColor: COLOR.GREY.LIGHT,
@@ -121,8 +127,10 @@ export function Table<T>({
                   minWidth: 'max-content',
                 }}
               >
-                {row.getVisibleCells().map((cell) => {
+                {row.getVisibleCells().map((cell, cellIndex) => {
                   const meta = cell.column.columnDef.meta as any
+                  const isFirstColumn = cellIndex === 0
+                  const isLastColumn = cellIndex === row.getVisibleCells().length - 1
                   return (
                     <div
                       key={cell.id}
@@ -130,12 +138,15 @@ export function Table<T>({
                         width: meta?.width || `calc(10 * ${SPACING.L})`,
                         minWidth: meta?.width || `calc(10 * ${SPACING.L})`,
                         flex: meta?.sticky ? FLEX.ZERO : FLEX.ONE,
-                        padding: SPACING.M,
+                        paddingTop: SPACING.M,
+                        paddingBottom: SPACING.M,
+                        paddingLeft: isFirstColumn ? SPACING.L : SPACING.M,
+                        paddingRight: isLastColumn ? SPACING.L : SPACING.M,
                         flexShrink: FLEX.ZERO,
                         overflow: OVERFLOW.HIDDEN,
                         display: DISPLAY.FLEX,
                         alignItems: ALIGN_ITEMS.CENTER,
-                        justifyContent: meta?.align === 'right' ? JUSTIFY_CONTENT.FLEX_END : JUSTIFY_CONTENT.FLEX_START,
+                        justifyContent: meta?.align === 'right' ? JUSTIFY_CONTENT.FLEX_END : meta?.align === 'center' ? JUSTIFY_CONTENT.CENTER : JUSTIFY_CONTENT.FLEX_START,
                         position: meta?.sticky ? POSITION_TYPE.STICKY : POSITION_TYPE.RELATIVE,
                         right: meta?.stickyRight,
                         backgroundColor: meta?.sticky ? rowBgColor : undefined,

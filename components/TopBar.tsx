@@ -173,6 +173,7 @@ export const TopBar = ({ icon: Icon, title, showSearch = false, searchValue, onS
                 value={currentSearchValue}
                 onChange={handleSearchChange}
                 icon={<Search size={ICON_SIZE.M} />}
+                variant="search"
               />
             </div>
           )}

@@ -13,14 +13,16 @@ import { DISPLAY } from '../constants/display'
 import { ALIGN_ITEMS, JUSTIFY_CONTENT } from '../constants/flex'
 import { OUTLINE } from '../constants/outline'
 import { POINTER_EVENTS } from '../constants/interaction'
+import { MULTIPLIER } from '../constants/multiplier'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   icon?: ReactNode
   actionButton?: ReactNode
+  variant?: 'default' | 'search'
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ icon, actionButton, style, ...props }, ref) => {
+  ({ icon, actionButton, variant = 'default', style, ...props }, ref) => {
     const [isFocused, setIsFocused] = useState(false)
     const hasIcon = !!icon
     const hasActionButton = !!actionButton
@@ -32,6 +34,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     const paddingRight = hasActionButton
       ? INPUT_PADDING.HORIZONTAL.WITH_ACTION
       : INPUT_PADDING.HORIZONTAL.WITHOUT_ICON
+
+    const height = variant === 'search'
+      ? `calc(${INPUT_HEIGHT.MAIN} * ${MULTIPLIER.HEIGHT_EIGHTY})`
+      : INPUT_HEIGHT.MAIN
 
     return (
       <div
@@ -65,7 +71,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           {...props}
           style={{
             width: WIDTH.FULL,
-            height: INPUT_HEIGHT.MAIN,
+            height: height,
             paddingLeft: paddingLeft,
             paddingRight: paddingRight,
             paddingTop: INPUT_PADDING.VERTICAL,

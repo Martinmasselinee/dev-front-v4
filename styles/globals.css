@@ -57,3 +57,33 @@ body {
   animation: spin 1s linear infinite;
 }
 
+/* rc-slider custom styles */
+.rc-slider {
+  border-radius: 8px;
+}
+
+.rc-slider-rail {
+  background-color: #e0e0e0 !important;
+  border-radius: 8px;
+}
+
+.rc-slider-track {
+  background-color: #5218F9 !important;
+  border-radius: 8px;
+}
+
+.rc-slider-handle {
+  border: 1px solid #ffffff !important;
+  background-color: #5218F9 !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
+  border-radius: 50% !important;
+}
+
+.rc-slider-handle:focus {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
+}
+
+.rc-slider-handle:hover {
+  border-color: #ffffff !important;
+}
+
