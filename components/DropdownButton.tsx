@@ -17,6 +17,7 @@ import { POINTER_EVENTS, CURSOR } from '../constants/interaction'
 import { OUTLINE } from '../constants/outline'
 import { WIDTH } from '../constants/width'
 import { DIMENSION } from '../constants/dimension'
+import { OPACITY } from '../constants/opacity'
 
 interface DropdownButtonProps extends SelectHTMLAttributes<HTMLSelectElement> {}
 
@@ -73,7 +74,8 @@ export const DropdownButton = forwardRef<HTMLSelectElement, DropdownButtonProps>
             outline: OUTLINE.NONE,
             transition: `border-color ${TRANSITION.FAST_EASE}`,
             appearance: 'none',
-            cursor: CURSOR.POINTER,
+            cursor: props.disabled ? CURSOR.NOT_ALLOWED : CURSOR.POINTER,
+            opacity: props.disabled ? OPACITY.DISABLED : OPACITY.FULL,
             ...style,
           }}
           onFocus={(e) => {

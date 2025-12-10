@@ -5,7 +5,7 @@ export const OPACITY = {
   BUTTON_GRADIENT_END: 0,
   SHADOW: 0.2,
   NAVBAR_SHADOW: 0.05,
-  DISABLED: 0.6,
+  DISABLED: 0.4,
   LOADING_OVERLAY: 0.9,
   FULL: 1,
 } as const

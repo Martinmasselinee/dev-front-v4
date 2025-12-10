@@ -36,6 +36,9 @@ import { DIMENSION } from '../../constants/dimension'
 import { DropdownButton } from '../../components/DropdownButton'
 import { Table } from '../../components/Table'
 import { ColumnDef } from '@tanstack/react-table'
+import { INPUT_HEIGHT } from '../../constants/input'
+import { UserInitial } from '../../components/UserInitial'
+import { LINE_HEIGHT } from '../../constants/font'
 
 export default function AdminPage() {
   const router = useRouter()
@@ -137,11 +140,14 @@ export default function AdminPage() {
       header: () => (
         <div style={{ display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER, gap: SPACING.S }}>
           <User size={ICON_SIZE.S} style={{ color: COLOR.GREY.DARK, flexShrink: FLEX.ZERO }} />
-          <Text size="S" weight="XL" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP, textTransform: TEXT_TRANSFORM.UPPERCASE, letterSpacing: LETTER_SPACING.TIGHT }}>Utilisateurs</Text>
+          <Text size="S" weight="XL" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP, textTransform: TEXT_TRANSFORM.UPPERCASE, letterSpacing: LETTER_SPACING.TIGHT }}>Prénom</Text>
         </div>
       ),
       cell: ({ row }) => (
-        <Text size="M" weight="L" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP }}>{row.original.firstName}</Text>
+        <div style={{ display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER, gap: SPACING.S }}>
+          <UserInitial name={row.original.firstName} size="M" />
+          <Text size="M" weight="L" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP }}>{row.original.firstName}</Text>
+        </div>
       ),
       meta: {
         width: `calc(10 * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY_FIVE})`,
@@ -180,7 +186,9 @@ export default function AdminPage() {
     {
       accessorKey: 'articlesLus',
       header: () => (
-        <BookOpen size={ICON_SIZE.S} style={{ color: COLOR.GREY.DARK, flexShrink: FLEX.ZERO }} title="Articles lus" />
+        <div title="Articles lus">
+          <BookOpen size={ICON_SIZE.S} style={{ color: COLOR.GREY.DARK, flexShrink: FLEX.ZERO }} />
+        </div>
       ),
       cell: ({ row }) => (
         <Text size="M" weight="M" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP }}>{row.original.articlesLus}</Text>
@@ -193,7 +201,9 @@ export default function AdminPage() {
     {
       accessorKey: 'recherchesLancees',
       header: () => (
-        <Search size={ICON_SIZE.S} style={{ color: COLOR.GREY.DARK, flexShrink: FLEX.ZERO }} title="Recherches lancées" />
+        <div title="Recherches lancées">
+          <Search size={ICON_SIZE.S} style={{ color: COLOR.GREY.DARK, flexShrink: FLEX.ZERO }} />
+        </div>
       ),
       cell: ({ row }) => (
         <Text size="M" weight="M" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP }}>{row.original.recherchesLancees}</Text>
@@ -206,7 +216,9 @@ export default function AdminPage() {
     {
       accessorKey: 'entreprisesIdentifiees',
       header: () => (
-        <Building2 size={ICON_SIZE.S} style={{ color: COLOR.GREY.DARK, flexShrink: FLEX.ZERO }} title="Entreprises identifiées" />
+        <div title="Entreprises identifiées">
+          <Building2 size={ICON_SIZE.S} style={{ color: COLOR.GREY.DARK, flexShrink: FLEX.ZERO }} />
+        </div>
       ),
       cell: ({ row }) => (
         <Text size="M" weight="M" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP }}>{row.original.entreprisesIdentifiees}</Text>
@@ -219,7 +231,9 @@ export default function AdminPage() {
     {
       accessorKey: 'decideursIdentifies',
       header: () => (
-        <Users size={ICON_SIZE.S} style={{ color: COLOR.GREY.DARK, flexShrink: FLEX.ZERO }} title="Décideurs identifiés" />
+        <div title="Décideurs identifiés">
+          <Users size={ICON_SIZE.S} style={{ color: COLOR.GREY.DARK, flexShrink: FLEX.ZERO }} />
+        </div>
       ),
       cell: ({ row }) => (
         <Text size="M" weight="M" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP }}>{row.original.decideursIdentifies}</Text>
@@ -232,7 +246,9 @@ export default function AdminPage() {
     {
       accessorKey: 'coordonneesTrouvees',
       header: () => (
-        <Phone size={ICON_SIZE.S} style={{ color: COLOR.GREY.DARK, flexShrink: FLEX.ZERO }} title="Coordonnées trouvées" />
+        <div title="Coordonnées trouvées">
+          <Phone size={ICON_SIZE.S} style={{ color: COLOR.GREY.DARK, flexShrink: FLEX.ZERO }} />
+        </div>
       ),
       cell: ({ row }) => (
         <Text size="M" weight="M" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP }}>{row.original.coordonneesTrouvees}</Text>
@@ -245,7 +261,9 @@ export default function AdminPage() {
     {
       accessorKey: 'emailsEnvoyes',
       header: () => (
-        <Mail size={ICON_SIZE.S} style={{ color: COLOR.GREY.DARK, flexShrink: FLEX.ZERO }} title="Emails envoyés" />
+        <div title="Emails envoyés">
+          <Mail size={ICON_SIZE.S} style={{ color: COLOR.GREY.DARK, flexShrink: FLEX.ZERO }} />
+        </div>
       ),
       cell: ({ row }) => (
         <Text size="M" weight="M" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP }}>{row.original.emailsEnvoyes}</Text>
@@ -258,7 +276,9 @@ export default function AdminPage() {
     {
       accessorKey: 'partenariatsSignes',
       header: () => (
-        <Award size={ICON_SIZE.S} style={{ color: COLOR.GREY.DARK, flexShrink: FLEX.ZERO }} title="Partenariats signés" />
+        <div title="Partenariats signés">
+          <Award size={ICON_SIZE.S} style={{ color: COLOR.GREY.DARK, flexShrink: FLEX.ZERO }} />
+        </div>
       ),
       cell: ({ row }) => (
         <Text size="M" weight="M" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP }}>{row.original.partenariatsSignes}</Text>
@@ -280,7 +300,13 @@ export default function AdminPage() {
         <DropdownButton
           value={row.original.role}
           onChange={(e) => handleRoleChange(row.original.id, e.target.value)}
-          style={{ width: WIDTH.FULL, minWidth: DIMENSION.MIN_WIDTH_ZERO }}
+          disabled={row.original.id === '1'}
+          style={{ 
+            width: WIDTH.FULL, 
+            minWidth: DIMENSION.MIN_WIDTH_ZERO,
+            height: `calc(${INPUT_HEIGHT.SMALL} * ${MULTIPLIER.HEIGHT_EIGHTY})`,
+            lineHeight: `calc(${INPUT_HEIGHT.SMALL} * ${MULTIPLIER.HEIGHT_EIGHTY})`,
+          }}
         >
           <option value="admin">Admin</option>
           <option value="user">Utilisateur</option>
@@ -309,6 +335,7 @@ export default function AdminPage() {
           disabled={row.original.id === '1'}
           style={{
             width: `calc(${WIDTH.FULL} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY})`,
+            height: `calc(${INPUT_HEIGHT.SMALL} * ${MULTIPLIER.HEIGHT_EIGHTY})`,
           }}
         >
           Retirer
