@@ -11,5 +11,6 @@ export const DIMENSION = {
   DROPDOWN_BUTTON_MIN_WIDTH: '180px',
   DROPDOWN_WIDTH: '120px',
   EMPTY_STATE_SUBTITLE_MAX_WIDTH: '400px',
+  DOT_SIZE: '4px',
 } as const
 

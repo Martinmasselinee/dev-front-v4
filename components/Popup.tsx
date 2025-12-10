@@ -31,13 +31,13 @@ interface PopupProps {
 export const Popup = ({ isOpen, onClose, title, children, icon: Icon = FileText, size = 'default', rightElement }: PopupProps) => {
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = 'hidden'
+      document.body.style.overflow = OVERFLOW.HIDDEN
     } else {
-      document.body.style.overflow = 'unset'
+      document.body.style.overflow = OVERFLOW.UNSET
     }
 
     return () => {
-      document.body.style.overflow = 'unset'
+      document.body.style.overflow = OVERFLOW.UNSET
     }
   }, [isOpen])
 

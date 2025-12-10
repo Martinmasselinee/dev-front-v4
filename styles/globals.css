@@ -5,7 +5,16 @@
 :root {
   --font-space-grotesk: 'Space Grotesk', sans-serif;
   --color-white: #ffffff;
+  --color-black: #000000;
+  --color-grey-medium: #b8bcc4;
   --min-screen-height: 100vh;
+  --slider-track-height: 3px;
+  --slider-handle-size: 12px;
+  --slider-handle-margin-top: -4.5px;
+  --slider-handle-margin-left: 6px;
+  --slider-handle-border-width: 2px;
+  --opacity-slider-shadow: 0.3;
+  --slider-shadow: 0 2px 4px rgba(0, 0, 0, var(--opacity-slider-shadow));
 }
 
 html,
@@ -59,42 +68,42 @@ body {
 
 /* rc-slider custom styles - thin black and grey */
 .rc-slider {
-  height: 3px;
+  height: var(--slider-track-height);
 }
 
 .rc-slider-rail {
-  background-color: #b8bcc4 !important;
-  height: 3px !important;
+  background-color: var(--color-grey-medium) !important;
+  height: var(--slider-track-height) !important;
 }
 
 .rc-slider-track {
-  background-color: #000000 !important;
-  height: 3px !important;
+  background-color: var(--color-black) !important;
+  height: var(--slider-track-height) !important;
 }
 
 .rc-slider-handle {
-  border: 2px solid #000000 !important;
-  background-color: #000000 !important;
-  width: 12px !important;
-  height: 12px !important;
-  margin-top: -4.5px !important;
-  margin-left: 6px !important;
+  border: var(--slider-handle-border-width) solid var(--color-black) !important;
+  background-color: var(--color-black) !important;
+  width: var(--slider-handle-size) !important;
+  height: var(--slider-handle-size) !important;
+  margin-top: var(--slider-handle-margin-top) !important;
+  margin-left: var(--slider-handle-margin-left) !important;
   opacity: 1 !important;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+  box-shadow: var(--slider-shadow) !important;
   border-radius: 50% !important;
 }
 
 .rc-slider-handle:focus {
-  border-color: #000000 !important;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+  border-color: var(--color-black) !important;
+  box-shadow: var(--slider-shadow) !important;
 }
 
 .rc-slider-handle:hover {
-  border-color: #000000 !important;
+  border-color: var(--color-black) !important;
 }
 
 .rc-slider-handle:active {
-  border-color: #000000 !important;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+  border-color: var(--color-black) !important;
+  box-shadow: var(--slider-shadow) !important;
 }
 

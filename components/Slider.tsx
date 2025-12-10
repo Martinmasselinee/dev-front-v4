@@ -6,6 +6,8 @@ import { COLOR } from '../constants/color'
 import { SPACING } from '../constants/spacing'
 import { WIDTH } from '../constants/width'
 import { OPACITY } from '../constants/opacity'
+import { SLIDER } from '../constants/slider'
+import { SHADOW } from '../constants/shadow'
 
 interface SliderProps {
   value: number | string
@@ -44,22 +46,22 @@ export const Slider = ({
         styles={{
           track: {
             backgroundColor: COLOR.BLACK,
-            height: '3px',
+            height: SLIDER.TRACK_HEIGHT,
           },
           rail: {
             backgroundColor: COLOR.GREY.MEDIUM,
-            height: '3px',
+            height: SLIDER.TRACK_HEIGHT,
           },
           handle: {
             borderColor: COLOR.BLACK,
             backgroundColor: COLOR.BLACK,
-            width: '12px',
-            height: '12px',
-            marginTop: '-4.5px',
-            marginLeft: '6px',
-            borderWidth: '2px',
+            width: SLIDER.HANDLE_SIZE,
+            height: SLIDER.HANDLE_SIZE,
+            marginTop: SLIDER.HANDLE_MARGIN_TOP,
+            marginLeft: SLIDER.HANDLE_MARGIN_LEFT,
+            borderWidth: SLIDER.HANDLE_BORDER_WIDTH,
             opacity: OPACITY.FULL,
-            boxShadow: `0 2px 4px rgba(0, 0, 0, ${OPACITY.OVERLAY})`,
+            boxShadow: SHADOW.SLIDER_HANDLE,
           },
         }}
       />
