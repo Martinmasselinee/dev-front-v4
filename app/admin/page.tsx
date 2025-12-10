@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Settings, ChevronDown, Building2, FileText, User, Mail, BookOpen, Search, Users, Phone, Award, Shield, Trash2, AlertTriangle, Brain, Presentation, Info, Share2, Globe, Linkedin, Instagram, Facebook, Plus, BarChart3, Users2, GraduationCap } from 'lucide-react'
+import { Settings, ChevronDown, Building2, FileText, User, Mail, BookOpen, Search, Users, Phone, Award, Shield, Trash2, AlertTriangle, Brain, Presentation, Info, Share2, Globe, Linkedin, Instagram, Facebook, Plus, BarChart3, Users2, GraduationCap, DollarSign, Heart, Star } from 'lucide-react'
 import { LAYOUT } from '../../constants/layout'
 import { SPACING } from '../../constants/spacing'
 import { POSITION_TYPE, POSITION } from '../../constants/position'
@@ -92,6 +92,19 @@ export default function AdminPage() {
   const [cadresSuperieurs, setCadresSuperieurs] = useState('')
   const [retraites, setRetraites] = useState('')
   
+  // Répartition revenus fanbase states
+  const [moins10k, setMoins10k] = useState('')
+  const [dixTrenteK, setDixTrenteK] = useState('')
+  const [trenteCinquanteK, setTrenteCinquanteK] = useState('')
+  const [cinquanteQuatreVingtK, setCinquanteQuatreVingtK] = useState('')
+  const [plusQuatreVingtK, setPlusQuatreVingtK] = useState('')
+  
+  // Centres d'intérêts fanbase states
+  const [centresInterets, setCentresInterets] = useState<Array<{ id: string; value: string }>>([{ id: Date.now().toString(), value: '' }])
+  
+  // Valeurs de la marque states
+  const [valeursMarque, setValeursMarque] = useState<Array<{ id: string; value: string }>>([{ id: Date.now().toString(), value: '' }])
+  
   // Track initial values to detect changes
   const [initialValues] = useState({
     deckFile: null as File | null,
@@ -123,6 +136,13 @@ export default function AdminPage() {
     cadres: '',
     cadresSuperieurs: '',
     retraites: '',
+    moins10k: '',
+    dixTrenteK: '',
+    trenteCinquanteK: '',
+    cinquanteQuatreVingtK: '',
+    plusQuatreVingtK: '',
+    centresInterets: [] as Array<{ id: string; value: string }>,
+    valeursMarque: [] as Array<{ id: string; value: string }>,
   })
   
   // Check if anything has been edited
@@ -155,7 +175,14 @@ export default function AdminPage() {
     ouvriers !== initialValues.ouvriers ||
     cadres !== initialValues.cadres ||
     cadresSuperieurs !== initialValues.cadresSuperieurs ||
-    retraites !== initialValues.retraites
+    retraites !== initialValues.retraites ||
+    moins10k !== initialValues.moins10k ||
+    dixTrenteK !== initialValues.dixTrenteK ||
+    trenteCinquanteK !== initialValues.trenteCinquanteK ||
+    cinquanteQuatreVingtK !== initialValues.cinquanteQuatreVingtK ||
+    plusQuatreVingtK !== initialValues.plusQuatreVingtK ||
+    JSON.stringify(centresInterets) !== JSON.stringify(initialValues.centresInterets) ||
+    JSON.stringify(valeursMarque) !== JSON.stringify(initialValues.valeursMarque)
   
   const handleSave = () => {
     // TODO: Save logic
@@ -1057,6 +1084,60 @@ export default function AdminPage() {
             </Button>
           </div>
 
+          {/* Valeurs de la marque subsection */}
+          <div
+            style={{
+              display: DISPLAY.FLEX,
+              flexDirection: FLEX_DIRECTION.COLUMN,
+              gap: SPACING.M,
+            }}
+          >
+            <div
+              style={{
+                display: DISPLAY.FLEX,
+                alignItems: ALIGN_ITEMS.CENTER,
+                gap: SPACING.S,
+              }}
+            >
+              <Star size={ICON_SIZE.M} style={{ color: COLOR.BLACK, flexShrink: FLEX.ZERO }} />
+              <Text size="L" weight="XL" color="BLACK">
+                Valeurs de la marque
+              </Text>
+            </div>
+            {valeursMarque.map((valeurMarque, index) => (
+              <FormGroup key={valeurMarque.id}>
+                {index === 0 && (
+                  <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
+                    Valeur
+                  </Text>
+                )}
+                <Input
+                  type="text"
+                  value={valeurMarque.value}
+                  onChange={(e) => {
+                    setValeursMarque(
+                      valeursMarque.map((item) =>
+                        item.id === valeurMarque.id ? { ...item, value: e.target.value } : item
+                      )
+                    )
+                  }}
+                  placeholder="Ex: Innovation, Durabilité, Excellence..."
+                />
+              </FormGroup>
+            ))}
+            <Button
+              variant="BLACK"
+              style={{ width: WIDTH.AUTO, paddingLeft: SPACING.L, paddingRight: SPACING.L }}
+              icon={<Plus size={ICON_SIZE.M} />}
+              onClick={() => {
+                const newId = Date.now().toString()
+                setValeursMarque([...valeursMarque, { id: newId, value: '' }])
+              }}
+            >
+              Ajouter plus
+            </Button>
+          </div>
+
           {/* Analytics fanbase subsection */}
           <div
             style={{
@@ -1466,6 +1547,202 @@ export default function AdminPage() {
                 step={1}
               />
             </FormGroup>
+          </div>
+
+          {/* Répartition revenus fanbase subsection */}
+          <div
+            style={{
+              display: DISPLAY.FLEX,
+              flexDirection: FLEX_DIRECTION.COLUMN,
+              gap: SPACING.M,
+            }}
+          >
+            <div
+              style={{
+                display: DISPLAY.FLEX,
+                alignItems: ALIGN_ITEMS.CENTER,
+                gap: SPACING.S,
+              }}
+            >
+              <DollarSign size={ICON_SIZE.M} style={{ color: COLOR.BLACK, flexShrink: FLEX.ZERO }} />
+              <Text size="L" weight="XL" color="BLACK">
+                Répartition revenus fanbase
+              </Text>
+            </div>
+            <FormGroup>
+              <div
+                style={{
+                  display: DISPLAY.FLEX,
+                  alignItems: ALIGN_ITEMS.CENTER,
+                  justifyContent: JUSTIFY_CONTENT.SPACE_BETWEEN,
+                  marginBottom: SPACING.NEGATIVE_ONE_PX,
+                }}
+              >
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  &lt; 10k€
+                </Text>
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  {moins10k || '0'}%
+                </Text>
+              </div>
+              <Slider
+                value={moins10k}
+                onChange={(value) => setMoins10k(value.toString())}
+                min={0}
+                max={100}
+                step={1}
+              />
+            </FormGroup>
+            <FormGroup>
+              <div
+                style={{
+                  display: DISPLAY.FLEX,
+                  alignItems: ALIGN_ITEMS.CENTER,
+                  justifyContent: JUSTIFY_CONTENT.SPACE_BETWEEN,
+                  marginBottom: SPACING.NEGATIVE_ONE_PX,
+                }}
+              >
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  10k-30k€
+                </Text>
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  {dixTrenteK || '0'}%
+                </Text>
+              </div>
+              <Slider
+                value={dixTrenteK}
+                onChange={(value) => setDixTrenteK(value.toString())}
+                min={0}
+                max={100}
+                step={1}
+              />
+            </FormGroup>
+            <FormGroup>
+              <div
+                style={{
+                  display: DISPLAY.FLEX,
+                  alignItems: ALIGN_ITEMS.CENTER,
+                  justifyContent: JUSTIFY_CONTENT.SPACE_BETWEEN,
+                  marginBottom: SPACING.NEGATIVE_ONE_PX,
+                }}
+              >
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  30k-50k€
+                </Text>
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  {trenteCinquanteK || '0'}%
+                </Text>
+              </div>
+              <Slider
+                value={trenteCinquanteK}
+                onChange={(value) => setTrenteCinquanteK(value.toString())}
+                min={0}
+                max={100}
+                step={1}
+              />
+            </FormGroup>
+            <FormGroup>
+              <div
+                style={{
+                  display: DISPLAY.FLEX,
+                  alignItems: ALIGN_ITEMS.CENTER,
+                  justifyContent: JUSTIFY_CONTENT.SPACE_BETWEEN,
+                  marginBottom: SPACING.NEGATIVE_ONE_PX,
+                }}
+              >
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  50k-80k€
+                </Text>
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  {cinquanteQuatreVingtK || '0'}%
+                </Text>
+              </div>
+              <Slider
+                value={cinquanteQuatreVingtK}
+                onChange={(value) => setCinquanteQuatreVingtK(value.toString())}
+                min={0}
+                max={100}
+                step={1}
+              />
+            </FormGroup>
+            <FormGroup>
+              <div
+                style={{
+                  display: DISPLAY.FLEX,
+                  alignItems: ALIGN_ITEMS.CENTER,
+                  justifyContent: JUSTIFY_CONTENT.SPACE_BETWEEN,
+                  marginBottom: SPACING.NEGATIVE_ONE_PX,
+                }}
+              >
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  &gt; 80k€
+                </Text>
+                <Text size="M" weight="M" color="BLACK" as="div">
+                  {plusQuatreVingtK || '0'}%
+                </Text>
+              </div>
+              <Slider
+                value={plusQuatreVingtK}
+                onChange={(value) => setPlusQuatreVingtK(value.toString())}
+                min={0}
+                max={100}
+                step={1}
+              />
+            </FormGroup>
+          </div>
+
+          {/* Centres d'intérêts fanbase subsection */}
+          <div
+            style={{
+              display: DISPLAY.FLEX,
+              flexDirection: FLEX_DIRECTION.COLUMN,
+              gap: SPACING.M,
+            }}
+          >
+            <div
+              style={{
+                display: DISPLAY.FLEX,
+                alignItems: ALIGN_ITEMS.CENTER,
+                gap: SPACING.S,
+              }}
+            >
+              <Heart size={ICON_SIZE.M} style={{ color: COLOR.BLACK, flexShrink: FLEX.ZERO }} />
+              <Text size="L" weight="XL" color="BLACK">
+                Centres d'intérêts fanbase
+              </Text>
+            </div>
+            {centresInterets.map((centreInteret, index) => (
+              <FormGroup key={centreInteret.id}>
+                {index === 0 && (
+                  <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
+                    Centre d'intérêt
+                  </Text>
+                )}
+                <Input
+                  type="text"
+                  value={centreInteret.value}
+                  onChange={(e) => {
+                    setCentresInterets(
+                      centresInterets.map((item) =>
+                        item.id === centreInteret.id ? { ...item, value: e.target.value } : item
+                      )
+                    )
+                  }}
+                  placeholder="Ex: Sport, Musique, Voyage..."
+                />
+              </FormGroup>
+            ))}
+            <Button
+              variant="BLACK"
+              style={{ width: WIDTH.AUTO, paddingLeft: SPACING.L, paddingRight: SPACING.L }}
+              icon={<Plus size={ICON_SIZE.M} />}
+              onClick={() => {
+                const newId = Date.now().toString()
+                setCentresInterets([...centresInterets, { id: newId, value: '' }])
+              }}
+            >
+              Ajouter plus
+            </Button>
           </div>
         </div>
       </Popup>
