@@ -6,5 +6,11 @@ export const SLIDER = {
   HANDLE_MARGIN_TOP: '-4.5px',
   HANDLE_MARGIN_LEFT: '6px',
   HANDLE_BORDER_WIDTH: BORDER_WIDTH.MEDIUM,
+  MIN: 0,
+  MAX: 100,
+  STEP: 1,
 } as const
+
+
+
 

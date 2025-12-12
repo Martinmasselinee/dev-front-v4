@@ -15,6 +15,7 @@ import { HelpButton } from '../../components/HelpButton'
 import { EmptyState } from '../../components/EmptyState'
 import { DISPLAY } from '../../constants/display'
 import { ALIGN_ITEMS } from '../../constants/flex'
+import { STRING } from '../../constants/string'
 
 export default function DashboardPage() {
   const [searchValue, setSearchValue] = useState('')
@@ -55,13 +56,13 @@ export default function DashboardPage() {
   )
 
   const stats = [
-    { icon: FileText, value: '0', label: 'articles lus' },
-    { icon: Search, value: '0', label: 'recherches lancées' },
-    { icon: Building2, value: '0', label: 'entreprises identifiées' },
-    { icon: Users, value: '0', label: 'décideurs identifiés' },
-    { icon: MapPin, value: '0', label: 'coordonnées trouvées' },
-    { icon: Mail, value: '0', label: 'emails envoyés' },
-    { icon: Handshake, value: '0', label: 'partenariats signés' },
+    { icon: FileText, value: STRING.ZERO, label: 'articles lus' },
+    { icon: Search, value: STRING.ZERO, label: 'recherches lancées' },
+    { icon: Building2, value: STRING.ZERO, label: 'entreprises identifiées' },
+    { icon: Users, value: STRING.ZERO, label: 'décideurs identifiés' },
+    { icon: MapPin, value: STRING.ZERO, label: 'coordonnées trouvées' },
+    { icon: Mail, value: STRING.ZERO, label: 'emails envoyés' },
+    { icon: Handshake, value: STRING.ZERO, label: 'partenariats signés' },
   ]
 
   return (

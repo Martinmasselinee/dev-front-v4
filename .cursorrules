@@ -38,8 +38,8 @@ This is a front-end rebuild of the Dataxx platform - a sponsoring management pla
 1. **MUST scan the entire project** using codebase_search or grep to find existing reusables
 2. **MUST check for:**
    - Existing components (Button, Input, Label, Link, Text, Heading, Container, Form, FormGroup, Checkbox, Card, Spacer, IconButton, HeaderSection, ConditionalComponent) - **USE THEM, DON'T RECREATE**
-   - Existing constants (FONT_SIZE, FONT_THICKNESS, COLOR, SPACING, BORDER_RADIUS, BORDER_WIDTH, ICON_SIZE, ICON_STROKE_WIDTH, LAYOUT, BUTTON_HEIGHT, BUTTON_OVERLAY, BUTTON_MAIN, INPUT_HEIGHT, INPUT_PADDING, POPUP, OPACITY, SHADOW, Z_INDEX, TEXT_ALIGN, TEXT_DECORATION, TEXT_OVERFLOW, TEXT_TRANSFORM, WHITE_SPACE, LETTER_SPACING, BORDER, WIDTH, POSITION, POSITION_TYPE, INSET, TRANSFORM, LINE_HEIGHT, FONT_STYLE, TRANSITION, TIME, DIMENSION, DISPLAY, FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT, FLEX, CURSOR, POINTER_EVENTS, OVERFLOW, BACKGROUND, BACKDROP_FILTER, MULTIPLIER, FILE_SIZE, BUSINESS) - **USE THEM, DON'T HARDCODE**
-   - **Note**: Constants are now organized in combined files: `border.ts` (BORDER, BORDER_WIDTH, BORDER_RADIUS), `button.ts` (BUTTON_HEIGHT, BUTTON_OVERLAY, BUTTON_MAIN), `input.ts` (INPUT_HEIGHT, INPUT_PADDING), `text.ts` (TEXT_ALIGN, TEXT_DECORATION, TEXT_OVERFLOW, TEXT_TRANSFORM, WHITE_SPACE, LETTER_SPACING), `position.ts` (POSITION, POSITION_TYPE, INSET, TRANSFORM), `flex.ts` (FLEX, FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT), `font.ts` (FONT_SIZE, FONT_THICKNESS, FONT_STYLE, LINE_HEIGHT), `interaction.ts` (CURSOR, POINTER_EVENTS), `background.ts` (BACKGROUND, BACKDROP_FILTER)
+   - Existing constants (FONT_SIZE, FONT_THICKNESS, COLOR, SPACING, BORDER_RADIUS, BORDER_WIDTH, ICON_SIZE, ICON_STROKE_WIDTH, LAYOUT, BUTTON_HEIGHT, BUTTON_OVERLAY, BUTTON_MAIN, INPUT_HEIGHT, INPUT_PADDING, POPUP, OPACITY, SHADOW, Z_INDEX, TEXT_ALIGN, TEXT_DECORATION, TEXT_OVERFLOW, TEXT_TRANSFORM, WHITE_SPACE, LETTER_SPACING, BORDER, WIDTH, POSITION, POSITION_TYPE, INSET, TRANSFORM, LINE_HEIGHT, FONT_STYLE, TRANSITION, TIME, DIMENSION, DISPLAY, FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT, FLEX, CURSOR, POINTER_EVENTS, OVERFLOW, BACKGROUND, BACKDROP_FILTER, MULTIPLIER, FILE_SIZE, BUSINESS, SLIDER, NUMBER, STRING, TABLE, PERSONALISATION) - **USE THEM, DON'T HARDCODE**
+   - **Note**: Constants are now organized in combined files: `border.ts` (BORDER, BORDER_WIDTH, BORDER_RADIUS), `button.ts` (BUTTON_HEIGHT, BUTTON_OVERLAY, BUTTON_MAIN), `input.ts` (INPUT_HEIGHT, INPUT_PADDING), `text.ts` (TEXT_ALIGN, TEXT_DECORATION, TEXT_OVERFLOW, TEXT_TRANSFORM, WHITE_SPACE, LETTER_SPACING), `position.ts` (POSITION, POSITION_TYPE, INSET, TRANSFORM), `flex.ts` (FLEX, FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT), `font.ts` (FONT_SIZE, FONT_THICKNESS, FONT_STYLE, LINE_HEIGHT), `interaction.ts` (CURSOR, POINTER_EVENTS), `background.ts` (BACKGROUND, BACKDROP_FILTER), `slider.ts` (SLIDER with MIN, MAX, STEP), `number.ts` (NUMBER with ZERO, ONE, PERCENTAGE_MAX), `string.ts` (STRING with ZERO), `table.ts` (TABLE with COLUMN_WIDTH_BASE), `personalisation.ts` (PERSONALISATION with BASE_COUNT)
    - **Note**: Components are now combined: `Card` (with variant prop: 'default' | 'dashed'), `Container` (with variant prop: 'default' | 'page' | 'title'), `ConditionalComponent` (with type prop: 'helpButton' | 'navbar')
    - Existing color variables (COLOR.PURPLE, COLOR.BLACK, COLOR.WHITE, COLOR.GREY.*) - **USE THEM, NEVER WRITE HEX VALUES**
    - Existing font configurations (FONT_SIZE.M, FONT_THICKNESS.L, etc.) - **USE THEM, NEVER WRITE PIXEL VALUES**
@@ -94,7 +94,7 @@ This is a front-end rebuild of the Dataxx platform - a sponsoring management pla
    - ❌ **NEVER hardcode dimension values** (minHeight, maxWidth, etc.) - ALWAYS use DIMENSION constants
    - ❌ **NEVER hardcode time/duration values** (milliseconds, seconds) - ALWAYS use TIME constants (TIME.INTERVAL.*, TIME.DELAY.*)
    - ❌ **NEVER hardcode transition strings** ('0.2s ease', '0.3s ease-out', etc.) - ALWAYS use TRANSITION constants (TRANSITION.FAST_EASE, TRANSITION.NORMAL_EASE, etc.)
-   - ❌ **NEVER hardcode '0' values** - Use POSITION.ZERO or SPACING.ZERO constants
+   - ❌ **NEVER hardcode '0' values** - Use POSITION.ZERO, SPACING.ZERO, NUMBER.ZERO, or STRING.ZERO constants (use NUMBER.ZERO for numeric 0, STRING.ZERO for string '0', POSITION.ZERO for position values, SPACING.ZERO for spacing values)
    - ❌ **NEVER hardcode opacity: 1** - ALWAYS use OPACITY.FULL constant
    - ❌ **NEVER hardcode opacity: 0** - ALWAYS use OPACITY.ZERO constant
    - ❌ **NEVER hardcode minWidth: 0** - ALWAYS use DIMENSION.MIN_WIDTH_ZERO constant
@@ -130,6 +130,13 @@ This is a front-end rebuild of the Dataxx platform - a sponsoring management pla
    - ❌ **NEVER hardcode file size conversions** - ALWAYS use FILE_SIZE constants (from `fileSize.ts`)
    - ❌ **NEVER hardcode percentage calculations** - ALWAYS use MULTIPLIER.PERCENTAGE_BASE
    - ❌ **NEVER hardcode business logic numbers** - ALWAYS use BUSINESS constants (from `business.ts`)
+   - ❌ **NEVER hardcode numeric values** (0, 1, 100, etc.) - ALWAYS use NUMBER constants (NUMBER.ZERO, NUMBER.ONE, NUMBER.PERCENTAGE_MAX)
+   - ❌ **NEVER hardcode string '0'** - ALWAYS use STRING.ZERO constant
+   - ❌ **NEVER hardcode slider min/max/step** - ALWAYS use SLIDER.MIN, SLIDER.MAX, SLIDER.STEP constants
+   - ❌ **NEVER hardcode table column width calculations** - ALWAYS use TABLE.COLUMN_WIDTH_BASE constant
+   - ❌ **NEVER hardcode personalisation counts** - ALWAYS use PERSONALISATION constants
+   - ❌ **NEVER hardcode Math.max(0, ...) or value >= 0** - ALWAYS use NUMBER.ZERO constant
+   - ❌ **NEVER hardcode value <= 100** - ALWAYS use NUMBER.PERCENTAGE_MAX constant
    - ❌ **NEVER hardcode icon stroke widths** - ALWAYS use ICON_STROKE_WIDTH constants (from `icon.ts`)
    - ❌ **NEVER hardcode flexShrink values** - ALWAYS use FLEX constants (FLEX.ZERO, FLEX.ONE, FLEX.AUTO)
    - ❌ **NEVER multiply constants directly** - Create new constants for multiplied values (e.g., ICON_SIZE.XXL instead of ICON_SIZE.XL * 2)
@@ -174,6 +181,16 @@ This is a front-end rebuild of the Dataxx platform - a sponsoring management pla
    - ❌ `className="text-center"` → ✅ `style={{ textAlign: TEXT_ALIGN.CENTER }}`
    - ❌ `className="mx-auto"` → ✅ Use inline styles with appropriate constants
    - ❌ `marginBottom: 0` → ✅ `marginBottom: POSITION.ZERO` or `SPACING.ZERO`
+   - ❌ `min={0}` → ✅ `min={SLIDER.MIN}` or `min={NUMBER.ZERO}`
+   - ❌ `max={100}` → ✅ `max={SLIDER.MAX}` or `max={NUMBER.PERCENTAGE_MAX}`
+   - ❌ `step={1}` → ✅ `step={SLIDER.STEP}` or `step={NUMBER.ONE}`
+   - ❌ `value: '0'` → ✅ `value: STRING.ZERO`
+   - ❌ `placeholder="0"` → ✅ `placeholder={STRING.ZERO}`
+   - ❌ `{value || '0'}` → ✅ `{value || STRING.ZERO}`
+   - ❌ `Math.max(0, value)` → ✅ `Math.max(NUMBER.ZERO, value)`
+   - ❌ `value >= 0 && value <= 100` → ✅ `value >= NUMBER.ZERO && value <= NUMBER.PERCENTAGE_MAX`
+   - ❌ `calc(10 * ${SPACING.L})` → ✅ `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L})`
+   - ❌ `const count = 11` → ✅ `const count = PERSONALISATION.BASE_COUNT`
    - ❌ `size={18}` → ✅ `size={ICON_SIZE.M}`
    - ❌ `setTimeout(() => {}, 1500)` → ✅ `setTimeout(() => {}, TIME.INTERVAL.ROTATING_TEXT)`
    - ❌ `transition: '0.2s ease'` → ✅ `transition: TRANSITION.FAST_EASE`
@@ -357,7 +374,7 @@ This is a front-end rebuild of the Dataxx platform - a sponsoring management pla
 When requested to create or modify anything, you MUST:
 1. ✅ **Scan project for existing reusables** - Check ALL constants, components, utilities
 2. ✅ **Check if the item already exists** - Search thoroughly before creating anything
-3. ✅ **Use existing constants** - FONT_SIZE, FONT_THICKNESS, COLOR, SPACING, BORDER_RADIUS, ICON_SIZE, ICON_STROKE_WIDTH, LAYOUT, OPACITY, SHADOW, Z_INDEX, TEXT_ALIGN, BUTTON_HEIGHT, BUTTON_OVERLAY, INPUT_HEIGHT, POPUP, BORDER, WIDTH, POSITION, LINE_HEIGHT, INSET, TRANSFORM, TRANSITION, TIME, DIMENSION, DISPLAY, FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT, POSITION_TYPE, CURSOR, OVERFLOW, TEXT_OVERFLOW, WHITE_SPACE, TEXT_TRANSFORM, FLEX, FONT_STYLE, TEXT_DECORATION, BACKGROUND, BACKDROP_FILTER, BORDER_WIDTH, LETTER_SPACING, OUTLINE, POINTER_EVENTS, MULTIPLIER, FILE_SIZE, BUSINESS
+3. ✅ **Use existing constants** - FONT_SIZE, FONT_THICKNESS, COLOR, SPACING, BORDER_RADIUS, ICON_SIZE, ICON_STROKE_WIDTH, LAYOUT, OPACITY, SHADOW, Z_INDEX, TEXT_ALIGN, BUTTON_HEIGHT, BUTTON_OVERLAY, INPUT_HEIGHT, POPUP, BORDER, WIDTH, POSITION, LINE_HEIGHT, INSET, TRANSFORM, TRANSITION, TIME, DIMENSION, DISPLAY, FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT, POSITION_TYPE, CURSOR, OVERFLOW, TEXT_OVERFLOW, WHITE_SPACE, TEXT_TRANSFORM, FLEX, FONT_STYLE, TEXT_DECORATION, BACKGROUND, BACKDROP_FILTER, BORDER_WIDTH, LETTER_SPACING, OUTLINE, POINTER_EVENTS, MULTIPLIER, FILE_SIZE, BUSINESS, SLIDER, NUMBER, STRING, TABLE, PERSONALISATION
 4. ✅ **Use existing components** - Button, Input, Label, Link, Text, Heading, Container, PageContainer, Form, FormGroup, Checkbox, Card, Spacer, IconButton, HeaderSection
 5. ✅ **Never hardcode ANY values** - All colors, sizes, spacing, layout values, opacity, shadows, z-index, rgba, rem units, time/duration, transitions, dimensions, display, flex direction, align items, justify content, position types, cursor, overflow, text overflow, white space, text transform, flex, font style, text decoration, background, backdrop filter, border width, letter spacing, outline, pointer events, multipliers, file size conversions, percentage calculations, business logic numbers, icon stroke widths, flexShrink values must use constants
 6. ✅ **Never use Tailwind spacing/layout classes** - Use inline styles with constants or reusable components
@@ -402,7 +419,7 @@ When requested to create or modify anything, you MUST:
 37. ✅ **Verify Space Grotesk font** - Applied everywhere
 38. ✅ **Ensure desktop-only approach** - No mobile code
 39. ✅ **Maintain white theme compatibility** - Light theme only
-40. ✅ **Verify all values use constants** - No hardcoded pixels, colors, sizes, spacing, layout, opacity, shadows, z-index, rgba values, time/duration, transitions, dimensions, display, flex, position, cursor, overflow, text overflow, white space, text transform, flex values, font style, text decoration, background, backdrop filter, border width, letter spacing, outline, pointer events, multipliers, file size conversions, percentage calculations, business logic numbers, icon stroke widths, flexShrink values
+40. ✅ **Verify all values use constants** - No hardcoded pixels, colors, sizes, spacing, layout, opacity, shadows, z-index, rgba values, time/duration, transitions, dimensions, display, flex, position, cursor, overflow, text overflow, white space, text transform, flex values, font style, text decoration, background, backdrop filter, border width, letter spacing, outline, pointer events, multipliers, file size conversions, percentage calculations, business logic numbers, icon stroke widths, flexShrink values, numeric values (0, 1, 100), string '0', slider min/max/step, table column widths, personalisation counts
 41. ✅ **Verify no Tailwind utility classes** - ALL Tailwind utility classes are prohibited (spacing, layout, positioning, flex, display, typography, and ALL other categories) - All styling must use inline styles with constants or reusable components
 42. ✅ **Use PageContainer for full-page layouts** - Or use LAYOUT.MIN_SCREEN_HEIGHT constant
 43. ✅ **Verify CSS files use CSS variables** - For values that need to be used in CSS files, use CSS variables defined in globals.css

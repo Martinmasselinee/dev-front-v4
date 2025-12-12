@@ -39,7 +39,7 @@ export const StatsBar = ({ stats }: StatsBarProps) => {
         height: `calc((${SPACING.XXXL} + ${SPACING.M}) * ${MULTIPLIER.STATS_BAR_HEIGHT})`,
         backgroundColor: COLOR.WHITE,
         borderBottom: BORDER.NONE,
-        zIndex: Z_INDEX.NAVBAR - 1,
+        zIndex: Z_INDEX.NAVBAR_MINUS_ONE,
         paddingLeft: SPACING.L,
         paddingRight: SPACING.L,
         display: DISPLAY.FLEX,

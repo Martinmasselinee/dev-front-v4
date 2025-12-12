@@ -149,6 +149,8 @@ export default function AuthSignUpPage() {
                 style={{
                   color: COLOR.PURPLE,
                   fontStyle: FONT_STYLE.ITALIC,
+                  fontSize: FONT_SIZE.XXXL,
+                  fontWeight: FONT_THICKNESS.XXXL,
                   paddingLeft: SPACING.XS,
                   paddingRight: SPACING.S,
                 }}

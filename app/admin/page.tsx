@@ -46,6 +46,11 @@ import { FormGroup } from '../../components/FormGroup'
 import { Textarea } from '../../components/Textarea'
 import { Select } from '../../components/Select'
 import { Slider } from '../../components/Slider'
+import { SLIDER } from '../../constants/slider'
+import { NUMBER } from '../../constants/number'
+import { STRING } from '../../constants/string'
+import { TABLE } from '../../constants/table'
+import { PERSONALISATION } from '../../constants/personalisation'
 
 export default function AdminPage() {
   const router = useRouter()
@@ -213,24 +218,24 @@ export default function AdminPage() {
   
   // Handle homme/femme interaction - they must sum to 100
   const handleHommeChange = (value: number) => {
-    if (value >= 0 && value <= 100) {
+    if (value >= NUMBER.ZERO && value <= NUMBER.PERCENTAGE_MAX) {
       setHomme(value.toString())
-      const newFemme = Math.max(0, 100 - value)
+      const newFemme = Math.max(NUMBER.ZERO, NUMBER.PERCENTAGE_MAX - value)
       setFemme(newFemme.toString())
     }
   }
   
   const handleFemmeChange = (value: number) => {
-    if (value >= 0 && value <= 100) {
+    if (value >= NUMBER.ZERO && value <= NUMBER.PERCENTAGE_MAX) {
       setFemme(value.toString())
-      const newHomme = Math.max(0, 100 - value)
+      const newHomme = Math.max(NUMBER.ZERO, NUMBER.PERCENTAGE_MAX - value)
       setHomme(newHomme.toString())
     }
   }
   
   // Calculate personalisations count
   // Base fields: deck, workspaceNom, workspaceTypeNom, nomAbrege, workspaceType, description, siteWeb, linkedin, instagram, facebook, tiktok
-  const basePersonalisations = 11
+  const basePersonalisations = PERSONALISATION.BASE_COUNT
   const dynamicUrlsCount = socialUrls.length
   const totalPersonalisations = basePersonalisations + dynamicUrlsCount
   
@@ -385,7 +390,7 @@ export default function AdminPage() {
         </div>
       ),
       meta: {
-        width: `calc(10 * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY_FIVE})`,
+        width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY_FIVE})`,
       },
     },
     {
@@ -400,7 +405,7 @@ export default function AdminPage() {
         <Text size="M" weight="M" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP }}>{row.original.lastName}</Text>
       ),
       meta: {
-        width: `calc(10 * ${SPACING.L})`,
+        width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L})`,
       },
     },
     {
@@ -415,7 +420,7 @@ export default function AdminPage() {
         <Text size="M" weight="M" color="PURPLE" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP }}>{row.original.email}</Text>
       ),
       meta: {
-        width: `calc(10 * ${SPACING.L} * ${MULTIPLIER.DROPDOWN_WIDTH_ONE_FIVE})`,
+        width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.DROPDOWN_WIDTH_ONE_FIVE})`,
       },
     },
     {
@@ -457,7 +462,7 @@ export default function AdminPage() {
         )
       },
       meta: {
-        width: `calc(10 * ${SPACING.L})`,
+        width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L})`,
         align: 'left',
       },
     },
@@ -472,7 +477,7 @@ export default function AdminPage() {
         <Text size="M" weight="M" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP }}>{row.original.articlesLus}</Text>
       ),
       meta: {
-        width: `calc(10 * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_HALF})`,
+        width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_HALF})`,
         align: 'center',
       },
     },
@@ -487,7 +492,7 @@ export default function AdminPage() {
         <Text size="M" weight="M" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP }}>{row.original.recherchesLancees}</Text>
       ),
       meta: {
-        width: `calc(10 * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_HALF})`,
+        width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_HALF})`,
         align: 'center',
       },
     },
@@ -502,7 +507,7 @@ export default function AdminPage() {
         <Text size="M" weight="M" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP }}>{row.original.entreprisesIdentifiees}</Text>
       ),
       meta: {
-        width: `calc(10 * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_HALF})`,
+        width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_HALF})`,
         align: 'center',
       },
     },
@@ -517,7 +522,7 @@ export default function AdminPage() {
         <Text size="M" weight="M" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP }}>{row.original.decideursIdentifies}</Text>
       ),
       meta: {
-        width: `calc(10 * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_HALF})`,
+        width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_HALF})`,
         align: 'center',
       },
     },
@@ -532,7 +537,7 @@ export default function AdminPage() {
         <Text size="M" weight="M" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP }}>{row.original.coordonneesTrouvees}</Text>
       ),
       meta: {
-        width: `calc(10 * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_HALF})`,
+        width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_HALF})`,
         align: 'center',
       },
     },
@@ -547,7 +552,7 @@ export default function AdminPage() {
         <Text size="M" weight="M" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP }}>{row.original.emailsEnvoyes}</Text>
       ),
       meta: {
-        width: `calc(10 * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_HALF})`,
+        width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_HALF})`,
         align: 'center',
       },
     },
@@ -562,7 +567,7 @@ export default function AdminPage() {
         <Text size="M" weight="M" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP }}>{row.original.partenariatsSignes}</Text>
       ),
       meta: {
-        width: `calc(10 * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_HALF})`,
+        width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_HALF})`,
         align: 'center',
       },
     },
@@ -591,10 +596,10 @@ export default function AdminPage() {
         </DropdownButton>
       ),
       meta: {
-        width: `calc(10 * ${SPACING.L})`,
+        width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L})`,
         align: 'center',
         sticky: true,
-        stickyRight: `calc(10 * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY})`,
+        stickyRight: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY})`,
         borderLeft: true,
       },
     },
@@ -620,7 +625,7 @@ export default function AdminPage() {
         </Button>
       ),
       meta: {
-        width: `calc(10 * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY})`,
+        width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY})`,
         align: 'right',
         sticky: true,
         stickyRight: POSITION.ZERO,
@@ -1264,8 +1269,8 @@ export default function AdminPage() {
                 type="number"
                 value={abonnesStade}
                 onChange={(e) => setAbonnesStade(e.target.value)}
-                placeholder="0"
-                min="0"
+                placeholder={STRING.ZERO}
+                min={STRING.ZERO}
                 max="100000"
                 step="1000"
                 icon={<Users size={ICON_SIZE.M} />}
@@ -1279,8 +1284,8 @@ export default function AdminPage() {
                 type="number"
                 value={abonnesLoges}
                 onChange={(e) => setAbonnesLoges(e.target.value)}
-                placeholder="0"
-                min="0"
+                placeholder={STRING.ZERO}
+                min={STRING.ZERO}
                 max="100000"
                 step="1000"
                 icon={<Users size={ICON_SIZE.M} />}
@@ -1294,8 +1299,8 @@ export default function AdminPage() {
                 type="number"
                 value={visiteursSiteWeb}
                 onChange={(e) => setVisiteursSiteWeb(e.target.value)}
-                placeholder="0"
-                min="0"
+                placeholder={STRING.ZERO}
+                min={STRING.ZERO}
                 max="10000000"
                 step="1000"
                 icon={<Globe size={ICON_SIZE.M} />}
@@ -1309,8 +1314,8 @@ export default function AdminPage() {
                 type="number"
                 value={abonnesLinkedin}
                 onChange={(e) => setAbonnesLinkedin(e.target.value)}
-                placeholder="0"
-                min="0"
+                placeholder={STRING.ZERO}
+                min={STRING.ZERO}
                 max="10000000"
                 step="10000"
                 icon={<Linkedin size={ICON_SIZE.M} />}
@@ -1324,8 +1329,8 @@ export default function AdminPage() {
                 type="number"
                 value={abonnesInstagram}
                 onChange={(e) => setAbonnesInstagram(e.target.value)}
-                placeholder="0"
-                min="0"
+                placeholder={STRING.ZERO}
+                min={STRING.ZERO}
                 max="10000000"
                 step="10000"
                 icon={<Instagram size={ICON_SIZE.M} />}
@@ -1339,8 +1344,8 @@ export default function AdminPage() {
                 type="number"
                 value={abonnesFacebook}
                 onChange={(e) => setAbonnesFacebook(e.target.value)}
-                placeholder="0"
-                min="0"
+                placeholder={STRING.ZERO}
+                min={STRING.ZERO}
                 max="10000000"
                 step="10000"
                 icon={<Facebook size={ICON_SIZE.M} />}
@@ -1354,8 +1359,8 @@ export default function AdminPage() {
                 type="number"
                 value={abonnesTiktok}
                 onChange={(e) => setAbonnesTiktok(e.target.value)}
-                placeholder="0"
-                min="0"
+                placeholder={STRING.ZERO}
+                min={STRING.ZERO}
                 max="10000000"
                 step="10000"
                 icon={<Globe size={ICON_SIZE.M} />}
@@ -1396,15 +1401,15 @@ export default function AdminPage() {
                   Homme
                 </Text>
                 <Text size="M" weight="M" color="BLACK" as="div">
-                  {homme || '0'}%
+                  {homme || STRING.ZERO}%
                 </Text>
               </div>
               <Slider
                 value={homme}
                 onChange={handleHommeChange}
-                min={0}
-                max={100}
-                step={1}
+                min={SLIDER.MIN}
+                max={SLIDER.MAX}
+                step={SLIDER.STEP}
               />
             </FormGroup>
             <FormGroup>
@@ -1420,15 +1425,15 @@ export default function AdminPage() {
                   Femme
                 </Text>
                 <Text size="M" weight="M" color="BLACK" as="div">
-                  {femme || '0'}%
+                  {femme || STRING.ZERO}%
                 </Text>
               </div>
               <Slider
                 value={femme}
                 onChange={handleFemmeChange}
-                min={0}
-                max={100}
-                step={1}
+                min={SLIDER.MIN}
+                max={SLIDER.MAX}
+                step={SLIDER.STEP}
               />
             </FormGroup>
             <FormGroup>
@@ -1444,15 +1449,15 @@ export default function AdminPage() {
                   Famille
                 </Text>
                 <Text size="M" weight="M" color="BLACK" as="div">
-                  {famille || '0'}%
+                  {famille || STRING.ZERO}%
                 </Text>
               </div>
               <Slider
                 value={famille}
                 onChange={(value) => setFamille(value.toString())}
-                min={0}
-                max={100}
-                step={1}
+                min={SLIDER.MIN}
+                max={SLIDER.MAX}
+                step={SLIDER.STEP}
               />
             </FormGroup>
           </div>
@@ -1490,15 +1495,15 @@ export default function AdminPage() {
                   Étudiants
                 </Text>
                 <Text size="M" weight="M" color="BLACK" as="div">
-                  {etudiants || '0'}%
+                  {etudiants || STRING.ZERO}%
                 </Text>
               </div>
               <Slider
                 value={etudiants}
                 onChange={(value) => setEtudiants(value.toString())}
-                min={0}
-                max={100}
-                step={1}
+                min={SLIDER.MIN}
+                max={SLIDER.MAX}
+                step={SLIDER.STEP}
               />
             </FormGroup>
             <FormGroup>
@@ -1514,15 +1519,15 @@ export default function AdminPage() {
                   Sans emploi
                 </Text>
                 <Text size="M" weight="M" color="BLACK" as="div">
-                  {sansEmploi || '0'}%
+                  {sansEmploi || STRING.ZERO}%
                 </Text>
               </div>
               <Slider
                 value={sansEmploi}
                 onChange={(value) => setSansEmploi(value.toString())}
-                min={0}
-                max={100}
-                step={1}
+                min={SLIDER.MIN}
+                max={SLIDER.MAX}
+                step={SLIDER.STEP}
               />
             </FormGroup>
             <FormGroup>
@@ -1538,15 +1543,15 @@ export default function AdminPage() {
                   Salariés
                 </Text>
                 <Text size="M" weight="M" color="BLACK" as="div">
-                  {salaries || '0'}%
+                  {salaries || STRING.ZERO}%
                 </Text>
               </div>
               <Slider
                 value={salaries}
                 onChange={(value) => setSalaries(value.toString())}
-                min={0}
-                max={100}
-                step={1}
+                min={SLIDER.MIN}
+                max={SLIDER.MAX}
+                step={SLIDER.STEP}
               />
             </FormGroup>
             <FormGroup>
@@ -1562,15 +1567,15 @@ export default function AdminPage() {
                   Ouvriers
                 </Text>
                 <Text size="M" weight="M" color="BLACK" as="div">
-                  {ouvriers || '0'}%
+                  {ouvriers || STRING.ZERO}%
                 </Text>
               </div>
               <Slider
                 value={ouvriers}
                 onChange={(value) => setOuvriers(value.toString())}
-                min={0}
-                max={100}
-                step={1}
+                min={SLIDER.MIN}
+                max={SLIDER.MAX}
+                step={SLIDER.STEP}
               />
             </FormGroup>
             <FormGroup>
@@ -1586,15 +1591,15 @@ export default function AdminPage() {
                   Cadres
                 </Text>
                 <Text size="M" weight="M" color="BLACK" as="div">
-                  {cadres || '0'}%
+                  {cadres || STRING.ZERO}%
                 </Text>
               </div>
               <Slider
                 value={cadres}
                 onChange={(value) => setCadres(value.toString())}
-                min={0}
-                max={100}
-                step={1}
+                min={SLIDER.MIN}
+                max={SLIDER.MAX}
+                step={SLIDER.STEP}
               />
             </FormGroup>
             <FormGroup>
@@ -1610,15 +1615,15 @@ export default function AdminPage() {
                   Cadres supérieurs
                 </Text>
                 <Text size="M" weight="M" color="BLACK" as="div">
-                  {cadresSuperieurs || '0'}%
+                  {cadresSuperieurs || STRING.ZERO}%
                 </Text>
               </div>
               <Slider
                 value={cadresSuperieurs}
                 onChange={(value) => setCadresSuperieurs(value.toString())}
-                min={0}
-                max={100}
-                step={1}
+                min={SLIDER.MIN}
+                max={SLIDER.MAX}
+                step={SLIDER.STEP}
               />
             </FormGroup>
             <FormGroup>
@@ -1634,15 +1639,15 @@ export default function AdminPage() {
                   Retraités
                 </Text>
                 <Text size="M" weight="M" color="BLACK" as="div">
-                  {retraites || '0'}%
+                  {retraites || STRING.ZERO}%
                 </Text>
               </div>
               <Slider
                 value={retraites}
                 onChange={(value) => setRetraites(value.toString())}
-                min={0}
-                max={100}
-                step={1}
+                min={SLIDER.MIN}
+                max={SLIDER.MAX}
+                step={SLIDER.STEP}
               />
             </FormGroup>
           </div>
@@ -1680,15 +1685,15 @@ export default function AdminPage() {
                   &lt; 10k€
                 </Text>
                 <Text size="M" weight="M" color="BLACK" as="div">
-                  {moins10k || '0'}%
+                  {moins10k || STRING.ZERO}%
                 </Text>
               </div>
               <Slider
                 value={moins10k}
                 onChange={(value) => setMoins10k(value.toString())}
-                min={0}
-                max={100}
-                step={1}
+                min={SLIDER.MIN}
+                max={SLIDER.MAX}
+                step={SLIDER.STEP}
               />
             </FormGroup>
             <FormGroup>
@@ -1704,15 +1709,15 @@ export default function AdminPage() {
                   10k-30k€
                 </Text>
                 <Text size="M" weight="M" color="BLACK" as="div">
-                  {dixTrenteK || '0'}%
+                  {dixTrenteK || STRING.ZERO}%
                 </Text>
               </div>
               <Slider
                 value={dixTrenteK}
                 onChange={(value) => setDixTrenteK(value.toString())}
-                min={0}
-                max={100}
-                step={1}
+                min={SLIDER.MIN}
+                max={SLIDER.MAX}
+                step={SLIDER.STEP}
               />
             </FormGroup>
             <FormGroup>
@@ -1728,15 +1733,15 @@ export default function AdminPage() {
                   30k-50k€
                 </Text>
                 <Text size="M" weight="M" color="BLACK" as="div">
-                  {trenteCinquanteK || '0'}%
+                  {trenteCinquanteK || STRING.ZERO}%
                 </Text>
               </div>
               <Slider
                 value={trenteCinquanteK}
                 onChange={(value) => setTrenteCinquanteK(value.toString())}
-                min={0}
-                max={100}
-                step={1}
+                min={SLIDER.MIN}
+                max={SLIDER.MAX}
+                step={SLIDER.STEP}
               />
             </FormGroup>
             <FormGroup>
@@ -1752,15 +1757,15 @@ export default function AdminPage() {
                   50k-80k€
                 </Text>
                 <Text size="M" weight="M" color="BLACK" as="div">
-                  {cinquanteQuatreVingtK || '0'}%
+                  {cinquanteQuatreVingtK || STRING.ZERO}%
                 </Text>
               </div>
               <Slider
                 value={cinquanteQuatreVingtK}
                 onChange={(value) => setCinquanteQuatreVingtK(value.toString())}
-                min={0}
-                max={100}
-                step={1}
+                min={SLIDER.MIN}
+                max={SLIDER.MAX}
+                step={SLIDER.STEP}
               />
             </FormGroup>
             <FormGroup>
@@ -1776,15 +1781,15 @@ export default function AdminPage() {
                   &gt; 80k€
                 </Text>
                 <Text size="M" weight="M" color="BLACK" as="div">
-                  {plusQuatreVingtK || '0'}%
+                  {plusQuatreVingtK || STRING.ZERO}%
                 </Text>
               </div>
               <Slider
                 value={plusQuatreVingtK}
                 onChange={(value) => setPlusQuatreVingtK(value.toString())}
-                min={0}
-                max={100}
-                step={1}
+                min={SLIDER.MIN}
+                max={SLIDER.MAX}
+                step={SLIDER.STEP}
               />
             </FormGroup>
           </div>
@@ -1822,15 +1827,15 @@ export default function AdminPage() {
                   Enfants
                 </Text>
                 <Text size="M" weight="M" color="BLACK" as="div">
-                  {enfants || '0'}%
+                  {enfants || STRING.ZERO}%
                 </Text>
               </div>
               <Slider
                 value={enfants}
                 onChange={(value) => setEnfants(value.toString())}
-                min={0}
-                max={100}
-                step={1}
+                min={SLIDER.MIN}
+                max={SLIDER.MAX}
+                step={SLIDER.STEP}
               />
             </FormGroup>
             <FormGroup>
@@ -1846,15 +1851,15 @@ export default function AdminPage() {
                   17-25 ans
                 </Text>
                 <Text size="M" weight="M" color="BLACK" as="div">
-                  {dixSeptVingtCinq || '0'}%
+                  {dixSeptVingtCinq || STRING.ZERO}%
                 </Text>
               </div>
               <Slider
                 value={dixSeptVingtCinq}
                 onChange={(value) => setDixSeptVingtCinq(value.toString())}
-                min={0}
-                max={100}
-                step={1}
+                min={SLIDER.MIN}
+                max={SLIDER.MAX}
+                step={SLIDER.STEP}
               />
             </FormGroup>
             <FormGroup>
@@ -1870,15 +1875,15 @@ export default function AdminPage() {
                   25-30 ans
                 </Text>
                 <Text size="M" weight="M" color="BLACK" as="div">
-                  {vingtCinqTrente || '0'}%
+                  {vingtCinqTrente || STRING.ZERO}%
                 </Text>
               </div>
               <Slider
                 value={vingtCinqTrente}
                 onChange={(value) => setVingtCinqTrente(value.toString())}
-                min={0}
-                max={100}
-                step={1}
+                min={SLIDER.MIN}
+                max={SLIDER.MAX}
+                step={SLIDER.STEP}
               />
             </FormGroup>
             <FormGroup>
@@ -1894,15 +1899,15 @@ export default function AdminPage() {
                   30-40 ans
                 </Text>
                 <Text size="M" weight="M" color="BLACK" as="div">
-                  {trenteQuarante || '0'}%
+                  {trenteQuarante || STRING.ZERO}%
                 </Text>
               </div>
               <Slider
                 value={trenteQuarante}
                 onChange={(value) => setTrenteQuarante(value.toString())}
-                min={0}
-                max={100}
-                step={1}
+                min={SLIDER.MIN}
+                max={SLIDER.MAX}
+                step={SLIDER.STEP}
               />
             </FormGroup>
             <FormGroup>
@@ -1918,15 +1923,15 @@ export default function AdminPage() {
                   40-60 ans
                 </Text>
                 <Text size="M" weight="M" color="BLACK" as="div">
-                  {quaranteSoixante || '0'}%
+                  {quaranteSoixante || STRING.ZERO}%
                 </Text>
               </div>
               <Slider
                 value={quaranteSoixante}
                 onChange={(value) => setQuaranteSoixante(value.toString())}
-                min={0}
-                max={100}
-                step={1}
+                min={SLIDER.MIN}
+                max={SLIDER.MAX}
+                step={SLIDER.STEP}
               />
             </FormGroup>
             <FormGroup>
@@ -1942,15 +1947,15 @@ export default function AdminPage() {
                   &gt; 60 ans
                 </Text>
                 <Text size="M" weight="M" color="BLACK" as="div">
-                  {plusSoixante || '0'}%
+                  {plusSoixante || STRING.ZERO}%
                 </Text>
               </div>
               <Slider
                 value={plusSoixante}
                 onChange={(value) => setPlusSoixante(value.toString())}
-                min={0}
-                max={100}
-                step={1}
+                min={SLIDER.MIN}
+                max={SLIDER.MAX}
+                step={SLIDER.STEP}
               />
             </FormGroup>
           </div>

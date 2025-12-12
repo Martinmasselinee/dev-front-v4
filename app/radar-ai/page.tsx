@@ -24,6 +24,7 @@ import { DISPLAY } from '../../constants/display'
 import { FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT, FLEX } from '../../constants/flex'
 import { TEXT_ALIGN } from '../../constants/text'
 import { MULTIPLIER } from '../../constants/multiplier'
+import { STRING } from '../../constants/string'
 
 export default function RadarAIPage() {
   const searchParams = useSearchParams()
@@ -35,8 +36,8 @@ export default function RadarAIPage() {
   const [searchValue, setSearchValue] = useState('')
   const [timeRange, setTimeRange] = useState('all')
   const [articleType, setArticleType] = useState('all')
-  const [nouveauxArticles, setNouveauxArticles] = useState('0')
-  const [totalArticles, setTotalArticles] = useState('0')
+  const [nouveauxArticles, setNouveauxArticles] = useState(STRING.ZERO)
+  const [totalArticles, setTotalArticles] = useState(STRING.ZERO)
   // Current user (admin) - in a real app, this would come from auth context
   const currentUserEmail = 'admin@dataxx.fr'
 

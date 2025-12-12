@@ -21,12 +21,12 @@ interface SliderProps {
 export const Slider = ({ 
   value, 
   onChange, 
-  min = 0, 
-  max = 100, 
-  step = 1,
+  min = SLIDER.MIN, 
+  max = SLIDER.MAX, 
+  step = SLIDER.STEP,
   disabled = false 
 }: SliderProps) => {
-  const numValue = typeof value === 'string' ? (parseInt(value) || 0) : value
+  const numValue = typeof value === 'string' ? (parseInt(value) || SLIDER.MIN) : value
 
   return (
     <div

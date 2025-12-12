@@ -21,10 +21,11 @@ import { TopBar } from '../../components/TopBar'
 import { HelpButton } from '../../components/HelpButton'
 import { Button } from '../../components/Button'
 import { WIDTH } from '../../constants/width'
+import { STRING } from '../../constants/string'
 
 export default function SmartSearchPage() {
   const [viewType, setViewType] = useState('table')
-  const [recherchesLancees, setRecherchesLancees] = useState('0')
+  const [recherchesLancees, setRecherchesLancees] = useState(STRING.ZERO)
 
   const viewOptions = [
     { value: 'table', label: 'Table' },
