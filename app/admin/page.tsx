@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Settings, ChevronDown, Building2, FileText, User, Mail, BookOpen, Search, Users, Phone, Award, Shield, Trash2, AlertTriangle, Brain, Presentation, Info, Share2, Globe, Linkedin, Instagram, Facebook, Plus, BarChart3, Users2, GraduationCap, DollarSign, Heart, Star, X, Calendar, Check } from 'lucide-react'
+import { Settings, ChevronDown, Building2, FileText, User, Mail, BookOpen, Search, Users, Phone, Award, Shield, Trash2, AlertTriangle, Brain, Presentation, Info, Share2, Globe, Linkedin, Instagram, Facebook, Plus, BarChart3, Users2, GraduationCap, DollarSign, Heart, Star, Calendar } from 'lucide-react'
 import { LAYOUT } from '../../constants/layout'
 import { SPACING } from '../../constants/spacing'
 import { POSITION_TYPE, POSITION } from '../../constants/position'
@@ -41,6 +41,7 @@ import { BUTTON_HEIGHT } from '../../constants/button'
 import { UserInitial } from '../../components/UserInitial'
 import { LINE_HEIGHT } from '../../constants/font'
 import { Input } from '../../components/Input'
+import { StatusBubble } from '../../components/StatusBubble'
 import { FileUpload } from '../../components/FileUpload'
 import { FormGroup } from '../../components/FormGroup'
 import { Textarea } from '../../components/Textarea'
@@ -417,7 +418,7 @@ export default function AdminPage() {
         </div>
       ),
       cell: ({ row }) => (
-        <Text size="M" weight="M" color="PURPLE" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP }}>{row.original.email}</Text>
+        <Text size="M" weight="M" color="GREY_DARK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP }}>{row.original.email}</Text>
       ),
       meta: {
         width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.DROPDOWN_WIDTH_ONE_FIVE})`,
@@ -428,37 +429,19 @@ export default function AdminPage() {
       header: () => (
         <div style={{ display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.FLEX_START, gap: SPACING.S }}>
           <Mail size={ICON_SIZE.S} style={{ color: COLOR.GREY.DARK, flexShrink: FLEX.ZERO }} />
-          <Text size="S" weight="XL" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP, textTransform: TEXT_TRANSFORM.UPPERCASE, letterSpacing: LETTER_SPACING.TIGHT, textAlign: TEXT_ALIGN.LEFT }}>Email connecté</Text>
+          <Text size="S" weight="XL" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP, textTransform: TEXT_TRANSFORM.UPPERCASE, letterSpacing: LETTER_SPACING.TIGHT, textAlign: TEXT_ALIGN.LEFT }}>Intégration</Text>
         </div>
       ),
       cell: ({ row }) => {
         const isConnecte = row.original.emailConnecte
         return (
-          <div
+          <StatusBubble
+            label={isConnecte ? 'connecté' : 'non connecté'}
+            variant={isConnecte ? 'green' : 'red'}
             style={{
-              display: DISPLAY.FLEX,
-              alignItems: ALIGN_ITEMS.CENTER,
-              gap: SPACING.XS,
-              paddingLeft: SPACING.XS,
-              paddingRight: SPACING.XS,
-              paddingTop: SPACING.XS,
-              paddingBottom: SPACING.XS,
-              backgroundColor: isConnecte ? hexToRgba(COLOR.PURPLE, MULTIPLIER.OPACITY_PURPLE_BACKGROUND) : COLOR.WHITE,
-              border: `${BORDER_WIDTH.THIN} solid ${isConnecte ? COLOR.PURPLE : COLOR.GREY.MEDIUM}`,
-              borderRadius: BORDER_RADIUS.S,
-              flexShrink: FLEX.ZERO,
               textAlign: TEXT_ALIGN.LEFT,
             }}
-          >
-            {isConnecte ? (
-              <Check size={ICON_SIZE.S} style={{ color: COLOR.PURPLE, flexShrink: FLEX.ZERO }} />
-            ) : (
-              <X size={ICON_SIZE.S} style={{ color: COLOR.GREY.DARK, flexShrink: FLEX.ZERO }} />
-            )}
-            <Text size="S" weight="M" color={isConnecte ? 'PURPLE' : 'GREY_DARK'}>
-              {isConnecte ? 'connecté' : 'non'}
-            </Text>
-          </div>
+          />
         )
       },
       meta: {
