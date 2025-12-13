@@ -9,6 +9,7 @@ import { MULTIPLIER } from '../constants/multiplier'
 import { OPACITY } from '../constants/opacity'
 import { BORDER_WIDTH } from '../constants/border'
 import { ICON_SIZE } from '../constants/iconSize'
+import { ICON_STROKE_WIDTH } from '../constants/icon'
 import { hexToRgba } from '../lib/colorUtils'
 import { Text } from './Text'
 
@@ -22,9 +23,12 @@ export const StatusBubble = ({ label, variant, style }: StatusBubbleProps) => {
   const backgroundColor = COLOR.WHITE
   
   const textColor = variant === 'green' ? COLOR.GOOGLE.GREEN : COLOR.RED
+  const iconColor = variant === 'green' 
+    ? hexToRgba(COLOR.GOOGLE.GREEN, OPACITY.FULL)
+    : hexToRgba(COLOR.RED, OPACITY.FULL)
   const borderColor = variant === 'green' 
-    ? hexToRgba(COLOR.GOOGLE.GREEN, OPACITY.SHADOW)
-    : hexToRgba(COLOR.RED, OPACITY.SHADOW)
+    ? hexToRgba(COLOR.GOOGLE.GREEN, 0.6)
+    : hexToRgba(COLOR.RED, 0.6)
   
   const IconComponent = variant === 'green' ? Check : X
   
@@ -50,8 +54,9 @@ export const StatusBubble = ({ label, variant, style }: StatusBubbleProps) => {
     >
       <IconComponent 
         size={ICON_SIZE.S} 
+        strokeWidth={ICON_STROKE_WIDTH.DEFAULT}
         style={{ 
-          color: textColor, 
+          color: iconColor, 
           flexShrink: FLEX.ZERO 
         }} 
       />
@@ -59,7 +64,6 @@ export const StatusBubble = ({ label, variant, style }: StatusBubbleProps) => {
         size="S" 
         weight="M" 
         color="BLACK"
-        style={{ color: textColor }}
       >
         {capitalizedLabel}
       </Text>

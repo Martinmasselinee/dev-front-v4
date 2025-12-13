@@ -13,6 +13,7 @@ import { Button } from '../../components/Button'
 import { Popup } from '../../components/Popup'
 import { Card } from '../../components/Card'
 import { Text } from '../../components/Text'
+import { Dot } from '../../components/Dot'
 import { COLOR } from '../../constants/color'
 import { BORDER_WIDTH } from '../../constants/border'
 import { ICON_SIZE } from '../../constants/iconSize'
@@ -58,6 +59,8 @@ export default function AdminPage() {
   const [showWorkspacePopup, setShowWorkspacePopup] = useState(false)
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
   const [userToDelete, setUserToDelete] = useState<string | null>(null)
+  const [showRoleChangeConfirm, setShowRoleChangeConfirm] = useState(false)
+  const [userToChangeRole, setUserToChangeRole] = useState<{ id: string; newRole: string } | null>(null)
   const [searchValue, setSearchValue] = useState('')
   const [showPersonaliserPopup, setShowPersonaliserPopup] = useState(false)
   
@@ -255,7 +258,7 @@ export default function AdminPage() {
     ...socialUrls.map(url => url.url.trim()),
   ].filter(value => value !== null && value !== '' && value !== undefined).length
   
-  const stickyPurplePersonalisation = (
+  const stickyPurpleTitle = (
     <div
       style={{
         display: DISPLAY.FLEX,
@@ -263,6 +266,10 @@ export default function AdminPage() {
         gap: SPACING.S,
       }}
     >
+      <Text size="M" weight="M" color="PURPLE">
+        Personalisez la mémoire IA
+      </Text>
+      <Dot marginLeft={SPACING.XS} marginRight={SPACING.XS} />
       <Text size="M" weight="M" color="PURPLE">
         {addedPersonalisations}/{totalPersonalisations} personalisations ajoutées
       </Text>
@@ -328,11 +335,39 @@ export default function AdminPage() {
   ])
 
   const handleRoleChange = (userId: string, newRole: string) => {
-    setUsers(users.map(user => 
-      user.id === userId 
-        ? { ...user, role: newRole as 'admin' | 'user' }
-        : user
-    ))
+    setUserToChangeRole({ id: userId, newRole })
+    setShowRoleChangeConfirm(true)
+  }
+
+  const handleConfirmRoleChange = () => {
+    if (userToChangeRole) {
+      setUsers(users.map(user => 
+        user.id === userToChangeRole.id 
+          ? { ...user, role: userToChangeRole.newRole as 'admin' | 'user' }
+          : user
+      ))
+      setUserToChangeRole(null)
+      setShowRoleChangeConfirm(false)
+    }
+  }
+
+  const handleCancelRoleChange = () => {
+    setUserToChangeRole(null)
+    setShowRoleChangeConfirm(false)
+  }
+
+  const getUserToChangeRoleName = () => {
+    const user = users.find(u => u.id === userToChangeRole?.id)
+    return user ? `${user.firstName} ${user.lastName}` : ''
+  }
+
+  const getRoleChangeText = () => {
+    if (!userToChangeRole) return ''
+    const currentUser = users.find(u => u.id === userToChangeRole.id)
+    if (!currentUser) return ''
+    const currentRole = currentUser.role === 'admin' ? 'administrateur' : 'utilisateur'
+    const newRole = userToChangeRole.newRole === 'admin' ? 'administrateur' : 'utilisateur'
+    return `passer de ${currentRole} à ${newRole}`
   }
 
   const handleRemoveUser = (userId: string) => {
@@ -379,10 +414,7 @@ export default function AdminPage() {
     {
       accessorKey: 'firstName',
       header: () => (
-        <div style={{ display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER, gap: SPACING.S }}>
-          <User size={ICON_SIZE.S} style={{ color: COLOR.GREY.DARK, flexShrink: FLEX.ZERO }} />
-          <Text size="S" weight="XL" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP, textTransform: TEXT_TRANSFORM.UPPERCASE, letterSpacing: LETTER_SPACING.TIGHT }}>Prénom</Text>
-        </div>
+        <Text size="S" weight="XL" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP, textTransform: TEXT_TRANSFORM.UPPERCASE, letterSpacing: LETTER_SPACING.TIGHT }}>Prénom</Text>
       ),
       cell: ({ row }) => (
         <div style={{ display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER, gap: SPACING.S }}>
@@ -397,10 +429,7 @@ export default function AdminPage() {
     {
       accessorKey: 'lastName',
       header: () => (
-        <div style={{ display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER, gap: SPACING.S }}>
-          <User size={ICON_SIZE.S} style={{ color: COLOR.GREY.DARK, flexShrink: FLEX.ZERO }} />
-          <Text size="S" weight="XL" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP, textTransform: TEXT_TRANSFORM.UPPERCASE, letterSpacing: LETTER_SPACING.TIGHT }}>Nom</Text>
-        </div>
+        <Text size="S" weight="XL" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP, textTransform: TEXT_TRANSFORM.UPPERCASE, letterSpacing: LETTER_SPACING.TIGHT }}>Nom</Text>
       ),
       cell: ({ row }) => (
         <Text size="M" weight="M" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP }}>{row.original.lastName}</Text>
@@ -565,7 +594,11 @@ export default function AdminPage() {
       cell: ({ row }) => (
         <DropdownButton
           value={row.original.role}
-          onChange={(e) => handleRoleChange(row.original.id, e.target.value)}
+          onChange={(e) => {
+            if (e.target.value !== row.original.role) {
+              handleRoleChange(row.original.id, e.target.value)
+            }
+          }}
           disabled={row.original.id === '1'}
           style={{ 
             width: WIDTH.FULL, 
@@ -650,9 +683,9 @@ export default function AdminPage() {
         <TopBar icon={Settings} title="Administration" rightElement={workspaceButton} hideBorder={true} />
         <TopBar 
           icon={Brain} 
-          title="Personalisez la mémoire IA" 
+          title=""
           variant="stickyPurple"
-          additionalText={stickyPurplePersonalisation}
+          additionalText={stickyPurpleTitle}
           rightElement={
             <Button
               variant="BLACK"
@@ -690,8 +723,8 @@ export default function AdminPage() {
                 gap: SPACING.S,
               }}
             >
-              <Users size={ICON_SIZE.M} style={{ color: COLOR.BLACK, flexShrink: FLEX.ZERO }} />
-              <Text size="L" weight="XL" color="BLACK">
+              <Users size={ICON_SIZE.M} style={{ color: COLOR.GREY.DARK, flexShrink: FLEX.ZERO, transition: `color ${TRANSITION.FAST_EASE}` }} />
+              <Text size="M" weight="L" style={{ color: COLOR.BLACK, transition: `color ${TRANSITION.FAST_EASE}` }}>
                 Utilisateurs
               </Text>
             </div>
@@ -857,6 +890,50 @@ export default function AdminPage() {
             <Button
               variant="RED"
               onClick={handleConfirmDelete}
+              type="button"
+              style={{ flex: FLEX.ONE }}
+            >
+              Confirmer
+            </Button>
+          </div>
+        </div>
+      </Popup>
+
+      <Popup
+        isOpen={showRoleChangeConfirm}
+        onClose={handleCancelRoleChange}
+        title="Confirmer le changement de rôle"
+        icon={Shield}
+        size="small"
+      >
+        <div
+          style={{
+            display: DISPLAY.FLEX,
+            flexDirection: FLEX_DIRECTION.COLUMN,
+            gap: SPACING.L,
+          }}
+        >
+          <Text size="M" weight="M" color="BLACK">
+            Êtes-vous sûr de vouloir {getRoleChangeText()} pour {getUserToChangeRoleName()} ?
+          </Text>
+
+          <div
+            style={{
+              display: DISPLAY.FLEX,
+              gap: SPACING.M,
+            }}
+          >
+            <Button
+              variant="WHITE"
+              onClick={handleCancelRoleChange}
+              type="button"
+              style={{ flex: FLEX.ONE }}
+            >
+              Annuler
+            </Button>
+            <Button
+              variant="BLACK"
+              onClick={handleConfirmRoleChange}
               type="button"
               style={{ flex: FLEX.ONE }}
             >

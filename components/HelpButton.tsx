@@ -17,7 +17,11 @@ import { TIME } from '../constants/time'
 import { TRANSITION } from '../constants/transition'
 import { POSITION_TYPE } from '../constants/position'
 import { DISPLAY } from '../constants/display'
-import { FLEX_DIRECTION, ALIGN_ITEMS } from '../constants/flex'
+import { FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT, FLEX } from '../constants/flex'
+import { CURSOR } from '../constants/interaction'
+import { BORDER_WIDTH, BORDER_RADIUS } from '../constants/border'
+import { OUTLINE } from '../constants/outline'
+import { MULTIPLIER } from '../constants/multiplier'
 import { Mail, Phone } from 'lucide-react'
 
 interface HelpButtonProps {
@@ -27,14 +31,31 @@ interface HelpButtonProps {
 export const HelpButton = ({ bottomOffset = SPACING.L }: HelpButtonProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const [bugDescription, setBugDescription] = useState('')
+  const [selectedBugTypes, setSelectedBugTypes] = useState<string[]>([])
   const [isSuccess, setIsSuccess] = useState(false)
 
+  const bugTypes = [
+    { value: 'interface', label: 'Interface' },
+    { value: 'performance', label: 'Performance' },
+    { value: 'crash', label: 'Crash' },
+    { value: 'latence', label: 'Latence' },
+  ]
+
+  const toggleBugType = (value: string) => {
+    setSelectedBugTypes(prev =>
+      prev.includes(value)
+        ? prev.filter(type => type !== value)
+        : [...prev, value]
+    )
+  }
+
   useEffect(() => {
-    if (isSuccess) {
+      if (isSuccess) {
       const timer = setTimeout(() => {
         setIsOpen(false)
         setIsSuccess(false)
         setBugDescription('')
+        setSelectedBugTypes([])
       }, TIME.INTERVAL.SUCCESS_MESSAGE)
 
       return () => clearTimeout(timer)
@@ -44,7 +65,7 @@ export const HelpButton = ({ bottomOffset = SPACING.L }: HelpButtonProps) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     // TODO: Add bug report submission logic here
-    console.log('Bug report:', bugDescription)
+    console.log('Bug report:', { bugDescription, bugTypes: selectedBugTypes })
     setIsSuccess(true)
   }
 
@@ -134,6 +155,50 @@ export const HelpButton = ({ bottomOffset = SPACING.L }: HelpButtonProps) => {
                 required
                 rows={4}
               />
+              <Text size="M" weight="XL" color="BLACK" as="div" style={{ marginTop: SPACING.M, marginBottom: SPACING.S }}>
+                Type de bug
+              </Text>
+              <div
+                style={{
+                  display: DISPLAY.FLEX,
+                  flexWrap: 'wrap',
+                  gap: SPACING.S,
+                }}
+              >
+                {bugTypes.map((type) => {
+                  const isSelected = selectedBugTypes.includes(type.value)
+                  return (
+                    <button
+                      key={type.value}
+                      type="button"
+                      onClick={() => toggleBugType(type.value)}
+                      style={{
+                        paddingLeft: SPACING.M,
+                        paddingRight: SPACING.M,
+                        paddingTop: `calc(${SPACING.S} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY})`,
+                        paddingBottom: `calc(${SPACING.S} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY})`,
+                        backgroundColor: isSelected ? COLOR.BLACK : COLOR.WHITE,
+                        border: `${BORDER_WIDTH.THIN} solid ${isSelected ? COLOR.BLACK : COLOR.GREY.MEDIUM}`,
+                        borderRadius: BORDER_RADIUS.M,
+                        cursor: CURSOR.POINTER,
+                        transition: `background-color ${TRANSITION.FAST_EASE}, border-color ${TRANSITION.FAST_EASE}, color ${TRANSITION.FAST_EASE}`,
+                        outline: OUTLINE.NONE,
+                      }}
+                    >
+                      <Text
+                        size="M"
+                        weight={isSelected ? 'L' : 'M'}
+                        style={{
+                          color: isSelected ? COLOR.WHITE : COLOR.BLACK,
+                          transition: `color ${TRANSITION.FAST_EASE}`,
+                        }}
+                      >
+                        {type.label}
+                      </Text>
+                    </button>
+                  )
+                })}
+              </div>
             </FormGroup>
 
             <Button
