@@ -3,6 +3,7 @@ import { COLOR } from './color'
 export const BUTTON_HEIGHT = {
   MAIN: '35px',
   OVERLAY: '34px',
+  SMALL: '30px',
 } as const
 
 export const BUTTON_OVERLAY = {
