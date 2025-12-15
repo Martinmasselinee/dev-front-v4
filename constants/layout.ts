@@ -8,3 +8,8 @@ export const LAYOUT = {
   SIDEBAR_WIDTH: '220px',
 } as const
 
+export const CALCULATION = {
+  GRID_COLUMN_COUNT: 3,
+  GRID_GAP_MULTIPLIER: 2,
+} as const
+

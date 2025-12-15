@@ -24,5 +24,10 @@ export const INPUT_STEP = {
 
 export const TEXTAREA_ROWS = {
   DEFAULT: 4,
+  SINGLE: 1,
+} as const
+
+export const INPUT_HEIGHT_MULTIPLIER = {
+  DOUBLE: 2,
 } as const
 

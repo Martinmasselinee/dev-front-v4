@@ -5,6 +5,7 @@ import { DollarSign, MapPin, ExternalLink, Tag, Plus, Brain, Leaf, Globe, X, Use
 import { Card } from '../../../components/Card'
 import { Text } from '../../../components/Text'
 import { Button } from '../../../components/Button'
+import { IconButton } from '../../../components/IconButton'
 import { Link } from '../../../components/Link'
 import { COLOR } from '../../../constants/color'
 import { SPACING } from '../../../constants/spacing'
@@ -18,11 +19,11 @@ import { TEXT_TRANSFORM, TEXT_ALIGN, TEXT_DECORATION } from '../../../constants/
 import { CURSOR } from '../../../constants/interaction'
 import { OVERFLOW } from '../../../constants/overflow'
 import { Z_INDEX } from '../../../constants/zIndex'
+import { NUMBER } from '../../../constants/number'
 import { MULTIPLIER } from '../../../constants/multiplier'
 import { OPACITY } from '../../../constants/opacity'
 import { BUTTON_HEIGHT } from '../../../constants/button'
 import { hexToRgba, lightenColor } from '../../../lib/colorUtils'
-import { IconButton } from '../../../components/IconButton'
 import { UserInitial } from '../../../components/UserInitial'
 
 export interface CompanyCardProps {
@@ -71,7 +72,7 @@ export const CompanyCard = ({
   const handleAddClick = () => {
     setSelectedStatus('prospects')
     if (!selectedOwner) {
-      setSelectedOwner(ownerOptions[0].value)
+      setSelectedOwner(ownerOptions[NUMBER.ZERO].value)
     }
   }
 
@@ -91,7 +92,7 @@ export const CompanyCard = ({
 
   const handleOwnerButtonClick = () => {
     if (!selectedOwner) {
-      setSelectedOwner(ownerOptions[0].value)
+      setSelectedOwner(ownerOptions[NUMBER.ZERO].value)
     }
     setIsOwnerMode(true)
   }
@@ -196,7 +197,7 @@ export const CompanyCard = ({
               paddingTop: SPACING.L,
               paddingLeft: SPACING.L,
               paddingRight: SPACING.L,
-              paddingBottom: `calc(${SPACING.XXXL} * ${MULTIPLIER.ICON_SIZE_DOUBLE} * ${MULTIPLIER.BUTTON_WIDTH_HALF} + ${SPACING.XXXL} * ${MULTIPLIER.ICON_SIZE_DOUBLE} * ${MULTIPLIER.BUTTON_WIDTH_HALF})`,
+              paddingBottom: `calc(${SPACING.XXL} * ${MULTIPLIER.ICON_SIZE_DOUBLE} * ${MULTIPLIER.BUTTON_WIDTH_HALF} + ${SPACING.XXL} * ${MULTIPLIER.ICON_SIZE_DOUBLE} * ${MULTIPLIER.BUTTON_WIDTH_HALF} + ${SPACING.S})`,
               position: POSITION_TYPE.RELATIVE,
             }}
           >
@@ -219,8 +220,8 @@ export const CompanyCard = ({
             position: POSITION_TYPE.ABSOLUTE,
             bottom: POSITION.ZERO,
             left: SPACING.L,
-            width: `calc(${SPACING.XXXL} * ${MULTIPLIER.ICON_SIZE_DOUBLE})`,
-            height: `calc(${SPACING.XXXL} * ${MULTIPLIER.ICON_SIZE_DOUBLE})`,
+            width: `calc(${SPACING.XXL} * ${MULTIPLIER.ICON_SIZE_DOUBLE})`,
+            height: `calc(${SPACING.XXL} * ${MULTIPLIER.ICON_SIZE_DOUBLE})`,
             borderRadius: BORDER_RADIUS.CIRCLE,
             backgroundColor: COLOR.WHITE,
             border: `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.MEDIUM}`,
@@ -228,7 +229,7 @@ export const CompanyCard = ({
             alignItems: ALIGN_ITEMS.CENTER,
             justifyContent: JUSTIFY_CONTENT.CENTER,
             zIndex: Z_INDEX.COMPONENT_OVERLAY,
-            transform: `translateY(calc(${SPACING.XXXL} * ${MULTIPLIER.ICON_SIZE_DOUBLE} * ${MULTIPLIER.BUTTON_WIDTH_HALF}))`,
+            transform: `translateY(calc(${SPACING.XXL} * ${MULTIPLIER.ICON_SIZE_DOUBLE} * ${MULTIPLIER.BUTTON_WIDTH_HALF}))`,
           }}
         >
           {logo ? (
@@ -253,7 +254,7 @@ export const CompanyCard = ({
         style={{
           paddingLeft: SPACING.L,
           paddingRight: SPACING.L,
-          paddingTop: `calc(${SPACING.XXXL} * ${MULTIPLIER.ICON_SIZE_DOUBLE} * ${MULTIPLIER.BUTTON_WIDTH_HALF})`,
+          paddingTop: `calc(${SPACING.XXL} * ${MULTIPLIER.ICON_SIZE_DOUBLE} * ${MULTIPLIER.BUTTON_WIDTH_HALF} + ${SPACING.S})`,
           paddingBottom: SPACING.M,
           display: DISPLAY.FLEX,
           flexDirection: FLEX_DIRECTION.COLUMN,
@@ -269,7 +270,7 @@ export const CompanyCard = ({
           color="BLACK"
           style={{
             textTransform: TEXT_TRANSFORM.UPPERCASE,
-            marginTop: SPACING.L,
+            marginTop: SPACING.M,
           }}
         >
           {companyName}
@@ -468,26 +469,19 @@ export const CompanyCard = ({
               )
             })()}
             {(() => {
-              const currentOwner = ownerOptions.find(opt => opt.value === selectedOwner) || ownerOptions[0]
+              const currentOwner = ownerOptions.find(opt => opt.value === selectedOwner) || ownerOptions[NUMBER.ZERO]
               return (
-                <button
+                <IconButton
                   onClick={handleOwnerButtonClick}
+                  icon={<UserInitial name={currentOwner.firstName} size="M" />}
                   style={{
                     width: BUTTON_HEIGHT.SMALL,
                     height: BUTTON_HEIGHT.SMALL,
                     borderRadius: BORDER_RADIUS.CIRCLE,
                     backgroundColor: COLOR.BLACK,
-                    border: BORDER.NONE,
-                    display: DISPLAY.FLEX,
-                    alignItems: ALIGN_ITEMS.CENTER,
-                    justifyContent: JUSTIFY_CONTENT.CENTER,
-                    cursor: CURSOR.POINTER,
-                    padding: SPACING.ZERO,
                     flexShrink: FLEX.ZERO,
                   }}
-                >
-                  <UserInitial name={currentOwner.firstName} size="M" />
-                </button>
+                />
               )
             })()}
           </div>

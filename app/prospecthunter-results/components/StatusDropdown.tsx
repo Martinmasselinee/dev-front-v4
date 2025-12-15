@@ -72,7 +72,7 @@ export const StatusDropdown = ({
           left: POSITION.ZERO,
           right: POSITION.ZERO,
           bottom: POSITION.ZERO,
-          zIndex: Z_INDEX.POPUP - 1,
+          zIndex: Z_INDEX.POPUP_MINUS_ONE,
         }}
         onClick={onClose}
       />

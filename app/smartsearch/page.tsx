@@ -8,22 +8,24 @@ import { Text } from '../../components/Text'
 import { LAYOUT } from '../../constants/layout'
 import { SPACING } from '../../constants/spacing'
 import { POSITION_TYPE } from '../../constants/position'
-import { DISPLAY } from '../../constants/display'
+import { DISPLAY, DISPLAY_COUNT } from '../../constants/display'
 import { ALIGN_ITEMS, FLEX_DIRECTION, FLEX_WRAP, JUSTIFY_CONTENT } from '../../constants/flex'
 import { COLOR } from '../../constants/color'
 import { BORDER, BORDER_WIDTH } from '../../constants/border'
 import { OPACITY } from '../../constants/opacity'
 import { NUMBER } from '../../constants/number'
+import { STRING } from '../../constants/string'
 import { TIME } from '../../constants/time'
 import { ICON_SIZE } from '../../constants/iconSize'
 import { DIMENSION } from '../../constants/dimension'
 import { MULTIPLIER } from '../../constants/multiplier'
+import { INPUT_HEIGHT, INPUT_HEIGHT_MULTIPLIER, TEXTAREA_ROWS, INPUT_PADDING } from '../../constants/input'
+import { CALCULATION } from '../../constants/layout'
 import { NavbarSidebar } from '../../components/NavbarSidebar'
 import { TopBar } from '../../components/TopBar'
 import { HelpButton } from '../../components/HelpButton'
 import { Button } from '../../components/Button'
 import { WIDTH } from '../../constants/width'
-import { STRING } from '../../constants/string'
 import { Input } from '../../components/Input'
 import { Card } from '../../components/Card'
 import { Heading } from '../../components/Heading'
@@ -33,7 +35,6 @@ import { Spacer } from '../../components/Spacer'
 import { Popup } from '../../components/Popup'
 import { Checkbox } from '../../components/Checkbox'
 import { UserInitial } from '../../components/UserInitial'
-import { INPUT_HEIGHT, INPUT_PADDING } from '../../constants/input'
 import { BUTTON_HEIGHT } from '../../constants/button'
 import { LINE_HEIGHT, FONT_SIZE, FONT_THICKNESS } from '../../constants/font'
 import { OUTLINE } from '../../constants/outline'
@@ -57,7 +58,7 @@ export default function SmartSearchPage() {
   const [recherchesLancees, setRecherchesLancees] = useState(STRING.ZERO)
   const [searchValue, setSearchValue] = useState('')
   const [placeholderIndex, setPlaceholderIndex] = useState<number>(NUMBER.ZERO)
-  const [visibleCardsCount, setVisibleCardsCount] = useState(NUMBER.ONE * 5)
+  const [visibleCardsCount, setVisibleCardsCount] = useState<number>(DISPLAY_COUNT.VISIBLE_CARDS_INITIAL)
   const [isFilterPopupOpen, setIsFilterPopupOpen] = useState(false)
   const [excludeSponsors, setExcludeSponsors] = useState(false)
   const [initialExcludeSponsors, setInitialExcludeSponsors] = useState(false)
@@ -112,11 +113,11 @@ export default function SmartSearchPage() {
   }, [])
 
   const formatDateTime = (date: Date): string => {
-    const day = String(date.getDate()).padStart(2, '0')
-    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const day = String(date.getDate()).padStart(2, STRING.ZERO)
+    const month = String(date.getMonth() + 1).padStart(2, STRING.ZERO)
     const year = date.getFullYear()
-    const hours = String(date.getHours()).padStart(2, '0')
-    const minutes = String(date.getMinutes()).padStart(2, '0')
+    const hours = String(date.getHours()).padStart(2, STRING.ZERO)
+    const minutes = String(date.getMinutes()).padStart(2, STRING.ZERO)
     return `${day}/${month}/${year} ${hours}:${minutes}`
   }
 
@@ -213,7 +214,7 @@ export default function SmartSearchPage() {
 
   const visibleCards = searchHistoryItems.slice(NUMBER.ZERO, visibleCardsCount)
   const hasMoreCards = visibleCardsCount < searchHistoryItems.length
-  const cardsToLoad = NUMBER.ONE * 10
+  const cardsToLoad = DISPLAY_COUNT.VISIBLE_CARDS_INCREMENT
 
   const handleLoadMore = () => {
     setVisibleCardsCount((prev) => Math.min(prev + cardsToLoad, searchHistoryItems.length))
@@ -341,14 +342,14 @@ export default function SmartSearchPage() {
               placeholder={currentPlaceholder}
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
-              rows={1}
+              rows={TEXTAREA_ROWS.SINGLE}
               className="smartsearch-textarea"
               style={{
                 width: WIDTH.FULL,
-                height: `calc(${INPUT_HEIGHT.MAIN} * 2)`,
+                height: `calc(${INPUT_HEIGHT.MAIN} * ${INPUT_HEIGHT_MULTIPLIER.DOUBLE})`,
                 paddingLeft: SPACING.ZERO,
                 paddingRight: INPUT_PADDING.HORIZONTAL.WITHOUT_ICON,
-                paddingTop: `calc(${SPACING.S} - 1px)`,
+                paddingTop: `calc(${SPACING.S} + ${SPACING.NEGATIVE_ONE_PX})`,
                 paddingBottom: SPACING.ZERO,
                 fontSize: FONT_SIZE.M,
                 fontWeight: FONT_THICKNESS.M,
@@ -397,8 +398,8 @@ export default function SmartSearchPage() {
             }}
           >
             {visibleCards.map((item, index) => {
-              const visibleFavicons = item.faviconUrls.slice(0, 6)
-              const remainingCount = item.faviconUrls.length - 6
+              const visibleFavicons = item.faviconUrls.slice(NUMBER.ZERO, DISPLAY_COUNT.FAVICON_DISPLAY_COUNT)
+              const remainingCount = item.faviconUrls.length - DISPLAY_COUNT.FAVICON_DISPLAY_COUNT
 
               return (
                 <Card

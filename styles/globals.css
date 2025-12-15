@@ -15,6 +15,14 @@
   --opacity-slider-shadow: 0.3;
   --slider-shadow: 0 2px 4px rgba(0, 0, 0, var(--opacity-slider-shadow));
   --font-thickness-m: 400;
+  --transform-scale-zero: scale(0);
+  --transform-scale-one: scale(1);
+  --transform-scale-one-two: scale(1.2);
+  --transform-rotate-zero: rotate(0deg);
+  --transform-rotate-360: rotate(360deg);
+  --opacity-zero: 0;
+  --opacity-full: 1;
+  --animation-duration-spin: 1s;
 }
 
 html,
@@ -41,29 +49,29 @@ body {
 
 @keyframes checkmarkAnimation {
   0% {
-    transform: scale(0);
-    opacity: 0;
+    transform: var(--transform-scale-zero);
+    opacity: var(--opacity-zero);
   }
   50% {
-    transform: scale(1.2);
+    transform: var(--transform-scale-one-two);
   }
   100% {
-    transform: scale(1);
-    opacity: 1;
+    transform: var(--transform-scale-one);
+    opacity: var(--opacity-full);
   }
 }
 
 @keyframes spin {
   0% {
-    transform: rotate(0deg);
+    transform: var(--transform-rotate-zero);
   }
   100% {
-    transform: rotate(360deg);
+    transform: var(--transform-rotate-360);
   }
 }
 
 .loading-spinner {
-  animation: spin 1s linear infinite;
+  animation: spin var(--animation-duration-spin) linear infinite;
 }
 
 /* rc-slider custom styles - thin black and grey */

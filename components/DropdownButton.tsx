@@ -20,6 +20,7 @@ import { DIMENSION } from '../constants/dimension'
 import { OPACITY } from '../constants/opacity'
 import { TEXT_OVERFLOW, WHITE_SPACE } from '../constants/text'
 import { OVERFLOW } from '../constants/overflow'
+import { extractPixelValue } from '../lib/dimensionUtils'
 
 interface DropdownButtonProps extends SelectHTMLAttributes<HTMLSelectElement> {
   maxWidth?: string
@@ -51,20 +52,19 @@ export const DropdownButton = forwardRef<HTMLSelectElement, DropdownButtonProps>
       // Measure the text width
       const textWidth = measureRef.current.offsetWidth
       const arrowWidth = ICON_SIZE.M
-      const paddingLeftValue = parseInt(paddingLeft.replace('px', ''))
-      const paddingRightValue = parseInt(paddingRight.replace('px', ''))
-      const spacingMValue = parseInt(SPACING.M.replace('px', ''))
+      const paddingLeftValue = extractPixelValue(paddingLeft)
+      const paddingRightValue = extractPixelValue(paddingRight)
+      const spacingMValue = extractPixelValue(SPACING.M)
       const totalPadding = paddingLeftValue + paddingRightValue + spacingMValue + arrowWidth
       const calculatedWidth = textWidth + totalPadding
 
       // Apply max width if provided
       let maxWidthValue: number | undefined
       if (maxWidth) {
-        const maxWidthStr = maxWidth.replace('px', '').replace('calc(', '').replace(')', '').trim()
-        maxWidthValue = parseInt(maxWidthStr) || undefined
+        maxWidthValue = extractPixelValue(maxWidth)
       }
       
-      const minWidthValue = parseInt(DIMENSION.DROPDOWN_BUTTON_MIN_WIDTH.replace('px', ''))
+      const minWidthValue = extractPixelValue(DIMENSION.DROPDOWN_BUTTON_MIN_WIDTH)
       const finalWidth = maxWidthValue && calculatedWidth > maxWidthValue 
         ? maxWidthValue 
         : Math.max(calculatedWidth, minWidthValue)

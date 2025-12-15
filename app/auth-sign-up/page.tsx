@@ -308,31 +308,21 @@ export default function AuthSignUpPage() {
               checked={acceptedCGU}
               onChange={(e) => setAcceptedCGU(e.target.checked)}
               label={
-                <span style={{
-                  fontSize: FONT_SIZE.M,
-                  fontWeight: FONT_THICKNESS.M,
-                }}>
+                <Text size="M" weight="M" as="span">
                   J'accepte les{' '}
-                  <button
-                    type="button"
+                  <Link
+                    href="#"
                     onClick={(e) => {
                       e.preventDefault()
                       setShowConditionsPopup(true)
                     }}
                     style={{
-                      background: BACKGROUND.NONE,
-                      border: BORDER.NONE,
-                      padding: POSITION.ZERO,
-                      cursor: CURSOR.POINTER,
-                      color: COLOR.PURPLE,
-                      fontSize: FONT_SIZE.M,
-                      fontWeight: FONT_THICKNESS.M,
                       textDecoration: TEXT_DECORATION.UNDERLINE,
                     }}
                   >
                     Conditions Générales d'Utilisation
-                  </button>
-                </span>
+                  </Link>
+                </Text>
               }
             />
             
@@ -340,31 +330,21 @@ export default function AuthSignUpPage() {
               checked={acceptedMentions}
               onChange={(e) => setAcceptedMentions(e.target.checked)}
               label={
-                <span style={{
-                  fontSize: FONT_SIZE.M,
-                  fontWeight: FONT_THICKNESS.M,
-                }}>
+                <Text size="M" weight="M" as="span">
                   J'accepte les{' '}
-                  <button
-                    type="button"
+                  <Link
+                    href="#"
                     onClick={(e) => {
                       e.preventDefault()
                       setShowMentionsPopup(true)
                     }}
                     style={{
-                      background: BACKGROUND.NONE,
-                      border: BORDER.NONE,
-                      padding: POSITION.ZERO,
-                      cursor: CURSOR.POINTER,
-                      color: COLOR.PURPLE,
-                      fontSize: FONT_SIZE.M,
-                      fontWeight: FONT_THICKNESS.M,
                       textDecoration: TEXT_DECORATION.UNDERLINE,
                     }}
                   >
                     Mentions Légales
-                  </button>
-                </span>
+                  </Link>
+                </Text>
               }
             />
           </div>

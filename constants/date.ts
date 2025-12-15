@@ -1,0 +1,11 @@
+export const DATE_OFFSET = {
+  DAYS_ONE: 1,
+  DAYS_THREE: 3,
+  DAYS_FIVE: 5,
+  DAYS_TEN: 10,
+  DAYS_FIFTEEN: 15,
+  DAYS_TWENTY: 20,
+  DAYS_FORTY: 40,
+  DAYS_FIFTY: 50,
+} as const
+

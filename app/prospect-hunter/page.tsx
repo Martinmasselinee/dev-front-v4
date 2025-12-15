@@ -31,6 +31,7 @@ import { NavbarSidebar } from '../../components/NavbarSidebar'
 import { TopBar } from '../../components/TopBar'
 import { HelpButton } from '../../components/HelpButton'
 import { Button } from '../../components/Button'
+import { FilterButton } from '../../components/FilterButton'
 import { Loading } from '../../components/Loading'
 import { TIME } from '../../constants/time'
 
@@ -262,11 +263,11 @@ export default function ProspectHunterPage() {
   // Button should be enabled when all filters are 'all' (default state) OR when any filter has changed
   const isSearchEnabled = useMemo(() => {
     const allDefault = 
-      selectedSectors.length === NUMBER.ONE && selectedSectors[0] === 'all' &&
-      selectedTurnovers.length === NUMBER.ONE && selectedTurnovers[0] === 'all' &&
-      selectedRegions.length === NUMBER.ONE && selectedRegions[0] === 'all' &&
-      selectedDepartments.length === NUMBER.ONE && selectedDepartments[0] === 'all' &&
-      selectedCities.length === NUMBER.ONE && selectedCities[0] === 'all'
+      selectedSectors.length === NUMBER.ONE && selectedSectors[NUMBER.ZERO] === 'all' &&
+      selectedTurnovers.length === NUMBER.ONE && selectedTurnovers[NUMBER.ZERO] === 'all' &&
+      selectedRegions.length === NUMBER.ONE && selectedRegions[NUMBER.ZERO] === 'all' &&
+      selectedDepartments.length === NUMBER.ONE && selectedDepartments[NUMBER.ZERO] === 'all' &&
+      selectedCities.length === NUMBER.ONE && selectedCities[NUMBER.ZERO] === 'all'
     // Enabled when all are 'all' (default) OR when any have changed
     return true
   }, [selectedSectors, selectedTurnovers, selectedRegions, selectedDepartments, selectedCities])
@@ -417,9 +418,9 @@ export default function ProspectHunterPage() {
                   {sectors.map((sector) => {
                     const isSelected = selectedSectors.includes(sector.value)
                     return (
-                      <button
+                      <FilterButton
                         key={sector.value}
-                        type="button"
+                        isSelected={isSelected}
                         onClick={() => handleSectorToggle(sector.value)}
                         onMouseEnter={(e) => {
                           if (!isSelected) {
@@ -431,33 +432,10 @@ export default function ProspectHunterPage() {
                             e.currentTarget.style.borderColor = COLOR.GREY.MEDIUM
                           }
                         }}
-                        style={{
-                          paddingLeft: SPACING.M,
-                          paddingRight: SPACING.M,
-                          paddingTop: `calc(${SPACING.S} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY_FIVE})`,
-                          paddingBottom: `calc(${SPACING.S} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY_FIVE})`,
-                          width: WIDTH.AUTO,
-                        backgroundColor: isSelected ? COLOR.BLACK : COLOR.WHITE,
-                        border: `${BORDER_WIDTH.THIN} solid ${isSelected ? COLOR.BLACK : COLOR.GREY.MEDIUM}`,
-                        borderRadius: BORDER_RADIUS.M,
-                        cursor: CURSOR.POINTER,
-                        transition: `background-color ${TRANSITION.FAST_EASE}, border-color ${TRANSITION.FAST_EASE}, color ${TRANSITION.FAST_EASE}`,
-                        outline: OUTLINE.NONE,
-                        textAlign: TEXT_ALIGN.LEFT,
-                      }}
-                    >
-                      <Text
-                        size="M"
-                        weight={isSelected ? 'L' : 'M'}
-                        style={{
-                          color: isSelected ? COLOR.WHITE : COLOR.BLACK,
-                          transition: `color ${TRANSITION.FAST_EASE}`,
-                        }}
                       >
                         {sector.label}
-                      </Text>
-                    </button>
-                  )
+                      </FilterButton>
+                    )
                   })}
                 </div>
               </div>
@@ -516,9 +494,9 @@ export default function ProspectHunterPage() {
                   {turnovers.map((turnover) => {
                     const isSelected = selectedTurnovers.includes(turnover.value)
                     return (
-                      <button
+                      <FilterButton
                         key={turnover.value}
-                        type="button"
+                        isSelected={isSelected}
                         onClick={() => handleTurnoverToggle(turnover.value)}
                         onMouseEnter={(e) => {
                           if (!isSelected) {
@@ -530,33 +508,10 @@ export default function ProspectHunterPage() {
                             e.currentTarget.style.borderColor = COLOR.GREY.MEDIUM
                           }
                         }}
-                        style={{
-                          paddingLeft: SPACING.M,
-                          paddingRight: SPACING.M,
-                          paddingTop: `calc(${SPACING.S} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY_FIVE})`,
-                          paddingBottom: `calc(${SPACING.S} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY_FIVE})`,
-                          width: WIDTH.AUTO,
-                        backgroundColor: isSelected ? COLOR.BLACK : COLOR.WHITE,
-                        border: `${BORDER_WIDTH.THIN} solid ${isSelected ? COLOR.BLACK : COLOR.GREY.MEDIUM}`,
-                        borderRadius: BORDER_RADIUS.M,
-                        cursor: CURSOR.POINTER,
-                        transition: `background-color ${TRANSITION.FAST_EASE}, border-color ${TRANSITION.FAST_EASE}, color ${TRANSITION.FAST_EASE}`,
-                        outline: OUTLINE.NONE,
-                        textAlign: TEXT_ALIGN.LEFT,
-                      }}
-                    >
-                      <Text
-                        size="M"
-                        weight={isSelected ? 'L' : 'M'}
-                        style={{
-                          color: isSelected ? COLOR.WHITE : COLOR.BLACK,
-                          transition: `color ${TRANSITION.FAST_EASE}`,
-                        }}
                       >
                         {turnover.label}
-                      </Text>
-                    </button>
-                  )
+                      </FilterButton>
+                    )
                   })}
                 </div>
               </div>
@@ -615,9 +570,9 @@ export default function ProspectHunterPage() {
                   {regions.map((region) => {
                     const isSelected = selectedRegions.includes(region.value)
                     return (
-                      <button
+                      <FilterButton
                         key={region.value}
-                        type="button"
+                        isSelected={isSelected}
                         onClick={() => handleRegionToggle(region.value)}
                         onMouseEnter={(e) => {
                           if (!isSelected) {
@@ -629,33 +584,10 @@ export default function ProspectHunterPage() {
                             e.currentTarget.style.borderColor = COLOR.GREY.MEDIUM
                           }
                         }}
-                        style={{
-                          paddingLeft: SPACING.M,
-                          paddingRight: SPACING.M,
-                          paddingTop: `calc(${SPACING.S} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY_FIVE})`,
-                          paddingBottom: `calc(${SPACING.S} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY_FIVE})`,
-                          width: WIDTH.AUTO,
-                        backgroundColor: isSelected ? COLOR.BLACK : COLOR.WHITE,
-                        border: `${BORDER_WIDTH.THIN} solid ${isSelected ? COLOR.BLACK : COLOR.GREY.MEDIUM}`,
-                        borderRadius: BORDER_RADIUS.M,
-                        cursor: CURSOR.POINTER,
-                        transition: `background-color ${TRANSITION.FAST_EASE}, border-color ${TRANSITION.FAST_EASE}, color ${TRANSITION.FAST_EASE}`,
-                        outline: OUTLINE.NONE,
-                        textAlign: TEXT_ALIGN.LEFT,
-                      }}
-                    >
-                      <Text
-                        size="M"
-                        weight={isSelected ? 'L' : 'M'}
-                        style={{
-                          color: isSelected ? COLOR.WHITE : COLOR.BLACK,
-                          transition: `color ${TRANSITION.FAST_EASE}`,
-                        }}
                       >
                         {region.label}
-                      </Text>
-                    </button>
-                  )
+                      </FilterButton>
+                    )
                   })}
                 </div>
               </div>
@@ -714,9 +646,9 @@ export default function ProspectHunterPage() {
                   {departments.map((department) => {
                     const isSelected = selectedDepartments.includes(department.value)
                     return (
-                      <button
+                      <FilterButton
                         key={department.value}
-                        type="button"
+                        isSelected={isSelected}
                         onClick={() => handleDepartmentToggle(department.value)}
                         onMouseEnter={(e) => {
                           if (!isSelected) {
@@ -728,33 +660,10 @@ export default function ProspectHunterPage() {
                             e.currentTarget.style.borderColor = COLOR.GREY.MEDIUM
                           }
                         }}
-                        style={{
-                          paddingLeft: SPACING.M,
-                          paddingRight: SPACING.M,
-                          paddingTop: `calc(${SPACING.S} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY_FIVE})`,
-                          paddingBottom: `calc(${SPACING.S} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY_FIVE})`,
-                          width: WIDTH.AUTO,
-                        backgroundColor: isSelected ? COLOR.BLACK : COLOR.WHITE,
-                        border: `${BORDER_WIDTH.THIN} solid ${isSelected ? COLOR.BLACK : COLOR.GREY.MEDIUM}`,
-                        borderRadius: BORDER_RADIUS.M,
-                        cursor: CURSOR.POINTER,
-                        transition: `background-color ${TRANSITION.FAST_EASE}, border-color ${TRANSITION.FAST_EASE}, color ${TRANSITION.FAST_EASE}`,
-                        outline: OUTLINE.NONE,
-                        textAlign: TEXT_ALIGN.LEFT,
-                      }}
-                    >
-                      <Text
-                        size="M"
-                        weight={isSelected ? 'L' : 'M'}
-                        style={{
-                          color: isSelected ? COLOR.WHITE : COLOR.BLACK,
-                          transition: `color ${TRANSITION.FAST_EASE}`,
-                        }}
                       >
                         {department.label}
-                      </Text>
-                    </button>
-                  )
+                      </FilterButton>
+                    )
                   })}
                 </div>
               </div>
@@ -814,9 +723,9 @@ export default function ProspectHunterPage() {
                     {filteredCities.map((city) => {
                       const isSelected = selectedCities.includes(city.value)
                       return (
-                        <button
+                        <FilterButton
                           key={city.value}
-                          type="button"
+                          isSelected={isSelected}
                           onClick={() => handleCityToggle(city.value)}
                           onMouseEnter={(e) => {
                             if (!isSelected) {
@@ -828,33 +737,10 @@ export default function ProspectHunterPage() {
                               e.currentTarget.style.borderColor = COLOR.GREY.MEDIUM
                             }
                           }}
-                          style={{
-                            paddingLeft: SPACING.M,
-                            paddingRight: SPACING.M,
-                            paddingTop: `calc(${SPACING.S} * (${MULTIPLIER.HEIGHT_EIGHTY} + (${MULTIPLIER.SIDEBAR_WIDTH_NINETY} - ${MULTIPLIER.HEIGHT_EIGHTY}) / ${MULTIPLIER.ICON_SIZE_DOUBLE}))`,
-                            paddingBottom: `calc(${SPACING.S} * (${MULTIPLIER.HEIGHT_EIGHTY} + (${MULTIPLIER.SIDEBAR_WIDTH_NINETY} - ${MULTIPLIER.HEIGHT_EIGHTY}) / ${MULTIPLIER.ICON_SIZE_DOUBLE}))`,
-                            width: WIDTH.AUTO,
-                          backgroundColor: isSelected ? COLOR.BLACK : COLOR.WHITE,
-                          border: `${BORDER_WIDTH.THIN} solid ${isSelected ? COLOR.BLACK : COLOR.GREY.MEDIUM}`,
-                          borderRadius: BORDER_RADIUS.M,
-                          cursor: CURSOR.POINTER,
-                          transition: `background-color ${TRANSITION.FAST_EASE}, border-color ${TRANSITION.FAST_EASE}, color ${TRANSITION.FAST_EASE}`,
-                          outline: OUTLINE.NONE,
-                          textAlign: TEXT_ALIGN.LEFT,
-                        }}
-                      >
-                        <Text
-                          size="M"
-                          weight={isSelected ? 'L' : 'M'}
-                          style={{
-                            color: isSelected ? COLOR.WHITE : COLOR.BLACK,
-                            transition: `color ${TRANSITION.FAST_EASE}`,
-                          }}
                         >
                           {city.label}
-                        </Text>
-                      </button>
-                    )
+                        </FilterButton>
+                      )
                     })}
                   </div>
                 </div>

@@ -10,7 +10,7 @@ import { ArticleCard } from './components/ArticleCard'
 import { ArticlePopup, ContentBlock } from './components/ArticlePopup'
 import { Dot } from '../../components/Dot'
 import { Text } from '../../components/Text'
-import { LAYOUT } from '../../constants/layout'
+import { LAYOUT, CALCULATION } from '../../constants/layout'
 import { SPACING } from '../../constants/spacing'
 import { POSITION_TYPE, POSITION } from '../../constants/position'
 import { ICON_SIZE } from '../../constants/iconSize'
@@ -32,6 +32,7 @@ import { TEXT_ALIGN } from '../../constants/text'
 import { MULTIPLIER } from '../../constants/multiplier'
 import { STRING } from '../../constants/string'
 import { NUMBER } from '../../constants/number'
+import { DATE_OFFSET } from '../../constants/date'
 import { INPUT_HEIGHT } from '../../constants/input'
 import { WIDTH } from '../../constants/width'
 import { DIMENSION } from '../../constants/dimension'
@@ -57,8 +58,8 @@ export default function RadarAIPage() {
 
   // Helper function to format date as DD/MM/YYYY
   const formatDate = (date: Date): string => {
-    const day = String(date.getDate()).padStart(2, '0')
-    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const day = String(date.getDate()).padStart(2, STRING.ZERO)
+    const month = String(date.getMonth() + 1).padStart(2, STRING.ZERO)
     const year = date.getFullYear()
     return `${day}/${month}/${year}`
   }
@@ -67,21 +68,21 @@ export default function RadarAIPage() {
   const now = new Date()
   const today = new Date(now)
   const yesterday = new Date(now)
-  yesterday.setDate(yesterday.getDate() - 1)
+  yesterday.setDate(yesterday.getDate() - DATE_OFFSET.DAYS_ONE)
   const threeDaysAgo = new Date(now)
-  threeDaysAgo.setDate(threeDaysAgo.getDate() - 3)
+  threeDaysAgo.setDate(threeDaysAgo.getDate() - DATE_OFFSET.DAYS_THREE)
   const fiveDaysAgo = new Date(now)
-  fiveDaysAgo.setDate(fiveDaysAgo.getDate() - 5)
+  fiveDaysAgo.setDate(fiveDaysAgo.getDate() - DATE_OFFSET.DAYS_FIVE)
   const tenDaysAgo = new Date(now)
-  tenDaysAgo.setDate(tenDaysAgo.getDate() - 10)
+  tenDaysAgo.setDate(tenDaysAgo.getDate() - DATE_OFFSET.DAYS_TEN)
   const fifteenDaysAgo = new Date(now)
-  fifteenDaysAgo.setDate(fifteenDaysAgo.getDate() - 15)
+  fifteenDaysAgo.setDate(fifteenDaysAgo.getDate() - DATE_OFFSET.DAYS_FIFTEEN)
   const twentyDaysAgo = new Date(now)
-  twentyDaysAgo.setDate(twentyDaysAgo.getDate() - 20)
+  twentyDaysAgo.setDate(twentyDaysAgo.getDate() - DATE_OFFSET.DAYS_TWENTY)
   const fortyDaysAgo = new Date(now)
-  fortyDaysAgo.setDate(fortyDaysAgo.getDate() - 40)
+  fortyDaysAgo.setDate(fortyDaysAgo.getDate() - DATE_OFFSET.DAYS_FORTY)
   const fiftyDaysAgo = new Date(now)
-  fiftyDaysAgo.setDate(fiftyDaysAgo.getDate() - 50)
+  fiftyDaysAgo.setDate(fiftyDaysAgo.getDate() - DATE_OFFSET.DAYS_FIFTY)
 
   // Mock content for all articles (same content for all)
   const mockContent: ContentBlock[] = [
@@ -688,8 +689,8 @@ export default function RadarAIPage() {
                               <div
                                 key={index}
                                 style={{
-                                  flex: `0 0 calc((100% - ${SPACING.L} * 2) / 3)`,
-                                  width: `calc((100% - ${SPACING.L} * 2) / 3)`,
+                                  flex: `0 0 calc((100% - ${SPACING.L} * ${CALCULATION.GRID_GAP_MULTIPLIER}) / ${CALCULATION.GRID_COLUMN_COUNT})`,
+                                  width: `calc((100% - ${SPACING.L} * ${CALCULATION.GRID_GAP_MULTIPLIER}) / ${CALCULATION.GRID_COLUMN_COUNT})`,
                                 }}
                               >
                                 <ArticleCard

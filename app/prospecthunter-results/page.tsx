@@ -6,7 +6,7 @@ import { Search, Building2 } from 'lucide-react'
 import { Dot } from '../../components/Dot'
 import { Text } from '../../components/Text'
 import { Container } from '../../components/Container'
-import { LAYOUT } from '../../constants/layout'
+import { LAYOUT, CALCULATION } from '../../constants/layout'
 import { SPACING } from '../../constants/spacing'
 import { POSITION_TYPE } from '../../constants/position'
 import { DISPLAY } from '../../constants/display'
@@ -318,8 +318,8 @@ export default function ProspectHunterResultsPage() {
                 <div
                   key={index}
                   style={{
-                    flex: `0 0 calc((100% - ${SPACING.L} * 2) / 3)`,
-                    width: `calc((100% - ${SPACING.L} * 2) / 3)`,
+                    flex: `0 0 calc((100% - ${SPACING.L} * ${CALCULATION.GRID_GAP_MULTIPLIER}) / ${CALCULATION.GRID_COLUMN_COUNT})`,
+                    width: `calc((100% - ${SPACING.L} * ${CALCULATION.GRID_GAP_MULTIPLIER}) / ${CALCULATION.GRID_COLUMN_COUNT})`,
                   }}
                 >
                   <CompanyCard
