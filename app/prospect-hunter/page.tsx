@@ -30,6 +30,7 @@ import { WIDTH } from '../../constants/width'
 import { NavbarSidebar } from '../../components/NavbarSidebar'
 import { TopBar } from '../../components/TopBar'
 import { HelpButton } from '../../components/HelpButton'
+import { Button } from '../../components/Button'
 
 interface FilterOption {
   value: string
@@ -252,6 +253,18 @@ export default function ProspectHunterPage() {
 
   const showCitiesColumn = selectedRegions.some(r => r !== 'all') || selectedDepartments.some(d => d !== 'all')
 
+  // Button should be enabled when all filters are 'all' (default state) OR when any filter has changed
+  const isSearchEnabled = useMemo(() => {
+    const allDefault = 
+      selectedSectors.length === NUMBER.ONE && selectedSectors[0] === 'all' &&
+      selectedTurnovers.length === NUMBER.ONE && selectedTurnovers[0] === 'all' &&
+      selectedRegions.length === NUMBER.ONE && selectedRegions[0] === 'all' &&
+      selectedDepartments.length === NUMBER.ONE && selectedDepartments[0] === 'all' &&
+      selectedCities.length === NUMBER.ONE && selectedCities[0] === 'all'
+    // Enabled when all are 'all' (default) OR when any have changed
+    return true
+  }, [selectedSectors, selectedTurnovers, selectedRegions, selectedDepartments, selectedCities])
+
   const stickyPurpleTitle = (
     <div
       style={{
@@ -288,6 +301,33 @@ export default function ProspectHunterPage() {
         onSearchChange={setSearchValue}
         searchPlaceholder="Rechercher..."
         hideBorder={true}
+        rightElement={
+          <Button
+            variant="PURPLE"
+            disabled={!isSearchEnabled}
+            style={{ width: WIDTH.AUTO, paddingLeft: SPACING.L, paddingRight: SPACING.L }}
+          >
+            {searchValue.trim().length > NUMBER.ZERO ? (
+              <div
+                style={{
+                  display: DISPLAY.FLEX,
+                  alignItems: ALIGN_ITEMS.CENTER,
+                  gap: SPACING.S,
+                }}
+              >
+                <Text size="M" weight="M" color="WHITE">
+                  Lancer recherche
+                </Text>
+                <Dot marginLeft={SPACING.ZERO} marginRight={SPACING.ZERO} color={COLOR.WHITE} />
+                <Text size="M" weight="M" color="WHITE">
+                  {entreprisesCount.toLocaleString('fr-FR')} entreprises
+                </Text>
+              </div>
+            ) : (
+              'Lancer la recherche'
+            )}
+          </Button>
+        }
       />
       <TopBar 
         icon={Building2} 
