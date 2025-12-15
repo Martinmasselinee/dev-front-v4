@@ -420,7 +420,7 @@ export default function SmartSearchResultsPage() {
       )}
       
       {viewType === 'cards' ? (
-        <Container variant="fullWidth">
+      <Container variant="fullWidth">
           <div style={{ marginTop: SPACING.XL }}>
             <div style={{ width: WIDTH.FULL }}>
               <div
@@ -528,13 +528,13 @@ export default function SmartSearchResultsPage() {
             showTopBorder={false}
           />
           {hasSearchResults && hasMoreResults && (
-            <div
-              style={{
+        <div
+          style={{
                 display: DISPLAY.FLEX,
                 alignItems: ALIGN_ITEMS.CENTER,
                 justifyContent: JUSTIFY_CONTENT.CENTER,
-                paddingTop: SPACING.XL,
-                paddingBottom: SPACING.XL,
+            paddingTop: SPACING.XL,
+            paddingBottom: SPACING.XL,
               }}
             >
               <Button
@@ -546,11 +546,11 @@ export default function SmartSearchResultsPage() {
                   width: WIDTH.AUTO,
                   paddingLeft: SPACING.L,
                   paddingRight: SPACING.L,
-                }}
-              >
+          }}
+        >
                 Afficher 5 de plus
               </Button>
-            </div>
+        </div>
           )}
         </>
       )}

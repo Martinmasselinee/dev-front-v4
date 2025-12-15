@@ -30,13 +30,15 @@ interface TableProps<T> {
   columns: ColumnDef<T>[]
   getRowBackgroundColor?: (row: Row<T>, index: number) => string
   showTopBorder?: boolean
+  stickyTopOffset?: string
 }
 
 export function Table<T>({ 
   data, 
   columns, 
   getRowBackgroundColor,
-  showTopBorder = false
+  showTopBorder = false,
+  stickyTopOffset
 }: TableProps<T>) {
   const [hoveredRowIndex, setHoveredRowIndex] = useState<number | null>(null)
   
@@ -72,7 +74,7 @@ export function Table<T>({
             display: DISPLAY.FLEX,
             backgroundColor: COLOR.GREY.LIGHT,
             position: POSITION_TYPE.STICKY,
-            top: POSITION.ZERO,
+            top: stickyTopOffset || POSITION.ZERO,
             zIndex: Z_INDEX.COMPONENT_OVERLAY,
             width: WIDTH.FULL,
             minWidth: 'max-content',

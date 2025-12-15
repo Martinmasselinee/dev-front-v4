@@ -46,6 +46,7 @@ import { lightenColor } from '../../lib/colorUtils'
 import { BUTTON_HEIGHT } from '../../constants/button'
 import { INPUT_HEIGHT } from '../../constants/input'
 import { POSITION } from '../../constants/position'
+import { Z_INDEX } from '../../constants/zIndex'
 import { StatusDropdown } from './components/StatusDropdown'
 import { useRef, useMemo } from 'react'
 
@@ -542,8 +543,11 @@ export default function ProspectHunterResultsPage() {
           borderBottom: `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.LIGHT_MEDIUM}`,
           paddingLeft: SPACING.L,
           paddingRight: SPACING.L,
-          paddingTop: SPACING.S,
-          paddingBottom: SPACING.S,
+          paddingTop: SPACING.M,
+          paddingBottom: SPACING.M,
+          position: POSITION_TYPE.STICKY,
+          top: `calc((${SPACING.XXXL} + ${SPACING.M}) + ((${SPACING.XXXL} + ${SPACING.M}) * ${MULTIPLIER.STICKY_BAR_HEIGHT}))`,
+          zIndex: Z_INDEX.NAVBAR_MINUS_ONE,
         }}
       >
         <div
