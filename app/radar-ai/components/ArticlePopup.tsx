@@ -24,7 +24,7 @@ export interface RelatedArticle {
 }
 
 export interface ContentBlock {
-  type: 'paragraph' | 'subtitle' | 'citation' | 'bulletPoints'
+  type: 'paragraph' | 'subtitle' | 'citation' | 'bulletPoints' | 'boldParagraph'
   content: string | string[]
 }
 
@@ -132,6 +132,14 @@ export const ArticlePopup = ({
               if (block.type === 'paragraph') {
                 return (
                   <Text key={index} size="M" weight="M" color="BLACK" style={{ lineHeight: LINE_HEIGHT.TIGHT }}>
+                    {typeof block.content === 'string' ? block.content : block.content.join(' ')}
+                  </Text>
+                )
+              }
+
+              if (block.type === 'boldParagraph') {
+                return (
+                  <Text key={index} size="M" weight="XL" color="BLACK" style={{ lineHeight: LINE_HEIGHT.TIGHT }}>
                     {typeof block.content === 'string' ? block.content : block.content.join(' ')}
                   </Text>
                 )

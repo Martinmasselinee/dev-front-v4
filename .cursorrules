@@ -290,6 +290,10 @@ This is a front-end rebuild of the Dataxx platform - a sponsoring management pla
 - **ALL text content MUST be in French**
 - All labels, buttons, placeholders, error messages, and UI text must be in French
 - This applies to all components, pages, and user-facing elements
+- **French pluralization rules**: When displaying counts with nouns, use singular form for 0 and 1, plural for 2 or more
+  - ✅ `{count <= 1 ? 'article disponible' : 'articles disponibles'}`
+  - ❌ `{count} articles disponibles` (always plural)
+  - Always check count values and adjust text accordingly
 
 #### Typography
 - **Font**: Space Grotesk (loaded from Google Fonts)

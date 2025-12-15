@@ -31,6 +31,7 @@ import { FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT, FLEX, FLEX_WRAP } from '.
 import { TEXT_ALIGN } from '../../constants/text'
 import { MULTIPLIER } from '../../constants/multiplier'
 import { STRING } from '../../constants/string'
+import { NUMBER } from '../../constants/number'
 import { INPUT_HEIGHT } from '../../constants/input'
 import { WIDTH } from '../../constants/width'
 import { DIMENSION } from '../../constants/dimension'
@@ -87,6 +88,10 @@ export default function RadarAIPage() {
     {
       type: 'paragraph',
       content: 'Un nouveau partenariat majeur vient d\'être annoncé dans le monde du sponsoring sportif, marquant une étape importante pour les deux parties impliquées. Cette collaboration stratégique représente un investissement significatif dans le domaine du sport professionnel et ouvre de nouvelles perspectives pour les deux entités.',
+    },
+    {
+      type: 'boldParagraph',
+      content: 'Cette annonce marque une nouvelle ère pour le sponsoring sportif en France, avec des implications significatives pour l\'ensemble du secteur.',
     },
     {
       type: 'subtitle',
@@ -637,7 +642,7 @@ export default function RadarAIPage() {
                             </Text>
                             <Dot marginLeft={SPACING.XS} marginRight={SPACING.XS} color={COLOR.GREY.DARK} />
                             <Text size="M" weight="M" color="GREY_DARK">
-                              {groupArticles.length} articles disponibles
+                              {groupArticles.length} {groupArticles.length <= NUMBER.ONE ? 'article disponible' : 'articles disponibles'}
                             </Text>
                           </div>
 
