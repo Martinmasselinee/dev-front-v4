@@ -29,7 +29,7 @@ export const Card = ({ children, className = '', style, variant = 'default', ...
 
   const getBorder = () => {
     if (isDashed) return `${BORDER_WIDTH.THIN} dashed ${COLOR.PURPLE}`
-    if (isInputContainer) return `calc(${BORDER_WIDTH.THIN} + ${SPACING.XS} / 8) solid ${COLOR.PURPLE}`
+    if (isInputContainer) return `${BORDER_WIDTH.MEDIUM} solid ${COLOR.GREY.MEDIUM}`
     return `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.MEDIUM}`
   }
 
@@ -44,17 +44,6 @@ export const Card = ({ children, className = '', style, variant = 'default', ...
 
   const defaultPadding = isInputContainer ? undefined : SPACING.L
   
-  const outerStrokeSpacing = `calc(${SPACING.XS} / 2)`
-  const outerStrokeThickness = isInputContainer 
-    ? `calc(${BORDER_WIDTH.THIN} + ${SPACING.XS} / 8)`
-    : undefined
-  const lighterPurple = isInputContainer 
-    ? lightenColor(COLOR.PURPLE, MULTIPLIER.COLOR_LIGHTEN_PERCENT)
-    : undefined
-  const lighterPurpleRgba50 = isInputContainer 
-    ? hexToRgba(lighterPurple!, OPACITY.OVERLAY)
-    : undefined
-  
   const isDefault = variant === 'default'
   
   return (
@@ -63,8 +52,7 @@ export const Card = ({ children, className = '', style, variant = 'default', ...
         <style dangerouslySetInnerHTML={{
           __html: `
             div[data-input-container]:focus-within {
-              outline: ${outerStrokeThickness} solid ${lighterPurpleRgba50} !important;
-              outline-offset: ${outerStrokeSpacing} !important;
+              border-color: ${COLOR.PURPLE} !important;
             }
           `
         }} />
@@ -88,7 +76,7 @@ export const Card = ({ children, className = '', style, variant = 'default', ...
           border: getBorder(),
           borderRadius: getBorderRadius(),
           animation: getAnimation(),
-          transition: isDefault ? `border-color ${TRANSITION.FAST_EASE}` : undefined,
+          transition: isDefault || isInputContainer ? `border-color ${TRANSITION.FAST_EASE}` : undefined,
           cursor: isDefault && props.onClick ? CURSOR.POINTER : undefined,
           ...style,
         }}

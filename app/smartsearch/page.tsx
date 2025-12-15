@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Sparkles, Clock, Wand2 } from 'lucide-react'
+import { Sparkles, Clock, Wand2, Filter } from 'lucide-react'
 import { Dot } from '../../components/Dot'
 import { Text } from '../../components/Text'
 import { LAYOUT } from '../../constants/layout'
@@ -29,7 +29,11 @@ import { Heading } from '../../components/Heading'
 import { Bubble } from '../../components/Bubble'
 import { Container } from '../../components/Container'
 import { Spacer } from '../../components/Spacer'
+import { Popup } from '../../components/Popup'
+import { Checkbox } from '../../components/Checkbox'
+import { UserInitial } from '../../components/UserInitial'
 import { INPUT_HEIGHT, INPUT_PADDING } from '../../constants/input'
+import { BUTTON_HEIGHT } from '../../constants/button'
 import { LINE_HEIGHT, FONT_SIZE, FONT_THICKNESS } from '../../constants/font'
 import { OUTLINE } from '../../constants/outline'
 import { Z_INDEX } from '../../constants/zIndex'
@@ -43,6 +47,7 @@ interface SearchHistoryItem {
   prompt: string
   faviconUrls: string[]
   aiAnswer: string
+  user: string
 }
 
 export default function SmartSearchPage() {
@@ -51,7 +56,28 @@ export default function SmartSearchPage() {
   const [searchValue, setSearchValue] = useState('')
   const [placeholderIndex, setPlaceholderIndex] = useState<number>(NUMBER.ZERO)
   const [visibleCardsCount, setVisibleCardsCount] = useState(NUMBER.ONE * 5)
+  const [isFilterPopupOpen, setIsFilterPopupOpen] = useState(false)
+  const [excludeSponsors, setExcludeSponsors] = useState(false)
+  const [initialExcludeSponsors, setInitialExcludeSponsors] = useState(false)
+  
+  // Reset initial values when popup opens
+  useEffect(() => {
+    if (isFilterPopupOpen) {
+      setInitialExcludeSponsors(excludeSponsors)
+    }
+  }, [isFilterPopupOpen])
+  
+  // Check if anything has been changed
+  const hasFilterChanges = excludeSponsors !== initialExcludeSponsors
+  
+  const handleConfirmFilters = () => {
+    // Save the filter values
+    setInitialExcludeSponsors(excludeSponsors)
+    setIsFilterPopupOpen(false)
+  }
   const veryLightGrey = lightenColor(COLOR.GREY.LIGHT, MULTIPLIER.COLOR_LIGHTEN_FORTY)
+  const minSearchLength = NUMBER.ONE + NUMBER.ONE + NUMBER.ONE
+  const isSearchValid = searchValue.trim().length > minSearchLength
 
   const placeholderExamples = [
     'Trouve moi des entreprises qui ont investit dans le Tour de France 2024',
@@ -102,6 +128,7 @@ export default function SmartSearchPage() {
         'https://www.linkedin.com/favicon.ico',
       ],
       aiAnswer: 'J\'ai trouvé plusieurs entreprises de technologie qui travaillent dans le secteur du sport. Ces entreprises proposent des solutions innovantes pour améliorer les performances sportives, la gestion des équipes et l\'expérience des fans.',
+      user: 'Martin Masseline',
     },
     {
       date: new Date(2024, 0, 14, 10, 15),
@@ -112,6 +139,7 @@ export default function SmartSearchPage() {
         'https://www.om.net/favicon.ico',
       ],
       aiAnswer: 'Les principaux décideurs des clubs de football français se concentrent sur le développement stratégique, la gestion des joueurs et les partenariats commerciaux. Ces dirigeants cherchent constamment de nouveaux sponsors et opportunités de croissance.',
+      user: 'Sophie Dubois',
     },
     {
       date: new Date(2024, 0, 13, 16, 45),
@@ -121,6 +149,7 @@ export default function SmartSearchPage() {
         'https://www.discord.com/favicon.ico',
       ],
       aiAnswer: 'Le secteur de l\'esport connaît une croissance exponentielle avec de nombreuses startups innovantes. Ces entreprises développent des plateformes de streaming, des outils de gestion d\'équipes et des solutions de monétisation pour les joueurs professionnels.',
+      user: 'Thomas Bernard',
     },
     {
       date: new Date(2024, 0, 12, 9, 20),
@@ -131,6 +160,7 @@ export default function SmartSearchPage() {
         'https://www.puma.com/favicon.ico',
       ],
       aiAnswer: 'Plusieurs grandes marques de sportswear sont partenaires officiels des Jeux Olympiques. Ces entreprises investissent massivement dans le sponsoring d\'athlètes et d\'événements sportifs majeurs pour renforcer leur image de marque.',
+      user: 'Marie Leclerc',
     },
     {
       date: new Date(2024, 0, 11, 15, 10),
@@ -140,6 +170,7 @@ export default function SmartSearchPage() {
         'https://www.lcl.fr/favicon.ico',
       ],
       aiAnswer: 'De nombreuses entreprises françaises sont partenaires du Tour de France, l\'un des événements cyclistes les plus prestigieux au monde. Ces sponsors bénéficient d\'une visibilité exceptionnelle pendant la compétition.',
+      user: 'Pierre Martin',
     },
     {
       date: new Date(2024, 0, 10, 11, 30),
@@ -149,6 +180,7 @@ export default function SmartSearchPage() {
         'https://www.olympics.com/favicon.ico',
       ],
       aiAnswer: 'Les décideurs des fédérations sportives internationales jouent un rôle crucial dans la gouvernance du sport mondial. Ils sont responsables de la gestion des compétitions, des règles et des partenariats stratégiques.',
+      user: 'Julie Rousseau',
     },
     {
       date: new Date(2024, 0, 9, 14, 45),
@@ -158,6 +190,7 @@ export default function SmartSearchPage() {
         'https://www.monsterenergy.com/favicon.ico',
       ],
       aiAnswer: 'Les marques de boissons énergisantes sont très actives dans le sponsoring sportif, notamment dans les sports extrêmes et les compétitions automobiles. Elles ciblent un public jeune et dynamique.',
+      user: 'Antoine Moreau',
     },
     {
       date: new Date(2024, 0, 8, 16, 20),
@@ -168,6 +201,7 @@ export default function SmartSearchPage() {
         'https://www.intel.com/favicon.ico',
       ],
       aiAnswer: 'Les entreprises technologiques investissent de plus en plus dans le sponsoring de clubs de football européens. Ces partenariats leur permettent d\'accéder à un public mondial et de promouvoir leurs innovations.',
+      user: 'Camille Petit',
     },
   ]
 
@@ -212,13 +246,29 @@ export default function SmartSearchPage() {
         title="SmartSearch" 
         hideBorder={true}
         rightElement={
-          <Button
-            variant="PURPLE"
-            disabled={true}
-            style={{ width: WIDTH.AUTO, paddingLeft: SPACING.L, paddingRight: SPACING.L }}
+          <div
+            style={{
+              display: DISPLAY.FLEX,
+              alignItems: ALIGN_ITEMS.CENTER,
+              gap: SPACING.M,
+            }}
           >
-            Lancer la recherche
-          </Button>
+            <Button
+              variant="WHITE"
+              onClick={() => setIsFilterPopupOpen(true)}
+              icon={<Filter size={ICON_SIZE.M} />}
+              style={{ width: WIDTH.AUTO, paddingLeft: SPACING.L, paddingRight: SPACING.L }}
+            >
+              Filtre
+            </Button>
+            <Button
+              variant="PURPLE"
+              disabled={!isSearchValid}
+              style={{ width: WIDTH.AUTO, paddingLeft: SPACING.L, paddingRight: SPACING.L }}
+            >
+              Lancer la recherche
+            </Button>
+          </div>
         }
       />
       <TopBar 
@@ -343,8 +393,19 @@ export default function SmartSearchPage() {
                   }}
                   style={{
                     backgroundColor: COLOR.WHITE,
+                    position: POSITION_TYPE.RELATIVE,
                   }}
                 >
+                  <div
+                    style={{
+                      position: POSITION_TYPE.ABSOLUTE,
+                      top: SPACING.M,
+                      right: SPACING.M,
+                      zIndex: Z_INDEX.COMPONENT_OVERLAY,
+                    }}
+                  >
+                    <UserInitial name={item.user} size="L" />
+                  </div>
                   <div
                     style={{
                       display: DISPLAY.FLEX,
@@ -411,6 +472,47 @@ export default function SmartSearchPage() {
           </div>
         </div>
       </Container>
+
+      <Popup
+        isOpen={isFilterPopupOpen}
+        onClose={() => setIsFilterPopupOpen(false)}
+        title="Filtres"
+        icon={Filter}
+        size="small"
+        rightElement={
+          <Button
+            variant="BLACK"
+            disabled={!hasFilterChanges}
+            onClick={handleConfirmFilters}
+            style={{ 
+              width: WIDTH.AUTO, 
+              paddingLeft: SPACING.L, 
+              paddingRight: SPACING.L,
+              height: BUTTON_HEIGHT.OVERLAY,
+            }}
+          >
+            Confirmer
+          </Button>
+        }
+      >
+        <div
+          style={{
+            display: DISPLAY.FLEX,
+            flexDirection: FLEX_DIRECTION.COLUMN,
+            gap: SPACING.L,
+          }}
+        >
+          <Checkbox
+            checked={excludeSponsors}
+            onChange={(e) => setExcludeSponsors(e.target.checked)}
+            label={
+              <Text size="M" weight="M" color="BLACK">
+                Exclure sponsors actuels / anciens
+              </Text>
+            }
+          />
+        </div>
+      </Popup>
     </div>
   )
 }
