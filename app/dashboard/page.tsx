@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { BarChart3, FileText, Search, Building2, Users, MapPin, Mail, Handshake, Activity, Inbox } from 'lucide-react'
+import { BarChart3, FileText, Search, Building2, Users, MapPin, Mail, Handshake, Activity as ActivityIcon, Inbox } from 'lucide-react'
 import { Dot } from '../../components/Dot'
 import { Text } from '../../components/Text'
 import { LAYOUT } from '../../constants/layout'
@@ -25,8 +25,8 @@ import { findOptionOrDefault } from '../../lib/arrayUtils'
 
 export default function DashboardPage() {
   const [searchValue, setSearchValue] = useState('')
-  const [timeRange, setTimeRange] = useState(TIME_RANGE.ALL)
-  const [selectedUserId, setSelectedUserId] = useState(TIME_RANGE.ALL)
+  const [timeRange, setTimeRange] = useState<string>(TIME_RANGE.ALL)
+  const [selectedUserId, setSelectedUserId] = useState<string>(TIME_RANGE.ALL)
   const [showTable, setShowTable] = useState(false)
 
   // Mock activities data - one for each stat icon
@@ -112,11 +112,26 @@ export default function DashboardPage() {
     console.log('View activity:', activityId)
   }
 
-  // Filter activities based on time range and user
+  // Filter activities based on time range, user, and search
   const filteredActivities = activities.filter(activity => {
     // Filter by user
     if (selectedUserId !== TIME_RANGE.ALL && activity.userId !== selectedUserId) {
       return false
+    }
+
+    // Filter by search value (case-insensitive search in user names and activity descriptions)
+    if (searchValue.trim()) {
+      const searchLower = searchValue.toLowerCase().trim()
+      const userFullName = `${activity.userFirstName} ${activity.userLastName}`.toLowerCase()
+      const descriptionLower = activity.description.toLowerCase()
+      
+      // Check if search matches user name or activity description
+      const matchesUser = userFullName.includes(searchLower)
+      const matchesDescription = descriptionLower.includes(searchLower)
+      
+      if (!matchesUser && !matchesDescription) {
+        return false
+      }
     }
 
     // Filter by time range
@@ -190,7 +205,17 @@ export default function DashboardPage() {
     const userLabel = selectedUserOption.label
 
     let title = 'Aucune activité trouvée'
-    let description = `Aucune activité trouvée pour ${timeRangeLabel.toLowerCase()}`
+    let description = `Aucune activité trouvée`
+
+    // Add search context if searching
+    if (searchValue.trim()) {
+      description += ` pour "${searchValue}"`
+    }
+
+    // Add time range context
+    if (timeRange !== TIME_RANGE.ALL) {
+      description += ` pour ${timeRangeLabel.toLowerCase()}`
+    }
 
     // Add user context if a specific user is selected
     if (selectedUserId !== TIME_RANGE.ALL) {
@@ -255,21 +280,21 @@ export default function DashboardPage() {
       />
       <StatsBar stats={stats} />
       <TopBar 
-        icon={Activity} 
+        icon={ActivityIcon} 
         title=""
         variant="stickyPurple"
         additionalText={stickyPurpleTitle}
         dropdownOptions={dropdownOptions}
         dropdownValue={timeRange}
-        onDropdownChange={setTimeRange}
+        onDropdownChange={(value) => setTimeRange(value)}
         secondDropdownOptions={userDropdownOptions}
         secondDropdownValue={selectedUserId}
-        onSecondDropdownChange={setSelectedUserId}
+        onSecondDropdownChange={(value) => setSelectedUserId(value)}
         stickyTopOffset={`calc((${SPACING.XXXL} + ${SPACING.M}) + ((${SPACING.XXXL} + ${SPACING.M}) * ${MULTIPLIER.STATS_BAR_HEIGHT}))`}
       />
       <HelpButton />
       
-      {showTable ? (
+      {showTable || searchValue.trim() ? (
         filteredActivities.length > 0 ? (
           <ActivityTable
             activities={filteredActivities}
