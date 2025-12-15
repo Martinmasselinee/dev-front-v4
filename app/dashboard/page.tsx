@@ -283,11 +283,11 @@ export default function DashboardPage() {
           />
         )
       ) : (
-        <EmptyState
-          icon={Inbox}
-          title="Aucune activité récente"
-          description="Vos activités récentes apparaîtront ici"
-        />
+      <EmptyState
+        icon={Inbox}
+        title="Aucune activité récente"
+        description="Vos activités récentes apparaîtront ici"
+      />
       )}
     </div>
   )

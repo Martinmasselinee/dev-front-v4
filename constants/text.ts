@@ -25,6 +25,7 @@ export const WHITE_SPACE = {
   NOWRAP: 'nowrap',
   NORMAL: 'normal',
   PRE: 'pre',
+  PRE_LINE: 'pre-line',
 } as const
 
 export const LETTER_SPACING = {

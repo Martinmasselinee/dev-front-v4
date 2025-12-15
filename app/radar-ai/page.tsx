@@ -3,6 +3,11 @@
 import { useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Users, Mail, AlertTriangle, Sparkles, ScanLine, Inbox, FileText, TrendingUp, Building2, Tag, Zap, Award, DollarSign, Youtube, Shirt, Plus } from 'lucide-react'
+import { Card } from '../../components/Card'
+import { Heading } from '../../components/Heading'
+import { Container } from '../../components/Container'
+import { ArticleCard } from './components/ArticleCard'
+import { ArticlePopup } from './components/ArticlePopup'
 import { Dot } from '../../components/Dot'
 import { Text } from '../../components/Text'
 import { LAYOUT } from '../../constants/layout'
@@ -15,7 +20,6 @@ import { HelpButton } from '../../components/HelpButton'
 import { Popup } from '../../components/Popup'
 import { Input } from '../../components/Input'
 import { Button } from '../../components/Button'
-import { Card } from '../../components/Card'
 import { EmptyState } from '../../components/EmptyState'
 import { UserInitial } from '../../components/UserInitial'
 import { DropdownButton } from '../../components/DropdownButton'
@@ -23,7 +27,7 @@ import { RoleChangeConfirmPopup } from '../../app/admin/components/RoleChangeCon
 import { COLOR } from '../../constants/color'
 import { BORDER_WIDTH } from '../../constants/border'
 import { DISPLAY } from '../../constants/display'
-import { FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT, FLEX } from '../../constants/flex'
+import { FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT, FLEX, FLEX_WRAP } from '../../constants/flex'
 import { TEXT_ALIGN } from '../../constants/text'
 import { MULTIPLIER } from '../../constants/multiplier'
 import { STRING } from '../../constants/string'
@@ -44,10 +48,27 @@ export default function RadarAIPage() {
   const [showRoleChangeConfirm, setShowRoleChangeConfirm] = useState(false)
   const [userToChangeRole, setUserToChangeRole] = useState<{ email: string; newRole: string } | null>(null)
   const [searchValue, setSearchValue] = useState('')
-  const [timeRange, setTimeRange] = useState(TIME_RANGE.ALL)
-  const [articleType, setArticleType] = useState('all')
+  const [timeRange, setTimeRange] = useState<string>(TIME_RANGE.ALL)
+  const [articleType, setArticleType] = useState<string>('all')
+  const [showSummaryCard, setShowSummaryCard] = useState(false)
+
+  const handleRefresh = () => {
+    setShowSummaryCard(true)
+    // TODO: Implement refresh logic
+    console.log('Refresh radar data')
+  }
   const [nouveauxArticles, setNouveauxArticles] = useState(STRING.ZERO)
   const [totalArticles, setTotalArticles] = useState(STRING.ZERO)
+  const [selectedArticle, setSelectedArticle] = useState<{
+    type: string
+    typeLabel: string
+    typeIcon: typeof TrendingUp
+    date: string
+    title: string
+    excerpt: string
+    content: string
+    tags: string[]
+  } | null>(null)
   // Current user (admin) - in a real app, this would come from auth context
   const currentUserEmail = 'admin@dataxx.fr'
 
@@ -236,6 +257,8 @@ export default function RadarAIPage() {
           searchValue={searchValue}
           onSearchChange={setSearchValue}
           searchPlaceholder="Rechercher des sponsors..."
+          showRefresh={true}
+          onRefresh={handleRefresh}
           hideBorder={true}
         />
         <TopBar 
@@ -245,18 +268,103 @@ export default function RadarAIPage() {
           additionalText={stickyPurpleTitle}
           dropdownOptions={articleOptions}
           dropdownValue={articleType}
-          onDropdownChange={setArticleType}
+          onDropdownChange={(value) => setArticleType(value)}
           secondDropdownOptions={timeframeOptions}
           secondDropdownValue={timeRange}
-          onSecondDropdownChange={setTimeRange}
+          onSecondDropdownChange={(value) => setTimeRange(value)}
         />
         <HelpButton />
         
-        <EmptyState
-          icon={emptyStateContent.icon}
-          title={emptyStateContent.title}
-          description={emptyStateContent.description}
-        />
+        {showSummaryCard ? (
+          <Container variant="fullWidth">
+            <Card style={{ marginTop: SPACING.XL, backgroundColor: COLOR.WHITE, paddingTop: SPACING.L, paddingRight: SPACING.XXL }}>
+              <div style={{ display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.FLEX_START, gap: SPACING.M }}>
+                <Sparkles size={ICON_SIZE.L} style={{ color: COLOR.PURPLE, flexShrink: FLEX.ZERO, marginTop: SPACING.XS }} />
+                <div style={{ display: DISPLAY.FLEX, flexDirection: FLEX_DIRECTION.COLUMN, gap: SPACING.S, flex: FLEX.ONE }}>
+                  <Heading level={2} style={{ marginBottom: SPACING.ZERO }}>
+                    Résumé IA des articles du jour
+                  </Heading>
+                  <Text size="M" weight="M" color="BLACK">
+                    Aujourd'hui, {nouveauxArticles} nouveau article a été identifié par les agents Dataxx. Ces articles couvrent les dernières actualités du sponsoring sportif, les partenariats stratégiques, et les tendances du marketing sportif en France et à l'international.
+                  </Text>
+                </div>
+              </div>
+            </Card>
+
+            {/* 3-column article layout */}
+            <div style={{ marginTop: SPACING.XL }}>
+              <div style={{ width: WIDTH.FULL }}>
+                <div
+                  style={{
+                    display: DISPLAY.FLEX,
+                    gap: SPACING.L,
+                    flexWrap: FLEX_WRAP.WRAP,
+                  }}
+                >
+                {/* Mock article data - replace with actual data later */}
+                {[
+                  {
+                    type: 'sponsoring',
+                    typeLabel: 'Sponsoring',
+                    typeIcon: TrendingUp,
+                    date: '15/01/2025',
+                    title: 'Nouveau partenariat stratégique annoncé',
+                    excerpt: 'Un nouveau partenariat majeur vient d\'être annoncé dans le monde du sponsoring sportif, marquant une étape importante pour les deux parties impliquées.',
+                    content: 'Un nouveau partenariat majeur vient d\'être annoncé dans le monde du sponsoring sportif, marquant une étape importante pour les deux parties impliquées. Cette collaboration stratégique représente un investissement significatif dans le domaine du sport professionnel et ouvre de nouvelles perspectives pour les deux entités.\n\nLes détails de ce partenariat incluent des engagements à long terme qui permettront de développer des initiatives communes dans le domaine du marketing sportif, de la communication et de l\'engagement communautaire. Les deux parties ont exprimé leur enthousiasme quant aux opportunités que cette collaboration apportera.\n\nCe type de partenariat démontre l\'importance croissante du sponsoring sportif dans les stratégies marketing modernes, où les marques cherchent à créer des connexions authentiques avec leur audience à travers le sport.',
+                    tags: ['Partenariat', 'Stratégie'],
+                  },
+                  {
+                    type: 'marques',
+                    typeLabel: 'Marques',
+                    typeIcon: Tag,
+                    date: '14/01/2025',
+                    title: 'Tendances marketing sportif 2025',
+                    excerpt: 'Les tendances du marketing sportif évoluent rapidement, avec de nouvelles approches innovantes qui transforment le paysage du sponsoring.',
+                    content: 'Les tendances du marketing sportif évoluent rapidement, avec de nouvelles approches innovantes qui transforment le paysage du sponsoring. L\'année 2025 marque un tournant dans la manière dont les marques interagissent avec le monde du sport.\n\nLes nouvelles technologies, notamment l\'intelligence artificielle et la réalité augmentée, ouvrent des possibilités inédites pour créer des expériences immersives pour les fans. Les marques investissent de plus en plus dans des campagnes digitales qui permettent une interaction directe avec leur audience.\n\nL\'authenticité et la transparence sont également devenues des valeurs centrales. Les consommateurs recherchent des partenariats qui reflètent leurs propres valeurs, poussant les marques à s\'engager dans des causes sociales et environnementales significatives.',
+                    tags: ['Marketing', 'Tendances'],
+                  },
+                  {
+                    type: 'activations',
+                    typeLabel: 'Activations',
+                    typeIcon: Zap,
+                    date: '13/01/2025',
+                    title: 'Campagne d\'activation réussie',
+                    excerpt: 'Une campagne d\'activation récente a démontré l\'efficacité des nouvelles stratégies de communication dans le domaine sportif.',
+                    content: 'Une campagne d\'activation récente a démontré l\'efficacité des nouvelles stratégies de communication dans le domaine sportif. Cette initiative a permis d\'atteindre des résultats exceptionnels en termes d\'engagement et de visibilité.\n\nLa campagne a combiné plusieurs canaux de communication, incluant les réseaux sociaux, les événements en direct, et des partenariats avec des influenceurs du monde sportif. Cette approche multi-canal a permis de toucher une audience diversifiée et d\'amplifier le message de la marque.\n\nLes résultats quantitatifs montrent une augmentation significative de l\'engagement, avec des taux d\'interaction qui dépassent les moyennes du secteur. Cette réussite démontre l\'importance d\'une stratégie bien pensée et d\'une exécution soignée dans le domaine du marketing sportif.',
+                    tags: ['Campagne', 'Succès'],
+                  },
+                ].map((article, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      flex: `1 1 calc(33.333% - ${SPACING.L})`,
+                      minWidth: DIMENSION.SEARCH_INPUT_WIDTH,
+                    }}
+                  >
+                    <ArticleCard
+                      type={article.type}
+                      typeLabel={article.typeLabel}
+                      typeIcon={article.typeIcon}
+                      date={article.date}
+                      title={article.title}
+                      excerpt={article.excerpt}
+                      tags={article.tags}
+                      onRead={() => setSelectedArticle(article)}
+                      onTypeClick={() => setArticleType(article.type)}
+                    />
+                  </div>
+                ))}
+                </div>
+              </div>
+            </div>
+          </Container>
+        ) : (
+          <EmptyState
+            icon={emptyStateContent.icon}
+            title={emptyStateContent.title}
+            description={emptyStateContent.description}
+          />
+        )}
       </div>
 
       <Popup
@@ -436,6 +544,21 @@ export default function RadarAIPage() {
         userName={getUserToChangeRoleName()}
         roleChangeText={getRoleChangeText()}
       />
+
+      {selectedArticle && (
+        <ArticlePopup
+          isOpen={!!selectedArticle}
+          onClose={() => setSelectedArticle(null)}
+          type={selectedArticle.type}
+          typeLabel={selectedArticle.typeLabel}
+          typeIcon={selectedArticle.typeIcon}
+          date={selectedArticle.date}
+          title={selectedArticle.title}
+          excerpt={selectedArticle.excerpt}
+          content={selectedArticle.content}
+          tags={selectedArticle.tags}
+        />
+      )}
     </>
   )
 }
