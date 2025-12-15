@@ -24,7 +24,7 @@ export const Card = ({ children, className = '', style, variant = 'default', ...
   const getBackgroundColor = () => {
     if (isDashed) return lightPurple
     if (isInputContainer) return veryLightGrey
-    return COLOR.GREY.LIGHT
+    return COLOR.WHITE
   }
 
   const getBorder = () => {
@@ -52,15 +52,6 @@ export const Card = ({ children, className = '', style, variant = 'default', ...
         <style dangerouslySetInnerHTML={{
           __html: `
             div[data-input-container]:focus-within {
-              border-color: ${COLOR.PURPLE} !important;
-            }
-          `
-        }} />
-      )}
-      {isDefault && (
-        <style dangerouslySetInnerHTML={{
-          __html: `
-            div[data-card-default]:hover {
               border-color: ${COLOR.PURPLE} !important;
             }
           `
