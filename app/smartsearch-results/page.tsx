@@ -48,7 +48,7 @@ import { StatusDropdown } from '../prospecthunter-results/components/StatusDropd
 export default function SmartSearchResultsPage() {
   const router = useRouter()
   const [viewType, setViewType] = useState('cards')
-  const [hasSearchResults, setHasSearchResults] = useState(true) // Show 6 cards by default when page loads
+  const [hasSearchResults, setHasSearchResults] = useState(true) // Show 5 cards by default when page loads
   const [displayedCount, setDisplayedCount] = useState<number>(NUMBER.ZERO)
   const [isLoadMoreHovered, setIsLoadMoreHovered] = useState(false)
   
@@ -135,14 +135,14 @@ export default function SmartSearchResultsPage() {
       return mockCompanies
     }
     
-    // Initial display: 6 cards
+    // Initial display: 5 cards
     if (displayedCount === NUMBER.ZERO) {
-      return generateSearchResults(NUMBER.SIX)
+      return generateSearchResults(NUMBER.FIVE)
     }
     
-    // After load more clicks: 6 initial + displayedCount additional cards
-    // Each load more adds 6 cards, so we add displayedCount cards
-    return generateSearchResults(NUMBER.SIX + displayedCount)
+    // After load more clicks: 5 initial + displayedCount additional cards
+    // Each load more adds 5 cards, so we add displayedCount cards
+    return generateSearchResults(NUMBER.FIVE + displayedCount)
   }
 
   const displayCompanies = getDisplayedCompanies()
@@ -449,6 +449,7 @@ export default function SmartSearchResultsPage() {
                       sector={company.sector}
                       onAdd={() => {}}
                       onAnalyze={() => {}}
+                      showJustification={true}
                     />
                   </div>
                 ))}
@@ -495,12 +496,12 @@ export default function SmartSearchResultsPage() {
                         color="GREY_DARK" 
                         style={{ textAlign: TEXT_ALIGN.CENTER, marginTop: SPACING.ZERO, marginBottom: SPACING.ZERO }}
                       >
-                        Lancez une nouvelle recherche pour découvrir 6 entreprises supplémentaires
+                        Lancez une nouvelle recherche pour découvrir 5 entreprises supplémentaires
                       </Text>
                       <Button
                         variant="PURPLE"
                         onClick={() => {
-                          setDisplayedCount(prev => prev + NUMBER.SIX)
+                          setDisplayedCount(prev => prev + NUMBER.FIVE)
                         }}
                         style={{
                           width: WIDTH.AUTO,
@@ -509,7 +510,7 @@ export default function SmartSearchResultsPage() {
                           marginTop: SPACING.M,
                         }}
                       >
-                        Afficher 6 de plus
+                        Afficher 5 de plus
                       </Button>
                     </Card>
                   </div>
@@ -539,7 +540,7 @@ export default function SmartSearchResultsPage() {
               <Button
                 variant="PURPLE"
                 onClick={() => {
-                  setDisplayedCount(prev => prev + NUMBER.SIX)
+                  setDisplayedCount(prev => prev + NUMBER.FIVE)
                 }}
                 style={{
                   width: WIDTH.AUTO,
@@ -547,7 +548,7 @@ export default function SmartSearchResultsPage() {
                   paddingRight: SPACING.L,
                 }}
               >
-                Afficher 6 de plus
+                Afficher 5 de plus
               </Button>
             </div>
           )}

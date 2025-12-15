@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { DollarSign, MapPin, ExternalLink, Tag, Plus, Brain, Leaf, Globe, X, UserPlus, Mail, CheckCircle, Calendar, FileCheck, Archive, ChevronDown } from 'lucide-react'
+import { DollarSign, MapPin, ExternalLink, Tag, Plus, Brain, Leaf, Globe, X, UserPlus, Mail, CheckCircle, Calendar, FileCheck, Archive, ChevronDown, Sparkles } from 'lucide-react'
 import { Card } from '../../../components/Card'
 import { Text } from '../../../components/Text'
 import { Button } from '../../../components/Button'
@@ -36,6 +36,8 @@ export interface CompanyCardProps {
   sector: string
   onAdd?: () => void
   onAnalyze?: () => void
+  showJustification?: boolean
+  justificationText?: string
 }
 
 export const CompanyCard = ({
@@ -48,6 +50,8 @@ export const CompanyCard = ({
   sector,
   onAdd,
   onAnalyze,
+  showJustification = false,
+  justificationText = 'Cette entreprise présente un potentiel stratégique élevé pour un partenariat de sponsoring sportif, avec un alignement fort entre ses valeurs et celles du sport.',
 }: CompanyCardProps) => {
   const [isStatusMode, setIsStatusMode] = useState(false)
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null)
@@ -413,6 +417,42 @@ export const CompanyCard = ({
             </div>
           </div>
         </div>
+
+        {/* Justification stratégique section (only for smartsearch) */}
+        {showJustification && (
+          <>
+            {/* Grey separator */}
+            <div
+              style={{
+                width: WIDTH.FULL,
+                height: BORDER_WIDTH.THIN,
+                backgroundColor: COLOR.GREY.LIGHT_MEDIUM,
+                marginTop: SPACING.L,
+                marginBottom: SPACING.L,
+              }}
+            />
+
+            {/* Justification title with sparkle icon */}
+            <div
+              style={{
+                display: DISPLAY.FLEX,
+                alignItems: ALIGN_ITEMS.CENTER,
+                gap: SPACING.S,
+                marginBottom: SPACING.S,
+              }}
+            >
+              <Sparkles size={ICON_SIZE.S} style={{ color: COLOR.BLACK, flexShrink: FLEX.ZERO }} />
+              <Text size="M" weight="XL" color="BLACK">
+                Justification stratégique
+              </Text>
+            </div>
+
+            {/* Justification paragraph */}
+            <Text size="M" weight="M" style={{ color: COLOR.GREY.DARK }}>
+              {justificationText}
+            </Text>
+          </>
+        )}
       </div>
 
       {/* Action buttons */}
