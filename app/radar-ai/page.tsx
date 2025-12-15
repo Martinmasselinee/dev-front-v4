@@ -572,7 +572,7 @@ export default function RadarAIPage() {
           hideBorder={true}
         />
         <TopBar 
-          icon={ScanLine} 
+          icon={FileText} 
           title=""
           variant="stickyPurple"
           additionalText={stickyPurpleTitle}

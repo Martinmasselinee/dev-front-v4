@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Search } from 'lucide-react'
+import { Search, Building2 } from 'lucide-react'
 import { Dot } from '../../components/Dot'
 import { Text } from '../../components/Text'
 import { EmptyState } from '../../components/EmptyState'
@@ -74,7 +74,7 @@ export default function ProspectHunterPage() {
         hideBorder={true}
       />
       <TopBar 
-        icon={Search} 
+        icon={Building2} 
         title=""
         variant="stickyPurple"
         additionalText={stickyPurpleTitle}

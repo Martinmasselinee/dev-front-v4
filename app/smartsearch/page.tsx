@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Sparkles, Clock, Wand2, Filter } from 'lucide-react'
+import { Sparkles, Clock, Wand2, Filter, Building2 } from 'lucide-react'
 import { Dot } from '../../components/Dot'
 import { Text } from '../../components/Text'
 import { LAYOUT } from '../../constants/layout'
@@ -272,7 +272,7 @@ export default function SmartSearchPage() {
         }
       />
       <TopBar 
-        icon={Sparkles} 
+        icon={Building2} 
         title=""
         variant="stickyPurple"
         additionalText={stickyPurpleTitle}
