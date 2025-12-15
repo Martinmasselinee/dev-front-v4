@@ -15,6 +15,7 @@ import { ICON_SIZE } from '../../../constants/iconSize'
 import { WIDTH } from '../../../constants/width'
 import { DIMENSION } from '../../../constants/dimension'
 import { CURSOR } from '../../../constants/interaction'
+import { TRANSITION } from '../../../constants/transition'
 
 export interface ArticleCardProps {
   type: string
@@ -67,6 +68,15 @@ export const ArticleCard = ({
         <IconButton
           icon={<ExternalLink size={ICON_SIZE.M} />}
           onClick={onRead}
+          style={{
+            transition: `color ${TRANSITION.FAST_EASE}`,
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.color = COLOR.PURPLE
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.color = COLOR.GREY.MEDIUM
+          }}
         />
       </div>
 
