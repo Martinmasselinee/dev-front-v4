@@ -7,10 +7,11 @@ import { Dot } from '../../components/Dot'
 import { Text } from '../../components/Text'
 import { Container } from '../../components/Container'
 import { LAYOUT, CALCULATION } from '../../constants/layout'
+import { NUMBER } from '../../constants/number'
 import { SPACING } from '../../constants/spacing'
 import { POSITION_TYPE } from '../../constants/position'
 import { DISPLAY } from '../../constants/display'
-import { ALIGN_ITEMS, FLEX_WRAP, FLEX_DIRECTION } from '../../constants/flex'
+import { ALIGN_ITEMS, FLEX_WRAP, FLEX_DIRECTION, JUSTIFY_CONTENT } from '../../constants/flex'
 import { COLOR } from '../../constants/color'
 import { BORDER_WIDTH, BORDER_RADIUS } from '../../constants/border'
 import { DIMENSION } from '../../constants/dimension'
@@ -27,6 +28,7 @@ import { NavbarSidebar } from '../../components/NavbarSidebar'
 import { TopBar } from '../../components/TopBar'
 import { HelpButton } from '../../components/HelpButton'
 import { Button } from '../../components/Button'
+import { Card } from '../../components/Card'
 import { Bubble } from '../../components/Bubble'
 import { CompanyCard } from './components/CompanyCard'
 
@@ -34,6 +36,8 @@ export default function ProspectHunterResultsPage() {
   const router = useRouter()
   const [searchValue, setSearchValue] = useState('')
   const [viewType, setViewType] = useState('table')
+  const [hasSearchResults, setHasSearchResults] = useState(true) // Show 29 cards by default when page loads
+  const [displayedCount, setDisplayedCount] = useState(NUMBER.ZERO)
 
   const viewOptions = [
     { value: 'table', label: 'Table' },
@@ -143,25 +147,30 @@ export default function ProspectHunterResultsPage() {
       website: 'www.cooperl.com',
       sector: 'Agriculture & Agroalimentaire',
     },
-    {
-      logo: undefined,
-      companyName: 'EXEMPLE ENTREPRISE',
-      description: 'Description de l\'entreprise exemple',
-      revenue: '50M€ - 100M€',
-      location: 'Paris, France',
-      website: 'www.exemple.com',
-      sector: 'Automobile',
-    },
-    {
-      logo: undefined,
-      companyName: 'AUTRE SOCIÉTÉ',
-      description: 'Autre description d\'entreprise',
-      revenue: '25M€ - 50M€',
-      location: 'Lyon, France',
-      website: undefined,
-      sector: 'Commerce & Distribution',
-    },
   ]
+
+  // Generate search result cards (reuse mock data)
+  const generateSearchResults = (count: number) => {
+    return Array.from({ length: count }, () => mockCompanies[NUMBER.ZERO])
+  }
+
+  // Calculate displayed companies
+  const getDisplayedCompanies = () => {
+    if (!hasSearchResults) {
+      return mockCompanies
+    }
+    
+    // Initial display: 29 cards + 1 load more = 30 total
+    if (displayedCount === NUMBER.ZERO) {
+      return generateSearchResults(NUMBER.THIRTY - NUMBER.ONE)
+    }
+    
+    // After load more clicks: displayedCount cards
+    return generateSearchResults(displayedCount)
+  }
+
+  const displayCompanies = getDisplayedCompanies()
+  const hasMoreResults = hasSearchResults // In real app, this would check if there are more results from API
 
   // Build array of selected filters with labels
   const selectedFiltersWithLabels = [
@@ -225,7 +234,16 @@ export default function ProspectHunterResultsPage() {
         title="Prospect Hunter" 
         showSearch={true}
         searchValue={searchValue}
-        onSearchChange={setSearchValue}
+        onSearchChange={(value) => {
+          setSearchValue(value)
+          if (value.trim()) {
+            setHasSearchResults(true)
+            setDisplayedCount(NUMBER.ZERO) // Reset to show 29 cards initially
+          } else {
+            setHasSearchResults(false)
+            setDisplayedCount(NUMBER.ZERO)
+          }
+        }}
         searchPlaceholder="Rechercher..."
         hideBorder={true}
         rightElement={
@@ -314,7 +332,7 @@ export default function ProspectHunterResultsPage() {
                 flexWrap: FLEX_WRAP.WRAP,
               }}
             >
-              {mockCompanies.map((company, index) => (
+              {displayCompanies.map((company, index) => (
                 <div
                   key={index}
                   style={{
@@ -335,6 +353,43 @@ export default function ProspectHunterResultsPage() {
                   />
                 </div>
               ))}
+              {hasSearchResults && hasMoreResults && (
+                <div
+                  style={{
+                    flex: `0 0 calc((100% - ${SPACING.L} * ${CALCULATION.GRID_GAP_MULTIPLIER}) / ${CALCULATION.GRID_COLUMN_COUNT})`,
+                    width: `calc((100% - ${SPACING.L} * ${CALCULATION.GRID_GAP_MULTIPLIER}) / ${CALCULATION.GRID_COLUMN_COUNT})`,
+                  }}
+                >
+                  <Card
+                    variant="default"
+                    style={{
+                      display: DISPLAY.FLEX,
+                      flexDirection: FLEX_DIRECTION.COLUMN,
+                      alignItems: ALIGN_ITEMS.CENTER,
+                      justifyContent: JUSTIFY_CONTENT.CENTER,
+                      height: WIDTH.FULL,
+                      paddingTop: SPACING.XXL,
+                      paddingBottom: SPACING.XXL,
+                      paddingLeft: SPACING.L,
+                      paddingRight: SPACING.L,
+                    }}
+                  >
+                    <Button
+                      variant="PURPLE"
+                      onClick={() => {
+                        setDisplayedCount(prev => prev + NUMBER.THIRTY)
+                      }}
+                      style={{
+                        width: WIDTH.AUTO,
+                        paddingLeft: SPACING.L,
+                        paddingRight: SPACING.L,
+                      }}
+                    >
+                      Afficher 30 de plus
+                    </Button>
+                  </Card>
+                </div>
+              )}
             </div>
           </div>
         </div>
