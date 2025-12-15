@@ -392,11 +392,36 @@ export default function RadarAIPage() {
     { value: 'partenariat', label: 'Partenariat officiel maillot' },
   ]
 
-  // Filter articles based on timeRange and articleType
+  // Filter articles based on timeRange, articleType, and search
   const filteredArticles = articles.filter(article => {
     // Filter by article type
     if (articleType !== 'all' && article.type !== articleType) {
       return false
+    }
+
+    // Filter by search value (case-insensitive search in title and content)
+    if (searchValue.trim()) {
+      const searchLower = searchValue.toLowerCase().trim()
+      const titleLower = article.title.toLowerCase()
+      
+      // Check if search matches title
+      const matchesTitle = titleLower.includes(searchLower)
+      
+      // Check if search matches any content block
+      const matchesContent = article.content.some(block => {
+        if (typeof block.content === 'string') {
+          return block.content.toLowerCase().includes(searchLower)
+        } else if (Array.isArray(block.content)) {
+          return block.content.some(contentItem => 
+            contentItem.toLowerCase().includes(searchLower)
+          )
+        }
+        return false
+      })
+      
+      if (!matchesTitle && !matchesContent) {
+        return false
+      }
     }
 
     // Filter by time range
@@ -473,6 +498,11 @@ export default function RadarAIPage() {
     let icon = Inbox
     let title = 'Aucun article trouvé'
     let description = `Aucun article récupéré par les agents IA`
+
+    // Add search context if searching
+    if (searchValue.trim()) {
+      description += ` pour "${searchValue}"`
+    }
 
     // Add timeframe context
     if (timeRange !== TIME_RANGE.ALL) {
