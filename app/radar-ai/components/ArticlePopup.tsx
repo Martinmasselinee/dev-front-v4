@@ -103,17 +103,17 @@ export const ArticlePopup = ({
         </div>
 
         <div style={{ display: DISPLAY.FLEX, flexDirection: FLEX_DIRECTION.COLUMN, gap: SPACING.L, marginTop: SPACING.ZERO }}>
-          {/* Image thumbnail - full width, no border radius, no padding */}
+          {/* Image thumbnail - with padding like text content */}
           <div
             style={{
-              width: `calc(100% + ${SPACING.L} + ${SPACING.L})`,
-              marginLeft: `-${SPACING.L}`,
-              marginRight: `-${SPACING.L}`,
+              width: WIDTH.FULL,
               aspectRatio: DIMENSION.ASPECT_RATIO_VIDEO,
               backgroundColor: COLOR.GREY.LIGHT,
+              borderRadius: BORDER_RADIUS.M,
               display: DISPLAY.FLEX,
               alignItems: ALIGN_ITEMS.CENTER,
               justifyContent: JUSTIFY_CONTENT.CENTER,
+              marginTop: SPACING.L,
             }}
           >
             <Icon size={ICON_SIZE.XL} style={{ color: COLOR.GREY.MEDIUM }} />

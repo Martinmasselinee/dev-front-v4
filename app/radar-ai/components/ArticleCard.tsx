@@ -41,7 +41,7 @@ export const ArticleCard = ({
   onTypeClick,
 }: ArticleCardProps) => {
   return (
-    <Card style={{ display: DISPLAY.FLEX, flexDirection: FLEX_DIRECTION.COLUMN, gap: SPACING.M, height: WIDTH.FULL }}>
+    <Card variant="article" style={{ display: DISPLAY.FLEX, flexDirection: FLEX_DIRECTION.COLUMN, gap: SPACING.M, height: WIDTH.FULL }}>
       {/* Top container with article type */}
       <div
         style={{

@@ -12,12 +12,13 @@ interface CardProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode
   className?: string
   style?: React.CSSProperties
-  variant?: 'default' | 'dashed' | 'inputContainer'
+  variant?: 'default' | 'dashed' | 'inputContainer' | 'article'
 }
 
 export const Card = ({ children, className = '', style, variant = 'default', ...props }: CardProps) => {
   const isDashed = variant === 'dashed'
   const isInputContainer = variant === 'inputContainer'
+  const isArticle = variant === 'article'
   const lightPurple = isDashed ? lightenColor(COLOR.PURPLE, MULTIPLIER.COLOR_LIGHTEN_NINETY_FIVE) : undefined
   const veryLightGrey = isInputContainer ? lightenColor(COLOR.GREY.LIGHT, MULTIPLIER.COLOR_LIGHTEN_FORTY) : undefined
   
@@ -52,6 +53,15 @@ export const Card = ({ children, className = '', style, variant = 'default', ...
         <style dangerouslySetInnerHTML={{
           __html: `
             div[data-input-container]:focus-within {
+              border-color: ${COLOR.PURPLE} !important;
+            }
+          `
+        }} />
+      )}
+      {isDefault && (
+        <style dangerouslySetInnerHTML={{
+          __html: `
+            div[data-card-default]:hover {
               border-color: ${COLOR.PURPLE} !important;
             }
           `
