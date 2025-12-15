@@ -17,8 +17,6 @@ export function ConditionalComponent({ type }: ConditionalComponentProps) {
     '/dashboard',
     '/decideurs',
     '/entreprises',
-    '/marques',
-    '/activations',
     '/prospect-hunter',
     '/prospecthunter-results',
     '/smartsearch',

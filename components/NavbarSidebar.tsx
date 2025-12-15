@@ -8,8 +8,6 @@ import {
   Search,
   Users,
   Building2,
-  Tag,
-  Zap,
   FileText,
   Settings,
   LogOut,
@@ -108,8 +106,6 @@ export const NavbarSidebar = () => {
       items: [
         { label: 'Décideurs', path: '/decideurs', icon: Users },
         { label: 'Entreprises', path: '/entreprises', icon: Building2 },
-        { label: 'Marques', path: '/marques', icon: Tag },
-        { label: 'Activations', path: '/activations', icon: Zap },
       ],
     },
   ]

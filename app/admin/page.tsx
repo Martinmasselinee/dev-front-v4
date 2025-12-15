@@ -48,9 +48,6 @@ import { RoleChangeConfirmPopup } from './components/RoleChangeConfirmPopup'
 import { WorkspaceSelectionPopup } from './components/WorkspaceSelectionPopup'
 import { UserTable } from './components/UserTable'
 import { PersonnaliserPopup } from './components/PersonnaliserPopup'
-import { NoAbonnementCard } from './components/NoAbonnementCard'
-import { ConnectEmailCard } from './components/ConnectEmailCard'
-import { ConnectCalendarCard } from './components/ConnectCalendarCard'
 import type { User } from './components/UserTable'
 
 export default function AdminPage() {
@@ -270,12 +267,6 @@ export default function AdminPage() {
             paddingBottom: SPACING.XL,
           }}
         >
-          <NoAbonnementCard
-            onSubscribe={() => {
-              // TODO: Implement subscription logic
-              console.log('Subscribe clicked')
-            }}
-          />
           <div
             style={{
               display: DISPLAY.FLEX,
@@ -319,18 +310,6 @@ export default function AdminPage() {
             users={filteredUsers}
             onRoleChange={handleRoleChange}
             onRemoveUser={handleRemoveUser}
-          />
-          <ConnectEmailCard
-            onConnect={() => {
-              // TODO: Implement email connection logic
-              console.log('Connect email clicked')
-            }}
-          />
-          <ConnectCalendarCard
-            onConnect={() => {
-              // TODO: Implement calendar connection logic
-              console.log('Connect calendar clicked')
-            }}
           />
         </div>
       </div>
