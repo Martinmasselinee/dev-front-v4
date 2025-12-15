@@ -360,7 +360,7 @@ export default function RadarAIPage() {
                 </div>
                 {user.email !== currentUserEmail && (
                   <Button
-                    variant="RED"
+                    variant="WHITE"
                     onClick={() => handleDeleteClick(user.email)}
                     style={{
                       width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY})`,

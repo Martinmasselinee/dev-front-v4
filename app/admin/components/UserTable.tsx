@@ -264,7 +264,7 @@ export const UserTable = ({ users, onRoleChange, onRemoveUser }: UserTableProps)
       ),
       cell: ({ row }) => (
         <Button
-          variant="RED"
+          variant="WHITE"
           onClick={() => onRemoveUser(row.original.id)}
           disabled={row.original.id === '1'}
           style={{

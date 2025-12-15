@@ -494,7 +494,7 @@ export const PersonaliserPopup = ({ isOpen, onClose, onSave, onPersonalisationsC
                 icon={<Globe size={ICON_SIZE.M} />}
                 actionButton={
                   <Button
-                    variant="RED"
+                    variant="WHITE"
                     onClick={() => {
                       setSocialUrls(socialUrls.filter((url) => url.id !== socialUrl.id))
                     }}
@@ -564,7 +564,7 @@ export const PersonaliserPopup = ({ isOpen, onClose, onSave, onPersonalisationsC
                 actionButton={
                   valeursMarque.length > 1 ? (
                     <Button
-                      variant="RED"
+                      variant="WHITE"
                       onClick={() => {
                         setValeursMarque(valeursMarque.filter((item) => item.id !== valeurMarque.id))
                       }}
@@ -1354,7 +1354,7 @@ export const PersonaliserPopup = ({ isOpen, onClose, onSave, onPersonalisationsC
                 actionButton={
                   centresInterets.length > 1 ? (
                     <Button
-                      variant="RED"
+                      variant="WHITE"
                       onClick={() => {
                         setCentresInterets(centresInterets.filter((item) => item.id !== centreInteret.id))
                       }}

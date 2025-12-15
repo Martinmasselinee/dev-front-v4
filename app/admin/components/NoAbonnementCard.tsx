@@ -1,6 +1,6 @@
 'use client'
 
-import { AlertCircle } from 'lucide-react'
+import { Sparkles } from 'lucide-react'
 import { Card } from '../../../components/Card'
 import { Text } from '../../../components/Text'
 import { Button } from '../../../components/Button'
@@ -40,10 +40,10 @@ export const NoAbonnementCard = ({ onSubscribe }: NoAbonnementCardProps) => {
             alignItems: ALIGN_ITEMS.CENTER,
             justifyContent: JUSTIFY_CONTENT.CENTER,
             flexShrink: FLEX.ZERO,
-            marginRight: SPACING.L,
+            marginRight: SPACING.M,
           }}
         >
-          <AlertCircle size={ICON_SIZE.L} style={{ color: COLOR.GREY.DARK }} />
+          <Sparkles size={ICON_SIZE.L} style={{ color: COLOR.GREY.DARK }} />
         </div>
         <div
           style={{
