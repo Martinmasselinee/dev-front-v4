@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Sparkles, Clock } from 'lucide-react'
+import { Sparkles, Clock, Wand2 } from 'lucide-react'
 import { Dot } from '../../components/Dot'
 import { Text } from '../../components/Text'
 import { LAYOUT } from '../../constants/layout'
@@ -30,12 +30,13 @@ import { Bubble } from '../../components/Bubble'
 import { Container } from '../../components/Container'
 import { Spacer } from '../../components/Spacer'
 import { INPUT_HEIGHT, INPUT_PADDING } from '../../constants/input'
-import { LINE_HEIGHT, FONT_SIZE } from '../../constants/font'
+import { LINE_HEIGHT, FONT_SIZE, FONT_THICKNESS } from '../../constants/font'
 import { OUTLINE } from '../../constants/outline'
 import { Z_INDEX } from '../../constants/zIndex'
 import { POINTER_EVENTS } from '../../constants/interaction'
 import { TRANSITION } from '../../constants/transition'
 import { TEXT_TRANSFORM, LETTER_SPACING } from '../../constants/text'
+import { lightenColor } from '../../lib/colorUtils'
 
 interface SearchHistoryItem {
   date: Date
@@ -49,14 +50,16 @@ export default function SmartSearchPage() {
   const [recherchesLancees, setRecherchesLancees] = useState(STRING.ZERO)
   const [searchValue, setSearchValue] = useState('')
   const [placeholderIndex, setPlaceholderIndex] = useState<number>(NUMBER.ZERO)
+  const [visibleCardsCount, setVisibleCardsCount] = useState(NUMBER.ONE * 5)
+  const veryLightGrey = lightenColor(COLOR.GREY.LIGHT, MULTIPLIER.COLOR_LIGHTEN_FORTY)
 
   const placeholderExamples = [
-    'TROUVE MOI DES ENTREPRISES QUI ONT INVESTIT DANS LE TOUR DE FRANCE 2024',
-    'QUELS SPONSORS ONT SOUTENU LES ÉQUIPES DE FOOTBALL EN LIGUE 1 CETTE SAISON ?',
-    'ENTREPRISES PARTENAIRES DU PARIS 2024 ET DE SES ÉVÉNEMENTS',
-    'MARQUES QUI COLLABORENT AVEC DES ATHLÈTES FRANÇAIS EN TENNIS',
-    'SPONSORS DES CLUBS DE RUGBY EN TOP 14 POUR LA SAISON 2024-2025',
-    'ENTREPRISES QUI ONT SIGNÉ DES CONTRATS DE SPONSORING AVEC DES ÉVÉNEMENTS SPORTIFS MAJEURS',
+    'Trouve moi des entreprises qui ont investit dans le Tour de France 2024',
+    'Quels sponsors ont soutenu les équipes de football en Ligue 1 cette saison ?',
+    'Entreprises partenaires du Paris 2024 et de ses événements',
+    'Marques qui collaborent avec des athlètes français en tennis',
+    'Sponsors des clubs de rugby en Top 14 pour la saison 2024-2025',
+    'Entreprises qui ont signé des contrats de sponsoring avec des événements sportifs majeurs',
   ]
 
   const currentPlaceholder = placeholderExamples[placeholderIndex]
@@ -119,7 +122,62 @@ export default function SmartSearchPage() {
       ],
       aiAnswer: 'Le secteur de l\'esport connaît une croissance exponentielle avec de nombreuses startups innovantes. Ces entreprises développent des plateformes de streaming, des outils de gestion d\'équipes et des solutions de monétisation pour les joueurs professionnels.',
     },
+    {
+      date: new Date(2024, 0, 12, 9, 20),
+      prompt: 'Marques de sportswear partenaires des Jeux Olympiques',
+      faviconUrls: [
+        'https://www.nike.com/favicon.ico',
+        'https://www.adidas.com/favicon.ico',
+        'https://www.puma.com/favicon.ico',
+      ],
+      aiAnswer: 'Plusieurs grandes marques de sportswear sont partenaires officiels des Jeux Olympiques. Ces entreprises investissent massivement dans le sponsoring d\'athlètes et d\'événements sportifs majeurs pour renforcer leur image de marque.',
+    },
+    {
+      date: new Date(2024, 0, 11, 15, 10),
+      prompt: 'Entreprises françaises sponsorisant le Tour de France',
+      faviconUrls: [
+        'https://www.carrefour.com/favicon.ico',
+        'https://www.lcl.fr/favicon.ico',
+      ],
+      aiAnswer: 'De nombreuses entreprises françaises sont partenaires du Tour de France, l\'un des événements cyclistes les plus prestigieux au monde. Ces sponsors bénéficient d\'une visibilité exceptionnelle pendant la compétition.',
+    },
+    {
+      date: new Date(2024, 0, 10, 11, 30),
+      prompt: 'Décideurs dans les fédérations sportives internationales',
+      faviconUrls: [
+        'https://www.fifa.com/favicon.ico',
+        'https://www.olympics.com/favicon.ico',
+      ],
+      aiAnswer: 'Les décideurs des fédérations sportives internationales jouent un rôle crucial dans la gouvernance du sport mondial. Ils sont responsables de la gestion des compétitions, des règles et des partenariats stratégiques.',
+    },
+    {
+      date: new Date(2024, 0, 9, 14, 45),
+      prompt: 'Marques de boissons énergisantes dans le sport',
+      faviconUrls: [
+        'https://www.redbull.com/favicon.ico',
+        'https://www.monsterenergy.com/favicon.ico',
+      ],
+      aiAnswer: 'Les marques de boissons énergisantes sont très actives dans le sponsoring sportif, notamment dans les sports extrêmes et les compétitions automobiles. Elles ciblent un public jeune et dynamique.',
+    },
+    {
+      date: new Date(2024, 0, 8, 16, 20),
+      prompt: 'Entreprises technologiques partenaires des clubs de football européens',
+      faviconUrls: [
+        'https://www.samsung.com/favicon.ico',
+        'https://www.sony.com/favicon.ico',
+        'https://www.intel.com/favicon.ico',
+      ],
+      aiAnswer: 'Les entreprises technologiques investissent de plus en plus dans le sponsoring de clubs de football européens. Ces partenariats leur permettent d\'accéder à un public mondial et de promouvoir leurs innovations.',
+    },
   ]
+
+  const visibleCards = searchHistoryItems.slice(NUMBER.ZERO, visibleCardsCount)
+  const hasMoreCards = visibleCardsCount < searchHistoryItems.length
+  const cardsToLoad = NUMBER.ONE * 10
+
+  const handleLoadMore = () => {
+    setVisibleCardsCount((prev) => Math.min(prev + cardsToLoad, searchHistoryItems.length))
+  }
 
   const stickyPurpleTitle = (
     <div
@@ -189,33 +247,35 @@ export default function SmartSearchPage() {
             style={{ padding: SPACING.XL }}
             id="smartsearch-input-card"
           >
-            <Text
-              size="S"
-              weight="S"
-              color="GREY_DARK"
+            <div
               style={{
-                textTransform: TEXT_TRANSFORM.UPPERCASE,
-                marginBottom: SPACING.M,
-                marginLeft: SPACING.ZERO,
-                letterSpacing: LETTER_SPACING.TIGHT,
-                fontSize: FONT_SIZE.S,
+                display: DISPLAY.FLEX,
+                alignItems: ALIGN_ITEMS.CENTER,
+                gap: SPACING.S,
+                marginBottom: SPACING.S,
               }}
             >
-              Entrez votre requête
-            </Text>
+              <Wand2 size={ICON_SIZE.M} style={{ color: COLOR.BLACK }} />
+              <Text
+                size="S"
+                weight="S"
+                color="BLACK"
+                style={{
+                  textTransform: TEXT_TRANSFORM.UPPERCASE,
+                  marginLeft: SPACING.ZERO,
+                  letterSpacing: LETTER_SPACING.TIGHT,
+                  fontSize: FONT_SIZE.S,
+                }}
+              >
+                Entrez votre requête
+              </Text>
+            </div>
             <textarea
               placeholder={currentPlaceholder}
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
-              onFocus={(e) => {
-                const card = document.getElementById('smartsearch-input-card')
-                if (card) card.style.borderColor = COLOR.PURPLE
-              }}
-              onBlur={(e) => {
-                const card = document.getElementById('smartsearch-input-card')
-                if (card) card.style.borderColor = COLOR.GREY.MEDIUM
-              }}
               rows={1}
+              className="smartsearch-textarea"
               style={{
                 width: WIDTH.FULL,
                 height: INPUT_HEIGHT.MAIN,
@@ -224,8 +284,9 @@ export default function SmartSearchPage() {
                 paddingTop: `calc(${SPACING.S} - 1px)`,
                 paddingBottom: SPACING.ZERO,
                 fontSize: FONT_SIZE.M,
+                fontWeight: FONT_THICKNESS.M,
                 color: COLOR.BLACK,
-                backgroundColor: COLOR.WHITE,
+                backgroundColor: veryLightGrey,
                 border: BORDER.NONE,
                 outline: OUTLINE.NONE,
                 lineHeight: LINE_HEIGHT.SINGLE,
@@ -268,7 +329,7 @@ export default function SmartSearchPage() {
               gap: SPACING.L,
             }}
           >
-            {searchHistoryItems.map((item, index) => {
+            {visibleCards.map((item, index) => {
               const visibleFavicons = item.faviconUrls.slice(0, 6)
               const remainingCount = item.faviconUrls.length - 6
 
@@ -276,6 +337,10 @@ export default function SmartSearchPage() {
                 <Card
                   key={index}
                   variant="default"
+                  onClick={() => {
+                    // Handle card click - could navigate to search results or fill the input
+                    setSearchValue(item.prompt)
+                  }}
                   style={{
                     backgroundColor: COLOR.WHITE,
                   }}
@@ -333,6 +398,16 @@ export default function SmartSearchPage() {
                 </Card>
               )
             })}
+            
+            {hasMoreCards && (
+              <Button
+                variant="WHITE"
+                onClick={handleLoadMore}
+                style={{ width: WIDTH.FULL }}
+              >
+                Voir plus
+              </Button>
+            )}
           </div>
         </div>
       </Container>

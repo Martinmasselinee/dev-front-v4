@@ -14,6 +14,7 @@
   --slider-handle-border-width: 2px;
   --opacity-slider-shadow: 0.3;
   --slider-shadow: 0 2px 4px rgba(0, 0, 0, var(--opacity-slider-shadow));
+  --font-thickness-m: 400;
 }
 
 html,
@@ -104,5 +105,9 @@ body {
 .rc-slider-handle:active {
   border-color: var(--color-black) !important;
   box-shadow: var(--slider-shadow) !important;
+}
+
+.smartsearch-textarea::placeholder {
+  font-weight: var(--font-thickness-m);
 }
 
