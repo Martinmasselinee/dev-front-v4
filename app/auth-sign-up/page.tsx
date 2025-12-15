@@ -36,11 +36,11 @@ import { BACKGROUND } from '../../constants/background'
 import { BORDER } from '../../constants/border'
 import { CURSOR } from '../../constants/interaction'
 import { POSITION, TRANSFORM } from '../../constants/position'
-import { Loading } from '../../components/Loading'
 import { Z_INDEX } from '../../constants/zIndex'
 import { DIMENSION } from '../../constants/dimension'
 import { TRANSITION_DURATION, TRANSITION_EASING } from '../../constants/transition'
 import { OPACITY } from '../../constants/opacity'
+import { Loading } from '../../components/Loading'
 
 const rotatingTexts = [
   'Clubs de football',

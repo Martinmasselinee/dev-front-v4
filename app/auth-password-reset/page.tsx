@@ -21,11 +21,11 @@ import { COLOR } from '../../constants/color'
 import { LAYOUT } from '../../constants/layout'
 import { FONT_THICKNESS, FONT_SIZE } from '../../constants/font'
 import { TEXT_ALIGN } from '../../constants/text'
-import { TIME } from '../../constants/time'
 import { DISPLAY } from '../../constants/display'
 import { FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT, FLEX } from '../../constants/flex'
 import { POSITION_TYPE } from '../../constants/position'
 import { Loading } from '../../components/Loading'
+import { TIME } from '../../constants/time'
 
 export default function AuthPasswordResetPage() {
   const router = useRouter()
@@ -35,9 +35,9 @@ export default function AuthPasswordResetPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    setIsSubmitted(true)
     setIsLoading(true)
     setTimeout(() => {
+      setIsSubmitted(true)
       router.push('/auth-sign-in')
     }, TIME.DELAY.LOADING_REDIRECT)
   }

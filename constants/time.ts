@@ -2,6 +2,7 @@ export const TIME = {
   INTERVAL: {
     ROTATING_TEXT: 1500, // milliseconds
     SUCCESS_MESSAGE: 1000, // milliseconds
+    BUTTON_LOADING: 5000, // milliseconds (5 seconds)
   },
   DELAY: {
     SHORT: 100, // milliseconds

@@ -32,6 +32,7 @@ export const HelpButton = ({ bottomOffset = SPACING.L }: HelpButtonProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const [bugDescription, setBugDescription] = useState('')
   const [selectedBugTypes, setSelectedBugTypes] = useState<string[]>([])
+  const [selectedUrgency, setSelectedUrgency] = useState<string | null>(null)
   const [isSuccess, setIsSuccess] = useState(false)
 
   const bugTypes = [
@@ -39,6 +40,12 @@ export const HelpButton = ({ bottomOffset = SPACING.L }: HelpButtonProps) => {
     { value: 'performance', label: 'Performance' },
     { value: 'crash', label: 'Crash' },
     { value: 'latence', label: 'Latence' },
+  ]
+
+  const urgencyOptions = [
+    { value: 'normal', label: 'Normal' },
+    { value: 'urgent', label: 'Urgent' },
+    { value: 'tres-urgent', label: 'Très urgent' },
   ]
 
   const toggleBugType = (value: string) => {
@@ -49,6 +56,10 @@ export const HelpButton = ({ bottomOffset = SPACING.L }: HelpButtonProps) => {
     )
   }
 
+  const toggleUrgency = (value: string) => {
+    setSelectedUrgency(prev => prev === value ? null : value)
+  }
+
   useEffect(() => {
       if (isSuccess) {
       const timer = setTimeout(() => {
@@ -56,6 +67,7 @@ export const HelpButton = ({ bottomOffset = SPACING.L }: HelpButtonProps) => {
         setIsSuccess(false)
         setBugDescription('')
         setSelectedBugTypes([])
+        setSelectedUrgency(null)
       }, TIME.INTERVAL.SUCCESS_MESSAGE)
 
       return () => clearTimeout(timer)
@@ -65,7 +77,7 @@ export const HelpButton = ({ bottomOffset = SPACING.L }: HelpButtonProps) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     // TODO: Add bug report submission logic here
-    console.log('Bug report:', { bugDescription, bugTypes: selectedBugTypes })
+    console.log('Bug report:', { bugDescription, bugTypes: selectedBugTypes, urgency: selectedUrgency })
     setIsSuccess(true)
   }
 
@@ -139,6 +151,59 @@ export const HelpButton = ({ bottomOffset = SPACING.L }: HelpButtonProps) => {
               <Text size="M" color="GREY_DARK" as="div">
                 06 95 42 08 38
               </Text>
+            </div>
+          </div>
+
+          <div
+            style={{
+              display: DISPLAY.FLEX,
+              flexDirection: FLEX_DIRECTION.COLUMN,
+              gap: SPACING.M,
+            }}
+          >
+            <Text size="M" weight="XL" color="BLACK" as="div">
+              Urgence
+            </Text>
+            <div
+              style={{
+                display: DISPLAY.FLEX,
+                flexWrap: 'wrap',
+                gap: SPACING.S,
+              }}
+            >
+              {urgencyOptions.map((option) => {
+                const isSelected = selectedUrgency === option.value
+                return (
+                  <button
+                    key={option.value}
+                    type="button"
+                    onClick={() => toggleUrgency(option.value)}
+                    style={{
+                      paddingLeft: SPACING.M,
+                      paddingRight: SPACING.M,
+                      paddingTop: `calc(${SPACING.S} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY})`,
+                      paddingBottom: `calc(${SPACING.S} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY})`,
+                      backgroundColor: isSelected ? COLOR.BLACK : COLOR.WHITE,
+                      border: `${BORDER_WIDTH.THIN} solid ${isSelected ? COLOR.BLACK : COLOR.GREY.MEDIUM}`,
+                      borderRadius: BORDER_RADIUS.M,
+                      cursor: CURSOR.POINTER,
+                      transition: `background-color ${TRANSITION.FAST_EASE}, border-color ${TRANSITION.FAST_EASE}, color ${TRANSITION.FAST_EASE}`,
+                      outline: OUTLINE.NONE,
+                    }}
+                  >
+                    <Text
+                      size="M"
+                      weight={isSelected ? 'L' : 'M'}
+                      style={{
+                        color: isSelected ? COLOR.WHITE : COLOR.BLACK,
+                        transition: `color ${TRANSITION.FAST_EASE}`,
+                      }}
+                    >
+                      {option.label}
+                    </Text>
+                  </button>
+                )
+              })}
             </div>
           </div>
 

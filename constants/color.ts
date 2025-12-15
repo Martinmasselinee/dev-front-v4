@@ -22,6 +22,6 @@ export const COLOR = {
 } as const
 
 export const COLOR_RGBA = {
-  PURPLE_LIGHT: hexToRgba(COLOR.PURPLE, 0.25),
+  PURPLE_LIGHT: hexToRgba(COLOR.PURPLE, OPACITY.PURPLE_LIGHT),
 } as const
 

@@ -16,7 +16,7 @@ import { CURSOR, POINTER_EVENTS } from '../constants/interaction'
 import { lightenColor, darkenColor } from '../lib/colorUtils'
 import { MULTIPLIER } from '../constants/multiplier'
 
-type ButtonVariant = 'BLACK' | 'PURPLE' | 'WHITE' | 'RED'
+type ButtonVariant = 'BLACK' | 'PURPLE' | 'WHITE' | 'RED' | 'ORANGE'
 
 interface ButtonProps {
   children: ReactNode

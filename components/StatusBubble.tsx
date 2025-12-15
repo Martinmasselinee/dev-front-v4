@@ -27,8 +27,8 @@ export const StatusBubble = ({ label, variant, style }: StatusBubbleProps) => {
     ? hexToRgba(COLOR.GOOGLE.GREEN, OPACITY.FULL)
     : hexToRgba(COLOR.RED, OPACITY.FULL)
   const borderColor = variant === 'green' 
-    ? hexToRgba(COLOR.GOOGLE.GREEN, 0.6)
-    : hexToRgba(COLOR.RED, 0.6)
+    ? hexToRgba(COLOR.GOOGLE.GREEN, OPACITY.STATUS_BUBBLE)
+    : hexToRgba(COLOR.RED, OPACITY.STATUS_BUBBLE)
   
   const IconComponent = variant === 'green' ? Check : X
   

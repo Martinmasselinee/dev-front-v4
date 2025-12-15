@@ -12,3 +12,17 @@ export const INPUT_PADDING = {
   VERTICAL: '12px', // py-3
 } as const
 
+export const INPUT_MAX = {
+  STADIUM_LOUNGE: 100000,
+  SOCIAL_MEDIA: 10000000,
+} as const
+
+export const INPUT_STEP = {
+  SMALL: 1000,
+  LARGE: 10000,
+} as const
+
+export const TEXTAREA_ROWS = {
+  DEFAULT: 4,
+} as const
+

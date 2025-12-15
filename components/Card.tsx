@@ -2,6 +2,7 @@ import { ReactNode, HTMLAttributes } from 'react'
 import { COLOR } from '../constants/color'
 import { BORDER_RADIUS, BORDER_WIDTH } from '../constants/border'
 import { SPACING } from '../constants/spacing'
+import { MULTIPLIER } from '../constants/multiplier'
 import { lightenColor } from '../lib/colorUtils'
 
 interface CardProps extends HTMLAttributes<HTMLDivElement> {
@@ -13,7 +14,7 @@ interface CardProps extends HTMLAttributes<HTMLDivElement> {
 
 export const Card = ({ children, className = '', style, variant = 'default', ...props }: CardProps) => {
   const isDashed = variant === 'dashed'
-  const lightPurple = isDashed ? lightenColor(COLOR.PURPLE, 95) : undefined
+  const lightPurple = isDashed ? lightenColor(COLOR.PURPLE, MULTIPLIER.COLOR_LIGHTEN_NINETY_FIVE) : undefined
   
   return (
     <div

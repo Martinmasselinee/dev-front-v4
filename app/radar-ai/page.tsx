@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { Users, Mail, X, AlertTriangle, Sparkles, ScanLine, Inbox, FileText, TrendingUp, Building2, Tag, Zap, Award, DollarSign, Youtube, Shirt } from 'lucide-react'
+import { Users, Mail, AlertTriangle, Sparkles, ScanLine, Inbox, FileText, TrendingUp, Building2, Tag, Zap, Award, DollarSign, Youtube, Shirt, Plus } from 'lucide-react'
 import { Dot } from '../../components/Dot'
 import { Text } from '../../components/Text'
 import { LAYOUT } from '../../constants/layout'
@@ -16,23 +16,31 @@ import { Popup } from '../../components/Popup'
 import { Input } from '../../components/Input'
 import { Button } from '../../components/Button'
 import { Card } from '../../components/Card'
-import { IconButton } from '../../components/IconButton'
 import { EmptyState } from '../../components/EmptyState'
+import { UserInitial } from '../../components/UserInitial'
+import { DropdownButton } from '../../components/DropdownButton'
+import { RoleChangeConfirmPopup } from '../../app/admin/components/RoleChangeConfirmPopup'
 import { COLOR } from '../../constants/color'
-import { BORDER_RADIUS, BORDER_WIDTH } from '../../constants/border'
+import { BORDER_WIDTH } from '../../constants/border'
 import { DISPLAY } from '../../constants/display'
 import { FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT, FLEX } from '../../constants/flex'
 import { TEXT_ALIGN } from '../../constants/text'
 import { MULTIPLIER } from '../../constants/multiplier'
 import { STRING } from '../../constants/string'
+import { INPUT_HEIGHT } from '../../constants/input'
+import { WIDTH } from '../../constants/width'
+import { DIMENSION } from '../../constants/dimension'
+import { TABLE } from '../../constants/table'
 
 export default function RadarAIPage() {
   const searchParams = useSearchParams()
   const [showAddUsersPopup, setShowAddUsersPopup] = useState(false)
-  const [invitedUsers, setInvitedUsers] = useState<string[]>([])
+  const [invitedUsers, setInvitedUsers] = useState<Array<{ email: string; role: 'admin' | 'user' }>>([])
   const [currentEmailInput, setCurrentEmailInput] = useState('')
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
   const [userToDelete, setUserToDelete] = useState<string | null>(null)
+  const [showRoleChangeConfirm, setShowRoleChangeConfirm] = useState(false)
+  const [userToChangeRole, setUserToChangeRole] = useState<{ email: string; newRole: string } | null>(null)
   const [searchValue, setSearchValue] = useState('')
   const [timeRange, setTimeRange] = useState('all')
   const [articleType, setArticleType] = useState('all')
@@ -50,8 +58,8 @@ export default function RadarAIPage() {
   }, [searchParams])
 
   const handleInviteUser = () => {
-    if (currentEmailInput.trim() && !invitedUsers.includes(currentEmailInput.trim())) {
-      setInvitedUsers([...invitedUsers, currentEmailInput.trim()])
+    if (currentEmailInput.trim() && !invitedUsers.some(user => user.email === currentEmailInput.trim())) {
+      setInvitedUsers([...invitedUsers, { email: currentEmailInput.trim(), role: 'user' }])
       setCurrentEmailInput('')
     }
   }
@@ -63,10 +71,45 @@ export default function RadarAIPage() {
 
   const handleConfirmDelete = () => {
     if (userToDelete) {
-      setInvitedUsers(invitedUsers.filter((userEmail) => userEmail !== userToDelete))
+      setInvitedUsers(invitedUsers.filter((user) => user.email !== userToDelete))
       setUserToDelete(null)
       setShowDeleteConfirm(false)
     }
+  }
+
+  const handleRoleChange = (email: string, newRole: string) => {
+    setUserToChangeRole({ email, newRole })
+    setShowRoleChangeConfirm(true)
+  }
+
+  const handleConfirmRoleChange = () => {
+    if (userToChangeRole) {
+      setInvitedUsers(invitedUsers.map(user => 
+        user.email === userToChangeRole.email 
+          ? { ...user, role: userToChangeRole.newRole as 'admin' | 'user' }
+          : user
+      ))
+      setUserToChangeRole(null)
+      setShowRoleChangeConfirm(false)
+    }
+  }
+
+  const handleCancelRoleChange = () => {
+    setUserToChangeRole(null)
+    setShowRoleChangeConfirm(false)
+  }
+
+  const getUserToChangeRoleName = () => {
+    return userToChangeRole?.email || ''
+  }
+
+  const getRoleChangeText = () => {
+    if (!userToChangeRole) return ''
+    const currentUser = allUsers.find(u => u.email === userToChangeRole.email)
+    if (!currentUser) return ''
+    const currentRole = currentUser.role === 'admin' ? 'administrateur' : 'utilisateur'
+    const newRole = userToChangeRole.newRole === 'admin' ? 'administrateur' : 'utilisateur'
+    return `passer de ${currentRole} à ${newRole}`
   }
 
   const handleCancelDelete = () => {
@@ -74,14 +117,10 @@ export default function RadarAIPage() {
     setShowDeleteConfirm(false)
   }
 
-  const getFirstLetter = (email: string) => {
-    return email.charAt(0).toUpperCase()
-  }
-
   // Combine current user and invited users for display
   const allUsers = [
     { email: currentUserEmail, role: 'admin' as const },
-    ...invitedUsers.map((email) => ({ email, role: 'utilisateur' as const }))
+    ...invitedUsers
   ]
 
   const timeframeOptions = [
@@ -251,9 +290,10 @@ export default function RadarAIPage() {
               style={{ flex: FLEX.ONE }}
             />
             <Button
-              variant="BLACK"
+              variant="WHITE"
               onClick={handleInviteUser}
               type="button"
+              icon={<Plus size={ICON_SIZE.M} />}
               style={{ width: `calc(${POSITION.CENTER} * ${MULTIPLIER.BUTTON_WIDTH_HALF} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY_FIVE})` }}
             >
               Inviter
@@ -286,22 +326,7 @@ export default function RadarAIPage() {
                     flex: FLEX.ONE,
                   }}
                 >
-                  <div
-                    style={{
-                      width: ICON_SIZE.L,
-                      height: ICON_SIZE.L,
-                      borderRadius: BORDER_RADIUS.CIRCLE,
-                      backgroundColor: COLOR.BLACK,
-                      display: DISPLAY.FLEX,
-                      alignItems: ALIGN_ITEMS.CENTER,
-                      justifyContent: JUSTIFY_CONTENT.CENTER,
-                      flexShrink: FLEX.ZERO,
-                    }}
-                  >
-                    <Text size="S" weight="XL" color="WHITE">
-                      {getFirstLetter(user.email)}
-                    </Text>
-                  </div>
+                  <UserInitial name={user.email} size="L" />
                   <div
                     style={{
                       display: DISPLAY.FLEX,
@@ -313,29 +338,37 @@ export default function RadarAIPage() {
                     <Text size="M" weight="M" color="BLACK">
                       {user.email}
                     </Text>
-                    <div
-                      style={{
-                        paddingLeft: SPACING.XS,
-                        paddingRight: SPACING.XS,
-                        paddingTop: SPACING.XS,
-                        paddingBottom: SPACING.XS,
-                        backgroundColor: COLOR.WHITE,
-                        border: `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.MEDIUM}`,
-                        borderRadius: BORDER_RADIUS.S,
+                    <DropdownButton
+                      value={user.role === 'admin' ? 'admin' : 'user'}
+                      disabled={user.email === currentUserEmail}
+                      onChange={(e) => {
+                        if (e.target.value !== user.role) {
+                          handleRoleChange(user.email, e.target.value)
+                        }
+                      }}
+                      style={{ 
+                        width: WIDTH.AUTO, 
+                        minWidth: DIMENSION.MIN_WIDTH_ZERO,
+                        height: `calc(${INPUT_HEIGHT.SMALL} * ${MULTIPLIER.HEIGHT_EIGHTY})`,
+                        lineHeight: `calc(${INPUT_HEIGHT.SMALL} * ${MULTIPLIER.HEIGHT_EIGHTY})`,
                       }}
                     >
-                      <Text size="S" weight="M" color="GREY_DARK">
-                        {user.role === 'admin' ? 'admin' : 'utilisateur'}
-                      </Text>
-                    </div>
+                      <option value="admin">Admin</option>
+                      <option value="user">Utilisateur</option>
+                    </DropdownButton>
                   </div>
                 </div>
-                {user.role === 'utilisateur' && (
-                  <IconButton
+                {user.email !== currentUserEmail && (
+                  <Button
+                    variant="RED"
                     onClick={() => handleDeleteClick(user.email)}
-                    icon={<X size={ICON_SIZE.M} />}
-                    style={{ color: COLOR.GREY.DARK }}
-                  />
+                    style={{
+                      width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY})`,
+                      height: `calc(${INPUT_HEIGHT.SMALL} * ${MULTIPLIER.HEIGHT_EIGHTY})`,
+                    }}
+                  >
+                    Retirer
+                  </Button>
                 )}
               </Card>
             ))}
@@ -344,7 +377,6 @@ export default function RadarAIPage() {
           <Button
             variant="PURPLE"
             onClick={() => setShowAddUsersPopup(false)}
-            icon={<Sparkles size={ICON_SIZE.M} />}
           >
             Trouver mes prochains sponsors
           </Button>
@@ -394,6 +426,14 @@ export default function RadarAIPage() {
           </div>
         </div>
       </Popup>
+
+      <RoleChangeConfirmPopup
+        isOpen={showRoleChangeConfirm}
+        onClose={handleCancelRoleChange}
+        onConfirm={handleConfirmRoleChange}
+        userName={getUserToChangeRoleName()}
+        roleChangeText={getRoleChangeText()}
+      />
     </>
   )
 }
