@@ -22,6 +22,7 @@ import { HelpButton } from '../../components/HelpButton'
 import { Button } from '../../components/Button'
 import { WIDTH } from '../../constants/width'
 import { STRING } from '../../constants/string'
+import { findOptionOrDefault } from '../../lib/arrayUtils'
 
 export default function SmartSearchPage() {
   const [viewType, setViewType] = useState('table')
