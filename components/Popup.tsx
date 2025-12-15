@@ -26,9 +26,10 @@ interface PopupProps {
   icon?: LucideIcon
   size?: 'default' | 'small'
   rightElement?: ReactNode
+  maxHeight?: string
 }
 
-export const Popup = ({ isOpen, onClose, title, children, icon: Icon = FileText, size = 'default', rightElement }: PopupProps) => {
+export const Popup = ({ isOpen, onClose, title, children, icon: Icon = FileText, size = 'default', rightElement, maxHeight }: PopupProps) => {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = OVERFLOW.HIDDEN
@@ -70,7 +71,7 @@ export const Popup = ({ isOpen, onClose, title, children, icon: Icon = FileText,
           borderRadius: BORDER_RADIUS.M,
           width: WIDTH.FULL,
           maxWidth: size === 'small' ? POPUP.MAX_WIDTH_SMALL : POPUP.MAX_WIDTH,
-          maxHeight: POPUP.MAX_HEIGHT,
+          maxHeight: maxHeight || POPUP.MAX_HEIGHT,
           display: DISPLAY.FLEX,
           flexDirection: FLEX_DIRECTION.COLUMN,
         }}

@@ -21,6 +21,7 @@ import { FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT, FLEX, FLEX_WRAP } from '.
 import { CURSOR } from '../constants/interaction'
 import { BORDER_WIDTH, BORDER_RADIUS } from '../constants/border'
 import { OUTLINE } from '../constants/outline'
+import { TEXTAREA_ROWS } from '../constants/input'
 import { MULTIPLIER } from '../constants/multiplier'
 import { Mail, Phone } from 'lucide-react'
 
@@ -218,7 +219,7 @@ export const HelpButton = ({ bottomOffset = SPACING.L }: HelpButtonProps) => {
                 onChange={(e) => setBugDescription(e.target.value)}
                 placeholder="Décrivez le problème rencontré..."
                 required
-                rows={4}
+                rows={TEXTAREA_ROWS.DEFAULT}
               />
               <Text size="M" weight="XL" color="BLACK" as="div" style={{ marginTop: SPACING.M, marginBottom: SPACING.S }}>
                 Type de bug

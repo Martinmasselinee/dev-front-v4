@@ -13,10 +13,12 @@ import { FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT, FLEX, FLEX_WRAP } from '.
 import { BORDER_RADIUS, BORDER_WIDTH } from '../../../constants/border'
 import { ICON_SIZE } from '../../../constants/iconSize'
 import { WIDTH } from '../../../constants/width'
+import { DIMENSION } from '../../../constants/dimension'
 import { LINE_HEIGHT, FONT_STYLE, FONT_SIZE } from '../../../constants/font'
-import { WHITE_SPACE } from '../../../constants/text'
+import { WHITE_SPACE, LIST_STYLE } from '../../../constants/text'
 import { TRANSITION } from '../../../constants/transition'
 import { POSITION } from '../../../constants/position'
+import { POPUP } from '../../../constants/popup'
 
 export interface RelatedArticle {
   title: string
@@ -61,6 +63,7 @@ export const ArticlePopup = ({
       onClose={onClose}
       title={title}
       icon={Icon}
+      maxHeight={POPUP.MAX_HEIGHT_LARGE}
     >
       <div style={{ display: DISPLAY.FLEX, flexDirection: FLEX_DIRECTION.COLUMN }}>
         {/* Type container - full width with white bg, positioned right after header */}
@@ -106,7 +109,7 @@ export const ArticlePopup = ({
               width: `calc(100% + ${SPACING.L} + ${SPACING.L})`,
               marginLeft: `-${SPACING.L}`,
               marginRight: `-${SPACING.L}`,
-              aspectRatio: '16/9',
+              aspectRatio: DIMENSION.ASPECT_RATIO_VIDEO,
               backgroundColor: COLOR.GREY.LIGHT,
               display: DISPLAY.FLEX,
               alignItems: ALIGN_ITEMS.CENTER,
@@ -186,7 +189,7 @@ export const ArticlePopup = ({
                     style={{
                       margin: SPACING.ZERO,
                       paddingLeft: SPACING.XL,
-                      listStyle: 'disc',
+                      listStyle: LIST_STYLE.DISC,
                       display: DISPLAY.FLEX,
                       flexDirection: FLEX_DIRECTION.COLUMN,
                       gap: SPACING.ZERO,

@@ -23,7 +23,7 @@ interface FileUploadProps {
 export const FileUpload = ({
   onFileSelect,
   acceptedFormats = ['PDF', 'DOCX', 'PPTX'],
-  maxSize = 50,
+  maxSize = FILE_SIZE.FILE_UPLOAD_MAX_SIZE_MB,
 }: FileUploadProps) => {
   const [isDragging, setIsDragging] = useState(false)
   const [isHovered, setIsHovered] = useState(false)

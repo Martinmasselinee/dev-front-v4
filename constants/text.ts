@@ -33,3 +33,7 @@ export const LETTER_SPACING = {
   NORMAL: 'normal',
 } as const
 
+export const LIST_STYLE = {
+  DISC: 'disc',
+} as const
+

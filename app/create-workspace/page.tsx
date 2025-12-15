@@ -15,6 +15,7 @@ import { Button } from '../../components/Button'
 import { ButtonRetour } from '../../components/ButtonRetour'
 import { Input } from '../../components/Input'
 import { Textarea } from '../../components/Textarea'
+import { TEXTAREA_ROWS } from '../../constants/input'
 import { Select } from '../../components/Select'
 import { Form } from '../../components/Form'
 import { FormGroup } from '../../components/FormGroup'
@@ -174,7 +175,7 @@ export default function CreateWorkspacePage() {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Décrivez votre workspace et vos objectifs sponsoring pour réussir votre mission"
-                rows={4}
+                rows={TEXTAREA_ROWS.DEFAULT}
               />
             </FormGroup>
 

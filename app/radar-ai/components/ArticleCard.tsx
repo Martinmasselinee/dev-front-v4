@@ -84,7 +84,7 @@ export const ArticleCard = ({
       <div
         style={{
           width: WIDTH.FULL,
-          aspectRatio: '16/9',
+          aspectRatio: DIMENSION.ASPECT_RATIO_VIDEO,
           backgroundColor: COLOR.GREY.LIGHT,
           borderRadius: BORDER_RADIUS.M,
           display: DISPLAY.FLEX,

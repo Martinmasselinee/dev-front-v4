@@ -31,11 +31,7 @@ export const SplashScreen = () => {
   useEffect(() => {
     const startTime = Date.now()
     const duration = TIME.SPLASH_SCREEN
-    const logoGrowDuration = TIME.DELAY.MEDIUM // Logo grows in 500ms, then stays at full size
-
-    // Animation timeline - Logo Dataxx grows at center quickly, then stays
     const timers = [
-      // Step 1: Dataxx logo grows at center (start immediately with small delay)
       setTimeout(() => setAnimationStep(1), TIME.DELAY.SHORT),
     ]
 

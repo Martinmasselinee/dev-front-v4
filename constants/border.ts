@@ -12,7 +12,8 @@ export const BORDER_RADIUS = {
   S: '4px',
   M: '8px',
   L: '12px',
-  XL: '16px',
+  XL: '24px',
   CIRCLE: '50%',
+  STATUS_BUBBLE: '24px',
 } as const
 

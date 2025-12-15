@@ -7,7 +7,7 @@ import { DISPLAY } from '../constants/display'
 import { ALIGN_ITEMS, FLEX } from '../constants/flex'
 import { MULTIPLIER } from '../constants/multiplier'
 import { OPACITY } from '../constants/opacity'
-import { BORDER_WIDTH } from '../constants/border'
+import { BORDER_WIDTH, BORDER_RADIUS } from '../constants/border'
 import { ICON_SIZE } from '../constants/iconSize'
 import { ICON_STROKE_WIDTH } from '../constants/icon'
 import { hexToRgba } from '../lib/colorUtils'
@@ -47,7 +47,7 @@ export const StatusBubble = ({ label, variant, style }: StatusBubbleProps) => {
         paddingBottom: SPACING.XS,
         backgroundColor,
         border: `${BORDER_WIDTH.THIN} solid ${borderColor}`,
-        borderRadius: SPACING.XL,
+        borderRadius: BORDER_RADIUS.STATUS_BUBBLE,
         flexShrink: FLEX.ZERO,
         ...style,
       }}

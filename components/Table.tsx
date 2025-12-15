@@ -18,10 +18,12 @@ import { Z_INDEX } from '../constants/zIndex'
 import { OVERFLOW } from '../constants/overflow'
 import { WIDTH } from '../constants/width'
 import { MULTIPLIER } from '../constants/multiplier'
+import { NUMBER } from '../constants/number'
 import { TEXT_ALIGN } from '../constants/text'
 import { darkenColor } from '../lib/colorUtils'
 import { TRANSITION } from '../constants/transition'
 import { CURSOR } from '../constants/interaction'
+import { TABLE } from '../constants/table'
 
 interface TableProps<T> {
   data: T[]
@@ -86,8 +88,8 @@ export function Table<T>({
                 <div
                   key={header.id}
                   style={{
-                    width: meta?.width || `calc(10 * ${SPACING.L})`,
-                    minWidth: meta?.width || `calc(10 * ${SPACING.L})`,
+                    width: meta?.width || `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L})`,
+                    minWidth: meta?.width || `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L})`,
                     flex: meta?.sticky ? FLEX.ZERO : FLEX.ONE,
                     paddingTop: SPACING.M,
                     paddingBottom: SPACING.M,
@@ -124,10 +126,10 @@ export function Table<T>({
           {table.getRowModel().rows.map((row, rowIndex) => {
             const baseRowBgColor = getRowBackgroundColor 
               ? getRowBackgroundColor(row, rowIndex)
-              : rowIndex % 2 === 0 ? COLOR.WHITE : COLOR.GREY.LIGHT
+              : rowIndex % MULTIPLIER.TABLE_ROW_ALTERNATE === NUMBER.ZERO ? COLOR.WHITE : COLOR.GREY.LIGHT
             
             const isHovered = hoveredRowIndex === rowIndex
-            const darkenPercent = (MULTIPLIER.COLOR_DARKEN_PERCENT / 2) + (MULTIPLIER.COLOR_DARKEN_PERCENT * 0.25)
+            const darkenPercent = (MULTIPLIER.COLOR_DARKEN_PERCENT * MULTIPLIER.DARKEN_PERCENT_HALF) + (MULTIPLIER.COLOR_DARKEN_PERCENT * MULTIPLIER.DARKEN_PERCENT_QUARTER)
             const rowBgColor = isHovered 
               ? darkenColor(baseRowBgColor, darkenPercent)
               : baseRowBgColor
@@ -154,8 +156,8 @@ export function Table<T>({
                     <div
                       key={cell.id}
                       style={{
-                        width: meta?.width || `calc(10 * ${SPACING.L})`,
-                        minWidth: meta?.width || `calc(10 * ${SPACING.L})`,
+                        width: meta?.width || `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L})`,
+                        minWidth: meta?.width || `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L})`,
                         flex: meta?.sticky ? FLEX.ZERO : FLEX.ONE,
                         paddingTop: SPACING.M,
                         paddingBottom: SPACING.M,
