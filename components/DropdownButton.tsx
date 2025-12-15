@@ -1,6 +1,6 @@
 'use client'
 
-import { SelectHTMLAttributes, forwardRef, useState } from 'react'
+import { SelectHTMLAttributes, forwardRef, useState, useEffect, useRef } from 'react'
 import { ChevronDown } from 'lucide-react'
 import { INPUT_HEIGHT, INPUT_PADDING } from '../constants/input'
 import { COLOR } from '../constants/color'
@@ -18,15 +18,59 @@ import { OUTLINE } from '../constants/outline'
 import { WIDTH } from '../constants/width'
 import { DIMENSION } from '../constants/dimension'
 import { OPACITY } from '../constants/opacity'
+import { TEXT_OVERFLOW, WHITE_SPACE } from '../constants/text'
+import { OVERFLOW } from '../constants/overflow'
 
-interface DropdownButtonProps extends SelectHTMLAttributes<HTMLSelectElement> {}
+interface DropdownButtonProps extends SelectHTMLAttributes<HTMLSelectElement> {
+  maxWidth?: string
+}
 
 export const DropdownButton = forwardRef<HTMLSelectElement, DropdownButtonProps>(
-  ({ style, ...props }, ref) => {
+  ({ style, maxWidth, ...props }, ref) => {
     const [isFocused, setIsFocused] = useState(false)
+    const [selectWidth, setSelectWidth] = useState<string>(DIMENSION.DROPDOWN_BUTTON_MIN_WIDTH)
+    const measureRef = useRef<HTMLSpanElement>(null)
+    const selectRef = useRef<HTMLSelectElement>(null)
 
     const paddingLeft = INPUT_PADDING.HORIZONTAL.WITHOUT_ICON
     const paddingRight = INPUT_PADDING.HORIZONTAL.WITH_ICON
+
+    // Use the ref from props or our internal ref
+    const actualRef = (ref as React.RefObject<HTMLSelectElement>) || selectRef
+
+    useEffect(() => {
+      const select = actualRef.current
+      if (!select || !measureRef.current) return
+
+      const selectedOption = select.options[select.selectedIndex]
+      if (!selectedOption) return
+
+      const selectedText = selectedOption.text
+      measureRef.current.textContent = selectedText
+
+      // Measure the text width
+      const textWidth = measureRef.current.offsetWidth
+      const arrowWidth = ICON_SIZE.M
+      const paddingLeftValue = parseInt(paddingLeft.replace('px', ''))
+      const paddingRightValue = parseInt(paddingRight.replace('px', ''))
+      const spacingMValue = parseInt(SPACING.M.replace('px', ''))
+      const totalPadding = paddingLeftValue + paddingRightValue + spacingMValue + arrowWidth
+      const calculatedWidth = textWidth + totalPadding
+
+      // Apply max width if provided
+      let maxWidthValue: number | undefined
+      if (maxWidth) {
+        const maxWidthStr = maxWidth.replace('px', '').replace('calc(', '').replace(')', '').trim()
+        maxWidthValue = parseInt(maxWidthStr) || undefined
+      }
+      
+      const minWidthValue = parseInt(DIMENSION.DROPDOWN_BUTTON_MIN_WIDTH.replace('px', ''))
+      const finalWidth = maxWidthValue && calculatedWidth > maxWidthValue 
+        ? maxWidthValue 
+        : Math.max(calculatedWidth, minWidthValue)
+
+      setSelectWidth(`${finalWidth}px`)
+    }, [props.value, props.children, maxWidth, paddingLeft, paddingRight])
 
     return (
       <div
@@ -35,6 +79,21 @@ export const DropdownButton = forwardRef<HTMLSelectElement, DropdownButtonProps>
           width: WIDTH.AUTO,
         }}
       >
+        {/* Hidden span for measuring text width */}
+        <span
+          ref={measureRef}
+          style={{
+            position: POSITION_TYPE.ABSOLUTE,
+            visibility: 'hidden',
+            whiteSpace: WHITE_SPACE.NOWRAP,
+            fontSize: FONT_SIZE.M,
+            padding: SPACING.ZERO,
+            margin: SPACING.ZERO,
+            height: 'auto',
+            width: 'auto',
+          }}
+        />
+
         {/* Dropdown Arrow */}
         <div
           style={{
@@ -55,11 +114,12 @@ export const DropdownButton = forwardRef<HTMLSelectElement, DropdownButtonProps>
         </div>
 
         <select
-          ref={ref}
+          ref={actualRef}
           {...props}
           style={{
-            width: WIDTH.AUTO,
+            width: selectWidth,
             minWidth: DIMENSION.DROPDOWN_BUTTON_MIN_WIDTH,
+            maxWidth: maxWidth || 'none',
             height: INPUT_HEIGHT.SMALL,
             paddingLeft: paddingLeft,
             paddingRight: paddingRight,
@@ -72,10 +132,13 @@ export const DropdownButton = forwardRef<HTMLSelectElement, DropdownButtonProps>
             border: `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.MEDIUM}`,
             borderRadius: BORDER_RADIUS.M,
             outline: OUTLINE.NONE,
-            transition: `border-color ${TRANSITION.FAST_EASE}`,
+            transition: `border-color ${TRANSITION.FAST_EASE}, width ${TRANSITION.FAST_EASE}`,
             appearance: 'none',
             cursor: props.disabled ? CURSOR.NOT_ALLOWED : CURSOR.POINTER,
             opacity: props.disabled ? OPACITY.DISABLED : OPACITY.FULL,
+            overflow: OVERFLOW.HIDDEN,
+            textOverflow: TEXT_OVERFLOW.ELLIPSIS,
+            whiteSpace: WHITE_SPACE.NOWRAP,
             ...style,
           }}
           onFocus={(e) => {

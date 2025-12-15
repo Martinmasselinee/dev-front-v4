@@ -22,7 +22,7 @@ export const NoAbonnementCard = ({ onSubscribe }: NoAbonnementCardProps) => {
         marginTop: SPACING.ZERO,
         marginLeft: SPACING.L,
         marginRight: SPACING.L,
-        marginBottom: SPACING.L,
+        marginBottom: SPACING.XL,
         backgroundColor: COLOR.WHITE,
       }}
     >

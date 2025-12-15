@@ -41,7 +41,6 @@ export function Table<T>({
       style={{
         width: WIDTH.FULL,
         overflowX: OVERFLOW.AUTO,
-        borderTop: `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.LIGHT_MEDIUM}`,
         borderBottom: `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.LIGHT_MEDIUM}`,
         borderRadius: POSITION.ZERO,
         display: DISPLAY.FLEX,
@@ -66,6 +65,7 @@ export function Table<T>({
             zIndex: Z_INDEX.COMPONENT_OVERLAY,
             width: WIDTH.FULL,
             minWidth: 'max-content',
+            borderBottom: `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.LIGHT_MEDIUM}`,
           }}
         >
           {table.getHeaderGroups().map(headerGroup =>

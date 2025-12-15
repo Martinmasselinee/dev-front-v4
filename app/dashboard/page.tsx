@@ -12,20 +12,102 @@ import { NavbarSidebar } from '../../components/NavbarSidebar'
 import { TopBar } from '../../components/TopBar'
 import { StatsBar } from '../../components/StatsBar'
 import { HelpButton } from '../../components/HelpButton'
+import { ActivityTable, type Activity } from './components/ActivityTable'
 import { EmptyState } from '../../components/EmptyState'
 import { DISPLAY } from '../../constants/display'
-import { ALIGN_ITEMS } from '../../constants/flex'
+import { ALIGN_ITEMS, FLEX_DIRECTION } from '../../constants/flex'
 import { STRING } from '../../constants/string'
+import { FLEX } from '../../constants/flex'
 
 export default function DashboardPage() {
   const [searchValue, setSearchValue] = useState('')
   const [timeRange, setTimeRange] = useState('all')
+  const [selectedUserId, setSelectedUserId] = useState('all')
   const [activitesAujourdhui, setActivitesAujourdhui] = useState('14')
   const [activitesSemaine, setActivitesSemaine] = useState('200')
+  const [showTable, setShowTable] = useState(false)
+
+  // Mock activities data - one for each stat icon
+  const [activities] = useState<Activity[]>([
+    {
+      id: '1',
+      userId: '1',
+      userFirstName: 'Martin',
+      userLastName: 'Masseline',
+      description: 'Article lu sur le sponsoring sportif',
+      date: '15/01/2025',
+      time: '14:30',
+      type: 'article',
+    },
+    {
+      id: '2',
+      userId: '2',
+      userFirstName: 'Jean',
+      userLastName: 'Dupont',
+      description: 'Recherche lancée pour entreprises tech',
+      date: '15/01/2025',
+      time: '13:45',
+      type: 'recherche',
+    },
+    {
+      id: '3',
+      userId: '1',
+      userFirstName: 'Martin',
+      userLastName: 'Masseline',
+      description: 'Entreprise identifiée : TechCorp',
+      date: '15/01/2025',
+      time: '12:20',
+      type: 'entreprise',
+    },
+    {
+      id: '4',
+      userId: '3',
+      userFirstName: 'Marie',
+      userLastName: 'Martin',
+      description: 'Décideur identifié : Directeur Marketing',
+      date: '15/01/2025',
+      time: '11:15',
+      type: 'decideur',
+    },
+    {
+      id: '5',
+      userId: '2',
+      userFirstName: 'Jean',
+      userLastName: 'Dupont',
+      description: 'Coordonnées trouvées pour 5 contacts',
+      date: '15/01/2025',
+      time: '10:00',
+      type: 'coordonnee',
+    },
+    {
+      id: '6',
+      userId: '1',
+      userFirstName: 'Martin',
+      userLastName: 'Masseline',
+      description: 'Email envoyé à TechCorp',
+      date: '14/01/2025',
+      time: '16:30',
+      type: 'email',
+    },
+    {
+      id: '7',
+      userId: '3',
+      userFirstName: 'Marie',
+      userLastName: 'Martin',
+      description: 'Partenariat signé avec SportBrand',
+      date: '14/01/2025',
+      time: '15:00',
+      type: 'partenariat',
+    },
+  ])
 
   const handleRefresh = () => {
-    // TODO: Implement refresh logic
-    console.log('Refresh clicked')
+    setShowTable(true)
+  }
+
+  const handleViewActivity = (activityId: string) => {
+    // TODO: Implement view activity logic
+    console.log('View activity:', activityId)
   }
 
   const dropdownOptions = [
@@ -33,6 +115,24 @@ export default function DashboardPage() {
     { value: '7d', label: '7 derniers jours' },
     { value: '30d', label: '30 derniers jours' },
     { value: 'all', label: 'Toute l\'activité' },
+  ]
+
+  // Get unique users from activities
+  const uniqueUsers = Array.from(
+    new Map(
+      activities.map(activity => [
+        activity.userId,
+        { id: activity.userId, firstName: activity.userFirstName, lastName: activity.userLastName }
+      ])
+    ).values()
+  )
+
+  const userDropdownOptions = [
+    { value: 'all', label: 'Tous les utilisateurs' },
+    ...uniqueUsers.map(user => ({
+      value: user.id,
+      label: `${user.firstName} ${user.lastName}`
+    }))
   ]
 
   const selectedOption = dropdownOptions.find(option => option.value === timeRange) || dropdownOptions[dropdownOptions.length - 1]
@@ -95,15 +195,25 @@ export default function DashboardPage() {
         dropdownOptions={dropdownOptions}
         dropdownValue={timeRange}
         onDropdownChange={setTimeRange}
+        secondDropdownOptions={userDropdownOptions}
+        secondDropdownValue={selectedUserId}
+        onSecondDropdownChange={setSelectedUserId}
         stickyTopOffset={`calc((${SPACING.XXXL} + ${SPACING.M}) + ((${SPACING.XXXL} + ${SPACING.M}) * ${MULTIPLIER.STATS_BAR_HEIGHT}))`}
       />
       <HelpButton />
       
-      <EmptyState
-        icon={Inbox}
-        title="Aucune activité récente"
-        description="Vos activités récentes apparaîtront ici"
-      />
+      {showTable ? (
+        <ActivityTable
+          activities={activities}
+          onView={handleViewActivity}
+        />
+      ) : (
+        <EmptyState
+          icon={Inbox}
+          title="Aucune activité récente"
+          description="Vos activités récentes apparaîtront ici"
+        />
+      )}
     </div>
   )
 }
