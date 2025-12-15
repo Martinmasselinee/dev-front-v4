@@ -16,6 +16,7 @@ import { BORDER_RADIUS, BORDER_WIDTH } from '../../constants/border'
 import { ICON_SIZE } from '../../constants/iconSize'
 import { DIMENSION } from '../../constants/dimension'
 import { BUSINESS } from '../../constants/business'
+import { findOptionOrDefault } from '../../lib/arrayUtils'
 import { MULTIPLIER } from '../../constants/multiplier'
 import { NavbarSidebar } from '../../components/NavbarSidebar'
 import { TopBar } from '../../components/TopBar'
@@ -30,7 +31,7 @@ export default function ProspectHunterPage() {
     { value: 'cards', label: 'Cartes' },
   ]
 
-  const selectedViewOption = viewOptions.find(option => option.value === viewType) || viewOptions[0]
+  const selectedViewOption = findOptionOrDefault(viewOptions, viewType)
 
   const entreprisesCount = 103937
   const decideursCount = entreprisesCount * BUSINESS.DECIDEURS_PER_ENTREPRISE

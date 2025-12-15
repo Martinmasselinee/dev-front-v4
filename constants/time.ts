@@ -12,5 +12,17 @@ export const TIME = {
   },
   SPLASH_SCREEN: 2000, // milliseconds (2 seconds)
   ANIMATION_DURATION: 1000, // milliseconds
+  MILLISECONDS_PER_SECOND: 1000,
+  SECONDS_PER_MINUTE: 60,
+  MINUTES_PER_HOUR: 60,
+  HOURS_PER_DAY: 24,
+  DAYS_PER_WEEK: 7,
+  DAYS_PER_MONTH: 30,
+  DATE_RESET: {
+    HOUR: 0,
+    MINUTE: 0,
+    SECOND: 0,
+    MILLISECOND: 0,
+  },
 } as const
 

@@ -338,7 +338,7 @@ export const NavbarSidebar = () => {
                   overflow: OVERFLOW.HIDDEN,
                   textOverflow: TEXT_OVERFLOW.ELLIPSIS,
                   whiteSpace: WHITE_SPACE.NOWRAP,
-                  minWidth: 0,
+                  minWidth: DIMENSION.MIN_WIDTH_ZERO,
                   flex: FLEX.ONE,
                 }}
               >
@@ -395,7 +395,7 @@ export const NavbarSidebar = () => {
                   overflow: OVERFLOW.HIDDEN,
                   textOverflow: TEXT_OVERFLOW.ELLIPSIS,
                   whiteSpace: WHITE_SPACE.NOWRAP,
-                  minWidth: 0,
+                  minWidth: DIMENSION.MIN_WIDTH_ZERO,
                   flex: FLEX.ONE,
                 }}
               >
@@ -418,7 +418,7 @@ export const NavbarSidebar = () => {
                   overflow: OVERFLOW.HIDDEN,
                   textOverflow: TEXT_OVERFLOW.ELLIPSIS,
                   whiteSpace: WHITE_SPACE.NOWRAP,
-                  minWidth: 0,
+                  minWidth: DIMENSION.MIN_WIDTH_ZERO,
                   flex: FLEX.ONE,
                 }}
               >

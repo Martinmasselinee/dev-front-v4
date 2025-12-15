@@ -1,6 +1,7 @@
 'use client'
 
 import { ReactNode } from 'react'
+import { Globe } from 'lucide-react'
 import { COLOR } from '../constants/color'
 import { SPACING } from '../constants/spacing'
 import { DISPLAY } from '../constants/display'
@@ -11,6 +12,7 @@ import { CURSOR } from '../constants/interaction'
 import { TRANSITION } from '../constants/transition'
 import { MULTIPLIER } from '../constants/multiplier'
 import { OPACITY } from '../constants/opacity'
+import { ICON_SIZE } from '../constants/iconSize'
 import { darkenColor, hexToRgba } from '../lib/colorUtils'
 import { Text } from './Text'
 
@@ -40,6 +42,7 @@ export const Bubble = ({ children, onClick, style }: BubbleProps) => {
         style={{
           display: DISPLAY.INLINE_FLEX,
           alignItems: ALIGN_ITEMS.CENTER,
+          gap: SPACING.XS,
           paddingLeft: SPACING.S,
           paddingRight: SPACING.S,
           paddingTop: SPACING.XS,
@@ -52,6 +55,13 @@ export const Bubble = ({ children, onClick, style }: BubbleProps) => {
           ...style,
         }}
       >
+        <Globe 
+          size={ICON_SIZE.S} 
+          style={{ 
+            color: COLOR.PURPLE,
+            flexShrink: FLEX.ZERO,
+          }} 
+        />
         <Text 
           size="M" 
           weight="XL" 

@@ -43,12 +43,12 @@ export const SplashScreen = () => {
     let animationFrameId: number
     const animate = () => {
       const elapsed = Date.now() - startTime
-      const progress = Math.min(elapsed / duration, 0.99) // Cap at 0.99 to stop at 99%
+      const progress = Math.min(elapsed / duration, MULTIPLIER.PROGRESS_CAP)
       const newPercentage = Math.floor(progress * MULTIPLIER.PERCENTAGE_BASE)
       setPercentage(newPercentage)
 
-      if (progress >= 0.99 || newPercentage >= 99) {
-        setPercentage(99)
+      if (progress >= MULTIPLIER.PROGRESS_CAP || newPercentage >= MULTIPLIER.PERCENTAGE_MAX) {
+        setPercentage(MULTIPLIER.PERCENTAGE_MAX)
         // Redirect to sign-in after animation completes
         setTimeout(() => {
           router.push('/auth-sign-in')

@@ -17,7 +17,7 @@ import { TIME } from '../constants/time'
 import { TRANSITION } from '../constants/transition'
 import { POSITION_TYPE } from '../constants/position'
 import { DISPLAY } from '../constants/display'
-import { FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT, FLEX } from '../constants/flex'
+import { FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT, FLEX, FLEX_WRAP } from '../constants/flex'
 import { CURSOR } from '../constants/interaction'
 import { BORDER_WIDTH, BORDER_RADIUS } from '../constants/border'
 import { OUTLINE } from '../constants/outline'
@@ -167,7 +167,7 @@ export const HelpButton = ({ bottomOffset = SPACING.L }: HelpButtonProps) => {
             <div
               style={{
                 display: DISPLAY.FLEX,
-                flexWrap: 'wrap',
+                flexWrap: FLEX_WRAP.WRAP,
                 gap: SPACING.S,
               }}
             >
@@ -226,7 +226,7 @@ export const HelpButton = ({ bottomOffset = SPACING.L }: HelpButtonProps) => {
               <div
                 style={{
                   display: DISPLAY.FLEX,
-                  flexWrap: 'wrap',
+                  flexWrap: FLEX_WRAP.WRAP,
                   gap: SPACING.S,
                 }}
               >

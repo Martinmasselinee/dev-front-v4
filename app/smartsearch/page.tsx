@@ -32,7 +32,7 @@ export default function SmartSearchPage() {
     { value: 'cards', label: 'Cartes' },
   ]
 
-  const selectedViewOption = viewOptions.find(option => option.value === viewType) || viewOptions[0]
+  const selectedViewOption = findOptionOrDefault(viewOptions, viewType)
 
   const stickyPurpleTitle = (
     <div

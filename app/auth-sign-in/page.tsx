@@ -23,6 +23,7 @@ import { TEXT_ALIGN } from '../../constants/text'
 import { COLOR } from '../../constants/color'
 import { FONT_SIZE, FONT_THICKNESS, LINE_HEIGHT, FONT_STYLE } from '../../constants/font'
 import { TIME } from '../../constants/time'
+import { useRotatingText } from '../../hooks/useRotatingText'
 import { DISPLAY } from '../../constants/display'
 import { FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT, FLEX } from '../../constants/flex'
 import { POSITION_TYPE } from '../../constants/position'
@@ -40,16 +41,8 @@ export default function AuthSignInPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [currentTextIndex, setCurrentTextIndex] = useState(0)
+  const { currentText } = useRotatingText(rotatingTexts)
   const [isLoading, setIsLoading] = useState(false)
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTextIndex((prevIndex) => (prevIndex + 1) % rotatingTexts.length)
-    }, TIME.INTERVAL.ROTATING_TEXT)
-
-    return () => clearInterval(interval)
-  }, [])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -96,7 +89,7 @@ export default function AuthSignInPage() {
                   paddingRight: SPACING.S,
                 }}
               >
-                {rotatingTexts[currentTextIndex]}
+                {currentText}
               </Text>
             </Heading>
           </HeaderSection>

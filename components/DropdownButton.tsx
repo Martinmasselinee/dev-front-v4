@@ -11,10 +11,10 @@ import { ICON_SIZE } from '../constants/iconSize'
 import { POSITION, POSITION_TYPE, TRANSFORM } from '../constants/position'
 import { Z_INDEX } from '../constants/zIndex'
 import { TRANSITION } from '../constants/transition'
-import { DISPLAY } from '../constants/display'
+import { DISPLAY, VISIBILITY } from '../constants/display'
 import { ALIGN_ITEMS, JUSTIFY_CONTENT } from '../constants/flex'
 import { POINTER_EVENTS, CURSOR } from '../constants/interaction'
-import { OUTLINE } from '../constants/outline'
+import { OUTLINE, APPEARANCE } from '../constants/outline'
 import { WIDTH } from '../constants/width'
 import { DIMENSION } from '../constants/dimension'
 import { OPACITY } from '../constants/opacity'
@@ -84,13 +84,13 @@ export const DropdownButton = forwardRef<HTMLSelectElement, DropdownButtonProps>
           ref={measureRef}
           style={{
             position: POSITION_TYPE.ABSOLUTE,
-            visibility: 'hidden',
+            visibility: VISIBILITY.HIDDEN,
             whiteSpace: WHITE_SPACE.NOWRAP,
             fontSize: FONT_SIZE.M,
             padding: SPACING.ZERO,
             margin: SPACING.ZERO,
-            height: 'auto',
-            width: 'auto',
+            height: DIMENSION.AUTO,
+            width: WIDTH.AUTO,
           }}
         />
 
@@ -119,7 +119,7 @@ export const DropdownButton = forwardRef<HTMLSelectElement, DropdownButtonProps>
           style={{
             width: selectWidth,
             minWidth: DIMENSION.DROPDOWN_BUTTON_MIN_WIDTH,
-            maxWidth: maxWidth || 'none',
+            maxWidth: maxWidth || DIMENSION.NONE,
             height: INPUT_HEIGHT.SMALL,
             paddingLeft: paddingLeft,
             paddingRight: paddingRight,
@@ -133,7 +133,7 @@ export const DropdownButton = forwardRef<HTMLSelectElement, DropdownButtonProps>
             borderRadius: BORDER_RADIUS.M,
             outline: OUTLINE.NONE,
             transition: `border-color ${TRANSITION.FAST_EASE}, width ${TRANSITION.FAST_EASE}`,
-            appearance: 'none',
+            appearance: APPEARANCE.NONE,
             cursor: props.disabled ? CURSOR.NOT_ALLOWED : CURSOR.POINTER,
             opacity: props.disabled ? OPACITY.DISABLED : OPACITY.FULL,
             overflow: OVERFLOW.HIDDEN,

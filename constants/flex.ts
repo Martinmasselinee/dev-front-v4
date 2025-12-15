@@ -9,6 +9,12 @@ export const FLEX_DIRECTION = {
   ROW: 'row',
 } as const
 
+export const FLEX_WRAP = {
+  NOWRAP: 'nowrap',
+  WRAP: 'wrap',
+  WRAP_REVERSE: 'wrap-reverse',
+} as const
+
 export const ALIGN_ITEMS = {
   CENTER: 'center',
   FLEX_START: 'flex-start',

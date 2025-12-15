@@ -6,3 +6,8 @@ export const DISPLAY = {
   INLINE_BLOCK: 'inline-block',
 } as const
 
+export const VISIBILITY = {
+  VISIBLE: 'visible',
+  HIDDEN: 'hidden',
+} as const
+

@@ -13,7 +13,7 @@ import { TRANSITION } from '../constants/transition'
 import { DISPLAY } from '../constants/display'
 import { ALIGN_ITEMS, JUSTIFY_CONTENT } from '../constants/flex'
 import { POINTER_EVENTS, CURSOR } from '../constants/interaction'
-import { OUTLINE } from '../constants/outline'
+import { OUTLINE, APPEARANCE } from '../constants/outline'
 
 interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   icon?: ReactNode
@@ -94,7 +94,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             borderRadius: BORDER_RADIUS.M,
             outline: OUTLINE.NONE,
             transition: `border-color ${TRANSITION.FAST_EASE}`,
-            appearance: 'none',
+            appearance: APPEARANCE.NONE,
             cursor: CURSOR.POINTER,
             ...style,
           }}

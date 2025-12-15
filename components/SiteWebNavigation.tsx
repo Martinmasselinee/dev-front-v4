@@ -97,8 +97,8 @@ export const SiteWebNavigation = () => {
           alignItems: ALIGN_ITEMS.CENTER,
           justifyContent: JUSTIFY_CONTENT.SPACE_BETWEEN,
           width: WIDTH.FULL,
-          marginLeft: 'auto',
-          marginRight: 'auto',
+          marginLeft: WIDTH.AUTO,
+          marginRight: WIDTH.AUTO,
           position: POSITION_TYPE.RELATIVE,
         }}
       >

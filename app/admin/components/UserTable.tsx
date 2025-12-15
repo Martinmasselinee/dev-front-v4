@@ -21,6 +21,7 @@ import { INPUT_HEIGHT } from '../../../constants/input'
 import { WIDTH } from '../../../constants/width'
 import { DIMENSION } from '../../../constants/dimension'
 import { POSITION } from '../../../constants/position'
+import { getAlternatingRowColor } from '../../../lib/tableUtils'
 
 export interface User {
   id: string
@@ -288,7 +289,7 @@ export const UserTable = ({ users, onRoleChange, onRemoveUser }: UserTableProps)
     <Table
       data={users}
       columns={columns}
-      getRowBackgroundColor={(row, index) => index % 2 === 0 ? COLOR.WHITE : COLOR.GREY.LIGHT}
+      getRowBackgroundColor={getAlternatingRowColor}
       showTopBorder={true}
     />
   )

@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import {
   useReactTable,
   getCoreRowModel,
@@ -18,6 +19,9 @@ import { OVERFLOW } from '../constants/overflow'
 import { WIDTH } from '../constants/width'
 import { MULTIPLIER } from '../constants/multiplier'
 import { TEXT_ALIGN } from '../constants/text'
+import { darkenColor } from '../lib/colorUtils'
+import { TRANSITION } from '../constants/transition'
+import { CURSOR } from '../constants/interaction'
 
 interface TableProps<T> {
   data: T[]
@@ -32,6 +36,8 @@ export function Table<T>({
   getRowBackgroundColor,
   showTopBorder = false
 }: TableProps<T>) {
+  const [hoveredRowIndex, setHoveredRowIndex] = useState<number | null>(null)
+  
   const table = useReactTable({
     data,
     columns,
@@ -116,18 +122,28 @@ export function Table<T>({
           }}
         >
           {table.getRowModel().rows.map((row, rowIndex) => {
-            const rowBgColor = getRowBackgroundColor 
+            const baseRowBgColor = getRowBackgroundColor 
               ? getRowBackgroundColor(row, rowIndex)
               : rowIndex % 2 === 0 ? COLOR.WHITE : COLOR.GREY.LIGHT
+            
+            const isHovered = hoveredRowIndex === rowIndex
+            const darkenPercent = (MULTIPLIER.COLOR_DARKEN_PERCENT / 2) + (MULTIPLIER.COLOR_DARKEN_PERCENT * 0.25)
+            const rowBgColor = isHovered 
+              ? darkenColor(baseRowBgColor, darkenPercent)
+              : baseRowBgColor
 
             return (
               <div
                 key={row.id}
+                onMouseEnter={() => setHoveredRowIndex(rowIndex)}
+                onMouseLeave={() => setHoveredRowIndex(null)}
                 style={{
                   display: DISPLAY.FLEX,
                   backgroundColor: rowBgColor,
                   width: WIDTH.FULL,
                   minWidth: 'max-content',
+                  cursor: CURSOR.DEFAULT,
+                  transition: `background-color ${TRANSITION.FAST_EASE}`,
                 }}
               >
                 {row.getVisibleCells().map((cell, cellIndex) => {
@@ -152,7 +168,7 @@ export function Table<T>({
                         justifyContent: meta?.align === 'right' ? JUSTIFY_CONTENT.FLEX_END : meta?.align === 'center' ? JUSTIFY_CONTENT.CENTER : JUSTIFY_CONTENT.FLEX_START,
                         position: meta?.sticky ? POSITION_TYPE.STICKY : POSITION_TYPE.RELATIVE,
                         right: meta?.stickyRight,
-                        backgroundColor: meta?.sticky ? rowBgColor : undefined,
+                        backgroundColor: rowBgColor,
                         zIndex: meta?.sticky ? Z_INDEX.COMPONENT_CONTENT : undefined,
                         borderLeft: meta?.borderLeft ? `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.LIGHT_MEDIUM}` : undefined,
                       }}

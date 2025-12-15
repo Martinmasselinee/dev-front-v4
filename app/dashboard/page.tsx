@@ -18,11 +18,15 @@ import { DISPLAY } from '../../constants/display'
 import { ALIGN_ITEMS, FLEX_DIRECTION } from '../../constants/flex'
 import { STRING } from '../../constants/string'
 import { FLEX } from '../../constants/flex'
+import { TIME } from '../../constants/time'
+import { TIME_RANGE } from '../../constants/filter'
+import { parseDateString, millisecondsToHours, hoursToDays, resetDateToStartOfDay, getDateDaysAgo } from '../../lib/dateUtils'
+import { findOptionOrDefault } from '../../lib/arrayUtils'
 
 export default function DashboardPage() {
   const [searchValue, setSearchValue] = useState('')
-  const [timeRange, setTimeRange] = useState('all')
-  const [selectedUserId, setSelectedUserId] = useState('all')
+  const [timeRange, setTimeRange] = useState(TIME_RANGE.ALL)
+  const [selectedUserId, setSelectedUserId] = useState(TIME_RANGE.ALL)
   const [showTable, setShowTable] = useState(false)
 
   // Mock activities data - one for each stat icon
@@ -108,64 +112,55 @@ export default function DashboardPage() {
     console.log('View activity:', activityId)
   }
 
-  // Parse date string (DD/MM/YYYY) and time string (HH:MM) to Date object
-  const parseActivityDateTime = (dateStr: string, timeStr: string): Date => {
-    const [day, month, year] = dateStr.split('/').map(Number)
-    const [hours, minutes] = timeStr.split(':').map(Number)
-    return new Date(year, month - 1, day, hours, minutes)
-  }
-
   // Filter activities based on time range and user
   const filteredActivities = activities.filter(activity => {
     // Filter by user
-    if (selectedUserId !== 'all' && activity.userId !== selectedUserId) {
+    if (selectedUserId !== TIME_RANGE.ALL && activity.userId !== selectedUserId) {
       return false
     }
 
     // Filter by time range
-    if (timeRange === 'all') {
+    if (timeRange === TIME_RANGE.ALL) {
       return true
     }
 
-    const activityDate = parseActivityDateTime(activity.date, activity.time)
+    const activityDate = parseDateString(activity.date, activity.time)
     const now = new Date()
     const diffMs = now.getTime() - activityDate.getTime()
-    const diffHours = diffMs / (1000 * 60 * 60)
-    const diffDays = diffHours / 24
+    const diffHours = millisecondsToHours(diffMs)
+    const diffDays = hoursToDays(diffHours)
 
     switch (timeRange) {
-      case '24h':
-        return diffHours <= 24
-      case '7d':
-        return diffDays <= 7
-      case '30d':
-        return diffDays <= 30
+      case TIME_RANGE.HOURS_24:
+        return diffHours <= TIME.HOURS_PER_DAY
+      case TIME_RANGE.DAYS_7:
+        return diffDays <= TIME.DAYS_PER_WEEK
+      case TIME_RANGE.DAYS_30:
+        return diffDays <= TIME.DAYS_PER_MONTH
       default:
         return true
     }
   })
 
   // Calculate activities for today and this week
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
-  const weekAgo = new Date(today)
-  weekAgo.setDate(weekAgo.getDate() - 7)
+  const today = resetDateToStartOfDay(new Date())
+  const weekAgo = getDateDaysAgo(today, TIME.DAYS_PER_WEEK)
 
   const activitiesToday = activities.filter(activity => {
-    const activityDate = parseActivityDateTime(activity.date, activity.time)
+    const activityDate = parseDateString(activity.date, activity.time)
     return activityDate >= today
   }).length
 
   const activitiesThisWeek = activities.filter(activity => {
-    const activityDate = parseActivityDateTime(activity.date, activity.time)
+    const activityDate = parseDateString(activity.date, activity.time)
     return activityDate >= weekAgo
   }).length
 
   const dropdownOptions = [
-    { value: '24h', label: 'Dernières 24h' },
-    { value: '7d', label: '7 derniers jours' },
-    { value: '30d', label: '30 derniers jours' },
-    { value: 'all', label: 'Toute l\'activité' },
+    { value: TIME_RANGE.HOURS_24, label: 'Dernières 24h' },
+    { value: TIME_RANGE.DAYS_7, label: '7 derniers jours' },
+    { value: TIME_RANGE.DAYS_30, label: '30 derniers jours' },
+    { value: TIME_RANGE.ALL, label: 'Toute l\'activité' },
   ]
 
   // Get unique users from activities
@@ -179,14 +174,35 @@ export default function DashboardPage() {
   )
 
   const userDropdownOptions = [
-    { value: 'all', label: 'Tous les utilisateurs' },
+    { value: TIME_RANGE.ALL, label: 'Tous les utilisateurs' },
     ...uniqueUsers.map(user => ({
       value: user.id,
       label: `${user.firstName} ${user.lastName}`
     }))
   ]
 
-  const selectedOption = dropdownOptions.find(option => option.value === timeRange) || dropdownOptions[dropdownOptions.length - 1]
+  const selectedOption = findOptionOrDefault(dropdownOptions, timeRange)
+  const selectedUserOption = findOptionOrDefault(userDropdownOptions, selectedUserId)
+
+  // Get empty state content based on selected filters
+  const getEmptyStateContent = () => {
+    const timeRangeLabel = dropdownOptions.find(opt => opt.value === timeRange)?.label || 'cette période'
+    const userLabel = selectedUserOption.label
+
+    let title = 'Aucune activité trouvée'
+    let description = `Aucune activité trouvée pour ${timeRangeLabel.toLowerCase()}`
+
+    // Add user context if a specific user is selected
+    if (selectedUserId !== TIME_RANGE.ALL) {
+      description += ` pour ${userLabel.toLowerCase()}`
+    }
+
+    description += '.'
+
+    return { icon: Inbox, title, description }
+  }
+
+  const emptyStateContent = getEmptyStateContent()
 
   const stickyPurpleTitle = (
     <div
@@ -254,10 +270,18 @@ export default function DashboardPage() {
       <HelpButton />
       
       {showTable ? (
-        <ActivityTable
-          activities={filteredActivities}
-          onView={handleViewActivity}
-        />
+        filteredActivities.length > 0 ? (
+          <ActivityTable
+            activities={filteredActivities}
+            onView={handleViewActivity}
+          />
+        ) : (
+          <EmptyState
+            icon={emptyStateContent.icon}
+            title={emptyStateContent.title}
+            description={emptyStateContent.description}
+          />
+        )
       ) : (
         <EmptyState
           icon={Inbox}

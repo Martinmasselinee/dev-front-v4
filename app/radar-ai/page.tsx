@@ -31,6 +31,8 @@ import { INPUT_HEIGHT } from '../../constants/input'
 import { WIDTH } from '../../constants/width'
 import { DIMENSION } from '../../constants/dimension'
 import { TABLE } from '../../constants/table'
+import { TIME_RANGE } from '../../constants/filter'
+import { findOptionOrDefault } from '../../lib/arrayUtils'
 
 export default function RadarAIPage() {
   const searchParams = useSearchParams()
@@ -42,7 +44,7 @@ export default function RadarAIPage() {
   const [showRoleChangeConfirm, setShowRoleChangeConfirm] = useState(false)
   const [userToChangeRole, setUserToChangeRole] = useState<{ email: string; newRole: string } | null>(null)
   const [searchValue, setSearchValue] = useState('')
-  const [timeRange, setTimeRange] = useState('all')
+  const [timeRange, setTimeRange] = useState(TIME_RANGE.ALL)
   const [articleType, setArticleType] = useState('all')
   const [nouveauxArticles, setNouveauxArticles] = useState(STRING.ZERO)
   const [totalArticles, setTotalArticles] = useState(STRING.ZERO)
@@ -124,14 +126,14 @@ export default function RadarAIPage() {
   ]
 
   const timeframeOptions = [
-    { value: '24h', label: 'Dernières 24h' },
-    { value: '7d', label: '7 derniers jours' },
-    { value: '30d', label: '30 derniers jours' },
-    { value: 'all', label: 'Toute l\'activité' },
+    { value: TIME_RANGE.HOURS_24, label: 'Dernières 24h' },
+    { value: TIME_RANGE.DAYS_7, label: '7 derniers jours' },
+    { value: TIME_RANGE.DAYS_30, label: '30 derniers jours' },
+    { value: TIME_RANGE.ALL, label: 'Toute l\'activité' },
   ]
 
   const articleOptions = [
-    { value: 'all', label: 'Tous les articles' },
+    { value: TIME_RANGE.ALL, label: 'Tous les articles' },
     { value: 'sponsoring', label: 'Sponsoring' },
     { value: 'marques', label: 'Marques' },
     { value: 'activations', label: 'Activations' },
@@ -142,7 +144,7 @@ export default function RadarAIPage() {
     { value: 'partenariat', label: 'Partenariat officiel maillot' },
   ]
 
-  const selectedTimeframeOption = timeframeOptions.find(option => option.value === timeRange) || timeframeOptions[timeframeOptions.length - 1]
+  const selectedTimeframeOption = findOptionOrDefault(timeframeOptions, timeRange)
 
   // Get icon and description based on article type and timeframe
   const getEmptyStateContent = () => {

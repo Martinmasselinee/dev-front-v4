@@ -20,6 +20,7 @@ import { INPUT_HEIGHT } from '../../../constants/input'
 import { WIDTH } from '../../../constants/width'
 import { DIMENSION } from '../../../constants/dimension'
 import { POSITION } from '../../../constants/position'
+import { getAlternatingRowColor } from '../../../lib/tableUtils'
 
 export interface Activity {
   id: string
@@ -131,7 +132,7 @@ export const ActivityTable = ({ activities, onView }: ActivityTableProps) => {
         <Text size="S" weight="XL" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP, textTransform: TEXT_TRANSFORM.UPPERCASE, letterSpacing: LETTER_SPACING.TIGHT }}>Heure</Text>
       ),
       cell: ({ row }) => (
-        <Text size="M" weight="M" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP }}>{row.original.time}</Text>
+        <Text size="M" weight="M" color="BLACK" style={{ color: COLOR.BLACK, overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP }}>{row.original.time}</Text>
       ),
       meta: {
         width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_HALF} * ${MULTIPLIER.BUTTON_WIDTH_HALF})`,
@@ -143,7 +144,7 @@ export const ActivityTable = ({ activities, onView }: ActivityTableProps) => {
         <Text size="S" weight="XL" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP, textTransform: TEXT_TRANSFORM.UPPERCASE, letterSpacing: LETTER_SPACING.TIGHT }}>Date</Text>
       ),
       cell: ({ row }) => (
-        <Text size="M" weight="M" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP }}>{row.original.date}</Text>
+        <Text size="M" weight="M" color="BLACK" style={{ color: COLOR.BLACK, overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP }}>{row.original.date}</Text>
       ),
       meta: {
         width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_HALF})`,
@@ -183,7 +184,7 @@ export const ActivityTable = ({ activities, onView }: ActivityTableProps) => {
     <Table
       data={activities}
       columns={columns}
-      getRowBackgroundColor={(row, index) => index % 2 === 0 ? COLOR.WHITE : COLOR.GREY.LIGHT}
+      getRowBackgroundColor={getAlternatingRowColor}
     />
   )
 }
