@@ -39,7 +39,7 @@ export const Container = ({ children, className = '', variant = 'default' }: Con
           width: WIDTH.FULL,
           paddingLeft: SPACING.XL,
           paddingRight: SPACING.XL,
-          marginBottom: SPACING.XXL,
+          marginBottom: SPACING.XL,
           display: DISPLAY.FLEX,
           justifyContent: JUSTIFY_CONTENT.CENTER,
           alignItems: ALIGN_ITEMS.CENTER,
