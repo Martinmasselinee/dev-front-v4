@@ -44,7 +44,7 @@ import { UserInitial } from '../../components/UserInitial'
 import { COLOR } from '../../constants/color'
 import { ICON_SIZE } from '../../constants/iconSize'
 import { FONT_SIZE, FONT_THICKNESS } from '../../constants/font'
-import { BORDER_RADIUS } from '../../constants/border'
+import { BORDER_RADIUS, BORDER_WIDTH } from '../../constants/border'
 import { DISPLAY } from '../../constants/display'
 import { ALIGN_ITEMS, FLEX, JUSTIFY_CONTENT, FLEX_WRAP } from '../../constants/flex'
 import { OVERFLOW } from '../../constants/overflow'
@@ -320,7 +320,7 @@ export default function DecideursPage() {
         </div>
       ),
       meta: {
-        width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.ICON_SIZE_DOUBLE})`,
+        width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.DROPDOWN_WIDTH_ONE_FIVE} * 0.9)`,
       },
     },
     {
@@ -358,44 +358,6 @@ export default function DecideursPage() {
       },
     },
     {
-      accessorKey: 'tags',
-      header: () => (
-        <div style={{ display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER, gap: SPACING.S }}>
-          <TagIcon size={ICON_SIZE.S} style={{ color: COLOR.GREY.DARK, flexShrink: FLEX.ZERO }} />
-          <Text size="S" weight="XL" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP, textTransform: TEXT_TRANSFORM.UPPERCASE, letterSpacing: LETTER_SPACING.TIGHT }}>
-            Tag
-          </Text>
-        </div>
-      ),
-      cell: ({ row }) => (
-        <div style={{ display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER, gap: SPACING.XS, flexWrap: FLEX_WRAP.WRAP }}>
-          {row.original.tags.map((tag, index) => (
-            <div
-              key={index}
-              style={{
-                display: DISPLAY.INLINE_FLEX,
-                alignItems: ALIGN_ITEMS.CENTER,
-                paddingLeft: SPACING.S,
-                paddingRight: SPACING.S,
-                paddingTop: SPACING.XS,
-                paddingBottom: SPACING.XS,
-                backgroundColor: lightenColor(COLOR.GOOGLE.GREEN, MULTIPLIER.COLOR_LIGHTEN_NINETY_FIVE),
-                borderRadius: BORDER_RADIUS.M,
-                overflow: OVERFLOW.HIDDEN,
-              }}
-            >
-              <Text size="S" weight="M" style={{ color: COLOR.GOOGLE.GREEN, overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP }}>
-                {tag}
-              </Text>
-            </div>
-          ))}
-        </div>
-      ),
-      meta: {
-        width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.ICON_SIZE_DOUBLE})`,
-      },
-    },
-    {
       accessorKey: 'linkedin',
       header: () => (
         <div style={{ display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER, gap: SPACING.S }}>
@@ -410,12 +372,15 @@ export default function DecideursPage() {
           <Button
             variant="WHITE"
             onClick={() => window.open(row.original.linkedin, '_blank')}
-            icon={<ExternalLink size={ICON_SIZE.M} />}
+            icon={<ExternalLink size={ICON_SIZE.M} style={{ color: COLOR.GOOGLE.BLUE }} />}
             style={{
               width: WIDTH.AUTO,
               paddingLeft: SPACING.M,
               paddingRight: SPACING.M,
               height: `calc(${INPUT_HEIGHT.SMALL} * ${MULTIPLIER.HEIGHT_EIGHTY})`,
+              backgroundColor: lightenColor(COLOR.GOOGLE.BLUE, MULTIPLIER.COLOR_LIGHTEN_NINETY_FIVE),
+              color: COLOR.GOOGLE.BLUE,
+              border: `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.MEDIUM}`,
             }}
           >
             LinkedIn
@@ -428,6 +393,46 @@ export default function DecideursPage() {
       ),
       meta: {
         width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY} * ${MULTIPLIER.DROPDOWN_WIDTH_ONE_FIVE})`,
+      },
+    },
+    {
+      accessorKey: 'tags',
+      header: () => (
+        <div style={{ display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER, gap: SPACING.S }}>
+          <TagIcon size={ICON_SIZE.S} style={{ color: COLOR.GREY.DARK, flexShrink: FLEX.ZERO }} />
+          <Text size="S" weight="XL" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP, textTransform: TEXT_TRANSFORM.UPPERCASE, letterSpacing: LETTER_SPACING.TIGHT }}>
+            Tag
+          </Text>
+        </div>
+      ),
+      cell: ({ row }) => (
+        row.original.tags.length > NUMBER.ZERO ? (
+          <div
+            style={{
+              display: DISPLAY.INLINE_FLEX,
+              alignItems: ALIGN_ITEMS.CENTER,
+              paddingLeft: SPACING.S,
+              paddingRight: SPACING.S,
+              paddingTop: SPACING.XS,
+              paddingBottom: SPACING.XS,
+              backgroundColor: lightenColor(COLOR.GOOGLE.GREEN, MULTIPLIER.COLOR_LIGHTEN_NINETY_FIVE),
+              borderRadius: BORDER_RADIUS.M,
+              overflow: OVERFLOW.HIDDEN,
+              maxWidth: WIDTH.FULL,
+            }}
+          >
+            <Text size="S" weight="M" style={{ color: COLOR.GOOGLE.GREEN, overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP }}>
+              {row.original.tags[NUMBER.ZERO]}
+            </Text>
+          </div>
+        ) : (
+          <Text size="M" weight="M" color="BLACK">
+            -
+          </Text>
+        )
+      ),
+      meta: {
+        width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY_FIVE})`,
       },
     },
     {
@@ -480,7 +485,7 @@ export default function DecideursPage() {
       ),
       cell: ({ row }) => (
         <Button
-          variant="BLACK"
+          variant="WHITE"
           onClick={() => {}}
           icon={<Eye size={ICON_SIZE.M} />}
           style={{
@@ -492,10 +497,10 @@ export default function DecideursPage() {
         </Button>
       ),
       meta: {
-        width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY} * ${MULTIPLIER.DROPDOWN_WIDTH_ONE_FIVE})`,
+        width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY_FIVE})`,
         align: 'center',
         sticky: true,
-        stickyRight: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY} * ${MULTIPLIER.DROPDOWN_WIDTH_ONE_FIVE})`,
+        stickyRight: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY_FIVE} * 0.85)`,
         borderLeft: true,
       },
     },
@@ -505,7 +510,7 @@ export default function DecideursPage() {
         <div style={{ display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER, justifyContent: JUSTIFY_CONTENT.CENTER, gap: SPACING.S }}>
           <Mail size={ICON_SIZE.S} style={{ color: COLOR.GREY.DARK, flexShrink: FLEX.ZERO }} />
           <Text size="S" weight="XL" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP, textTransform: TEXT_TRANSFORM.UPPERCASE, letterSpacing: LETTER_SPACING.TIGHT, textAlign: TEXT_ALIGN.CENTER }}>
-            Action
+            Contact
           </Text>
         </div>
       ),
@@ -513,17 +518,18 @@ export default function DecideursPage() {
         <Button
           variant="BLACK"
           onClick={() => {}}
-          icon={<Mail size={ICON_SIZE.M} />}
           style={{
-            width: `calc(${WIDTH.FULL} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY})`,
+            width: `calc(${WIDTH.FULL} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY_FIVE} * 0.85)`,
             height: `calc(${INPUT_HEIGHT.SMALL} * ${MULTIPLIER.HEIGHT_EIGHTY})`,
+            paddingLeft: SPACING.ZERO,
+            paddingRight: SPACING.ZERO,
           }}
         >
-          Contacter
+          <Mail size={ICON_SIZE.M} />
         </Button>
       ),
       meta: {
-        width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY} * ${MULTIPLIER.DROPDOWN_WIDTH_ONE_FIVE})`,
+        width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY_FIVE} * 0.85)`,
         align: 'center',
         sticky: true,
         stickyRight: POSITION.ZERO,
