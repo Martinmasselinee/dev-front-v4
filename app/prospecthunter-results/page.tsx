@@ -52,7 +52,7 @@ import { useRef, useMemo } from 'react'
 export default function ProspectHunterResultsPage() {
   const router = useRouter()
   const [searchValue, setSearchValue] = useState('')
-  const [viewType, setViewType] = useState('table')
+  const [viewType, setViewType] = useState('cards')
   const [hasSearchResults, setHasSearchResults] = useState(true) // Show 29 cards by default when page loads
   const [displayedCount, setDisplayedCount] = useState<number>(NUMBER.ZERO)
   const [isLoadMoreHovered, setIsLoadMoreHovered] = useState(false)
