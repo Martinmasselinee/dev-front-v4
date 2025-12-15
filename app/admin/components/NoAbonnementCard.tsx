@@ -1,6 +1,6 @@
 'use client'
 
-import { Sparkles } from 'lucide-react'
+import { Sparkles, Wand2 } from 'lucide-react'
 import { Card } from '../../../components/Card'
 import { Text } from '../../../components/Text'
 import { Button } from '../../../components/Button'
@@ -19,7 +19,7 @@ export const NoAbonnementCard = ({ onSubscribe }: NoAbonnementCardProps) => {
   return (
     <Card
       style={{
-        marginTop: SPACING.L,
+        marginTop: SPACING.ZERO,
         marginLeft: SPACING.L,
         marginRight: SPACING.L,
         marginBottom: SPACING.L,
@@ -49,15 +49,14 @@ export const NoAbonnementCard = ({ onSubscribe }: NoAbonnementCardProps) => {
           style={{
             display: DISPLAY.FLEX,
             flexDirection: FLEX_DIRECTION.COLUMN,
-            gap: SPACING.XS,
+            gap: SPACING.ZERO,
             flex: FLEX.ONE,
+            paddingTop: SPACING.ZERO,
+            marginTop: SPACING.ZERO,
           }}
         >
-          <Text size="L" weight="XL" color="BLACK">
+          <Text size="M" weight="XL" color="BLACK" style={{ marginTop: SPACING.ZERO, paddingTop: SPACING.ZERO }}>
             Aucun abonnement actif
-          </Text>
-          <Text size="M" weight="M" color="GREY_DARK">
-            Vous devez souscrire à un abonnement pour effectuer des recherches de sponsors.
           </Text>
         </div>
         <div
@@ -71,6 +70,7 @@ export const NoAbonnementCard = ({ onSubscribe }: NoAbonnementCardProps) => {
           <Button
             variant="BLACK"
             onClick={onSubscribe}
+            icon={<Wand2 size={ICON_SIZE.M} />}
             style={{
               width: WIDTH.AUTO,
               paddingLeft: SPACING.L,

@@ -116,12 +116,12 @@ export const Button = ({
           alignItems: ALIGN_ITEMS.CENTER,
         }}
       >
-        {children}
         {icon && (
-          <span style={{ marginLeft: SPACING.S, display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER }}>
+          <span style={{ marginRight: SPACING.S, display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER }}>
             {icon}
           </span>
         )}
+        {children}
       </span>
     </button>
     </>

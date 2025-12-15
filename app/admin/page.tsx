@@ -47,7 +47,7 @@ import { DeleteConfirmPopup } from './components/DeleteConfirmPopup'
 import { RoleChangeConfirmPopup } from './components/RoleChangeConfirmPopup'
 import { WorkspaceSelectionPopup } from './components/WorkspaceSelectionPopup'
 import { UserTable } from './components/UserTable'
-import { PersonaliserPopup } from './components/PersonaliserPopup'
+import { PersonnaliserPopup } from './components/PersonnaliserPopup'
 import { NoAbonnementCard } from './components/NoAbonnementCard'
 import type { User } from './components/UserTable'
 
@@ -59,8 +59,8 @@ export default function AdminPage() {
   const [showRoleChangeConfirm, setShowRoleChangeConfirm] = useState(false)
   const [userToChangeRole, setUserToChangeRole] = useState<{ id: string; newRole: string } | null>(null)
   const [searchValue, setSearchValue] = useState('')
-  const [showPersonaliserPopup, setShowPersonaliserPopup] = useState(false)
-  const [personalisationsCount, setPersonalisationsCount] = useState<{ added: number; total: number }>({ added: NUMBER.ZERO, total: PERSONALISATION.BASE_COUNT })
+  const [showPersonnaliserPopup, setShowPersonnaliserPopup] = useState(false)
+  const [personnalisationsCount, setPersonnalisationsCount] = useState<{ added: number; total: number }>({ added: NUMBER.ZERO, total: PERSONALISATION.BASE_COUNT })
   
   // Workspace data (should match NavbarSidebar)
   const workspaceName = 'SRFC'
@@ -224,11 +224,11 @@ export default function AdminPage() {
       }}
     >
       <Text size="M" weight="M" color="PURPLE">
-        Personalisez la mémoire IA
+        Personnalisez la mémoire IA
       </Text>
       <Dot marginLeft={SPACING.XS} marginRight={SPACING.XS} />
       <Text size="M" weight="M" color="PURPLE">
-        {personalisationsCount.added}/{personalisationsCount.total} personalisations ajoutées
+        {personnalisationsCount.added}/{personnalisationsCount.total} personnalisations ajoutées
       </Text>
     </div>
   )
@@ -254,9 +254,9 @@ export default function AdminPage() {
             <Button
               variant="BLACK"
               style={{ width: WIDTH.AUTO, paddingLeft: SPACING.L, paddingRight: SPACING.L }}
-              onClick={() => setShowPersonaliserPopup(true)}
+              onClick={() => setShowPersonnaliserPopup(true)}
             >
-              Personaliser
+              Personnaliser
             </Button>
           }
         />
@@ -268,6 +268,12 @@ export default function AdminPage() {
             paddingBottom: SPACING.XL,
           }}
         >
+          <NoAbonnementCard
+            onSubscribe={() => {
+              // TODO: Implement subscription logic
+              console.log('Subscribe clicked')
+            }}
+          />
           <div
             style={{
               display: DISPLAY.FLEX,
@@ -311,12 +317,6 @@ export default function AdminPage() {
             users={filteredUsers}
             onRoleChange={handleRoleChange}
             onRemoveUser={handleRemoveUser}
-          />
-          <NoAbonnementCard
-            onSubscribe={() => {
-              // TODO: Implement subscription logic
-              console.log('Subscribe clicked')
-            }}
           />
         </div>
       </div>
@@ -379,10 +379,10 @@ export default function AdminPage() {
         </div>
       </Popup>
 
-      <PersonaliserPopup
-        isOpen={showPersonaliserPopup}
-        onClose={() => setShowPersonaliserPopup(false)}
-        onPersonalisationsCountChange={setPersonalisationsCount}
+      <PersonnaliserPopup
+        isOpen={showPersonnaliserPopup}
+        onClose={() => setShowPersonnaliserPopup(false)}
+        onPersonnalisationsCountChange={setPersonnalisationsCount}
       />
     </>
   )

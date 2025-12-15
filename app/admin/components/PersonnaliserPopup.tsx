@@ -26,15 +26,15 @@ import { PERSONALISATION } from '../../../constants/personalisation'
 import { MULTIPLIER } from '../../../constants/multiplier'
 import { generateId } from '../../../lib/idUtils'
 
-interface PersonaliserPopupProps {
+interface PersonnaliserPopupProps {
   isOpen: boolean
   onClose: () => void
   onSave?: () => void
-  onPersonalisationsCountChange?: (count: { added: number; total: number }) => void
+  onPersonnalisationsCountChange?: (count: { added: number; total: number }) => void
 }
 
-export const PersonaliserPopup = ({ isOpen, onClose, onSave, onPersonalisationsCountChange }: PersonaliserPopupProps) => {
-  // Personaliser form states
+export const PersonnaliserPopup = ({ isOpen, onClose, onSave, onPersonnalisationsCountChange }: PersonnaliserPopupProps) => {
+  // Personnaliser form states
   const [workspaceNom, setWorkspaceNom] = useState('')
   const [workspaceTypeNom, setWorkspaceTypeNom] = useState('')
   const [nomAbrege, setNomAbrege] = useState('')
@@ -185,7 +185,7 @@ export const PersonaliserPopup = ({ isOpen, onClose, onSave, onPersonalisationsC
   
   const handleSave = () => {
     // TODO: Save logic
-    console.log('Saving personalisations...')
+    console.log('Saving personnalisations...')
     onSave?.()
     onClose()
   }
@@ -207,12 +207,12 @@ export const PersonaliserPopup = ({ isOpen, onClose, onSave, onPersonalisationsC
     }
   }
   
-  // Calculate personalisations count
-  const basePersonalisations = PERSONALISATION.BASE_COUNT
+  // Calculate personnalisations count
+  const basePersonnalisations = PERSONALISATION.BASE_COUNT
   const dynamicUrlsCount = socialUrls.length
-  const totalPersonalisations = basePersonalisations + dynamicUrlsCount
+  const totalPersonnalisations = basePersonnalisations + dynamicUrlsCount
   
-  const addedPersonalisations = [
+  const addedPersonnalisations = [
     deckFile,
     workspaceNom.trim(),
     workspaceTypeNom.trim(),
@@ -227,19 +227,19 @@ export const PersonaliserPopup = ({ isOpen, onClose, onSave, onPersonalisationsC
     ...socialUrls.map(url => url.url.trim()),
   ].filter(value => value !== null && value !== '' && value !== undefined).length
 
-  // Notify parent of personalisation count changes
+  // Notify parent of personnalisation count changes
   useEffect(() => {
-    onPersonalisationsCountChange?.({
-      added: addedPersonalisations,
-      total: totalPersonalisations,
+    onPersonnalisationsCountChange?.({
+      added: addedPersonnalisations,
+      total: totalPersonnalisations,
     })
-  }, [addedPersonalisations, totalPersonalisations, onPersonalisationsCountChange])
+  }, [addedPersonnalisations, totalPersonnalisations, onPersonnalisationsCountChange])
 
   return (
     <Popup
       isOpen={isOpen}
       onClose={onClose}
-      title="Personaliser la mémoire IA"
+      title="Personnaliser la mémoire IA"
       icon={Brain}
       rightElement={
         <Button
