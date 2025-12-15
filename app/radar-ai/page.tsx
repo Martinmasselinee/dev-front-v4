@@ -68,6 +68,7 @@ export default function RadarAIPage() {
     excerpt: string
     content: string
     tags: string[]
+    relatedArticles?: Array<{ title: string; url: string }>
   } | null>(null)
   // Current user (admin) - in a real app, this would come from auth context
   const currentUserEmail = 'admin@dataxx.fr'
@@ -312,6 +313,10 @@ export default function RadarAIPage() {
                     excerpt: 'Un nouveau partenariat majeur vient d\'être annoncé dans le monde du sponsoring sportif, marquant une étape importante pour les deux parties impliquées.',
                     content: 'Un nouveau partenariat majeur vient d\'être annoncé dans le monde du sponsoring sportif, marquant une étape importante pour les deux parties impliquées. Cette collaboration stratégique représente un investissement significatif dans le domaine du sport professionnel et ouvre de nouvelles perspectives pour les deux entités.\n\nLes détails de ce partenariat incluent des engagements à long terme qui permettront de développer des initiatives communes dans le domaine du marketing sportif, de la communication et de l\'engagement communautaire. Les deux parties ont exprimé leur enthousiasme quant aux opportunités que cette collaboration apportera.\n\nCe type de partenariat démontre l\'importance croissante du sponsoring sportif dans les stratégies marketing modernes, où les marques cherchent à créer des connexions authentiques avec leur audience à travers le sport.',
                     tags: ['Partenariat', 'Stratégie'],
+                    relatedArticles: [
+                      { title: 'Guide complet du sponsoring sportif en 2025', url: 'https://example.com/sponsoring-guide' },
+                      { title: 'Les meilleures pratiques de partenariat sportif', url: 'https://example.com/partenariat-practices' },
+                    ],
                   },
                   {
                     type: 'marques',
@@ -322,6 +327,10 @@ export default function RadarAIPage() {
                     excerpt: 'Les tendances du marketing sportif évoluent rapidement, avec de nouvelles approches innovantes qui transforment le paysage du sponsoring.',
                     content: 'Les tendances du marketing sportif évoluent rapidement, avec de nouvelles approches innovantes qui transforment le paysage du sponsoring. L\'année 2025 marque un tournant dans la manière dont les marques interagissent avec le monde du sport.\n\nLes nouvelles technologies, notamment l\'intelligence artificielle et la réalité augmentée, ouvrent des possibilités inédites pour créer des expériences immersives pour les fans. Les marques investissent de plus en plus dans des campagnes digitales qui permettent une interaction directe avec leur audience.\n\nL\'authenticité et la transparence sont également devenues des valeurs centrales. Les consommateurs recherchent des partenariats qui reflètent leurs propres valeurs, poussant les marques à s\'engager dans des causes sociales et environnementales significatives.',
                     tags: ['Marketing', 'Tendances'],
+                    relatedArticles: [
+                      { title: 'L\'impact de l\'IA sur le marketing sportif', url: 'https://example.com/ia-marketing' },
+                      { title: 'Marketing digital dans le sport : nouvelles tendances', url: 'https://example.com/digital-sport' },
+                    ],
                   },
                   {
                     type: 'activations',
@@ -332,6 +341,10 @@ export default function RadarAIPage() {
                     excerpt: 'Une campagne d\'activation récente a démontré l\'efficacité des nouvelles stratégies de communication dans le domaine sportif.',
                     content: 'Une campagne d\'activation récente a démontré l\'efficacité des nouvelles stratégies de communication dans le domaine sportif. Cette initiative a permis d\'atteindre des résultats exceptionnels en termes d\'engagement et de visibilité.\n\nLa campagne a combiné plusieurs canaux de communication, incluant les réseaux sociaux, les événements en direct, et des partenariats avec des influenceurs du monde sportif. Cette approche multi-canal a permis de toucher une audience diversifiée et d\'amplifier le message de la marque.\n\nLes résultats quantitatifs montrent une augmentation significative de l\'engagement, avec des taux d\'interaction qui dépassent les moyennes du secteur. Cette réussite démontre l\'importance d\'une stratégie bien pensée et d\'une exécution soignée dans le domaine du marketing sportif.',
                     tags: ['Campagne', 'Succès'],
+                    relatedArticles: [
+                      { title: 'Comment créer une campagne d\'activation réussie', url: 'https://example.com/activation-campaign' },
+                      { title: 'Stratégies multi-canaux pour le marketing sportif', url: 'https://example.com/multi-channel' },
+                    ],
                   },
                 ].map((article, index) => (
                   <div
@@ -557,6 +570,7 @@ export default function RadarAIPage() {
           excerpt={selectedArticle.excerpt}
           content={selectedArticle.content}
           tags={selectedArticle.tags}
+          relatedArticles={selectedArticle.relatedArticles}
         />
       )}
     </>

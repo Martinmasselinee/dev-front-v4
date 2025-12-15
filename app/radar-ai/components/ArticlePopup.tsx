@@ -3,6 +3,8 @@
 import { LucideIcon, ExternalLink } from 'lucide-react'
 import { Popup } from '../../../components/Popup'
 import { Text } from '../../../components/Text'
+import { Heading } from '../../../components/Heading'
+import { Link } from '../../../components/Link'
 import { IconButton } from '../../../components/IconButton'
 import { COLOR } from '../../../constants/color'
 import { SPACING } from '../../../constants/spacing'
@@ -16,6 +18,11 @@ import { WHITE_SPACE } from '../../../constants/text'
 import { TRANSITION } from '../../../constants/transition'
 import { POSITION } from '../../../constants/position'
 
+export interface RelatedArticle {
+  title: string
+  url: string
+}
+
 export interface ArticlePopupProps {
   isOpen: boolean
   onClose: () => void
@@ -27,6 +34,7 @@ export interface ArticlePopupProps {
   excerpt: string
   content: string
   tags: string[]
+  relatedArticles?: RelatedArticle[]
 }
 
 export const ArticlePopup = ({
@@ -40,6 +48,7 @@ export const ArticlePopup = ({
   excerpt,
   content,
   tags,
+  relatedArticles = [],
 }: ArticlePopupProps) => {
   return (
     <Popup
@@ -145,6 +154,47 @@ export const ArticlePopup = ({
                   </Text>
                 </div>
               ))}
+            </div>
+          )}
+
+          {/* Related articles section */}
+          {relatedArticles.length > 0 && (
+            <div
+              style={{
+                display: DISPLAY.FLEX,
+                flexDirection: FLEX_DIRECTION.COLUMN,
+                gap: SPACING.S,
+                paddingTop: SPACING.L,
+                borderTop: `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.LIGHT_MEDIUM}`,
+              }}
+            >
+              <Heading level={3} style={{ marginBottom: SPACING.ZERO }}>
+                À lire également
+              </Heading>
+              <div
+                style={{
+                  display: DISPLAY.FLEX,
+                  flexDirection: FLEX_DIRECTION.COLUMN,
+                  gap: SPACING.XS,
+                }}
+              >
+                {relatedArticles.map((article, index) => (
+                  <Link
+                    key={index}
+                    href={article.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      display: DISPLAY.FLEX,
+                      alignItems: ALIGN_ITEMS.CENTER,
+                      gap: SPACING.XS,
+                    }}
+                  >
+                    <ExternalLink size={ICON_SIZE.S} />
+                    {article.title}
+                  </Link>
+                ))}
+              </div>
             </div>
           )}
         </div>
