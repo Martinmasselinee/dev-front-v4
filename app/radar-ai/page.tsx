@@ -563,72 +563,81 @@ export default function RadarAIPage() {
               {/* 3-column article layout with time range separators */}
               <div style={{ marginTop: SPACING.XL }}>
                 <div style={{ width: WIDTH.FULL }}>
-                  {groupOrder.map((groupKey, groupIndex) => {
-                    const groupArticles = groupedArticles[groupKey]
-                    if (!groupArticles || groupArticles.length === 0) return null
+                  {(() => {
+                    const visibleGroups = groupOrder.filter(groupKey => {
+                      const groupArticles = groupedArticles[groupKey]
+                      return groupArticles && groupArticles.length > 0
+                    })
 
-                    const groupInfo = groupLabels[groupKey]
-                    const GroupIcon = groupInfo.icon
+                    return groupOrder.map((groupKey, groupIndex) => {
+                      const groupArticles = groupedArticles[groupKey]
+                      if (!groupArticles || groupArticles.length === 0) return null
 
-                    return (
-                      <div key={groupKey} style={{ marginBottom: SPACING.XL }}>
-                        {/* Time range separator */}
-                        <div
-                          style={{
-                            width: WIDTH.FULL,
-                            marginTop: groupIndex > 0 ? SPACING.XL : SPACING.ZERO,
-                            marginBottom: SPACING.S,
-                            paddingTop: SPACING.M,
-                            paddingBottom: SPACING.S,
-                            borderTop: groupIndex > 0 ? `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.LIGHT_MEDIUM}` : BORDER.NONE,
-                            display: DISPLAY.FLEX,
-                            alignItems: ALIGN_ITEMS.CENTER,
-                            gap: SPACING.S,
-                          }}
-                        >
-                          <GroupIcon size={ICON_SIZE.M} style={{ color: COLOR.GREY.DARK }} />
-                          <Text size="M" weight="M" color="GREY_DARK">
-                            {groupInfo.label}
-                          </Text>
-                          <Dot marginLeft={SPACING.XS} marginRight={SPACING.XS} color={COLOR.GREY.DARK} />
-                          <Text size="M" weight="M" color="GREY_DARK">
-                            {groupArticles.length} articles disponibles
-                          </Text>
+                      const groupInfo = groupLabels[groupKey]
+                      const GroupIcon = groupInfo.icon
+                      const isLastGroup = visibleGroups[visibleGroups.length - 1] === groupKey
+                      const visibleGroupIndex = visibleGroups.indexOf(groupKey)
+
+                      return (
+                        <div key={groupKey} style={{ paddingBottom: isLastGroup ? SPACING.XL : SPACING.ZERO }}>
+                          {/* Time range separator */}
+                          <div
+                            style={{
+                              width: WIDTH.FULL,
+                              marginTop: visibleGroupIndex > 0 ? SPACING.XL : SPACING.ZERO,
+                              marginBottom: SPACING.S,
+                              paddingTop: SPACING.M,
+                              paddingBottom: SPACING.S,
+                              borderTop: visibleGroupIndex > 0 ? `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.LIGHT_MEDIUM}` : BORDER.NONE,
+                              display: DISPLAY.FLEX,
+                              alignItems: ALIGN_ITEMS.CENTER,
+                              gap: SPACING.S,
+                            }}
+                          >
+                            <GroupIcon size={ICON_SIZE.M} style={{ color: COLOR.GREY.DARK }} />
+                            <Text size="M" weight="M" color="GREY_DARK">
+                              {groupInfo.label}
+                            </Text>
+                            <Dot marginLeft={SPACING.XS} marginRight={SPACING.XS} color={COLOR.GREY.DARK} />
+                            <Text size="M" weight="M" color="GREY_DARK">
+                              {groupArticles.length} articles disponibles
+                            </Text>
+                          </div>
+
+                          {/* Article cards for this group */}
+                          <div
+                            style={{
+                              display: DISPLAY.FLEX,
+                              gap: SPACING.L,
+                              flexWrap: FLEX_WRAP.WRAP,
+                            }}
+                          >
+                            {groupArticles.map((article, index) => (
+                              <div
+                                key={index}
+                                style={{
+                                  flex: `0 0 calc((100% - ${SPACING.L} * 2) / 3)`,
+                                  width: `calc((100% - ${SPACING.L} * 2) / 3)`,
+                                }}
+                              >
+                                <ArticleCard
+                                  type={article.type}
+                                  typeLabel={article.typeLabel}
+                                  typeIcon={article.typeIcon}
+                                  date={article.date}
+                                  title={article.title}
+                                  excerpt={article.excerpt}
+                                  tags={article.tags}
+                                  onRead={() => setSelectedArticle(article)}
+                                  onTypeClick={() => setArticleType(article.type)}
+                                />
+                              </div>
+                            ))}
+                          </div>
                         </div>
-
-                        {/* Article cards for this group */}
-                        <div
-                          style={{
-                            display: DISPLAY.FLEX,
-                            gap: SPACING.L,
-                            flexWrap: FLEX_WRAP.NOWRAP,
-                          }}
-                        >
-                          {groupArticles.map((article, index) => (
-                            <div
-                              key={index}
-                              style={{
-                                flex: `0 0 calc(33.333% - ${SPACING.L})`,
-                                width: `calc(33.333% - ${SPACING.L})`,
-                              }}
-                            >
-                              <ArticleCard
-                                type={article.type}
-                                typeLabel={article.typeLabel}
-                                typeIcon={article.typeIcon}
-                                date={article.date}
-                                title={article.title}
-                                excerpt={article.excerpt}
-                                tags={article.tags}
-                                onRead={() => setSelectedArticle(article)}
-                                onTypeClick={() => setArticleType(article.type)}
-                              />
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )
-                  })}
+                      )
+                    })
+                  })()}
                 </div>
               </div>
             </Container>
