@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Settings, ChevronDown, Building2, FileText, Mail, BookOpen, Search, Users, Phone, Award, Shield, Trash2, AlertTriangle, Brain } from 'lucide-react'
+import { Settings, ChevronDown, Building2, FileText, Mail, BookOpen, Search, Users, Phone, Award, Shield, Trash2, AlertTriangle, Brain, Calendar } from 'lucide-react'
 import { LAYOUT } from '../../constants/layout'
 import { SPACING } from '../../constants/spacing'
 import { POSITION_TYPE, POSITION } from '../../constants/position'
@@ -49,6 +49,8 @@ import { WorkspaceSelectionPopup } from './components/WorkspaceSelectionPopup'
 import { UserTable } from './components/UserTable'
 import { PersonnaliserPopup } from './components/PersonnaliserPopup'
 import { NoAbonnementCard } from './components/NoAbonnementCard'
+import { ConnectEmailCard } from './components/ConnectEmailCard'
+import { ConnectCalendarCard } from './components/ConnectCalendarCard'
 import type { User } from './components/UserTable'
 
 export default function AdminPage() {
@@ -317,6 +319,18 @@ export default function AdminPage() {
             users={filteredUsers}
             onRoleChange={handleRoleChange}
             onRemoveUser={handleRemoveUser}
+          />
+          <ConnectEmailCard
+            onConnect={() => {
+              // TODO: Implement email connection logic
+              console.log('Connect email clicked')
+            }}
+          />
+          <ConnectCalendarCard
+            onConnect={() => {
+              // TODO: Implement calendar connection logic
+              console.log('Connect calendar clicked')
+            }}
           />
         </div>
       </div>

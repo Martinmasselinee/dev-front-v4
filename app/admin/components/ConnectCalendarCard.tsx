@@ -1,6 +1,5 @@
 'use client'
 
-import { Wand2 } from 'lucide-react'
 import { Card } from '../../../components/Card'
 import { Text } from '../../../components/Text'
 import { Button } from '../../../components/Button'
@@ -11,11 +10,11 @@ import { COLOR } from '../../../constants/color'
 import { ICON_SIZE } from '../../../constants/iconSize'
 import { WIDTH } from '../../../constants/width'
 
-interface NoAbonnementCardProps {
-  onSubscribe?: () => void
+interface ConnectCalendarCardProps {
+  onConnect?: () => void
 }
 
-export const NoAbonnementCard = ({ onSubscribe }: NoAbonnementCardProps) => {
+export const ConnectCalendarCard = ({ onConnect }: ConnectCalendarCardProps) => {
   return (
     <Card
       style={{
@@ -43,7 +42,14 @@ export const NoAbonnementCard = ({ onSubscribe }: NoAbonnementCardProps) => {
             marginRight: SPACING.M,
           }}
         >
-          <Wand2 size={ICON_SIZE.L} style={{ color: COLOR.GREY.DARK }} />
+          <img
+            src="/image copy.png"
+            alt="Google Calendar"
+            style={{
+              width: ICON_SIZE.L,
+              height: ICON_SIZE.L,
+            }}
+          />
         </div>
         <div
           style={{
@@ -56,7 +62,7 @@ export const NoAbonnementCard = ({ onSubscribe }: NoAbonnementCardProps) => {
           }}
         >
           <Text size="M" weight="XL" color="BLACK" style={{ marginTop: SPACING.ZERO, paddingTop: SPACING.ZERO }}>
-            Aucun abonnement actif
+            Connectez votre agenda
           </Text>
         </div>
         <div
@@ -69,14 +75,14 @@ export const NoAbonnementCard = ({ onSubscribe }: NoAbonnementCardProps) => {
         >
           <Button
             variant="BLACK"
-            onClick={onSubscribe}
+            onClick={onConnect}
             style={{
               width: WIDTH.AUTO,
               paddingLeft: SPACING.L,
               paddingRight: SPACING.L,
             }}
           >
-            7 jours gratuits
+            Connecter
           </Button>
         </div>
       </div>
