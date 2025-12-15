@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { ColumnDef } from '@tanstack/react-table'
 import { 
   Users, 
   UserPlus, 
@@ -17,18 +18,53 @@ import {
   CheckCircle2, 
   Archive, 
   XCircle,
-  LucideIcon
+  LucideIcon,
+  Eye,
+  Phone,
+  ExternalLink,
+  Linkedin,
+  User,
+  Briefcase,
+  Tag as TagIcon
 } from 'lucide-react'
 import { LAYOUT } from '../../constants/layout'
 import { SPACING } from '../../constants/spacing'
 import { MULTIPLIER } from '../../constants/multiplier'
-import { POSITION_TYPE } from '../../constants/position'
+import { POSITION_TYPE, POSITION } from '../../constants/position'
 import { NavbarSidebar } from '../../components/NavbarSidebar'
 import { TopBar } from '../../components/TopBar'
 import { HelpButton } from '../../components/HelpButton'
 import { StatusFilterSidebar, StatusItem } from '../../components/StatusFilterSidebar'
 import { StickyStatsBar } from '../../components/StickyStatsBar'
 import { EmptyState } from '../../components/EmptyState'
+import { Table } from '../../components/Table'
+import { Text } from '../../components/Text'
+import { Button } from '../../components/Button'
+import { UserInitial } from '../../components/UserInitial'
+import { COLOR } from '../../constants/color'
+import { ICON_SIZE } from '../../constants/iconSize'
+import { FONT_SIZE, FONT_THICKNESS } from '../../constants/font'
+import { BORDER_RADIUS } from '../../constants/border'
+import { DISPLAY } from '../../constants/display'
+import { ALIGN_ITEMS, FLEX, JUSTIFY_CONTENT, FLEX_WRAP } from '../../constants/flex'
+import { OVERFLOW } from '../../constants/overflow'
+import { TEXT_ALIGN, TEXT_OVERFLOW, WHITE_SPACE, TEXT_TRANSFORM, LETTER_SPACING } from '../../constants/text'
+import { TABLE } from '../../constants/table'
+import { INPUT_HEIGHT } from '../../constants/input'
+import { WIDTH } from '../../constants/width'
+import { NUMBER } from '../../constants/number'
+import { getAlternatingRowColor } from '../../lib/tableUtils'
+import { lightenColor } from '../../lib/colorUtils'
+
+type User = {
+  id: string
+  fullName: string
+  fonction: string
+  tags: string[]
+  linkedin?: string
+  email: string
+  telephone: string
+}
 
 export default function DecideursPage() {
   const [searchValue, setSearchValue] = useState('')
@@ -37,6 +73,48 @@ export default function DecideursPage() {
   const [contacteSubStatus, setContacteSubStatus] = useState<string>('all')
   const [meetingsSubStatus, setMeetingsSubStatus] = useState<string>('all')
   const [contratsSubStatus, setContratsSubStatus] = useState<string>('all')
+
+  // Mock users data
+  const mockUsers: User[] = [
+    {
+      id: '1',
+      fullName: 'Jean Dupont',
+      fonction: 'Directeur Marketing',
+      tags: ['Sport', 'Tech'],
+      linkedin: 'https://linkedin.com/in/jeandupont',
+      email: 'jean.dupont@example.com',
+      telephone: '+33 6 12 34 56 78',
+    },
+    {
+      id: '2',
+      fullName: 'Marie Martin',
+      fonction: 'CEO',
+      tags: ['Finance'],
+      linkedin: 'https://linkedin.com/in/mariemartin',
+      email: 'marie.martin@example.com',
+      telephone: '+33 6 23 45 67 89',
+    },
+    {
+      id: '3',
+      fullName: 'Pierre Bernard',
+      fonction: 'Directeur Commercial',
+      tags: ['Sport', 'Media'],
+      email: 'pierre.bernard@example.com',
+      telephone: '+33 6 34 56 78 90',
+    },
+  ]
+
+  const filteredUsers = mockUsers.filter(user => {
+    if (searchValue) {
+      const searchLower = searchValue.toLowerCase()
+      return (
+        user.fullName.toLowerCase().includes(searchLower) ||
+        user.fonction.toLowerCase().includes(searchLower) ||
+        user.email.toLowerCase().includes(searchLower)
+      )
+    }
+    return true
+  })
 
   // Mock team members
   const ownerOptions = [
@@ -221,6 +299,239 @@ export default function DecideursPage() {
   const selectedStatusItem = statusItems.find(item => item.value === selectedStatus)
   const emptyStateIcon = (selectedStatusItem?.icon || Users) as LucideIcon
 
+  // Table columns definition
+  const tableColumns: ColumnDef<User>[] = [
+    {
+      accessorKey: 'fullName',
+      header: () => (
+        <div style={{ display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER, gap: SPACING.S }}>
+          <User size={ICON_SIZE.S} style={{ color: COLOR.GREY.DARK, flexShrink: FLEX.ZERO }} />
+          <Text size="S" weight="XL" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP, textTransform: TEXT_TRANSFORM.UPPERCASE, letterSpacing: LETTER_SPACING.TIGHT }}>
+            Nom complet
+          </Text>
+        </div>
+      ),
+      cell: ({ row }) => (
+        <div style={{ display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER, gap: SPACING.S, minWidth: NUMBER.ZERO, overflow: OVERFLOW.HIDDEN }}>
+          <UserInitial name={row.original.fullName} size="M" />
+          <Text size="M" weight="L" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP, minWidth: NUMBER.ZERO, flex: FLEX.ONE }}>
+            {row.original.fullName}
+          </Text>
+        </div>
+      ),
+      meta: {
+        width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.ICON_SIZE_DOUBLE})`,
+      },
+    },
+    {
+      accessorKey: 'fonction',
+      header: () => (
+        <div style={{ display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER, gap: SPACING.S }}>
+          <Briefcase size={ICON_SIZE.S} style={{ color: COLOR.GREY.DARK, flexShrink: FLEX.ZERO }} />
+          <Text size="S" weight="XL" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP, textTransform: TEXT_TRANSFORM.UPPERCASE, letterSpacing: LETTER_SPACING.TIGHT }}>
+            Fonction
+          </Text>
+        </div>
+      ),
+      cell: ({ row }) => (
+        <div
+          style={{
+            display: DISPLAY.INLINE_FLEX,
+            alignItems: ALIGN_ITEMS.CENTER,
+            paddingLeft: SPACING.S,
+            paddingRight: SPACING.S,
+            paddingTop: SPACING.XS,
+            paddingBottom: SPACING.XS,
+            backgroundColor: lightenColor(COLOR.PURPLE, MULTIPLIER.COLOR_LIGHTEN_NINETY_FIVE),
+            borderRadius: BORDER_RADIUS.M,
+            maxWidth: WIDTH.FULL,
+            overflow: OVERFLOW.HIDDEN,
+          }}
+        >
+          <Text size="S" weight="M" style={{ color: COLOR.PURPLE, overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP }}>
+            {row.original.fonction}
+          </Text>
+        </div>
+      ),
+      meta: {
+        width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY} * ${MULTIPLIER.ICON_SIZE_DOUBLE})`,
+      },
+    },
+    {
+      accessorKey: 'tags',
+      header: () => (
+        <div style={{ display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER, gap: SPACING.S }}>
+          <TagIcon size={ICON_SIZE.S} style={{ color: COLOR.GREY.DARK, flexShrink: FLEX.ZERO }} />
+          <Text size="S" weight="XL" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP, textTransform: TEXT_TRANSFORM.UPPERCASE, letterSpacing: LETTER_SPACING.TIGHT }}>
+            Tag
+          </Text>
+        </div>
+      ),
+      cell: ({ row }) => (
+        <div style={{ display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER, gap: SPACING.XS, flexWrap: FLEX_WRAP.WRAP }}>
+          {row.original.tags.map((tag, index) => (
+            <div
+              key={index}
+              style={{
+                display: DISPLAY.INLINE_FLEX,
+                alignItems: ALIGN_ITEMS.CENTER,
+                paddingLeft: SPACING.S,
+                paddingRight: SPACING.S,
+                paddingTop: SPACING.XS,
+                paddingBottom: SPACING.XS,
+                backgroundColor: lightenColor(COLOR.GOOGLE.GREEN, MULTIPLIER.COLOR_LIGHTEN_NINETY_FIVE),
+                borderRadius: BORDER_RADIUS.M,
+                overflow: OVERFLOW.HIDDEN,
+              }}
+            >
+              <Text size="S" weight="M" style={{ color: COLOR.GOOGLE.GREEN, overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP }}>
+                {tag}
+              </Text>
+            </div>
+          ))}
+        </div>
+      ),
+      meta: {
+        width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.ICON_SIZE_DOUBLE})`,
+      },
+    },
+    {
+      accessorKey: 'linkedin',
+      header: () => (
+        <div style={{ display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER, gap: SPACING.S }}>
+          <Linkedin size={ICON_SIZE.S} style={{ color: COLOR.GREY.DARK, flexShrink: FLEX.ZERO }} />
+          <Text size="S" weight="XL" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP, textTransform: TEXT_TRANSFORM.UPPERCASE, letterSpacing: LETTER_SPACING.TIGHT }}>
+            LinkedIn
+          </Text>
+        </div>
+      ),
+      cell: ({ row }) => (
+        row.original.linkedin ? (
+          <Button
+            variant="WHITE"
+            onClick={() => window.open(row.original.linkedin, '_blank')}
+            icon={<ExternalLink size={ICON_SIZE.M} />}
+            style={{
+              width: WIDTH.AUTO,
+              paddingLeft: SPACING.M,
+              paddingRight: SPACING.M,
+              height: `calc(${INPUT_HEIGHT.SMALL} * ${MULTIPLIER.HEIGHT_EIGHTY})`,
+            }}
+          >
+            LinkedIn
+          </Button>
+        ) : (
+          <Text size="M" weight="M" color="BLACK">
+            -
+          </Text>
+        )
+      ),
+      meta: {
+        width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY} * ${MULTIPLIER.DROPDOWN_WIDTH_ONE_FIVE})`,
+      },
+    },
+    {
+      accessorKey: 'email',
+      header: () => (
+        <div style={{ display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER, gap: SPACING.S }}>
+          <Mail size={ICON_SIZE.S} style={{ color: COLOR.GREY.DARK, flexShrink: FLEX.ZERO }} />
+          <Text size="S" weight="XL" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP, textTransform: TEXT_TRANSFORM.UPPERCASE, letterSpacing: LETTER_SPACING.TIGHT }}>
+            Email
+          </Text>
+        </div>
+      ),
+      cell: ({ row }) => (
+        <Text size="M" weight="M" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP }}>
+          {row.original.email}
+        </Text>
+      ),
+      meta: {
+        width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.ICON_SIZE_DOUBLE})`,
+      },
+    },
+    {
+      accessorKey: 'telephone',
+      header: () => (
+        <div style={{ display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER, gap: SPACING.S }}>
+          <Phone size={ICON_SIZE.S} style={{ color: COLOR.GREY.DARK, flexShrink: FLEX.ZERO }} />
+          <Text size="S" weight="XL" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP, textTransform: TEXT_TRANSFORM.UPPERCASE, letterSpacing: LETTER_SPACING.TIGHT }}>
+            Téléphone
+          </Text>
+        </div>
+      ),
+      cell: ({ row }) => (
+        <Text size="M" weight="M" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP }}>
+          {row.original.telephone}
+        </Text>
+      ),
+      meta: {
+        width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L})`,
+      },
+    },
+    {
+      id: 'details',
+      header: () => (
+        <div style={{ display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER, justifyContent: JUSTIFY_CONTENT.CENTER, gap: SPACING.S }}>
+          <Eye size={ICON_SIZE.S} style={{ color: COLOR.GREY.DARK, flexShrink: FLEX.ZERO }} />
+          <Text size="S" weight="XL" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP, textTransform: TEXT_TRANSFORM.UPPERCASE, letterSpacing: LETTER_SPACING.TIGHT, textAlign: TEXT_ALIGN.CENTER }}>
+            Détails
+          </Text>
+        </div>
+      ),
+      cell: ({ row }) => (
+        <Button
+          variant="BLACK"
+          onClick={() => {}}
+          icon={<Eye size={ICON_SIZE.M} />}
+          style={{
+            width: `calc(${WIDTH.FULL} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY})`,
+            height: `calc(${INPUT_HEIGHT.SMALL} * ${MULTIPLIER.HEIGHT_EIGHTY})`,
+          }}
+        >
+          Voir
+        </Button>
+      ),
+      meta: {
+        width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY} * ${MULTIPLIER.DROPDOWN_WIDTH_ONE_FIVE})`,
+        align: 'center',
+        sticky: true,
+        stickyRight: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY} * ${MULTIPLIER.DROPDOWN_WIDTH_ONE_FIVE})`,
+        borderLeft: true,
+      },
+    },
+    {
+      id: 'action',
+      header: () => (
+        <div style={{ display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER, justifyContent: JUSTIFY_CONTENT.CENTER, gap: SPACING.S }}>
+          <Mail size={ICON_SIZE.S} style={{ color: COLOR.GREY.DARK, flexShrink: FLEX.ZERO }} />
+          <Text size="S" weight="XL" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP, textTransform: TEXT_TRANSFORM.UPPERCASE, letterSpacing: LETTER_SPACING.TIGHT, textAlign: TEXT_ALIGN.CENTER }}>
+            Action
+          </Text>
+        </div>
+      ),
+      cell: ({ row }) => (
+        <Button
+          variant="BLACK"
+          onClick={() => {}}
+          icon={<Mail size={ICON_SIZE.M} />}
+          style={{
+            width: `calc(${WIDTH.FULL} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY})`,
+            height: `calc(${INPUT_HEIGHT.SMALL} * ${MULTIPLIER.HEIGHT_EIGHTY})`,
+          }}
+        >
+          Contacter
+        </Button>
+      ),
+      meta: {
+        width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY} * ${MULTIPLIER.DROPDOWN_WIDTH_ONE_FIVE})`,
+        align: 'center',
+        sticky: true,
+        stickyRight: POSITION.ZERO,
+        borderLeft: true,
+      },
+    },
+  ]
+
   return (
     <div
       style={{
@@ -264,11 +575,21 @@ export default function DecideursPage() {
         onContratsSubStatusChange={setContratsSubStatus}
         selectedStatus={selectedStatus}
       />
-      <EmptyState
-        icon={emptyStateIcon}
-        title={emptyStateContent.title}
-        description={emptyStateContent.description}
-      />
+      {filteredUsers.length > NUMBER.ZERO ? (
+        <Table
+          data={filteredUsers}
+          columns={tableColumns}
+          getRowBackgroundColor={getAlternatingRowColor}
+          showTopBorder={false}
+          stickyTopOffset={`calc((${SPACING.XXXL} + ${SPACING.M}) + ((${SPACING.XXXL} + ${SPACING.M}) * ${MULTIPLIER.STICKY_BAR_HEIGHT}) - (${SPACING.L} * 7))`}
+        />
+      ) : (
+        <EmptyState
+          icon={emptyStateIcon}
+          title={emptyStateContent.title}
+          description={emptyStateContent.description}
+        />
+      )}
       <HelpButton />
     </div>
   )
