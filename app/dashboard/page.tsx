@@ -23,8 +23,6 @@ export default function DashboardPage() {
   const [searchValue, setSearchValue] = useState('')
   const [timeRange, setTimeRange] = useState('all')
   const [selectedUserId, setSelectedUserId] = useState('all')
-  const [activitesAujourdhui, setActivitesAujourdhui] = useState('14')
-  const [activitesSemaine, setActivitesSemaine] = useState('200')
   const [showTable, setShowTable] = useState(false)
 
   // Mock activities data - one for each stat icon
@@ -110,6 +108,59 @@ export default function DashboardPage() {
     console.log('View activity:', activityId)
   }
 
+  // Parse date string (DD/MM/YYYY) and time string (HH:MM) to Date object
+  const parseActivityDateTime = (dateStr: string, timeStr: string): Date => {
+    const [day, month, year] = dateStr.split('/').map(Number)
+    const [hours, minutes] = timeStr.split(':').map(Number)
+    return new Date(year, month - 1, day, hours, minutes)
+  }
+
+  // Filter activities based on time range and user
+  const filteredActivities = activities.filter(activity => {
+    // Filter by user
+    if (selectedUserId !== 'all' && activity.userId !== selectedUserId) {
+      return false
+    }
+
+    // Filter by time range
+    if (timeRange === 'all') {
+      return true
+    }
+
+    const activityDate = parseActivityDateTime(activity.date, activity.time)
+    const now = new Date()
+    const diffMs = now.getTime() - activityDate.getTime()
+    const diffHours = diffMs / (1000 * 60 * 60)
+    const diffDays = diffHours / 24
+
+    switch (timeRange) {
+      case '24h':
+        return diffHours <= 24
+      case '7d':
+        return diffDays <= 7
+      case '30d':
+        return diffDays <= 30
+      default:
+        return true
+    }
+  })
+
+  // Calculate activities for today and this week
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  const weekAgo = new Date(today)
+  weekAgo.setDate(weekAgo.getDate() - 7)
+
+  const activitiesToday = activities.filter(activity => {
+    const activityDate = parseActivityDateTime(activity.date, activity.time)
+    return activityDate >= today
+  }).length
+
+  const activitiesThisWeek = activities.filter(activity => {
+    const activityDate = parseActivityDateTime(activity.date, activity.time)
+    return activityDate >= weekAgo
+  }).length
+
   const dropdownOptions = [
     { value: '24h', label: 'Dernières 24h' },
     { value: '7d', label: '7 derniers jours' },
@@ -146,11 +197,11 @@ export default function DashboardPage() {
       }}
     >
       <Text size="M" weight="M" color="PURPLE">
-        {activitesAujourdhui} activités aujourd'hui
+        {activitiesToday} activités aujourd'hui
       </Text>
       <Dot marginLeft={SPACING.XS} marginRight={SPACING.XS} />
       <Text size="M" weight="M" color="PURPLE">
-        {activitesSemaine} activités cette semaine
+        {activitiesThisWeek} activités cette semaine
       </Text>
     </div>
   )
@@ -204,7 +255,7 @@ export default function DashboardPage() {
       
       {showTable ? (
         <ActivityTable
-          activities={activities}
+          activities={filteredActivities}
           onView={handleViewActivity}
         />
       ) : (

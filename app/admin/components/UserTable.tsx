@@ -289,6 +289,7 @@ export const UserTable = ({ users, onRoleChange, onRemoveUser }: UserTableProps)
       data={users}
       columns={columns}
       getRowBackgroundColor={(row, index) => index % 2 === 0 ? COLOR.WHITE : COLOR.GREY.LIGHT}
+      showTopBorder={true}
     />
   )
 }

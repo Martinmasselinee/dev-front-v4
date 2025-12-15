@@ -23,12 +23,14 @@ interface TableProps<T> {
   data: T[]
   columns: ColumnDef<T>[]
   getRowBackgroundColor?: (row: Row<T>, index: number) => string
+  showTopBorder?: boolean
 }
 
 export function Table<T>({ 
   data, 
   columns, 
-  getRowBackgroundColor 
+  getRowBackgroundColor,
+  showTopBorder = false
 }: TableProps<T>) {
   const table = useReactTable({
     data,
@@ -41,6 +43,7 @@ export function Table<T>({
       style={{
         width: WIDTH.FULL,
         overflowX: OVERFLOW.AUTO,
+        borderTop: showTopBorder ? `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.LIGHT_MEDIUM}` : undefined,
         borderBottom: `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.LIGHT_MEDIUM}`,
         borderRadius: POSITION.ZERO,
         display: DISPLAY.FLEX,
