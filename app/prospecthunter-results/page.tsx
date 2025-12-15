@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Search, Building2 } from 'lucide-react'
+import { Search, Building2, Eye } from 'lucide-react'
 import { Dot } from '../../components/Dot'
 import { Text } from '../../components/Text'
 import { Container } from '../../components/Container'
@@ -29,15 +29,19 @@ import { TopBar } from '../../components/TopBar'
 import { HelpButton } from '../../components/HelpButton'
 import { Button } from '../../components/Button'
 import { Card } from '../../components/Card'
+import { Heading } from '../../components/Heading'
 import { Bubble } from '../../components/Bubble'
 import { CompanyCard } from './components/CompanyCard'
+import { ICON_SIZE } from '../../constants/iconSize'
+import { ICON_STROKE_WIDTH } from '../../constants/icon'
 
 export default function ProspectHunterResultsPage() {
   const router = useRouter()
   const [searchValue, setSearchValue] = useState('')
   const [viewType, setViewType] = useState('table')
   const [hasSearchResults, setHasSearchResults] = useState(true) // Show 29 cards by default when page loads
-  const [displayedCount, setDisplayedCount] = useState(NUMBER.ZERO)
+  const [displayedCount, setDisplayedCount] = useState<number>(NUMBER.ZERO)
+  const [isLoadMoreHovered, setIsLoadMoreHovered] = useState(false)
 
   const viewOptions = [
     { value: 'table', label: 'Table' },
@@ -331,6 +335,7 @@ export default function ProspectHunterResultsPage() {
                 display: DISPLAY.FLEX,
                 gap: SPACING.L,
                 flexWrap: FLEX_WRAP.WRAP,
+                paddingBottom: SPACING.XL,
               }}
             >
               {displayCompanies.map((company, index) => (
@@ -373,8 +378,32 @@ export default function ProspectHunterResultsPage() {
                       paddingBottom: SPACING.XXL,
                       paddingLeft: SPACING.L,
                       paddingRight: SPACING.L,
+                      gap: SPACING.M,
+                      cursor: CURSOR.POINTER,
+                      transition: `border-color ${TRANSITION.FAST_EASE}`,
                     }}
+                    onMouseEnter={() => setIsLoadMoreHovered(true)}
+                    onMouseLeave={() => setIsLoadMoreHovered(false)}
                   >
+                    <Eye 
+                      size={ICON_SIZE.XL} 
+                      style={{ 
+                        color: isLoadMoreHovered ? COLOR.PURPLE : COLOR.GREY.MEDIUM,
+                        strokeWidth: ICON_STROKE_WIDTH.DEFAULT,
+                        transition: `color ${TRANSITION.FAST_EASE}`,
+                      }} 
+                    />
+                    <Heading style={{ textAlign: TEXT_ALIGN.CENTER, marginTop: SPACING.ZERO, marginBottom: SPACING.ZERO }}>
+                      Découvrir plus d'entreprises
+                    </Heading>
+                    <Text 
+                      size="M" 
+                      weight="M" 
+                      color="GREY_DARK" 
+                      style={{ textAlign: TEXT_ALIGN.CENTER, marginTop: SPACING.ZERO, marginBottom: SPACING.ZERO }}
+                    >
+                      Lancez une nouvelle recherche pour découvrir 30 entreprises supplémentaires
+                    </Text>
                     <Button
                       variant="PURPLE"
                       onClick={() => {
@@ -384,6 +413,7 @@ export default function ProspectHunterResultsPage() {
                         width: WIDTH.AUTO,
                         paddingLeft: SPACING.L,
                         paddingRight: SPACING.L,
+                        marginTop: SPACING.M,
                       }}
                     >
                       Afficher 30 de plus
