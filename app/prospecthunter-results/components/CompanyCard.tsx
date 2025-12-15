@@ -10,11 +10,12 @@ import { COLOR } from '../../../constants/color'
 import { SPACING } from '../../../constants/spacing'
 import { DISPLAY } from '../../../constants/display'
 import { FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT, FLEX } from '../../../constants/flex'
-import { BORDER_RADIUS, BORDER_WIDTH } from '../../../constants/border'
+import { BORDER_RADIUS, BORDER_WIDTH, BORDER } from '../../../constants/border'
 import { ICON_SIZE } from '../../../constants/iconSize'
 import { WIDTH } from '../../../constants/width'
 import { POSITION_TYPE, POSITION, TRANSFORM } from '../../../constants/position'
 import { TEXT_TRANSFORM, TEXT_ALIGN, TEXT_DECORATION } from '../../../constants/text'
+import { CURSOR } from '../../../constants/interaction'
 import { OVERFLOW } from '../../../constants/overflow'
 import { Z_INDEX } from '../../../constants/zIndex'
 import { MULTIPLIER } from '../../../constants/multiplier'
@@ -22,6 +23,7 @@ import { OPACITY } from '../../../constants/opacity'
 import { BUTTON_HEIGHT } from '../../../constants/button'
 import { hexToRgba, lightenColor } from '../../../lib/colorUtils'
 import { IconButton } from '../../../components/IconButton'
+import { UserInitial } from '../../../components/UserInitial'
 
 export interface CompanyCardProps {
   logo?: string
@@ -48,6 +50,8 @@ export const CompanyCard = ({
 }: CompanyCardProps) => {
   const [isStatusMode, setIsStatusMode] = useState(false)
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null)
+  const [isOwnerMode, setIsOwnerMode] = useState(false)
+  const [selectedOwner, setSelectedOwner] = useState<string | null>(null)
 
   const statusOptions = [
     { value: 'prospects', label: 'Prospects', icon: UserPlus },
@@ -58,8 +62,17 @@ export const CompanyCard = ({
     { value: 'archive', label: 'Archivé', icon: Archive },
   ]
 
+  const ownerOptions = [
+    { value: 'martin', label: 'Martin Masseline', firstName: 'Martin' },
+    { value: 'sarah', label: 'Sarah Dupont', firstName: 'Sarah' },
+    { value: 'pierre', label: 'Pierre Martin', firstName: 'Pierre' },
+  ]
+
   const handleAddClick = () => {
     setSelectedStatus('prospects')
+    if (!selectedOwner) {
+      setSelectedOwner(ownerOptions[0].value)
+    }
   }
 
   const handleStatusButtonClick = () => {
@@ -76,6 +89,22 @@ export const CompanyCard = ({
     setIsStatusMode(false)
   }
 
+  const handleOwnerButtonClick = () => {
+    if (!selectedOwner) {
+      setSelectedOwner(ownerOptions[0].value)
+    }
+    setIsOwnerMode(true)
+  }
+
+  const handleOwnerSelect = (value: string) => {
+    setSelectedOwner(value)
+    setIsOwnerMode(false)
+  }
+
+  const handleCloseOwnerMode = () => {
+    setIsOwnerMode(false)
+  }
+
   return (
     <Card
       variant="default"
@@ -87,7 +116,7 @@ export const CompanyCard = ({
         overflow: OVERFLOW.HIDDEN,
       }}
     >
-      {isStatusMode ? (
+      {isStatusMode || isOwnerMode ? (
         <>
           {/* Status mode header with X button */}
           <div
@@ -103,15 +132,15 @@ export const CompanyCard = ({
             }}
           >
             <Text size="L" weight="XL" color="BLACK">
-              Sélectionner un statut
+              {isStatusMode ? 'Sélectionner un statut' : 'Sélectionner un propriétaire'}
             </Text>
             <IconButton
-              onClick={handleCloseStatusMode}
+              onClick={isStatusMode ? handleCloseStatusMode : handleCloseOwnerMode}
               icon={<X size={ICON_SIZE.M} />}
             />
           </div>
 
-          {/* Status options */}
+          {/* Status or Owner options */}
           <div
             style={{
               paddingLeft: SPACING.L,
@@ -124,21 +153,38 @@ export const CompanyCard = ({
               flex: FLEX.ONE,
             }}
           >
-            {statusOptions.map((option) => {
-              const IconComponent = option.icon
-              const isSelected = option.value === selectedStatus
-              return (
-                <Button
-                  key={option.value}
-                  variant={isSelected ? "BLACK" : "WHITE"}
-                  onClick={() => handleStatusSelect(option.value)}
-                  icon={<IconComponent size={ICON_SIZE.M} />}
-                  style={{ width: WIDTH.FULL, height: BUTTON_HEIGHT.MAIN }}
-                >
-                  {option.label}
-                </Button>
-              )
-            })}
+            {isStatusMode ? (
+              statusOptions.map((option) => {
+                const IconComponent = option.icon
+                const isSelected = option.value === selectedStatus
+                return (
+                  <Button
+                    key={option.value}
+                    variant={isSelected ? "BLACK" : "WHITE"}
+                    onClick={() => handleStatusSelect(option.value)}
+                    icon={<IconComponent size={ICON_SIZE.M} />}
+                    style={{ width: WIDTH.FULL, height: BUTTON_HEIGHT.MAIN }}
+                  >
+                    {option.label}
+                  </Button>
+                )
+              })
+            ) : (
+              ownerOptions.map((option) => {
+                const isSelected = option.value === selectedOwner
+                return (
+                  <Button
+                    key={option.value}
+                    variant={isSelected ? "BLACK" : "WHITE"}
+                    onClick={() => handleOwnerSelect(option.value)}
+                    icon={<UserInitial name={option.firstName} size="M" />}
+                    style={{ width: WIDTH.FULL, height: BUTTON_HEIGHT.MAIN }}
+                  >
+                    {option.label}
+                  </Button>
+                )
+              })
+            )}
           </div>
         </>
       ) : (
@@ -390,30 +436,61 @@ export const CompanyCard = ({
             Ajouter
           </Button>
         ) : (
-          (() => {
-            const currentStatus = statusOptions.find(opt => opt.value === selectedStatus)
-            const StatusIcon = currentStatus?.icon || UserPlus
-            return (
-              <Button
-                variant="STATUS"
-                onClick={handleStatusButtonClick}
-                icon={<StatusIcon size={ICON_SIZE.M} />}
-                style={{ width: WIDTH.FULL, height: BUTTON_HEIGHT.SMALL, position: POSITION_TYPE.RELATIVE }}
-              >
-                <div
+          <div
+            style={{
+              display: DISPLAY.FLEX,
+              alignItems: ALIGN_ITEMS.CENTER,
+              gap: SPACING.S,
+            }}
+          >
+            {(() => {
+              const currentStatus = statusOptions.find(opt => opt.value === selectedStatus)
+              const StatusIcon = currentStatus?.icon || UserPlus
+              return (
+                <Button
+                  variant="STATUS"
+                  onClick={handleStatusButtonClick}
+                  icon={<StatusIcon size={ICON_SIZE.M} />}
+                  style={{ flex: FLEX.ONE, height: BUTTON_HEIGHT.SMALL, position: POSITION_TYPE.RELATIVE }}
+                >
+                  <div
+                    style={{
+                      display: DISPLAY.FLEX,
+                      alignItems: ALIGN_ITEMS.CENTER,
+                      justifyContent: JUSTIFY_CONTENT.SPACE_BETWEEN,
+                      width: WIDTH.FULL,
+                    }}
+                  >
+                    <span>{currentStatus?.label || 'Prospect'}</span>
+                    <ChevronDown size={ICON_SIZE.M} />
+                  </div>
+                </Button>
+              )
+            })()}
+            {(() => {
+              const currentOwner = ownerOptions.find(opt => opt.value === selectedOwner) || ownerOptions[0]
+              return (
+                <button
+                  onClick={handleOwnerButtonClick}
                   style={{
+                    width: BUTTON_HEIGHT.SMALL,
+                    height: BUTTON_HEIGHT.SMALL,
+                    borderRadius: BORDER_RADIUS.CIRCLE,
+                    backgroundColor: COLOR.BLACK,
+                    border: BORDER.NONE,
                     display: DISPLAY.FLEX,
                     alignItems: ALIGN_ITEMS.CENTER,
-                    justifyContent: JUSTIFY_CONTENT.SPACE_BETWEEN,
-                    width: WIDTH.FULL,
+                    justifyContent: JUSTIFY_CONTENT.CENTER,
+                    cursor: CURSOR.POINTER,
+                    padding: SPACING.ZERO,
+                    flexShrink: FLEX.ZERO,
                   }}
                 >
-                  <span>{currentStatus?.label || 'Prospect'}</span>
-                  <ChevronDown size={ICON_SIZE.M} />
-                </div>
-              </Button>
-            )
-          })()
+                  <UserInitial name={currentOwner.firstName} size="M" />
+                </button>
+              )
+            })()}
+          </div>
         )}
         <Button
           variant="BLACK"
