@@ -160,13 +160,14 @@ export default function ProspectHunterResultsPage() {
       return mockCompanies
     }
     
-    // Initial display: 29 cards + 1 load more = 30 total
+    // Initial display: 29 cards
     if (displayedCount === NUMBER.ZERO) {
       return generateSearchResults(NUMBER.THIRTY - NUMBER.ONE)
     }
     
-    // After load more clicks: displayedCount cards
-    return generateSearchResults(displayedCount)
+    // After load more clicks: 29 initial + displayedCount additional cards
+    // The load more card becomes the first of the new 30, so we add displayedCount cards
+    return generateSearchResults((NUMBER.THIRTY - NUMBER.ONE) + displayedCount)
   }
 
   const displayCompanies = getDisplayedCompanies()
