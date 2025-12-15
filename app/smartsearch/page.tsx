@@ -12,6 +12,7 @@ import { DISPLAY } from '../../constants/display'
 import { ALIGN_ITEMS, FLEX_DIRECTION, FLEX_WRAP, JUSTIFY_CONTENT } from '../../constants/flex'
 import { COLOR } from '../../constants/color'
 import { BORDER, BORDER_WIDTH } from '../../constants/border'
+import { OPACITY } from '../../constants/opacity'
 import { NUMBER } from '../../constants/number'
 import { TIME } from '../../constants/time'
 import { ICON_SIZE } from '../../constants/iconSize'
@@ -23,7 +24,6 @@ import { HelpButton } from '../../components/HelpButton'
 import { Button } from '../../components/Button'
 import { WIDTH } from '../../constants/width'
 import { STRING } from '../../constants/string'
-import { findOptionOrDefault } from '../../lib/arrayUtils'
 import { Input } from '../../components/Input'
 import { Card } from '../../components/Card'
 import { Heading } from '../../components/Heading'
@@ -54,7 +54,6 @@ interface SearchHistoryItem {
 
 export default function SmartSearchPage() {
   const router = useRouter()
-  const [viewType, setViewType] = useState('table')
   const [recherchesLancees, setRecherchesLancees] = useState(STRING.ZERO)
   const [searchValue, setSearchValue] = useState('')
   const [placeholderIndex, setPlaceholderIndex] = useState<number>(NUMBER.ZERO)
@@ -111,13 +110,6 @@ export default function SmartSearchPage() {
 
     return () => clearInterval(interval)
   }, [])
-
-  const viewOptions = [
-    { value: 'table', label: 'Table' },
-    { value: 'cards', label: 'Cartes' },
-  ]
-
-  const selectedViewOption = findOptionOrDefault(viewOptions, viewType)
 
   const formatDateTime = (date: Date): string => {
     const day = String(date.getDate()).padStart(2, '0')
@@ -233,7 +225,6 @@ export default function SmartSearchPage() {
       clearTimeout(timeoutRef.current)
     }
     timeoutRef.current = setTimeout(() => {
-      setIsLoading(false)
       router.push('/smartsearch-results')
     }, TIME.DELAY.LOADING_REDIRECT)
   }
@@ -302,10 +293,6 @@ export default function SmartSearchPage() {
         title=""
         variant="stickyPurple"
         additionalText={stickyPurpleTitle}
-        dropdownOptions={viewOptions}
-        dropdownValue={viewType}
-        onDropdownChange={setViewType}
-        dropdownWidth={DIMENSION.DROPDOWN_WIDTH}
       />
       <HelpButton />
       
@@ -320,7 +307,11 @@ export default function SmartSearchPage() {
         >
           <Card 
             variant="inputContainer" 
-            style={{ padding: SPACING.XL }}
+            style={{ 
+              padding: SPACING.XL,
+              border: `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.MEDIUM}`,
+              backgroundColor: COLOR.WHITE,
+            }}
             id="smartsearch-input-card"
           >
             <div
@@ -354,7 +345,7 @@ export default function SmartSearchPage() {
               className="smartsearch-textarea"
               style={{
                 width: WIDTH.FULL,
-                height: INPUT_HEIGHT.MAIN,
+                height: `calc(${INPUT_HEIGHT.MAIN} * 2)`,
                 paddingLeft: SPACING.ZERO,
                 paddingRight: INPUT_PADDING.HORIZONTAL.WITHOUT_ICON,
                 paddingTop: `calc(${SPACING.S} - 1px)`,
@@ -362,7 +353,7 @@ export default function SmartSearchPage() {
                 fontSize: FONT_SIZE.M,
                 fontWeight: FONT_THICKNESS.M,
                 color: COLOR.BLACK,
-                backgroundColor: veryLightGrey,
+                backgroundColor: COLOR.WHITE,
                 border: BORDER.NONE,
                 outline: OUTLINE.NONE,
                 lineHeight: LINE_HEIGHT.SINGLE,

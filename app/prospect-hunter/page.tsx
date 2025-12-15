@@ -19,7 +19,6 @@ import { ICON_SIZE } from '../../constants/iconSize'
 import { ICON_STROKE_WIDTH } from '../../constants/icon'
 import { DIMENSION } from '../../constants/dimension'
 import { BUSINESS } from '../../constants/business'
-import { findOptionOrDefault } from '../../lib/arrayUtils'
 import { MULTIPLIER } from '../../constants/multiplier'
 import { CURSOR } from '../../constants/interaction'
 import { TRANSITION } from '../../constants/transition'
@@ -45,7 +44,6 @@ interface FilterOption {
 export default function ProspectHunterPage() {
   const router = useRouter()
   const [searchValue, setSearchValue] = useState('')
-  const [viewType, setViewType] = useState('table')
   const [isLoading, setIsLoading] = useState(false)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
   
@@ -64,13 +62,6 @@ export default function ProspectHunterPage() {
       }
     }
   }, [])
-
-  const viewOptions = [
-    { value: 'table', label: 'Table' },
-    { value: 'cards', label: 'Cartes' },
-  ]
-
-  const selectedViewOption = findOptionOrDefault(viewOptions, viewType)
 
   // Filter data arrays
   const sectors: FilterOption[] = [
@@ -286,7 +277,6 @@ export default function ProspectHunterPage() {
       clearTimeout(timeoutRef.current)
     }
     timeoutRef.current = setTimeout(() => {
-      setIsLoading(false)
       router.push('/prospecthunter-results')
     }, TIME.DELAY.LOADING_REDIRECT)
   }
@@ -361,10 +351,6 @@ export default function ProspectHunterPage() {
         title=""
         variant="stickyPurple"
         additionalText={stickyPurpleTitle}
-        dropdownOptions={viewOptions}
-        dropdownValue={viewType}
-        onDropdownChange={setViewType}
-        dropdownWidth={DIMENSION.DROPDOWN_WIDTH}
         />
       <HelpButton />
       

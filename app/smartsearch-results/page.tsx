@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Sparkles, Filter, Building2 } from 'lucide-react'
+import { Sparkles, Building2 } from 'lucide-react'
 import { Dot } from '../../components/Dot'
 import { Text } from '../../components/Text'
 import { LAYOUT } from '../../constants/layout'
@@ -69,28 +69,13 @@ export default function SmartSearchResultsPage() {
         title="SmartSearch" 
         hideBorder={true}
         rightElement={
-          <div
-            style={{
-              display: DISPLAY.FLEX,
-              alignItems: ALIGN_ITEMS.CENTER,
-              gap: SPACING.M,
-            }}
+          <Button
+            variant="BLACK"
+            onClick={() => router.push('/smartsearch')}
+            style={{ width: WIDTH.AUTO, paddingLeft: SPACING.L, paddingRight: SPACING.L }}
           >
-            <Button
-              variant="WHITE"
-              icon={<Filter size={ICON_SIZE.M} />}
-              style={{ width: WIDTH.AUTO, paddingLeft: SPACING.L, paddingRight: SPACING.L }}
-            >
-              Filtre
-            </Button>
-            <Button
-              variant="BLACK"
-              onClick={() => router.push('/smartsearch')}
-              style={{ width: WIDTH.AUTO, paddingLeft: SPACING.L, paddingRight: SPACING.L }}
-            >
-              Nouvelle recherche
-            </Button>
-          </div>
+            Nouvelle recherche
+          </Button>
         }
       />
       <TopBar 
