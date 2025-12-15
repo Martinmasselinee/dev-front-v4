@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { useRouter } from 'next/navigation'
 import { Sparkles, Clock, Wand2, Filter, Building2 } from 'lucide-react'
 import { Dot } from '../../components/Dot'
 import { Text } from '../../components/Text'
@@ -41,6 +42,7 @@ import { POINTER_EVENTS } from '../../constants/interaction'
 import { TRANSITION } from '../../constants/transition'
 import { TEXT_TRANSFORM, LETTER_SPACING } from '../../constants/text'
 import { lightenColor } from '../../lib/colorUtils'
+import { Loading } from '../../components/Loading'
 
 interface SearchHistoryItem {
   date: Date
@@ -51,6 +53,7 @@ interface SearchHistoryItem {
 }
 
 export default function SmartSearchPage() {
+  const router = useRouter()
   const [viewType, setViewType] = useState('table')
   const [recherchesLancees, setRecherchesLancees] = useState(STRING.ZERO)
   const [searchValue, setSearchValue] = useState('')
@@ -59,7 +62,18 @@ export default function SmartSearchPage() {
   const [isFilterPopupOpen, setIsFilterPopupOpen] = useState(false)
   const [excludeSponsors, setExcludeSponsors] = useState(false)
   const [initialExcludeSponsors, setInitialExcludeSponsors] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
   
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [])
+
   // Reset initial values when popup opens
   useEffect(() => {
     if (isFilterPopupOpen) {
@@ -213,6 +227,17 @@ export default function SmartSearchPage() {
     setVisibleCardsCount((prev) => Math.min(prev + cardsToLoad, searchHistoryItems.length))
   }
 
+  const handleLaunchSearch = () => {
+    setIsLoading(true)
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+    }
+    timeoutRef.current = setTimeout(() => {
+      setIsLoading(false)
+      router.push('/smartsearch-results')
+    }, TIME.DELAY.LOADING_REDIRECT)
+  }
+
   const stickyPurpleTitle = (
     <div
       style={{
@@ -264,6 +289,7 @@ export default function SmartSearchPage() {
             <Button
               variant="PURPLE"
               disabled={!isSearchValid}
+              onClick={handleLaunchSearch}
               style={{ width: WIDTH.AUTO, paddingLeft: SPACING.L, paddingRight: SPACING.L }}
             >
               Lancer la recherche
@@ -513,6 +539,8 @@ export default function SmartSearchPage() {
           />
         </div>
       </Popup>
+
+      <Loading message="Recherche en cours..." isVisible={isLoading} />
     </div>
   )
 }

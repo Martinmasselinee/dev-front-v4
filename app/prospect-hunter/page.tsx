@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useRef, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { Search, Building2, DollarSign, MapPin } from 'lucide-react'
 import { Dot } from '../../components/Dot'
 import { Text } from '../../components/Text'
@@ -31,6 +32,8 @@ import { NavbarSidebar } from '../../components/NavbarSidebar'
 import { TopBar } from '../../components/TopBar'
 import { HelpButton } from '../../components/HelpButton'
 import { Button } from '../../components/Button'
+import { Loading } from '../../components/Loading'
+import { TIME } from '../../constants/time'
 
 interface FilterOption {
   value: string
@@ -40,8 +43,11 @@ interface FilterOption {
 }
 
 export default function ProspectHunterPage() {
+  const router = useRouter()
   const [searchValue, setSearchValue] = useState('')
   const [viewType, setViewType] = useState('table')
+  const [isLoading, setIsLoading] = useState(false)
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
   
   // Filter state management
   const [selectedSectors, setSelectedSectors] = useState<string[]>(['all'])
@@ -49,6 +55,15 @@ export default function ProspectHunterPage() {
   const [selectedRegions, setSelectedRegions] = useState<string[]>(['all'])
   const [selectedDepartments, setSelectedDepartments] = useState<string[]>(['all'])
   const [selectedCities, setSelectedCities] = useState<string[]>(['all'])
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [])
 
   const viewOptions = [
     { value: 'table', label: 'Table' },
@@ -265,6 +280,17 @@ export default function ProspectHunterPage() {
     return true
   }, [selectedSectors, selectedTurnovers, selectedRegions, selectedDepartments, selectedCities])
 
+  const handleLaunchSearch = () => {
+    setIsLoading(true)
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+    }
+    timeoutRef.current = setTimeout(() => {
+      setIsLoading(false)
+      router.push('/prospecthunter-results')
+    }, TIME.DELAY.LOADING_REDIRECT)
+  }
+
   const stickyPurpleTitle = (
     <div
       style={{
@@ -305,6 +331,7 @@ export default function ProspectHunterPage() {
           <Button
             variant="PURPLE"
             disabled={!isSearchEnabled}
+            onClick={handleLaunchSearch}
             style={{ width: WIDTH.AUTO, paddingLeft: SPACING.L, paddingRight: SPACING.L }}
           >
             {searchValue.trim().length > NUMBER.ZERO ? (
@@ -928,6 +955,8 @@ export default function ProspectHunterPage() {
           </div>
         </div>
       </Container>
+
+      <Loading message="Recherche en cours..." isVisible={isLoading} />
     </div>
   )
 }

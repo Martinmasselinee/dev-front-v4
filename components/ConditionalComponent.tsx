@@ -20,7 +20,9 @@ export function ConditionalComponent({ type }: ConditionalComponentProps) {
     '/marques',
     '/activations',
     '/prospect-hunter',
+    '/prospecthunter-results',
     '/smartsearch',
+    '/smartsearch-results',
     '/radar-ai',
     '/admin',
   ]
