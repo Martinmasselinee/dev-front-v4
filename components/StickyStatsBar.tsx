@@ -38,6 +38,10 @@ interface StickyStatsBarProps {
   contratsSubStatusValue?: string
   onContratsSubStatusChange?: (value: string) => void
   selectedStatus?: string
+  viewDropdownOptions?: { value: string; label: string }[]
+  viewDropdownValue?: string
+  onViewDropdownChange?: (value: string) => void
+  viewDropdownWidth?: string
 }
 
 export const StickyStatsBar = ({ 
@@ -59,7 +63,11 @@ export const StickyStatsBar = ({
   contratsSubStatusOptions,
   contratsSubStatusValue,
   onContratsSubStatusChange,
-  selectedStatus
+  selectedStatus,
+  viewDropdownOptions,
+  viewDropdownValue,
+  onViewDropdownChange,
+  viewDropdownWidth
 }: StickyStatsBarProps) => {
   const IconComponent = icon || Activity
   const statsContent = (
@@ -108,6 +116,8 @@ export const StickyStatsBar = ({
     ? meetingsSubStatusOptions 
     : showContratsSubStatus
     ? contratsSubStatusOptions
+    : viewDropdownOptions
+    ? viewDropdownOptions
     : undefined
 
   const firstDropdownValue = showContacteSubStatus 
@@ -118,6 +128,8 @@ export const StickyStatsBar = ({
     ? meetingsSubStatusValue 
     : showContratsSubStatus
     ? contratsSubStatusValue
+    : viewDropdownValue
+    ? viewDropdownValue
     : undefined
 
   const onFirstDropdownChange = showContacteSubStatus 
@@ -128,6 +140,8 @@ export const StickyStatsBar = ({
     ? onMeetingsSubStatusChange 
     : showContratsSubStatus
     ? onContratsSubStatusChange
+    : onViewDropdownChange
+    ? onViewDropdownChange
     : undefined
 
   return (
@@ -142,7 +156,7 @@ export const StickyStatsBar = ({
       secondDropdownOptions={ownerDropdownOptions}
       secondDropdownValue={ownerValue}
       onSecondDropdownChange={onOwnerChange}
-      dropdownWidth={`calc(${DIMENSION.DROPDOWN_WIDTH} * ${MULTIPLIER.DROPDOWN_WIDTH_ONE_FIVE})`}
+      dropdownWidth={viewDropdownWidth || `calc(${DIMENSION.DROPDOWN_WIDTH} * ${MULTIPLIER.DROPDOWN_WIDTH_ONE_FIVE})`}
       stickyTopOffset={`calc(${SPACING.XXXL} + ${SPACING.M} + ${SPACING.NEGATIVE_ONE_PX})`}
       customLeft={customLeft}
       customWidth={customWidth}
