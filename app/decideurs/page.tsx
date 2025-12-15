@@ -77,9 +77,6 @@ export default function DecideursPage() {
   const [searchValue, setSearchValue] = useState('')
   const [ownerFilter, setOwnerFilter] = useState('all')
   const [selectedStatus, setSelectedStatus] = useState<string>('all')
-  const [contacteSubStatus, setContacteSubStatus] = useState<string>('all')
-  const [meetingsSubStatus, setMeetingsSubStatus] = useState<string>('all')
-  const [contratsSubStatus, setContratsSubStatus] = useState<string>('all')
 
   // Mock users data
   const mockUsers: User[] = [
@@ -141,132 +138,10 @@ export default function DecideursPage() {
     { label: 'Archivé', value: 'archive', icon: Archive },
   ]
 
-  const contacteSubStatusOptions = [
-    { value: 'all', label: 'Contactés' },
-    { value: 'a_relancer', label: 'À relancer' },
-    { value: '1x_relance', label: '1X relance' },
-    { value: '2x_relances', label: '2X relances' },
-    { value: '3x_relances', label: '3X relances' },
-    { value: 'discussion_en_cours', label: 'Discussion en cours' },
-    { value: 'aucune_reponse', label: 'Aucune réponse' },
-  ]
-
-  const meetingsSubStatusOptions = [
-    { value: 'all', label: 'Tous' },
-    { value: 'meeting_a_venir', label: 'Meeting à venir' },
-    { value: '1x_meeting', label: '1X meeting' },
-    { value: '2x_meetings', label: '2X meetings' },
-    { value: '3x_meetings', label: '3X meetings' },
-    { value: 'meetings_effectues', label: 'Meetings effectués' },
-  ]
-
-  const contratsSubStatusOptions = [
-    { value: 'all', label: 'Tous' },
-    { value: 'contrat_signe', label: 'Contrat signé' },
-    { value: 'contrat_a_venir', label: 'Contrat à venir' },
-    { value: 'contrat_termine', label: 'Contrat terminé' },
-  ]
-
   const getEmptyStateContent = () => {
     const statusLabel = statusItems.find(item => item.value === selectedStatus)?.label || 'Tous'
     const ownerLabel = ownerOptions.find(opt => opt.value === ownerFilter)?.label || 'Tous les membres'
     const ownerText = ownerFilter === 'all' ? '' : ` pour ${ownerLabel.toLowerCase()}`
-
-    // Handle sub-status for "Contacté"
-    if (selectedStatus === 'contacte' && contacteSubStatus !== 'all') {
-      if (contacteSubStatus === 'a_relancer') {
-        return {
-          title: 'Aucun décideur à relancer',
-          description: `Aucun décideur à relancer${ownerText}.`
-        }
-      }
-      if (contacteSubStatus === '1x_relance') {
-        return {
-          title: 'Aucun décideur avec 1X relance',
-          description: `Aucun décideur avec 1X relance${ownerText}.`
-        }
-      }
-      if (contacteSubStatus === '2x_relances') {
-        return {
-          title: 'Aucun décideur avec 2X relances',
-          description: `Aucun décideur avec 2X relances${ownerText}.`
-        }
-      }
-      if (contacteSubStatus === '3x_relances') {
-        return {
-          title: 'Aucun décideur avec 3X relances',
-          description: `Aucun décideur avec 3X relances${ownerText}.`
-        }
-      }
-      if (contacteSubStatus === 'discussion_en_cours') {
-        return {
-          title: 'Aucune discussion en cours',
-          description: `Aucune discussion en cours${ownerText}.`
-        }
-      }
-      if (contacteSubStatus === 'aucune_reponse') {
-        return {
-          title: 'Aucun décideur sans réponse',
-          description: `Aucun décideur sans réponse${ownerText}.`
-        }
-      }
-    }
-
-    // Handle sub-status for "Meetings"
-    if (selectedStatus === 'meetings' && meetingsSubStatus !== 'all') {
-      if (meetingsSubStatus === 'meeting_a_venir') {
-        return {
-          title: 'Aucun meeting à venir',
-          description: `Aucun meeting à venir${ownerText}.`
-        }
-      }
-      if (meetingsSubStatus === '1x_meeting') {
-        return {
-          title: 'Aucun décideur avec 1X meeting',
-          description: `Aucun décideur avec 1X meeting${ownerText}.`
-        }
-      }
-      if (meetingsSubStatus === '2x_meetings') {
-        return {
-          title: 'Aucun décideur avec 2X meetings',
-          description: `Aucun décideur avec 2X meetings${ownerText}.`
-        }
-      }
-      if (meetingsSubStatus === '3x_meetings') {
-        return {
-          title: 'Aucun décideur avec 3X meetings',
-          description: `Aucun décideur avec 3X meetings${ownerText}.`
-        }
-      }
-      if (meetingsSubStatus === 'meetings_effectues') {
-        return {
-          title: 'Aucun meeting effectué',
-          description: `Aucun meeting effectué${ownerText}.`
-        }
-      }
-    }
-
-    // Handle sub-status for "Contrats"
-    if (selectedStatus === 'contrats' && contratsSubStatus !== 'all') {
-      if (contratsSubStatus === 'contrat_signe') {
-        return {
-          title: 'Aucun contrat signé',
-          description: `Aucun contrat signé${ownerText}.`
-        }
-      }
-      if (contratsSubStatus === 'contrat_a_venir') {
-        return {
-          title: 'Aucun contrat à venir',
-          description: `Aucun contrat à venir${ownerText}.`
-        }
-      }
-      if (contratsSubStatus === 'contrat_termine') {
-        return {
-          title: 'Aucun contrat terminé',
-          description: `Aucun contrat terminé${ownerText}.`
-        }
-      }
-    }
 
     const statusMessages: Record<string, { title: string; description: string }> = {
       'all': {
@@ -623,15 +498,6 @@ export default function DecideursPage() {
         ownerDropdownOptions={ownerOptions}
         ownerValue={ownerFilter}
         onOwnerChange={setOwnerFilter}
-        contacteSubStatusOptions={contacteSubStatusOptions}
-        contacteSubStatusValue={contacteSubStatus}
-        onContacteSubStatusChange={setContacteSubStatus}
-        meetingsSubStatusOptions={meetingsSubStatusOptions}
-        meetingsSubStatusValue={meetingsSubStatus}
-        onMeetingsSubStatusChange={setMeetingsSubStatus}
-        contratsSubStatusOptions={contratsSubStatusOptions}
-        contratsSubStatusValue={contratsSubStatus}
-        onContratsSubStatusChange={setContratsSubStatus}
         selectedStatus={selectedStatus}
       />
       {filteredUsers.length > NUMBER.ZERO ? (
