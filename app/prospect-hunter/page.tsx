@@ -4,7 +4,6 @@ import { useState, useMemo } from 'react'
 import { Search, Building2, DollarSign, MapPin } from 'lucide-react'
 import { Dot } from '../../components/Dot'
 import { Text } from '../../components/Text'
-import { EmptyState } from '../../components/EmptyState'
 import { Card } from '../../components/Card'
 import { Container } from '../../components/Container'
 import { LAYOUT } from '../../constants/layout'
@@ -16,6 +15,7 @@ import { TEXT_ALIGN } from '../../constants/text'
 import { COLOR } from '../../constants/color'
 import { BORDER_RADIUS, BORDER_WIDTH } from '../../constants/border'
 import { ICON_SIZE } from '../../constants/iconSize'
+import { ICON_STROKE_WIDTH } from '../../constants/icon'
 import { DIMENSION } from '../../constants/dimension'
 import { BUSINESS } from '../../constants/business'
 import { findOptionOrDefault } from '../../lib/arrayUtils'
@@ -810,11 +810,83 @@ export default function ProspectHunterPage() {
           )}
         </div>
 
-        <EmptyState
-          icon={Search}
-          title="Sélectionnez vos critères"
-          description="Utilisez les filtres ci-dessus pour sélectionner le type d'entreprises et de décideurs que vous recherchez"
-        />
+        {/* Empty State - rendered directly without Container wrapper to remove extra padding */}
+        <div
+          style={{
+            width: WIDTH.FULL,
+            paddingTop: SPACING.XL,
+            paddingLeft: SPACING.ZERO,
+            paddingRight: SPACING.ZERO,
+            paddingBottom: SPACING.XXL,
+            backgroundColor: COLOR.GREY.LIGHT,
+            border: `${BORDER_WIDTH.MEDIUM} dashed ${COLOR.GREY.MEDIUM}`,
+            borderRadius: BORDER_RADIUS.L,
+            marginTop: SPACING.XL,
+          }}
+        >
+          <div
+            style={{
+              display: DISPLAY.FLEX,
+              flexDirection: FLEX_DIRECTION.COLUMN,
+              alignItems: ALIGN_ITEMS.CENTER,
+              gap: SPACING.M,
+            }}
+          >
+            {/* Icon */}
+            <div
+              style={{
+                display: DISPLAY.FLEX,
+                alignItems: ALIGN_ITEMS.CENTER,
+                justifyContent: JUSTIFY_CONTENT.CENTER,
+              }}
+            >
+              <Search
+                size={ICON_SIZE.XXL}
+                strokeWidth={ICON_STROKE_WIDTH.DEFAULT}
+                style={{
+                  color: COLOR.GREY.DARK,
+                }}
+              />
+            </div>
+
+            {/* Text content */}
+            <div
+              style={{
+                display: DISPLAY.FLEX,
+                flexDirection: FLEX_DIRECTION.COLUMN,
+                alignItems: ALIGN_ITEMS.CENTER,
+                gap: SPACING.XS,
+              }}
+            >
+              <Text
+                size="L"
+                weight="XL"
+                color="BLACK"
+                style={{
+                  textAlign: TEXT_ALIGN.CENTER,
+                }}
+              >
+                Sélectionnez vos critères
+              </Text>
+              <div
+                style={{
+                  maxWidth: DIMENSION.EMPTY_STATE_SUBTITLE_MAX_WIDTH,
+                }}
+              >
+                <Text
+                  size="M"
+                  weight="M"
+                  color="GREY_DARK"
+                  style={{
+                    textAlign: TEXT_ALIGN.CENTER,
+                  }}
+                >
+                  Utilisez les filtres ci-dessus pour sélectionner le type d'entreprises et de décideurs que vous recherchez
+                </Text>
+              </div>
+            </div>
+          </div>
+        </div>
       </Container>
     </div>
   )
