@@ -14,6 +14,7 @@ import { COLOR } from '../../../constants/color'
 import { ICON_SIZE } from '../../../constants/iconSize'
 import { OVERFLOW } from '../../../constants/overflow'
 import { TEXT_OVERFLOW, WHITE_SPACE, TEXT_TRANSFORM, LETTER_SPACING, TEXT_ALIGN } from '../../../constants/text'
+import { FONT_SIZE, FONT_THICKNESS } from '../../../constants/font'
 import { TABLE } from '../../../constants/table'
 import { MULTIPLIER } from '../../../constants/multiplier'
 import { INPUT_HEIGHT } from '../../../constants/input'
@@ -82,8 +83,18 @@ export const ActivityTable = ({ activities, onView }: ActivityTableProps) => {
           </Bubble>
         )
       }
-      // Otherwise, return as plain text
-      return <span key={index}>{part}</span>
+      // Otherwise, return as plain text with proper alignment
+      return (
+        <span 
+          key={index}
+          style={{
+            display: DISPLAY.INLINE_FLEX,
+            alignItems: ALIGN_ITEMS.CENTER,
+          }}
+        >
+          {part}
+        </span>
+      )
     })
   }
 
@@ -115,10 +126,10 @@ export const ActivityTable = ({ activities, onView }: ActivityTableProps) => {
         const Icon = getActivityIcon(row.original.type)
         return (
           <div style={{ display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER, gap: SPACING.S }}>
-            <Icon size={ICON_SIZE.M} style={{ color: COLOR.GREY.DARK, flexShrink: FLEX.ZERO }} />
-            <Text size="M" weight="M" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP }}>
+            <Icon size={ICON_SIZE.M} style={{ color: COLOR.PURPLE, flexShrink: FLEX.ZERO }} />
+            <div style={{ display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER, gap: SPACING.XS, overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP, flex: FLEX.ONE, fontSize: FONT_SIZE.M, fontWeight: FONT_THICKNESS.M, color: COLOR.BLACK }}>
               {parseDescription(row.original.description, row.original.id)}
-            </Text>
+            </div>
           </div>
         )
       },
@@ -132,7 +143,7 @@ export const ActivityTable = ({ activities, onView }: ActivityTableProps) => {
         <Text size="S" weight="XL" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP, textTransform: TEXT_TRANSFORM.UPPERCASE, letterSpacing: LETTER_SPACING.TIGHT }}>Heure</Text>
       ),
       cell: ({ row }) => (
-        <Text size="M" weight="M" color="BLACK" style={{ color: COLOR.BLACK, overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP }}>{row.original.time}</Text>
+        <Text size="M" weight="M" color="GREY_DARK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP }}>{row.original.time}</Text>
       ),
       meta: {
         width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_HALF} * ${MULTIPLIER.BUTTON_WIDTH_HALF})`,
