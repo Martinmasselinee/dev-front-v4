@@ -44,9 +44,10 @@ import { UserInitial } from '../../components/UserInitial'
 import { COLOR } from '../../constants/color'
 import { ICON_SIZE } from '../../constants/iconSize'
 import { FONT_SIZE, FONT_THICKNESS } from '../../constants/font'
-import { BORDER_RADIUS, BORDER_WIDTH } from '../../constants/border'
+import { BORDER_RADIUS, BORDER_WIDTH, BORDER } from '../../constants/border'
 import { DISPLAY } from '../../constants/display'
 import { ALIGN_ITEMS, FLEX, JUSTIFY_CONTENT, FLEX_WRAP } from '../../constants/flex'
+import { CURSOR } from '../../constants/interaction'
 import { OVERFLOW } from '../../constants/overflow'
 import { TEXT_ALIGN, TEXT_OVERFLOW, WHITE_SPACE, TEXT_TRANSFORM, LETTER_SPACING } from '../../constants/text'
 import { TABLE } from '../../constants/table'
@@ -54,7 +55,13 @@ import { INPUT_HEIGHT } from '../../constants/input'
 import { WIDTH } from '../../constants/width'
 import { NUMBER } from '../../constants/number'
 import { getAlternatingRowColor } from '../../lib/tableUtils'
-import { lightenColor } from '../../lib/colorUtils'
+import { lightenColor, hexToRgba } from '../../lib/colorUtils'
+import { OPACITY } from '../../constants/opacity'
+import { BUTTON_HEIGHT, BUTTON_OVERLAY } from '../../constants/button'
+import { INSET } from '../../constants/position'
+import { Z_INDEX } from '../../constants/zIndex'
+import { TRANSITION } from '../../constants/transition'
+import { POINTER_EVENTS } from '../../constants/interaction'
 
 type User = {
   id: string
@@ -369,22 +376,68 @@ export default function DecideursPage() {
       ),
       cell: ({ row }) => (
         row.original.linkedin ? (
-          <Button
-            variant="WHITE"
+          <button
             onClick={() => window.open(row.original.linkedin, '_blank')}
-            icon={<ExternalLink size={ICON_SIZE.M} style={{ color: COLOR.GOOGLE.BLUE }} />}
             style={{
+              backgroundColor: lightenColor(COLOR.GOOGLE.BLUE, MULTIPLIER.COLOR_LIGHTEN_NINETY_FIVE),
+              color: COLOR.GOOGLE.BLUE,
+              borderRadius: BORDER_RADIUS.M,
+              height: `calc(${INPUT_HEIGHT.SMALL} * ${MULTIPLIER.HEIGHT_EIGHTY})`,
+              border: BORDER.NONE,
+              cursor: CURSOR.POINTER,
               width: WIDTH.AUTO,
               paddingLeft: SPACING.M,
               paddingRight: SPACING.M,
-              height: `calc(${INPUT_HEIGHT.SMALL} * ${MULTIPLIER.HEIGHT_EIGHTY})`,
-              backgroundColor: lightenColor(COLOR.GOOGLE.BLUE, MULTIPLIER.COLOR_LIGHTEN_NINETY_FIVE),
-              color: COLOR.GOOGLE.BLUE,
-              border: `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.MEDIUM}`,
+              fontSize: FONT_SIZE.M,
+              fontWeight: FONT_THICKNESS.L,
+              transition: `background-color ${TRANSITION.FAST_EASE}`,
+              display: DISPLAY.FLEX,
+              alignItems: ALIGN_ITEMS.CENTER,
+              justifyContent: JUSTIFY_CONTENT.CENTER,
+              position: POSITION_TYPE.RELATIVE,
+              opacity: OPACITY.FULL,
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = lightenColor(lightenColor(COLOR.GOOGLE.BLUE, MULTIPLIER.COLOR_LIGHTEN_NINETY_FIVE), MULTIPLIER.COLOR_LIGHTEN_PERCENT)
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = lightenColor(COLOR.GOOGLE.BLUE, MULTIPLIER.COLOR_LIGHTEN_NINETY_FIVE)
             }}
           >
-            LinkedIn
-          </Button>
+            <div
+              style={{
+                position: POSITION_TYPE.ABSOLUTE,
+                inset: INSET.BUTTON_OVERLAY,
+                borderRadius: BUTTON_OVERLAY.BORDER_RADIUS,
+                background: `linear-gradient(to bottom, rgba(255, 255, 255, ${OPACITY.BUTTON_GRADIENT_START}), rgba(255, 255, 255, ${OPACITY.BUTTON_GRADIENT_END}))`,
+                pointerEvents: POINTER_EVENTS.NONE,
+                zIndex: Z_INDEX.COMPONENT_OVERLAY,
+              }}
+            >
+              <div
+                style={{
+                  position: POSITION_TYPE.ABSOLUTE,
+                  inset: INSET.BUTTON_OVERLAY,
+                  borderRadius: BUTTON_OVERLAY.INNER_BORDER_RADIUS,
+                  background: lightenColor(COLOR.GOOGLE.BLUE, MULTIPLIER.COLOR_LIGHTEN_NINETY_FIVE),
+                  transition: `background-color ${TRANSITION.FAST_EASE}`,
+                }}
+              />
+            </div>
+            <span
+              style={{
+                position: POSITION_TYPE.RELATIVE,
+                zIndex: Z_INDEX.COMPONENT_CONTENT,
+                display: DISPLAY.FLEX,
+                alignItems: ALIGN_ITEMS.CENTER,
+              }}
+            >
+              <span style={{ marginRight: SPACING.S, display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER }}>
+                <ExternalLink size={ICON_SIZE.M} style={{ color: COLOR.GOOGLE.BLUE }} />
+              </span>
+              LinkedIn
+            </span>
+          </button>
         ) : (
           <Text size="M" weight="M" color="BLACK">
             -

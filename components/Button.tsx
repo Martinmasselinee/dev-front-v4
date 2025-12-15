@@ -45,10 +45,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
   const overlayBorderRadius = BUTTON_OVERLAY.BORDER_RADIUS
   const innerBorderRadius = BUTTON_OVERLAY.INNER_BORDER_RADIUS
 
+  // Use custom backgroundColor from style if provided, otherwise use variant default
+  const actualBackgroundColor = style?.backgroundColor as string || buttonStyle.backgroundColor
+
   const hoverBackgroundColor =
     variant === 'WHITE'
-      ? darkenColor(buttonStyle.backgroundColor, MULTIPLIER.COLOR_DARKEN_PERCENT)
-      : lightenColor(buttonStyle.backgroundColor, MULTIPLIER.COLOR_LIGHTEN_PERCENT)
+      ? darkenColor(actualBackgroundColor, MULTIPLIER.COLOR_DARKEN_PERCENT)
+      : lightenColor(actualBackgroundColor, MULTIPLIER.COLOR_LIGHTEN_PERCENT)
 
   return (
     <>
@@ -70,7 +73,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
         className={className}
         disabled={disabled}
         style={{
-          backgroundColor: buttonStyle.backgroundColor,
+          backgroundColor: actualBackgroundColor,
           color: buttonStyle.color,
           borderRadius: borderRadius,
           height: buttonHeight,
@@ -104,7 +107,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
             position: POSITION_TYPE.ABSOLUTE,
             inset: INSET.BUTTON_OVERLAY,
             borderRadius: innerBorderRadius,
-            background: buttonStyle.backgroundColor,
+            background: actualBackgroundColor,
             transition: `background-color ${TRANSITION.FAST_EASE}`,
           }}
         />
