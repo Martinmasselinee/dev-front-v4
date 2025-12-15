@@ -7,7 +7,7 @@ import { Card } from '../../components/Card'
 import { Heading } from '../../components/Heading'
 import { Container } from '../../components/Container'
 import { ArticleCard } from './components/ArticleCard'
-import { ArticlePopup } from './components/ArticlePopup'
+import { ArticlePopup, ContentBlock } from './components/ArticlePopup'
 import { Dot } from '../../components/Dot'
 import { Text } from '../../components/Text'
 import { LAYOUT } from '../../constants/layout'
@@ -82,6 +82,43 @@ export default function RadarAIPage() {
   const fiftyDaysAgo = new Date(now)
   fiftyDaysAgo.setDate(fiftyDaysAgo.getDate() - 50)
 
+  // Mock content for all articles (same content for all)
+  const mockContent: ContentBlock[] = [
+    {
+      type: 'paragraph',
+      content: 'Un nouveau partenariat majeur vient d\'être annoncé dans le monde du sponsoring sportif, marquant une étape importante pour les deux parties impliquées. Cette collaboration stratégique représente un investissement significatif dans le domaine du sport professionnel et ouvre de nouvelles perspectives pour les deux entités.',
+    },
+    {
+      type: 'subtitle',
+      content: 'Les détails du partenariat',
+    },
+    {
+      type: 'paragraph',
+      content: 'Les détails de ce partenariat incluent des engagements à long terme qui permettront de développer des initiatives communes dans le domaine du marketing sportif, de la communication et de l\'engagement communautaire.',
+    },
+    {
+      type: 'citation',
+      content: 'Cette collaboration représente un moment clé pour notre marque et démontre notre engagement envers le sport professionnel et la communauté sportive.',
+    },
+    {
+      type: 'subtitle',
+      content: 'Les points clés',
+    },
+    {
+      type: 'bulletPoints',
+      content: [
+        'Engagement à long terme sur plusieurs saisons',
+        'Initiatives communes en marketing sportif',
+        'Communication renforcée avec la communauté',
+        'Développement de programmes sociaux et environnementaux',
+      ],
+    },
+    {
+      type: 'paragraph',
+      content: 'Ce type de partenariat démontre l\'importance croissante du sponsoring sportif dans les stratégies marketing modernes, où les marques cherchent à créer des connexions authentiques avec leur audience à travers le sport.',
+    },
+  ]
+
   // Mock articles data - move to state for filtering
   const [articles] = useState([
     // Last 24h (3 articles)
@@ -92,7 +129,7 @@ export default function RadarAIPage() {
       date: formatDate(today),
       title: 'Nouveau partenariat stratégique annoncé',
       excerpt: 'Un nouveau partenariat majeur vient d\'être annoncé dans le monde du sponsoring sportif, marquant une étape importante pour les deux parties impliquées.',
-      content: 'Un nouveau partenariat majeur vient d\'être annoncé dans le monde du sponsoring sportif, marquant une étape importante pour les deux parties impliquées. Cette collaboration stratégique représente un investissement significatif dans le domaine du sport professionnel et ouvre de nouvelles perspectives pour les deux entités.\n\nLes détails de ce partenariat incluent des engagements à long terme qui permettront de développer des initiatives communes dans le domaine du marketing sportif, de la communication et de l\'engagement communautaire. Les deux parties ont exprimé leur enthousiasme quant aux opportunités que cette collaboration apportera.\n\nCe type de partenariat démontre l\'importance croissante du sponsoring sportif dans les stratégies marketing modernes, où les marques cherchent à créer des connexions authentiques avec leur audience à travers le sport.',
+      content: mockContent,
       tags: ['Partenariat', 'Stratégie'],
       relatedArticles: [
         { title: 'Guide complet du sponsoring sportif en 2025', url: 'https://example.com/sponsoring-guide' },
@@ -106,7 +143,7 @@ export default function RadarAIPage() {
       date: formatDate(yesterday),
       title: 'Tendances marketing sportif 2025',
       excerpt: 'Les tendances du marketing sportif évoluent rapidement, avec de nouvelles approches innovantes qui transforment le paysage du sponsoring.',
-      content: 'Les tendances du marketing sportif évoluent rapidement, avec de nouvelles approches innovantes qui transforment le paysage du sponsoring. L\'année 2025 marque un tournant dans la manière dont les marques interagissent avec le monde du sport.\n\nLes nouvelles technologies, notamment l\'intelligence artificielle et la réalité augmentée, ouvrent des possibilités inédites pour créer des expériences immersives pour les fans. Les marques investissent de plus en plus dans des campagnes digitales qui permettent une interaction directe avec leur audience.\n\nL\'authenticité et la transparence sont également devenues des valeurs centrales. Les consommateurs recherchent des partenariats qui reflètent leurs propres valeurs, poussant les marques à s\'engager dans des causes sociales et environnementales significatives.',
+      content: mockContent,
       tags: ['Marketing', 'Tendances'],
       relatedArticles: [
         { title: 'L\'impact de l\'IA sur le marketing sportif', url: 'https://example.com/ia-marketing' },
@@ -120,7 +157,7 @@ export default function RadarAIPage() {
       date: formatDate(yesterday),
       title: 'Campagne d\'activation réussie',
       excerpt: 'Une campagne d\'activation récente a démontré l\'efficacité des nouvelles stratégies de communication dans le domaine sportif.',
-      content: 'Une campagne d\'activation récente a démontré l\'efficacité des nouvelles stratégies de communication dans le domaine sportif. Cette initiative a permis d\'atteindre des résultats exceptionnels en termes d\'engagement et de visibilité.\n\nLa campagne a combiné plusieurs canaux de communication, incluant les réseaux sociaux, les événements en direct, et des partenariats avec des influenceurs du monde sportif. Cette approche multi-canal a permis de toucher une audience diversifiée et d\'amplifier le message de la marque.\n\nLes résultats quantitatifs montrent une augmentation significative de l\'engagement, avec des taux d\'interaction qui dépassent les moyennes du secteur. Cette réussite démontre l\'importance d\'une stratégie bien pensée et d\'une exécution soignée dans le domaine du marketing sportif.',
+      content: mockContent,
       tags: ['Campagne', 'Succès'],
       relatedArticles: [
         { title: 'Comment créer une campagne d\'activation réussie', url: 'https://example.com/activation-campaign' },
@@ -135,7 +172,7 @@ export default function RadarAIPage() {
       date: formatDate(threeDaysAgo),
       title: 'Innovation dans le sponsoring digital',
       excerpt: 'Les nouvelles technologies transforment la manière dont les marques s\'engagent dans le sponsoring sportif.',
-      content: 'Les nouvelles technologies transforment la manière dont les marques s\'engagent dans le sponsoring sportif. L\'intégration de solutions digitales innovantes permet de créer des expériences plus immersives et mesurables pour les partenaires et les fans.\n\nLes plateformes de réalité augmentée et virtuelle ouvrent de nouvelles possibilités pour les campagnes de sponsoring, permettant aux marques de créer des interactions uniques avec leur audience. Ces technologies permettent également une meilleure mesure de l\'impact et du retour sur investissement des partenariats.',
+      content: mockContent,
       tags: ['Digital', 'Innovation'],
       relatedArticles: [
         { title: 'L\'avenir du sponsoring digital', url: 'https://example.com/digital-sponsoring' },
@@ -148,7 +185,7 @@ export default function RadarAIPage() {
       date: formatDate(fiveDaysAgo),
       title: 'Stratégies de branding sportif',
       excerpt: 'Les marques développent de nouvelles approches pour renforcer leur présence dans le monde du sport.',
-      content: 'Les marques développent de nouvelles approches pour renforcer leur présence dans le monde du sport. Les stratégies de branding évoluent pour s\'adapter aux attentes des consommateurs modernes qui recherchent authenticité et engagement social.\n\nLes partenariats à long terme avec des équipes et des athlètes permettent aux marques de construire une identité forte et cohérente. Ces collaborations vont au-delà du simple placement de logo et créent de véritables connexions émotionnelles avec les fans.',
+      content: mockContent,
       tags: ['Branding', 'Stratégie'],
       relatedArticles: [
         { title: 'Construire une marque dans le sport', url: 'https://example.com/branding-sport' },
@@ -161,7 +198,7 @@ export default function RadarAIPage() {
       date: formatDate(fiveDaysAgo),
       title: 'Événements sportifs et activation de marque',
       excerpt: 'Les événements sportifs représentent une opportunité unique pour les marques d\'activer leur présence.',
-      content: 'Les événements sportifs représentent une opportunité unique pour les marques d\'activer leur présence. Les grandes compétitions offrent une visibilité exceptionnelle et permettent de toucher des millions de spectateurs à travers le monde.\n\nLes stratégies d\'activation lors d\'événements sportifs incluent des expériences immersives, des partenariats avec des influenceurs, et des campagnes sur les réseaux sociaux. Ces approches permettent aux marques de maximiser leur impact et de créer des souvenirs durables pour leur audience.',
+      content: mockContent,
       tags: ['Événements', 'Activation'],
       relatedArticles: [
         { title: 'Maximiser l\'impact des événements sportifs', url: 'https://example.com/events-activation' },
@@ -175,7 +212,7 @@ export default function RadarAIPage() {
       date: formatDate(tenDaysAgo),
       title: 'Partenariats durables dans le sport',
       excerpt: 'Les partenariats à long terme deviennent la norme dans le sponsoring sportif moderne.',
-      content: 'Les partenariats à long terme deviennent la norme dans le sponsoring sportif moderne. Les marques recherchent des collaborations durables qui permettent de construire une relation authentique avec les équipes, les athlètes et les fans.\n\nCes partenariats étendus offrent de nombreux avantages, notamment une meilleure cohérence du message de marque, une plus grande visibilité, et la possibilité de développer des initiatives communes sur plusieurs saisons. Les marques investissent dans des relations qui vont au-delà du simple sponsoring financier.',
+      content: mockContent,
       tags: ['Durabilité', 'Partenariat'],
       relatedArticles: [
         { title: 'Construire des partenariats durables', url: 'https://example.com/durable-partnerships' },
@@ -188,7 +225,7 @@ export default function RadarAIPage() {
       date: formatDate(fifteenDaysAgo),
       title: 'L\'impact social du sponsoring sportif',
       excerpt: 'Les marques utilisent le sponsoring sportif pour s\'engager dans des causes sociales importantes.',
-      content: 'Les marques utilisent le sponsoring sportif pour s\'engager dans des causes sociales importantes. De plus en plus, les partenariats incluent des composantes de responsabilité sociale et environnementale.\n\nLes initiatives incluent le soutien à des programmes éducatifs, la promotion de l\'inclusion et de la diversité, et des engagements en faveur de la durabilité environnementale. Ces approches permettent aux marques d\'aligner leurs valeurs avec celles de leur audience et de créer un impact positif au-delà du simple marketing.',
+      content: mockContent,
       tags: ['Social', 'Impact'],
       relatedArticles: [
         { title: 'Sponsoring sportif et responsabilité sociale', url: 'https://example.com/social-impact' },
@@ -201,7 +238,7 @@ export default function RadarAIPage() {
       date: formatDate(twentyDaysAgo),
       title: 'Mesure de performance des campagnes sportives',
       excerpt: 'Les marques développent de nouvelles méthodes pour mesurer l\'efficacité de leurs campagnes de sponsoring.',
-      content: 'Les marques développent de nouvelles méthodes pour mesurer l\'efficacité de leurs campagnes de sponsoring. Les outils d\'analyse avancés permettent de quantifier l\'impact réel des partenariats sportifs.\n\nLes métriques incluent la portée des campagnes, l\'engagement des audiences, l\'évolution de la notoriété de marque, et le retour sur investissement. Ces données permettent aux marques d\'optimiser leurs stratégies et de justifier leurs investissements dans le sponsoring sportif.',
+      content: mockContent,
       tags: ['Performance', 'Métriques'],
       relatedArticles: [
         { title: 'Mesurer le ROI du sponsoring sportif', url: 'https://example.com/roi-measurement' },
@@ -215,7 +252,7 @@ export default function RadarAIPage() {
       date: formatDate(fortyDaysAgo),
       title: 'Histoire du sponsoring sportif',
       excerpt: 'Retour sur l\'évolution du sponsoring sportif au fil des décennies.',
-      content: 'Retour sur l\'évolution du sponsoring sportif au fil des décennies. Le sponsoring sportif a considérablement évolué depuis ses débuts, passant de simples placements de logos à des partenariats stratégiques complexes.\n\nLes premières formes de sponsoring sportif remontent aux années 1960, avec des marques qui commençaient à reconnaître le potentiel marketing du sport. Depuis lors, l\'industrie a connu une croissance exponentielle, avec des investissements qui atteignent aujourd\'hui des milliards d\'euros chaque année.',
+      content: mockContent,
       tags: ['Histoire', 'Évolution'],
       relatedArticles: [
         { title: 'L\'évolution du sponsoring sportif', url: 'https://example.com/sponsoring-history' },
@@ -228,7 +265,7 @@ export default function RadarAIPage() {
       date: formatDate(fiftyDaysAgo),
       title: 'Fondamentaux du marketing sportif',
       excerpt: 'Les principes de base du marketing sportif restent pertinents malgré l\'évolution des technologies.',
-      content: 'Les principes de base du marketing sportif restent pertinents malgré l\'évolution des technologies. L\'authenticité, la cohérence et l\'engagement restent au cœur de toute stratégie de marketing sportif réussie.\n\nLes marques qui réussissent dans le sport comprennent l\'importance de créer des connexions émotionnelles avec les fans. Ces connexions se construisent sur la base de valeurs partagées, d\'expériences mémorables, et d\'un engagement authentique avec la communauté sportive.',
+      content: mockContent,
       tags: ['Fondamentaux', 'Marketing'],
       relatedArticles: [
         { title: 'Les bases du marketing sportif', url: 'https://example.com/sports-marketing-basics' },
@@ -250,7 +287,7 @@ export default function RadarAIPage() {
     date: string
     title: string
     excerpt: string
-    content: string
+    content: ContentBlock[]
     tags: string[]
     relatedArticles?: Array<{ title: string; url: string }>
   } | null>(null)

@@ -13,7 +13,7 @@ import { FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT, FLEX, FLEX_WRAP } from '.
 import { BORDER_RADIUS, BORDER_WIDTH } from '../../../constants/border'
 import { ICON_SIZE } from '../../../constants/iconSize'
 import { WIDTH } from '../../../constants/width'
-import { LINE_HEIGHT } from '../../../constants/font'
+import { LINE_HEIGHT, FONT_STYLE, FONT_SIZE } from '../../../constants/font'
 import { WHITE_SPACE } from '../../../constants/text'
 import { TRANSITION } from '../../../constants/transition'
 import { POSITION } from '../../../constants/position'
@@ -21,6 +21,11 @@ import { POSITION } from '../../../constants/position'
 export interface RelatedArticle {
   title: string
   url: string
+}
+
+export interface ContentBlock {
+  type: 'paragraph' | 'subtitle' | 'citation' | 'bulletPoints'
+  content: string | string[]
 }
 
 export interface ArticlePopupProps {
@@ -32,7 +37,7 @@ export interface ArticlePopupProps {
   date: string
   title: string
   excerpt: string
-  content: string
+  content: ContentBlock[]
   tags: string[]
   relatedArticles?: RelatedArticle[]
 }
@@ -121,10 +126,78 @@ export const ArticlePopup = ({
             {excerpt}
           </Text>
 
-          {/* Full content */}
-          <Text size="M" weight="M" color="BLACK" style={{ lineHeight: LINE_HEIGHT.TIGHT, whiteSpace: WHITE_SPACE.PRE_LINE }}>
-            {content}
-          </Text>
+          {/* Structured content */}
+          <div style={{ display: DISPLAY.FLEX, flexDirection: FLEX_DIRECTION.COLUMN, gap: SPACING.M }}>
+            {content.map((block, index) => {
+              if (block.type === 'paragraph') {
+                return (
+                  <Text key={index} size="M" weight="M" color="BLACK" style={{ lineHeight: LINE_HEIGHT.TIGHT }}>
+                    {typeof block.content === 'string' ? block.content : block.content.join(' ')}
+                  </Text>
+                )
+              }
+
+              if (block.type === 'subtitle') {
+                return (
+                  <Heading key={index} level={3} style={{ marginBottom: SPACING.ZERO, marginTop: SPACING.M }}>
+                    {typeof block.content === 'string' ? block.content : block.content.join(' ')}
+                  </Heading>
+                )
+              }
+
+              if (block.type === 'citation') {
+                return (
+                  <div
+                    key={index}
+                    style={{
+                      display: DISPLAY.FLEX,
+                      paddingLeft: SPACING.L,
+                      borderLeft: `${BORDER_WIDTH.MEDIUM} solid ${COLOR.PURPLE}`,
+                    }}
+                  >
+                    <Text
+                      size="M"
+                      weight="M"
+                      color="GREY_DARK"
+                      style={{
+                        fontStyle: FONT_STYLE.ITALIC,
+                        lineHeight: LINE_HEIGHT.TIGHT,
+                      }}
+                    >
+                      {typeof block.content === 'string' ? block.content : block.content.join(' ')}
+                    </Text>
+                  </div>
+                )
+              }
+
+              if (block.type === 'bulletPoints') {
+                const points = Array.isArray(block.content) ? block.content : [block.content]
+                return (
+                  <ul
+                    key={index}
+                    style={{
+                      margin: SPACING.ZERO,
+                      paddingLeft: SPACING.XL,
+                      listStyle: 'disc',
+                      display: DISPLAY.FLEX,
+                      flexDirection: FLEX_DIRECTION.COLUMN,
+                      gap: SPACING.ZERO,
+                    }}
+                  >
+                    {points.map((point, pointIndex) => (
+                      <li key={pointIndex}>
+                        <Text size="M" weight="M" color="BLACK" style={{ lineHeight: LINE_HEIGHT.TIGHT }}>
+                          {point}
+                        </Text>
+                      </li>
+                    ))}
+                  </ul>
+                )
+              }
+
+              return null
+            })}
+          </div>
 
           {/* Tag bubbles */}
           {tags.length > 0 && (
