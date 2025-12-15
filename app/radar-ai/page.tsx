@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { Users, Mail, AlertTriangle, Sparkles, ScanLine, Inbox, FileText, TrendingUp, Building2, Tag, Zap, Award, DollarSign, Youtube, Shirt, Plus } from 'lucide-react'
+import { Users, Mail, AlertTriangle, Sparkles, ScanLine, Inbox, FileText, TrendingUp, Building2, Tag, Zap, Award, DollarSign, Youtube, Shirt, Plus, Wand2, Clock } from 'lucide-react'
 import { Card } from '../../components/Card'
 import { Heading } from '../../components/Heading'
 import { Container } from '../../components/Container'
@@ -25,7 +25,7 @@ import { UserInitial } from '../../components/UserInitial'
 import { DropdownButton } from '../../components/DropdownButton'
 import { RoleChangeConfirmPopup } from '../../app/admin/components/RoleChangeConfirmPopup'
 import { COLOR } from '../../constants/color'
-import { BORDER_WIDTH } from '../../constants/border'
+import { BORDER, BORDER_WIDTH } from '../../constants/border'
 import { DISPLAY } from '../../constants/display'
 import { FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT, FLEX, FLEX_WRAP } from '../../constants/flex'
 import { TEXT_ALIGN } from '../../constants/text'
@@ -36,7 +36,9 @@ import { WIDTH } from '../../constants/width'
 import { DIMENSION } from '../../constants/dimension'
 import { TABLE } from '../../constants/table'
 import { TIME_RANGE } from '../../constants/filter'
+import { TIME } from '../../constants/time'
 import { findOptionOrDefault } from '../../lib/arrayUtils'
+import { parseDateString, millisecondsToHours, hoursToDays } from '../../lib/dateUtils'
 
 export default function RadarAIPage() {
   const searchParams = useSearchParams()
@@ -51,6 +53,188 @@ export default function RadarAIPage() {
   const [timeRange, setTimeRange] = useState<string>(TIME_RANGE.ALL)
   const [articleType, setArticleType] = useState<string>('all')
   const [showSummaryCard, setShowSummaryCard] = useState(false)
+
+  // Helper function to format date as DD/MM/YYYY
+  const formatDate = (date: Date): string => {
+    const day = String(date.getDate()).padStart(2, '0')
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const year = date.getFullYear()
+    return `${day}/${month}/${year}`
+  }
+
+  // Get dates for different time ranges
+  const now = new Date()
+  const today = new Date(now)
+  const yesterday = new Date(now)
+  yesterday.setDate(yesterday.getDate() - 1)
+  const threeDaysAgo = new Date(now)
+  threeDaysAgo.setDate(threeDaysAgo.getDate() - 3)
+  const fiveDaysAgo = new Date(now)
+  fiveDaysAgo.setDate(fiveDaysAgo.getDate() - 5)
+  const tenDaysAgo = new Date(now)
+  tenDaysAgo.setDate(tenDaysAgo.getDate() - 10)
+  const fifteenDaysAgo = new Date(now)
+  fifteenDaysAgo.setDate(fifteenDaysAgo.getDate() - 15)
+  const twentyDaysAgo = new Date(now)
+  twentyDaysAgo.setDate(twentyDaysAgo.getDate() - 20)
+  const fortyDaysAgo = new Date(now)
+  fortyDaysAgo.setDate(fortyDaysAgo.getDate() - 40)
+  const fiftyDaysAgo = new Date(now)
+  fiftyDaysAgo.setDate(fiftyDaysAgo.getDate() - 50)
+
+  // Mock articles data - move to state for filtering
+  const [articles] = useState([
+    // Last 24h (3 articles)
+    {
+      type: 'sponsoring',
+      typeLabel: 'Sponsoring',
+      typeIcon: TrendingUp,
+      date: formatDate(today),
+      title: 'Nouveau partenariat stratégique annoncé',
+      excerpt: 'Un nouveau partenariat majeur vient d\'être annoncé dans le monde du sponsoring sportif, marquant une étape importante pour les deux parties impliquées.',
+      content: 'Un nouveau partenariat majeur vient d\'être annoncé dans le monde du sponsoring sportif, marquant une étape importante pour les deux parties impliquées. Cette collaboration stratégique représente un investissement significatif dans le domaine du sport professionnel et ouvre de nouvelles perspectives pour les deux entités.\n\nLes détails de ce partenariat incluent des engagements à long terme qui permettront de développer des initiatives communes dans le domaine du marketing sportif, de la communication et de l\'engagement communautaire. Les deux parties ont exprimé leur enthousiasme quant aux opportunités que cette collaboration apportera.\n\nCe type de partenariat démontre l\'importance croissante du sponsoring sportif dans les stratégies marketing modernes, où les marques cherchent à créer des connexions authentiques avec leur audience à travers le sport.',
+      tags: ['Partenariat', 'Stratégie'],
+      relatedArticles: [
+        { title: 'Guide complet du sponsoring sportif en 2025', url: 'https://example.com/sponsoring-guide' },
+        { title: 'Les meilleures pratiques de partenariat sportif', url: 'https://example.com/partenariat-practices' },
+      ],
+    },
+    {
+      type: 'marques',
+      typeLabel: 'Marques',
+      typeIcon: Tag,
+      date: formatDate(yesterday),
+      title: 'Tendances marketing sportif 2025',
+      excerpt: 'Les tendances du marketing sportif évoluent rapidement, avec de nouvelles approches innovantes qui transforment le paysage du sponsoring.',
+      content: 'Les tendances du marketing sportif évoluent rapidement, avec de nouvelles approches innovantes qui transforment le paysage du sponsoring. L\'année 2025 marque un tournant dans la manière dont les marques interagissent avec le monde du sport.\n\nLes nouvelles technologies, notamment l\'intelligence artificielle et la réalité augmentée, ouvrent des possibilités inédites pour créer des expériences immersives pour les fans. Les marques investissent de plus en plus dans des campagnes digitales qui permettent une interaction directe avec leur audience.\n\nL\'authenticité et la transparence sont également devenues des valeurs centrales. Les consommateurs recherchent des partenariats qui reflètent leurs propres valeurs, poussant les marques à s\'engager dans des causes sociales et environnementales significatives.',
+      tags: ['Marketing', 'Tendances'],
+      relatedArticles: [
+        { title: 'L\'impact de l\'IA sur le marketing sportif', url: 'https://example.com/ia-marketing' },
+        { title: 'Marketing digital dans le sport : nouvelles tendances', url: 'https://example.com/digital-sport' },
+      ],
+    },
+    {
+      type: 'activations',
+      typeLabel: 'Activations',
+      typeIcon: Zap,
+      date: formatDate(yesterday),
+      title: 'Campagne d\'activation réussie',
+      excerpt: 'Une campagne d\'activation récente a démontré l\'efficacité des nouvelles stratégies de communication dans le domaine sportif.',
+      content: 'Une campagne d\'activation récente a démontré l\'efficacité des nouvelles stratégies de communication dans le domaine sportif. Cette initiative a permis d\'atteindre des résultats exceptionnels en termes d\'engagement et de visibilité.\n\nLa campagne a combiné plusieurs canaux de communication, incluant les réseaux sociaux, les événements en direct, et des partenariats avec des influenceurs du monde sportif. Cette approche multi-canal a permis de toucher une audience diversifiée et d\'amplifier le message de la marque.\n\nLes résultats quantitatifs montrent une augmentation significative de l\'engagement, avec des taux d\'interaction qui dépassent les moyennes du secteur. Cette réussite démontre l\'importance d\'une stratégie bien pensée et d\'une exécution soignée dans le domaine du marketing sportif.',
+      tags: ['Campagne', 'Succès'],
+      relatedArticles: [
+        { title: 'Comment créer une campagne d\'activation réussie', url: 'https://example.com/activation-campaign' },
+        { title: 'Stratégies multi-canaux pour le marketing sportif', url: 'https://example.com/multi-channel' },
+      ],
+    },
+    // Last 7 days (3 articles)
+    {
+      type: 'sponsoring',
+      typeLabel: 'Sponsoring',
+      typeIcon: TrendingUp,
+      date: formatDate(threeDaysAgo),
+      title: 'Innovation dans le sponsoring digital',
+      excerpt: 'Les nouvelles technologies transforment la manière dont les marques s\'engagent dans le sponsoring sportif.',
+      content: 'Les nouvelles technologies transforment la manière dont les marques s\'engagent dans le sponsoring sportif. L\'intégration de solutions digitales innovantes permet de créer des expériences plus immersives et mesurables pour les partenaires et les fans.\n\nLes plateformes de réalité augmentée et virtuelle ouvrent de nouvelles possibilités pour les campagnes de sponsoring, permettant aux marques de créer des interactions uniques avec leur audience. Ces technologies permettent également une meilleure mesure de l\'impact et du retour sur investissement des partenariats.',
+      tags: ['Digital', 'Innovation'],
+      relatedArticles: [
+        { title: 'L\'avenir du sponsoring digital', url: 'https://example.com/digital-sponsoring' },
+      ],
+    },
+    {
+      type: 'marques',
+      typeLabel: 'Marques',
+      typeIcon: Tag,
+      date: formatDate(fiveDaysAgo),
+      title: 'Stratégies de branding sportif',
+      excerpt: 'Les marques développent de nouvelles approches pour renforcer leur présence dans le monde du sport.',
+      content: 'Les marques développent de nouvelles approches pour renforcer leur présence dans le monde du sport. Les stratégies de branding évoluent pour s\'adapter aux attentes des consommateurs modernes qui recherchent authenticité et engagement social.\n\nLes partenariats à long terme avec des équipes et des athlètes permettent aux marques de construire une identité forte et cohérente. Ces collaborations vont au-delà du simple placement de logo et créent de véritables connexions émotionnelles avec les fans.',
+      tags: ['Branding', 'Stratégie'],
+      relatedArticles: [
+        { title: 'Construire une marque dans le sport', url: 'https://example.com/branding-sport' },
+      ],
+    },
+    {
+      type: 'activations',
+      typeLabel: 'Activations',
+      typeIcon: Zap,
+      date: formatDate(fiveDaysAgo),
+      title: 'Événements sportifs et activation de marque',
+      excerpt: 'Les événements sportifs représentent une opportunité unique pour les marques d\'activer leur présence.',
+      content: 'Les événements sportifs représentent une opportunité unique pour les marques d\'activer leur présence. Les grandes compétitions offrent une visibilité exceptionnelle et permettent de toucher des millions de spectateurs à travers le monde.\n\nLes stratégies d\'activation lors d\'événements sportifs incluent des expériences immersives, des partenariats avec des influenceurs, et des campagnes sur les réseaux sociaux. Ces approches permettent aux marques de maximiser leur impact et de créer des souvenirs durables pour leur audience.',
+      tags: ['Événements', 'Activation'],
+      relatedArticles: [
+        { title: 'Maximiser l\'impact des événements sportifs', url: 'https://example.com/events-activation' },
+      ],
+    },
+    // Last 30 days (3 articles)
+    {
+      type: 'sponsoring',
+      typeLabel: 'Sponsoring',
+      typeIcon: TrendingUp,
+      date: formatDate(tenDaysAgo),
+      title: 'Partenariats durables dans le sport',
+      excerpt: 'Les partenariats à long terme deviennent la norme dans le sponsoring sportif moderne.',
+      content: 'Les partenariats à long terme deviennent la norme dans le sponsoring sportif moderne. Les marques recherchent des collaborations durables qui permettent de construire une relation authentique avec les équipes, les athlètes et les fans.\n\nCes partenariats étendus offrent de nombreux avantages, notamment une meilleure cohérence du message de marque, une plus grande visibilité, et la possibilité de développer des initiatives communes sur plusieurs saisons. Les marques investissent dans des relations qui vont au-delà du simple sponsoring financier.',
+      tags: ['Durabilité', 'Partenariat'],
+      relatedArticles: [
+        { title: 'Construire des partenariats durables', url: 'https://example.com/durable-partnerships' },
+      ],
+    },
+    {
+      type: 'marques',
+      typeLabel: 'Marques',
+      typeIcon: Tag,
+      date: formatDate(fifteenDaysAgo),
+      title: 'L\'impact social du sponsoring sportif',
+      excerpt: 'Les marques utilisent le sponsoring sportif pour s\'engager dans des causes sociales importantes.',
+      content: 'Les marques utilisent le sponsoring sportif pour s\'engager dans des causes sociales importantes. De plus en plus, les partenariats incluent des composantes de responsabilité sociale et environnementale.\n\nLes initiatives incluent le soutien à des programmes éducatifs, la promotion de l\'inclusion et de la diversité, et des engagements en faveur de la durabilité environnementale. Ces approches permettent aux marques d\'aligner leurs valeurs avec celles de leur audience et de créer un impact positif au-delà du simple marketing.',
+      tags: ['Social', 'Impact'],
+      relatedArticles: [
+        { title: 'Sponsoring sportif et responsabilité sociale', url: 'https://example.com/social-impact' },
+      ],
+    },
+    {
+      type: 'activations',
+      typeLabel: 'Activations',
+      typeIcon: Zap,
+      date: formatDate(twentyDaysAgo),
+      title: 'Mesure de performance des campagnes sportives',
+      excerpt: 'Les marques développent de nouvelles méthodes pour mesurer l\'efficacité de leurs campagnes de sponsoring.',
+      content: 'Les marques développent de nouvelles méthodes pour mesurer l\'efficacité de leurs campagnes de sponsoring. Les outils d\'analyse avancés permettent de quantifier l\'impact réel des partenariats sportifs.\n\nLes métriques incluent la portée des campagnes, l\'engagement des audiences, l\'évolution de la notoriété de marque, et le retour sur investissement. Ces données permettent aux marques d\'optimiser leurs stratégies et de justifier leurs investissements dans le sponsoring sportif.',
+      tags: ['Performance', 'Métriques'],
+      relatedArticles: [
+        { title: 'Mesurer le ROI du sponsoring sportif', url: 'https://example.com/roi-measurement' },
+      ],
+    },
+    // Older articles (2 articles)
+    {
+      type: 'sponsoring',
+      typeLabel: 'Sponsoring',
+      typeIcon: TrendingUp,
+      date: formatDate(fortyDaysAgo),
+      title: 'Histoire du sponsoring sportif',
+      excerpt: 'Retour sur l\'évolution du sponsoring sportif au fil des décennies.',
+      content: 'Retour sur l\'évolution du sponsoring sportif au fil des décennies. Le sponsoring sportif a considérablement évolué depuis ses débuts, passant de simples placements de logos à des partenariats stratégiques complexes.\n\nLes premières formes de sponsoring sportif remontent aux années 1960, avec des marques qui commençaient à reconnaître le potentiel marketing du sport. Depuis lors, l\'industrie a connu une croissance exponentielle, avec des investissements qui atteignent aujourd\'hui des milliards d\'euros chaque année.',
+      tags: ['Histoire', 'Évolution'],
+      relatedArticles: [
+        { title: 'L\'évolution du sponsoring sportif', url: 'https://example.com/sponsoring-history' },
+      ],
+    },
+    {
+      type: 'marques',
+      typeLabel: 'Marques',
+      typeIcon: Tag,
+      date: formatDate(fiftyDaysAgo),
+      title: 'Fondamentaux du marketing sportif',
+      excerpt: 'Les principes de base du marketing sportif restent pertinents malgré l\'évolution des technologies.',
+      content: 'Les principes de base du marketing sportif restent pertinents malgré l\'évolution des technologies. L\'authenticité, la cohérence et l\'engagement restent au cœur de toute stratégie de marketing sportif réussie.\n\nLes marques qui réussissent dans le sport comprennent l\'importance de créer des connexions émotionnelles avec les fans. Ces connexions se construisent sur la base de valeurs partagées, d\'expériences mémorables, et d\'un engagement authentique avec la communauté sportive.',
+      tags: ['Fondamentaux', 'Marketing'],
+      relatedArticles: [
+        { title: 'Les bases du marketing sportif', url: 'https://example.com/sports-marketing-basics' },
+      ],
+    },
+  ])
 
   const handleRefresh = () => {
     setShowSummaryCard(true)
@@ -155,7 +339,7 @@ export default function RadarAIPage() {
   ]
 
   const articleOptions = [
-    { value: TIME_RANGE.ALL, label: 'Tous les articles' },
+    { value: 'all', label: 'Tous les articles' },
     { value: 'sponsoring', label: 'Sponsoring' },
     { value: 'marques', label: 'Marques' },
     { value: 'activations', label: 'Activations' },
@@ -166,6 +350,77 @@ export default function RadarAIPage() {
     { value: 'partenariat', label: 'Partenariat officiel maillot' },
   ]
 
+  // Filter articles based on timeRange and articleType
+  const filteredArticles = articles.filter(article => {
+    // Filter by article type
+    if (articleType !== 'all' && article.type !== articleType) {
+      return false
+    }
+
+    // Filter by time range
+    if (timeRange === TIME_RANGE.ALL) {
+      return true
+    }
+
+    // Parse article date (format: DD/MM/YYYY)
+    const [day, month, year] = article.date.split('/').map(Number)
+    const articleDate = new Date(year, month - 1, day)
+    const now = new Date()
+    const diffMs = now.getTime() - articleDate.getTime()
+    const diffHours = millisecondsToHours(diffMs)
+    const diffDays = hoursToDays(diffHours)
+
+    switch (timeRange) {
+      case TIME_RANGE.HOURS_24:
+        return diffHours <= TIME.HOURS_PER_DAY
+      case TIME_RANGE.DAYS_7:
+        return diffDays <= TIME.DAYS_PER_WEEK
+      case TIME_RANGE.DAYS_30:
+        return diffDays <= TIME.DAYS_PER_MONTH
+      default:
+        return true
+    }
+  })
+
+  // Group articles by time range for separators
+  const getArticleTimeGroup = (article: typeof articles[0]): string => {
+    const [day, month, year] = article.date.split('/').map(Number)
+    const articleDate = new Date(year, month - 1, day)
+    const now = new Date()
+    const diffMs = now.getTime() - articleDate.getTime()
+    const diffHours = millisecondsToHours(diffMs)
+    const diffDays = hoursToDays(diffHours)
+
+    if (diffHours <= TIME.HOURS_PER_DAY) {
+      return 'last24h'
+    } else if (diffDays <= TIME.DAYS_PER_WEEK) {
+      return 'last7d'
+    } else if (diffDays <= TIME.DAYS_PER_MONTH) {
+      return 'last30d'
+    } else {
+      return 'older'
+    }
+  }
+
+  // Group filtered articles by time range
+  const groupedArticles = filteredArticles.reduce((groups, article) => {
+    const group = getArticleTimeGroup(article)
+    if (!groups[group]) {
+      groups[group] = []
+    }
+    groups[group].push(article)
+    return groups
+  }, {} as Record<string, typeof filteredArticles>)
+
+  // Define group order and labels
+  const groupOrder: readonly string[] = ['last24h', 'last7d', 'last30d', 'older'] as const
+  const groupLabels: Record<string, { label: string; icon: typeof Clock }> = {
+    last24h: { label: 'Dernières 24h', icon: Clock },
+    last7d: { label: '7 derniers jours', icon: Clock },
+    last30d: { label: '30 derniers jours', icon: Clock },
+    older: { label: 'Articles plus anciens', icon: Clock },
+  }
+
   const selectedTimeframeOption = findOptionOrDefault(timeframeOptions, timeRange)
 
   // Get icon and description based on article type and timeframe
@@ -175,7 +430,19 @@ export default function RadarAIPage() {
 
     let icon = Inbox
     let title = 'Aucun article trouvé'
-    let description = `Aucun article récupéré par les agents IA pour ${timeframeLabel.toLowerCase()}.`
+    let description = `Aucun article récupéré par les agents IA`
+
+    // Add timeframe context
+    if (timeRange !== TIME_RANGE.ALL) {
+      description += ` pour ${timeframeLabel.toLowerCase()}`
+    }
+
+    // Add article type context
+    if (articleType !== 'all') {
+      description += ` pour ${articleTypeLabel.toLowerCase()}`
+    }
+
+    description += '.'
 
     // Set icon based on article type
     switch (articleType) {
@@ -277,106 +544,107 @@ export default function RadarAIPage() {
         <HelpButton />
         
         {showSummaryCard ? (
-          <Container variant="fullWidth">
-            <Card style={{ marginTop: SPACING.XL, backgroundColor: COLOR.WHITE, paddingTop: SPACING.L, paddingRight: SPACING.XXL }}>
-              <div style={{ display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.FLEX_START, gap: SPACING.M }}>
-                <Sparkles size={ICON_SIZE.L} style={{ color: COLOR.PURPLE, flexShrink: FLEX.ZERO, marginTop: SPACING.XS }} />
-                <div style={{ display: DISPLAY.FLEX, flexDirection: FLEX_DIRECTION.COLUMN, gap: SPACING.S, flex: FLEX.ONE }}>
-                  <Heading level={2} style={{ marginBottom: SPACING.ZERO }}>
-                    Résumé IA des articles du jour
-                  </Heading>
-                  <Text size="M" weight="M" color="BLACK">
-                    Aujourd'hui, {nouveauxArticles} nouveau article a été identifié par les agents Dataxx. Ces articles couvrent les dernières actualités du sponsoring sportif, les partenariats stratégiques, et les tendances du marketing sportif en France et à l'international.
-                  </Text>
-                </div>
-              </div>
-            </Card>
-
-            {/* 3-column article layout */}
-            <div style={{ marginTop: SPACING.XL }}>
-              <div style={{ width: WIDTH.FULL }}>
-                <div
-                  style={{
-                    display: DISPLAY.FLEX,
-                    gap: SPACING.L,
-                    flexWrap: FLEX_WRAP.WRAP,
-                  }}
-                >
-                {/* Mock article data - replace with actual data later */}
-                {[
-                  {
-                    type: 'sponsoring',
-                    typeLabel: 'Sponsoring',
-                    typeIcon: TrendingUp,
-                    date: '15/01/2025',
-                    title: 'Nouveau partenariat stratégique annoncé',
-                    excerpt: 'Un nouveau partenariat majeur vient d\'être annoncé dans le monde du sponsoring sportif, marquant une étape importante pour les deux parties impliquées.',
-                    content: 'Un nouveau partenariat majeur vient d\'être annoncé dans le monde du sponsoring sportif, marquant une étape importante pour les deux parties impliquées. Cette collaboration stratégique représente un investissement significatif dans le domaine du sport professionnel et ouvre de nouvelles perspectives pour les deux entités.\n\nLes détails de ce partenariat incluent des engagements à long terme qui permettront de développer des initiatives communes dans le domaine du marketing sportif, de la communication et de l\'engagement communautaire. Les deux parties ont exprimé leur enthousiasme quant aux opportunités que cette collaboration apportera.\n\nCe type de partenariat démontre l\'importance croissante du sponsoring sportif dans les stratégies marketing modernes, où les marques cherchent à créer des connexions authentiques avec leur audience à travers le sport.',
-                    tags: ['Partenariat', 'Stratégie'],
-                    relatedArticles: [
-                      { title: 'Guide complet du sponsoring sportif en 2025', url: 'https://example.com/sponsoring-guide' },
-                      { title: 'Les meilleures pratiques de partenariat sportif', url: 'https://example.com/partenariat-practices' },
-                    ],
-                  },
-                  {
-                    type: 'marques',
-                    typeLabel: 'Marques',
-                    typeIcon: Tag,
-                    date: '14/01/2025',
-                    title: 'Tendances marketing sportif 2025',
-                    excerpt: 'Les tendances du marketing sportif évoluent rapidement, avec de nouvelles approches innovantes qui transforment le paysage du sponsoring.',
-                    content: 'Les tendances du marketing sportif évoluent rapidement, avec de nouvelles approches innovantes qui transforment le paysage du sponsoring. L\'année 2025 marque un tournant dans la manière dont les marques interagissent avec le monde du sport.\n\nLes nouvelles technologies, notamment l\'intelligence artificielle et la réalité augmentée, ouvrent des possibilités inédites pour créer des expériences immersives pour les fans. Les marques investissent de plus en plus dans des campagnes digitales qui permettent une interaction directe avec leur audience.\n\nL\'authenticité et la transparence sont également devenues des valeurs centrales. Les consommateurs recherchent des partenariats qui reflètent leurs propres valeurs, poussant les marques à s\'engager dans des causes sociales et environnementales significatives.',
-                    tags: ['Marketing', 'Tendances'],
-                    relatedArticles: [
-                      { title: 'L\'impact de l\'IA sur le marketing sportif', url: 'https://example.com/ia-marketing' },
-                      { title: 'Marketing digital dans le sport : nouvelles tendances', url: 'https://example.com/digital-sport' },
-                    ],
-                  },
-                  {
-                    type: 'activations',
-                    typeLabel: 'Activations',
-                    typeIcon: Zap,
-                    date: '13/01/2025',
-                    title: 'Campagne d\'activation réussie',
-                    excerpt: 'Une campagne d\'activation récente a démontré l\'efficacité des nouvelles stratégies de communication dans le domaine sportif.',
-                    content: 'Une campagne d\'activation récente a démontré l\'efficacité des nouvelles stratégies de communication dans le domaine sportif. Cette initiative a permis d\'atteindre des résultats exceptionnels en termes d\'engagement et de visibilité.\n\nLa campagne a combiné plusieurs canaux de communication, incluant les réseaux sociaux, les événements en direct, et des partenariats avec des influenceurs du monde sportif. Cette approche multi-canal a permis de toucher une audience diversifiée et d\'amplifier le message de la marque.\n\nLes résultats quantitatifs montrent une augmentation significative de l\'engagement, avec des taux d\'interaction qui dépassent les moyennes du secteur. Cette réussite démontre l\'importance d\'une stratégie bien pensée et d\'une exécution soignée dans le domaine du marketing sportif.',
-                    tags: ['Campagne', 'Succès'],
-                    relatedArticles: [
-                      { title: 'Comment créer une campagne d\'activation réussie', url: 'https://example.com/activation-campaign' },
-                      { title: 'Stratégies multi-canaux pour le marketing sportif', url: 'https://example.com/multi-channel' },
-                    ],
-                  },
-                ].map((article, index) => (
-                  <div
-                    key={index}
-                    style={{
-                      flex: `1 1 calc(33.333% - ${SPACING.L})`,
-                      minWidth: DIMENSION.SEARCH_INPUT_WIDTH,
-                    }}
-                  >
-                    <ArticleCard
-                      type={article.type}
-                      typeLabel={article.typeLabel}
-                      typeIcon={article.typeIcon}
-                      date={article.date}
-                      title={article.title}
-                      excerpt={article.excerpt}
-                      tags={article.tags}
-                      onRead={() => setSelectedArticle(article)}
-                      onTypeClick={() => setArticleType(article.type)}
-                    />
+          filteredArticles.length > 0 ? (
+            <Container variant="fullWidth">
+              <Card style={{ marginTop: SPACING.XL, backgroundColor: COLOR.WHITE, paddingTop: SPACING.XL, paddingBottom: SPACING.XL, paddingRight: SPACING.XXL }}>
+                <div style={{ display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.FLEX_START, gap: SPACING.M }}>
+                  <Wand2 size={ICON_SIZE.L} style={{ color: COLOR.PURPLE, flexShrink: FLEX.ZERO, marginTop: SPACING.XS }} />
+                  <div style={{ display: DISPLAY.FLEX, flexDirection: FLEX_DIRECTION.COLUMN, gap: SPACING.S, flex: FLEX.ONE }}>
+                    <Heading level={2} style={{ marginBottom: SPACING.ZERO }}>
+                      Résumé IA des articles du jour
+                    </Heading>
+                    <Text size="M" weight="M" color="BLACK">
+                      Aujourd'hui, {nouveauxArticles} nouveau article a été identifié par les agents Dataxx. Ces articles couvrent les dernières actualités du sponsoring sportif, les partenariats stratégiques, et les tendances du marketing sportif en France et à l'international.
+                    </Text>
                   </div>
-                ))}
+                </div>
+              </Card>
+
+              {/* 3-column article layout with time range separators */}
+              <div style={{ marginTop: SPACING.XL }}>
+                <div style={{ width: WIDTH.FULL }}>
+                  {groupOrder.map((groupKey, groupIndex) => {
+                    const groupArticles = groupedArticles[groupKey]
+                    if (!groupArticles || groupArticles.length === 0) return null
+
+                    const groupInfo = groupLabels[groupKey]
+                    const GroupIcon = groupInfo.icon
+
+                    return (
+                      <div key={groupKey} style={{ marginBottom: SPACING.XL }}>
+                        {/* Time range separator */}
+                        <div
+                          style={{
+                            width: WIDTH.FULL,
+                            marginTop: groupIndex > 0 ? SPACING.XL : SPACING.ZERO,
+                            marginBottom: SPACING.S,
+                            paddingTop: SPACING.M,
+                            paddingBottom: SPACING.S,
+                            borderTop: groupIndex > 0 ? `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.LIGHT_MEDIUM}` : BORDER.NONE,
+                            display: DISPLAY.FLEX,
+                            alignItems: ALIGN_ITEMS.CENTER,
+                            gap: SPACING.S,
+                          }}
+                        >
+                          <GroupIcon size={ICON_SIZE.M} style={{ color: COLOR.GREY.DARK }} />
+                          <Text size="M" weight="M" color="GREY_DARK">
+                            {groupInfo.label}
+                          </Text>
+                          <Dot marginLeft={SPACING.XS} marginRight={SPACING.XS} color={COLOR.GREY.DARK} />
+                          <Text size="M" weight="M" color="GREY_DARK">
+                            {groupArticles.length} articles disponibles
+                          </Text>
+                        </div>
+
+                        {/* Article cards for this group */}
+                        <div
+                          style={{
+                            display: DISPLAY.FLEX,
+                            gap: SPACING.L,
+                            flexWrap: FLEX_WRAP.NOWRAP,
+                          }}
+                        >
+                          {groupArticles.map((article, index) => (
+                            <div
+                              key={index}
+                              style={{
+                                flex: `0 0 calc(33.333% - ${SPACING.L})`,
+                                width: `calc(33.333% - ${SPACING.L})`,
+                              }}
+                            >
+                              <ArticleCard
+                                type={article.type}
+                                typeLabel={article.typeLabel}
+                                typeIcon={article.typeIcon}
+                                date={article.date}
+                                title={article.title}
+                                excerpt={article.excerpt}
+                                tags={article.tags}
+                                onRead={() => setSelectedArticle(article)}
+                                onTypeClick={() => setArticleType(article.type)}
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )
+                  })}
                 </div>
               </div>
-            </div>
-          </Container>
+            </Container>
+          ) : (
+            <EmptyState
+              icon={emptyStateContent.icon}
+              title={emptyStateContent.title}
+              description={emptyStateContent.description}
+            />
+          )
         ) : (
-          <EmptyState
-            icon={emptyStateContent.icon}
-            title={emptyStateContent.title}
-            description={emptyStateContent.description}
-          />
+        <EmptyState
+          icon={emptyStateContent.icon}
+          title={emptyStateContent.title}
+          description={emptyStateContent.description}
+        />
         )}
       </div>
 
