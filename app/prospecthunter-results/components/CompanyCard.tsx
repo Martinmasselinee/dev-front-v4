@@ -1,6 +1,7 @@
 'use client'
 
-import { DollarSign, MapPin, ExternalLink, Tag, Plus, Brain, Leaf, Globe } from 'lucide-react'
+import { useState } from 'react'
+import { DollarSign, MapPin, ExternalLink, Tag, Plus, Brain, Leaf, Globe, X, UserPlus, Mail, CheckCircle, Calendar, FileCheck, Archive, ChevronDown } from 'lucide-react'
 import { Card } from '../../../components/Card'
 import { Text } from '../../../components/Text'
 import { Button } from '../../../components/Button'
@@ -20,6 +21,7 @@ import { MULTIPLIER } from '../../../constants/multiplier'
 import { OPACITY } from '../../../constants/opacity'
 import { BUTTON_HEIGHT } from '../../../constants/button'
 import { hexToRgba, lightenColor } from '../../../lib/colorUtils'
+import { IconButton } from '../../../components/IconButton'
 
 export interface CompanyCardProps {
   logo?: string
@@ -44,6 +46,36 @@ export const CompanyCard = ({
   onAdd,
   onAnalyze,
 }: CompanyCardProps) => {
+  const [isStatusMode, setIsStatusMode] = useState(false)
+  const [selectedStatus, setSelectedStatus] = useState<string | null>(null)
+
+  const statusOptions = [
+    { value: 'prospects', label: 'Prospects', icon: UserPlus },
+    { value: 'a_contacter', label: 'À contacter', icon: Mail },
+    { value: 'contacte', label: 'Contacté', icon: CheckCircle },
+    { value: 'meetings', label: 'Meetings', icon: Calendar },
+    { value: 'contrats', label: 'Contrats', icon: FileCheck },
+    { value: 'archive', label: 'Archivé', icon: Archive },
+  ]
+
+  const handleAddClick = () => {
+    setSelectedStatus('prospects')
+  }
+
+  const handleStatusButtonClick = () => {
+    setIsStatusMode(true)
+  }
+
+  const handleStatusSelect = (value: string) => {
+    setSelectedStatus(value)
+    setIsStatusMode(false)
+    onAdd?.()
+  }
+
+  const handleCloseStatusMode = () => {
+    setIsStatusMode(false)
+  }
+
   return (
     <Card
       variant="default"
@@ -55,17 +87,73 @@ export const CompanyCard = ({
         overflow: OVERFLOW.HIDDEN,
       }}
     >
-      {/* Header with grey background */}
-      <div
-        style={{
-          backgroundColor: COLOR.GREY.LIGHT,
-          paddingTop: SPACING.L,
-          paddingLeft: SPACING.L,
-          paddingRight: SPACING.L,
-          paddingBottom: `calc(${SPACING.XXXL} * ${MULTIPLIER.ICON_SIZE_DOUBLE} * ${MULTIPLIER.BUTTON_WIDTH_HALF} + ${SPACING.XXXL} * ${MULTIPLIER.ICON_SIZE_DOUBLE} * ${MULTIPLIER.BUTTON_WIDTH_HALF})`,
-          position: POSITION_TYPE.RELATIVE,
-        }}
-      >
+      {isStatusMode ? (
+        <>
+          {/* Status mode header with X button */}
+          <div
+            style={{
+              paddingTop: SPACING.L,
+              paddingLeft: SPACING.L,
+              paddingRight: SPACING.L,
+              paddingBottom: SPACING.L,
+              position: POSITION_TYPE.RELATIVE,
+              display: DISPLAY.FLEX,
+              alignItems: ALIGN_ITEMS.CENTER,
+              justifyContent: JUSTIFY_CONTENT.SPACE_BETWEEN,
+            }}
+          >
+            <Text size="L" weight="XL" color="BLACK">
+              Sélectionner un statut
+            </Text>
+            <IconButton
+              onClick={handleCloseStatusMode}
+              icon={<X size={ICON_SIZE.M} />}
+            />
+          </div>
+
+          {/* Status options */}
+          <div
+            style={{
+              paddingLeft: SPACING.L,
+              paddingRight: SPACING.L,
+              paddingBottom: SPACING.L,
+              display: DISPLAY.FLEX,
+              flexDirection: FLEX_DIRECTION.COLUMN,
+              alignItems: ALIGN_ITEMS.CENTER,
+              gap: SPACING.S,
+              flex: FLEX.ONE,
+            }}
+          >
+            {statusOptions.map((option) => {
+              const IconComponent = option.icon
+              const isSelected = option.value === selectedStatus
+              return (
+                <Button
+                  key={option.value}
+                  variant={isSelected ? "BLACK" : "WHITE"}
+                  onClick={() => handleStatusSelect(option.value)}
+                  icon={<IconComponent size={ICON_SIZE.M} />}
+                  style={{ width: WIDTH.FULL, height: BUTTON_HEIGHT.MAIN }}
+                >
+                  {option.label}
+                </Button>
+              )
+            })}
+          </div>
+        </>
+      ) : (
+        <>
+          {/* Header with grey background */}
+          <div
+            style={{
+              backgroundColor: COLOR.GREY.LIGHT,
+              paddingTop: SPACING.L,
+              paddingLeft: SPACING.L,
+              paddingRight: SPACING.L,
+              paddingBottom: `calc(${SPACING.XXXL} * ${MULTIPLIER.ICON_SIZE_DOUBLE} * ${MULTIPLIER.BUTTON_WIDTH_HALF} + ${SPACING.XXXL} * ${MULTIPLIER.ICON_SIZE_DOUBLE} * ${MULTIPLIER.BUTTON_WIDTH_HALF})`,
+              position: POSITION_TYPE.RELATIVE,
+            }}
+          >
         <div
           style={{
             position: POSITION_TYPE.ABSOLUTE,
@@ -292,14 +380,41 @@ export const CompanyCard = ({
           gap: SPACING.S,
         }}
       >
-        <Button
-          variant="PURPLE"
-          onClick={onAdd}
-          icon={<Plus size={ICON_SIZE.M} />}
-          style={{ width: WIDTH.FULL, height: BUTTON_HEIGHT.SMALL }}
-        >
-          Ajouter
-        </Button>
+        {!selectedStatus ? (
+          <Button
+            variant="PURPLE"
+            onClick={handleAddClick}
+            icon={<Plus size={ICON_SIZE.M} />}
+            style={{ width: WIDTH.FULL, height: BUTTON_HEIGHT.SMALL }}
+          >
+            Ajouter
+          </Button>
+        ) : (
+          (() => {
+            const currentStatus = statusOptions.find(opt => opt.value === selectedStatus)
+            const StatusIcon = currentStatus?.icon || UserPlus
+            return (
+              <Button
+                variant="STATUS"
+                onClick={handleStatusButtonClick}
+                icon={<StatusIcon size={ICON_SIZE.M} />}
+                style={{ width: WIDTH.FULL, height: BUTTON_HEIGHT.SMALL, position: POSITION_TYPE.RELATIVE }}
+              >
+                <div
+                  style={{
+                    display: DISPLAY.FLEX,
+                    alignItems: ALIGN_ITEMS.CENTER,
+                    justifyContent: JUSTIFY_CONTENT.SPACE_BETWEEN,
+                    width: WIDTH.FULL,
+                  }}
+                >
+                  <span>{currentStatus?.label || 'Prospect'}</span>
+                  <ChevronDown size={ICON_SIZE.M} />
+                </div>
+              </Button>
+            )
+          })()
+        )}
         <Button
           variant="BLACK"
           onClick={onAnalyze}
@@ -309,6 +424,8 @@ export const CompanyCard = ({
           Analyse du sponsor
         </Button>
       </div>
+        </>
+      )}
     </Card>
   )
 }

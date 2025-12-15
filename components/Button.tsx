@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, forwardRef } from 'react'
 import { BUTTON_MAIN, BUTTON_HEIGHT, BUTTON_OVERLAY } from '../constants/button'
 import { FONT_SIZE, FONT_THICKNESS } from '../constants/font'
 import { BORDER_RADIUS, BORDER_WIDTH } from '../constants/border'
@@ -16,7 +16,7 @@ import { CURSOR, POINTER_EVENTS } from '../constants/interaction'
 import { lightenColor, darkenColor } from '../lib/colorUtils'
 import { MULTIPLIER } from '../constants/multiplier'
 
-type ButtonVariant = 'BLACK' | 'PURPLE' | 'WHITE' | 'RED'
+type ButtonVariant = 'BLACK' | 'PURPLE' | 'WHITE' | 'RED' | 'STATUS'
 
 interface ButtonProps {
   children: ReactNode
@@ -29,7 +29,7 @@ interface ButtonProps {
   disabled?: boolean
 }
 
-export const Button = ({
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
   children,
   variant = 'BLACK',
   onClick,
@@ -38,7 +38,7 @@ export const Button = ({
   icon,
   style,
   disabled = false,
-}: ButtonProps) => {
+}, ref) => {
   const buttonStyle = BUTTON_MAIN[variant]
   const buttonHeight = BUTTON_HEIGHT.MAIN
   const borderRadius = BORDER_RADIUS.M
@@ -63,6 +63,7 @@ export const Button = ({
         `
       }} />
       <button
+        ref={ref}
         data-button-variant={variant}
         type={type}
         onClick={onClick}
@@ -73,7 +74,7 @@ export const Button = ({
           color: buttonStyle.color,
           borderRadius: borderRadius,
           height: buttonHeight,
-          border: variant === 'WHITE' ? `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.MEDIUM}` : BORDER.NONE,
+          border: variant === 'WHITE' || variant === 'STATUS' ? `${BORDER_WIDTH.THIN} solid ${COLOR.GREY.MEDIUM}` : BORDER.NONE,
           cursor: disabled ? CURSOR.NOT_ALLOWED : CURSOR.POINTER,
           width: WIDTH.FULL,
           fontSize: FONT_SIZE.M,
@@ -126,4 +127,6 @@ export const Button = ({
     </button>
     </>
   )
-}
+})
+
+Button.displayName = 'Button'

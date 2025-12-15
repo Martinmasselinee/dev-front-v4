@@ -28,5 +28,9 @@ export const BUTTON_MAIN = {
     backgroundColor: COLOR.RED,
     color: COLOR.WHITE,
   },
+  STATUS: {
+    backgroundColor: COLOR.WHITE,
+    color: COLOR.BLACK,
+  },
 } as const
 
