@@ -433,6 +433,37 @@ export default function SmartSearchResultsPage() {
       },
     },
     {
+      id: 'details',
+      header: () => (
+        <div style={{ display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER, justifyContent: JUSTIFY_CONTENT.CENTER, gap: SPACING.S }}>
+          <Sparkles size={ICON_SIZE.S} style={{ color: COLOR.GREY.DARK, flexShrink: FLEX.ZERO }} />
+          <Text size="S" weight="XL" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP, textTransform: TEXT_TRANSFORM.UPPERCASE, letterSpacing: LETTER_SPACING.TIGHT, textAlign: TEXT_ALIGN.CENTER }}>
+            Détails
+          </Text>
+        </div>
+      ),
+      cell: ({ row }) => (
+        <Button
+          variant="WHITE"
+          onClick={() => {}}
+          icon={<Eye size={ICON_SIZE.M} />}
+          style={{
+            width: `calc(${WIDTH.FULL} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY})`,
+            height: `calc(${INPUT_HEIGHT.SMALL} * ${MULTIPLIER.HEIGHT_EIGHTY})`,
+          }}
+        >
+          Voir
+        </Button>
+      ),
+      meta: {
+        width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY_FIVE})`,
+        align: 'center',
+        sticky: true,
+        stickyRight: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY_FIVE} * ${MULTIPLIER.COLUMN_WIDTH_EIGHTY_FIVE})`,
+        borderLeft: true,
+      },
+    },
+    {
       id: 'analyse',
       header: () => (
         <div style={{ display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER, justifyContent: JUSTIFY_CONTENT.CENTER, gap: SPACING.S }}>
