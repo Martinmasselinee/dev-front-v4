@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { DollarSign, MapPin, ExternalLink, Tag, Plus, Brain, Leaf, Globe, X, UserPlus, Mail, CheckCircle, Calendar, FileCheck, Archive, ChevronDown, Sparkles } from 'lucide-react'
+import { DollarSign, MapPin, ExternalLink, Tag, Plus, Brain, Leaf, Globe, X, UserPlus, Mail, CheckCircle, Calendar, FileCheck, Archive, XCircle, ChevronDown, Sparkles } from 'lucide-react'
 import { Card } from '../../../components/Card'
 import { Text } from '../../../components/Text'
 import { Button } from '../../../components/Button'
@@ -64,6 +64,7 @@ export const CompanyCard = ({
     { value: 'contacte', label: 'Contacté', icon: CheckCircle },
     { value: 'meetings', label: 'Meetings', icon: Calendar },
     { value: 'contrats', label: 'Contrats', icon: FileCheck },
+    { value: 'expire', label: 'Expiré', icon: XCircle },
     { value: 'archive', label: 'Archivé', icon: Archive },
   ]
 

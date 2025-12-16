@@ -69,13 +69,12 @@ export default function AuthSignUpPage() {
   const [showSecurityNotice, setShowSecurityNotice] = useState(false)
 
   useEffect(() => {
-
     // Trigger pop-in animation for security notice
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       setShowSecurityNotice(true)
     }, TIME.DELAY.SHORT)
 
-    return () => clearInterval(interval)
+    return () => clearTimeout(timeoutId)
   }, [])
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -84,7 +83,7 @@ export default function AuthSignUpPage() {
   }
 
   const handleConfirmSignUp = () => {
-    if (acceptedCGU && acceptedMentions) {
+    if (acceptedCGU) {
       setShowSignUpPopup(false)
       setIsLoading(true)
       setTimeout(() => {
@@ -325,28 +324,6 @@ export default function AuthSignUpPage() {
                 </Text>
               }
             />
-            
-            <Checkbox
-              checked={acceptedMentions}
-              onChange={(e) => setAcceptedMentions(e.target.checked)}
-              label={
-                <Text size="M" weight="M" as="span">
-                  J'accepte les{' '}
-                  <Link
-                    href="#"
-                    onClick={(e) => {
-                      e.preventDefault()
-                      setShowMentionsPopup(true)
-                    }}
-                    style={{
-                      textDecoration: TEXT_DECORATION.UNDERLINE,
-                    }}
-                  >
-                    Mentions Légales
-                  </Link>
-                </Text>
-              }
-            />
           </div>
 
           <div
@@ -361,7 +338,7 @@ export default function AuthSignUpPage() {
               variant="PURPLE"
               type="button"
               onClick={handleConfirmSignUp}
-              disabled={!acceptedCGU || !acceptedMentions}
+              disabled={!acceptedCGU}
             >
               Confirmer
             </Button>

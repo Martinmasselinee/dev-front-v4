@@ -1,9 +1,9 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { ColumnDef } from '@tanstack/react-table'
-import { Sparkles, Building2, Eye, ExternalLink, DollarSign, MapPin, Tag, Brain, Plus, ChevronDown, UserPlus, Mail, CheckCircle, Calendar, FileCheck, Archive, Globe, FileText, Wand2 } from 'lucide-react'
+import { Sparkles, Building2, Eye, ExternalLink, DollarSign, MapPin, Tag, Brain, Plus, ChevronDown, UserPlus, Mail, CheckCircle, Calendar, FileCheck, Archive, XCircle, Globe, FileText, Wand2 } from 'lucide-react'
 import { Dot } from '../../components/Dot'
 import { Text } from '../../components/Text'
 import { Container } from '../../components/Container'
@@ -43,7 +43,7 @@ import { UserInitial } from '../../components/UserInitial'
 import { lightenColor } from '../../lib/colorUtils'
 import { BUTTON_HEIGHT } from '../../constants/button'
 import { INPUT_HEIGHT } from '../../constants/input'
-import { StatusDropdown } from '../prospecthunter-results/components/StatusDropdown'
+import { Popup } from '../../components/Popup'
 
 export default function SmartSearchResultsPage() {
   const router = useRouter()
@@ -51,31 +51,8 @@ export default function SmartSearchResultsPage() {
   const [hasSearchResults, setHasSearchResults] = useState(true) // Show 5 cards by default when page loads
   const [displayedCount, setDisplayedCount] = useState<number>(NUMBER.ZERO)
   const [isLoadMoreHovered, setIsLoadMoreHovered] = useState(false)
-  
-  // Status/owner state per row (keyed by company index)
-  const [rowStatuses, setRowStatuses] = useState<Record<number, string | null>>({})
-  const [rowOwners, setRowOwners] = useState<Record<number, string | null>>({})
-  const [openStatusDropdowns, setOpenStatusDropdowns] = useState<Record<number, boolean>>({})
-  const [openOwnerDropdowns, setOpenOwnerDropdowns] = useState<Record<number, boolean>>({})
-  
-  // Refs for status and owner buttons per row
-  const statusButtonRefs = useMemo(() => new Map<number, React.RefObject<HTMLButtonElement>>(), [])
-  const ownerButtonRefs = useMemo(() => new Map<number, React.RefObject<HTMLButtonElement>>(), [])
-  
-  // Helper to get or create ref for a row
-  const getStatusButtonRef = (rowIndex: number) => {
-    if (!statusButtonRefs.has(rowIndex)) {
-      statusButtonRefs.set(rowIndex, { current: null })
-    }
-    return statusButtonRefs.get(rowIndex)!
-  }
-  
-  const getOwnerButtonRef = (rowIndex: number) => {
-    if (!ownerButtonRefs.has(rowIndex)) {
-      ownerButtonRefs.set(rowIndex, { current: null })
-    }
-    return ownerButtonRefs.get(rowIndex)!
-  }
+  const [companyStatuses, setCompanyStatuses] = useState<Record<string, string | null>>({})
+  const [openStatusPopup, setOpenStatusPopup] = useState<string | null>(null)
 
   // Status and owner options (same as CompanyCard)
   const statusOptions = [
@@ -84,6 +61,7 @@ export default function SmartSearchResultsPage() {
     { value: 'contacte', label: 'Contacté', icon: CheckCircle },
     { value: 'meetings', label: 'Meetings', icon: Calendar },
     { value: 'contrats', label: 'Contrats', icon: FileCheck },
+    { value: 'expire', label: 'Expiré', icon: XCircle },
     { value: 'archive', label: 'Archivé', icon: Archive },
   ]
 
@@ -202,7 +180,129 @@ export default function SmartSearchResultsPage() {
         </div>
       ),
       meta: {
-        width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.ICON_SIZE_DOUBLE})`,
+        width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.ICON_SIZE_DOUBLE} * ${MULTIPLIER.COLUMN_WIDTH_NINETY})`,
+      },
+    },
+    {
+      id: 'status',
+      header: () => (
+        <div style={{ display: DISPLAY.FLEX, alignItems: ALIGN_ITEMS.CENTER, gap: SPACING.S }}>
+          <UserPlus size={ICON_SIZE.S} style={{ color: COLOR.GREY.DARK, flexShrink: FLEX.ZERO }} />
+          <Text size="S" weight="XL" color="BLACK" style={{ overflow: OVERFLOW.HIDDEN, textOverflow: TEXT_OVERFLOW.ELLIPSIS, whiteSpace: WHITE_SPACE.NOWRAP, textTransform: TEXT_TRANSFORM.UPPERCASE, letterSpacing: LETTER_SPACING.TIGHT }}>
+            Status
+          </Text>
+        </div>
+      ),
+      cell: ({ row }) => {
+        const rowId = row.id
+        const currentStatus = companyStatuses[rowId]
+        const isPopupOpen = openStatusPopup === rowId
+
+        const handleAddClick = () => {
+          setCompanyStatuses(prev => ({
+            ...prev,
+            [rowId]: 'prospects'
+          }))
+        }
+
+        const handleStatusButtonClick = () => {
+          setOpenStatusPopup(rowId)
+        }
+
+        const handleStatusSelect = (value: string) => {
+          setCompanyStatuses(prev => ({
+            ...prev,
+            [rowId]: value
+          }))
+          setOpenStatusPopup(null)
+        }
+
+        const handleClosePopup = () => {
+          setOpenStatusPopup(null)
+        }
+
+        const currentStatusOption = statusOptions.find(opt => opt.value === currentStatus)
+        const StatusIcon = currentStatusOption?.icon || UserPlus
+
+        return (
+          <>
+            {!currentStatus ? (
+              <Button
+                variant="PURPLE"
+                onClick={handleAddClick}
+                icon={<Plus size={ICON_SIZE.M} />}
+                style={{
+                  width: WIDTH.AUTO,
+                  height: `calc(${INPUT_HEIGHT.SMALL} * ${MULTIPLIER.HEIGHT_EIGHTY})`,
+                  paddingLeft: SPACING.M,
+                  paddingRight: SPACING.M,
+                }}
+              >
+                Ajouter
+              </Button>
+            ) : (
+              <>
+                <Button
+                  variant="STATUS"
+                  onClick={handleStatusButtonClick}
+                  icon={<StatusIcon size={ICON_SIZE.M} />}
+                  style={{
+                    width: WIDTH.AUTO,
+                    height: `calc(${INPUT_HEIGHT.SMALL} * ${MULTIPLIER.HEIGHT_EIGHTY})`,
+                    paddingLeft: SPACING.M,
+                    paddingRight: SPACING.M,
+                  }}
+                >
+                  <div
+                    style={{
+                      display: DISPLAY.FLEX,
+                      alignItems: ALIGN_ITEMS.CENTER,
+                      justifyContent: JUSTIFY_CONTENT.SPACE_BETWEEN,
+                      gap: SPACING.S,
+                    }}
+                  >
+                    <span>{currentStatusOption?.label || 'Prospect'}</span>
+                    <ChevronDown size={ICON_SIZE.M} />
+                  </div>
+                </Button>
+                <Popup
+                  isOpen={isPopupOpen}
+                  onClose={handleClosePopup}
+                  title="Changer le statut"
+                  icon={StatusIcon}
+                  size="small"
+                >
+                  <div
+                    style={{
+                      display: DISPLAY.FLEX,
+                      flexDirection: FLEX_DIRECTION.COLUMN,
+                      gap: SPACING.S,
+                    }}
+                  >
+                    {statusOptions.map((option) => {
+                      const IconComponent = option.icon
+                      const isSelected = option.value === currentStatus
+                      return (
+                        <Button
+                          key={option.value}
+                          variant={isSelected ? "BLACK" : "WHITE"}
+                          onClick={() => handleStatusSelect(option.value)}
+                          icon={<IconComponent size={ICON_SIZE.M} />}
+                          style={{ width: WIDTH.FULL, height: BUTTON_HEIGHT.MAIN }}
+                        >
+                          {option.label}
+                        </Button>
+                      )
+                    })}
+                  </div>
+                </Popup>
+              </>
+            )}
+          </>
+        )
+      },
+      meta: {
+        width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY} * ${MULTIPLIER.DROPDOWN_WIDTH_ONE_FIVE} * ${MULTIPLIER.COLUMN_WIDTH_ONE_TEN})`,
       },
     },
     {
@@ -346,17 +446,18 @@ export default function SmartSearchResultsPage() {
         <Button
           variant="BLACK"
           onClick={() => {}}
-          icon={<Brain size={ICON_SIZE.M} />}
           style={{
-            width: `calc(${WIDTH.FULL} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY})`,
+            width: `calc(${WIDTH.FULL} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY_FIVE} * ${MULTIPLIER.COLUMN_WIDTH_EIGHTY_FIVE})`,
             height: `calc(${INPUT_HEIGHT.SMALL} * ${MULTIPLIER.HEIGHT_EIGHTY})`,
+            paddingLeft: SPACING.ZERO,
+            paddingRight: SPACING.ZERO,
           }}
         >
-          Analyse
+          <Brain size={ICON_SIZE.M} />
         </Button>
       ),
       meta: {
-        width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY} * ${MULTIPLIER.DROPDOWN_WIDTH_ONE_FIVE})`,
+        width: `calc(${TABLE.COLUMN_WIDTH_BASE} * ${SPACING.L} * ${MULTIPLIER.BUTTON_WIDTH_SEVENTY_FIVE} * ${MULTIPLIER.COLUMN_WIDTH_EIGHTY_FIVE})`,
         align: 'center',
         sticky: true,
         stickyRight: POSITION.ZERO,

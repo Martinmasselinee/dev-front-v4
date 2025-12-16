@@ -135,6 +135,7 @@ export default function DecideursPage() {
     { label: 'Contacté', value: 'contacte', icon: CheckCircle },
     { label: 'Meetings', value: 'meetings', icon: Calendar },
     { label: 'Contrats', value: 'contrats', icon: FileCheck },
+    { label: 'Expiré', value: 'expire', icon: XCircle },
     { label: 'Archivé', value: 'archive', icon: Archive },
   ]
 
@@ -167,6 +168,10 @@ export default function DecideursPage() {
       'contrats': {
         title: 'Aucun contrat',
         description: `Aucun contrat trouvé${ownerText}.`
+      },
+      'expire': {
+        title: 'Aucun décideur expiré',
+        description: `Aucun décideur expiré${ownerText}.`
       },
       'archive': {
         title: 'Aucun décideur archivé',

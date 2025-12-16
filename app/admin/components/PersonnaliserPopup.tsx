@@ -9,7 +9,7 @@ import { FileUpload } from '../../../components/FileUpload'
 import { FormGroup } from '../../../components/FormGroup'
 import { Input } from '../../../components/Input'
 import { Textarea } from '../../../components/Textarea'
-import { Select } from '../../../components/Select'
+import { DropdownButton } from '../../../components/DropdownButton'
 import { Slider } from '../../../components/Slider'
 import { SPACING } from '../../../constants/spacing'
 import { FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT, FLEX } from '../../../constants/flex'
@@ -368,17 +368,17 @@ export const PersonnaliserPopup = ({ isOpen, onClose, onSave, onPersonnalisation
             <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
               Type de workspace
             </Text>
-            <Select
+            <DropdownButton
               value={workspaceType}
               onChange={(e) => setWorkspaceType(e.target.value)}
-              icon={<Building2 size={ICON_SIZE.M} />}
+              style={{ width: WIDTH.FULL }}
             >
               <option value="">Sélectionnez un type</option>
               <option value="club-sportif">Club sportif</option>
               <option value="athlete">Athlète</option>
               <option value="evenement-sportif">Événement sportif</option>
               <option value="media-sportif">Média sportif</option>
-            </Select>
+            </DropdownButton>
           </FormGroup>
           <FormGroup>
             <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>

@@ -16,7 +16,7 @@ import { ButtonRetour } from '../../components/ButtonRetour'
 import { Input } from '../../components/Input'
 import { Textarea } from '../../components/Textarea'
 import { TEXTAREA_ROWS } from '../../constants/input'
-import { Select } from '../../components/Select'
+import { DropdownButton } from '../../components/DropdownButton'
 import { Form } from '../../components/Form'
 import { FormGroup } from '../../components/FormGroup'
 import { AdminInfoCard } from '../../components/AdminInfoCard'
@@ -141,20 +141,11 @@ export default function CreateWorkspacePage() {
               <Text size="M" weight="M" color="BLACK" as="div" style={{ marginBottom: SPACING.S }}>
                 Type de workspace *
               </Text>
-              <Select
+              <DropdownButton
                 value={workspaceType}
                 onChange={(e) => setWorkspaceType(e.target.value as WorkspaceType)}
                 required
-                icon={
-                  workspaceType
-                    ? (() => {
-                        const selectedType = workspaceTypes.find((type) => type.value === workspaceType)
-                        return selectedType ? (
-                          <selectedType.icon size={ICON_SIZE.M} />
-                        ) : undefined
-                      })()
-                    : undefined
-                }
+                style={{ width: WIDTH.FULL }}
               >
                 <option value="">Sélectionnez un type</option>
                 {workspaceTypes.map((type) => (
@@ -162,7 +153,7 @@ export default function CreateWorkspacePage() {
                     {type.label}
                   </option>
                 ))}
-              </Select>
+              </DropdownButton>
             </FormGroup>
 
             {/* Description */}
